@@ -11,8 +11,9 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
 
   const navigationItems = [
     { name: 'Home', href: '#hero' },
-    { name: 'About', href: '#about' },
+    { name: 'About', href: '#mystory' },
     { name: 'Work', href: '#work' },
+    { name: 'LaunchBox', href: '#launchbox' },
     { name: 'Contact', href: '#contact' },
   ];
 

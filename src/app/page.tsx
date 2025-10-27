@@ -1,14 +1,20 @@
 import Hero from '@/components/Hero';
-import WhyChoose from '@/components/WhyChoose';
-import OurWork from '@/components/OurWork';
+import WhoThisIsFor from '@/components/WhoThisIsFor';
+import LaunchBox from '@/components/LaunchBox';
+import MyStory from '@/components/MyStory';
+import Portfolio from '@/components/Portfolio';
+import Approach from '@/components/Approach';
 import Contact from '@/components/Contact';
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <WhyChoose />
-      <OurWork />
+      <WhoThisIsFor />
+      <LaunchBox />
+      <MyStory />
+      <Portfolio />
+      <Approach />
       <Contact />
     </>
   );

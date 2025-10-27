@@ -18,13 +18,13 @@ const rosario = Rosario({
 });
 
 export const metadata: Metadata = {
-  title: "Ian McDonald — AI Product Builder | Launch Box, AI4B App, Disruptiv Solutions",
-  description: "Ian McDonald ships practical AI platforms used by 1,300+ members and teaches non-technical builders inside Launch Box. See the work, join the community, or hire the studio.",
-  keywords: ["Ian McDonald", "Disruptiv Solutions", "Launch Box", "AI4B App", "AI for Business", "AI product builder", "AI consulting", "practical AI", "AI training", "no-code AI"],
+  title: "Ian McDonald — Build Real Apps Without a CS Degree | LaunchBox",
+  description: "From barely making rent to building an AI platform with 1,500+ active users. I teach others to build their dreams the same way I built mine. No jargon, no fluff—just real apps.",
+  keywords: ["Ian McDonald", "LaunchBox", "Launch Box", "AI for Business", "AI product builder", "build without CS degree", "practical AI", "AI training", "no-code AI", "ChatterCard", "Disruptiv Solutions"],
   authors: [{ name: "Ian McDonald" }],
   openGraph: {
-    title: "Ian McDonald — AI Product Builder | Launch Box, AI4B App, Disruptiv Solutions",
-    description: "Ian McDonald ships practical AI platforms used by 1,300+ members and teaches non-technical builders inside Launch Box.",
+    title: "Ian McDonald — Build Real Apps Without a CS Degree",
+    description: "From barely making rent to building an AI platform with 1,500+ active users. Join LaunchBox and build your first app in 30 days.",
     type: "website",
   },
 };

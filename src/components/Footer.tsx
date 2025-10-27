@@ -10,29 +10,46 @@ const Footer: React.FC = () => {
           {/* Brand */}
           <div className="text-center md:text-left">
             <span className="text-xl font-bold text-white">
-              <span className="text-red-600">D</span>isruptiv
+              Ian McDonald
             </span>
             <p className="text-gray-500 text-sm mt-1">
+              Disruptiv Solutions LLC
+            </p>
+            <p className="text-gray-500 text-sm">
               Building AI solutions that matter
             </p>
           </div>
 
           {/* Links */}
-          <div className="flex space-x-8 text-gray-400 text-sm">
-            <a href="#about" className="hover:text-white transition-colors">
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-gray-400 text-sm">
+            <a href="#hero" className="hover:text-white transition-colors">
+              Home
+            </a>
+            <a href="#mystory" className="hover:text-white transition-colors">
               About
             </a>
             <a href="#work" className="hover:text-white transition-colors">
               Work
+            </a>
+            <a href="#launchbox" className="hover:text-white transition-colors">
+              LaunchBox
             </a>
             <a href="#contact" className="hover:text-white transition-colors">
               Contact
             </a>
           </div>
 
-          {/* Copyright */}
-          <div className="text-gray-500 text-sm">
-            © {currentYear} Disruptiv Solutions. All rights reserved.
+          {/* Contact Info */}
+          <div className="text-gray-500 text-sm text-center md:text-right">
+            <p>
+              <a href="mailto:ian@ianmcdonald.me" className="hover:text-white transition-colors">
+                ian@ianmcdonald.me
+              </a>
+            </p>
+            <p className="mt-1">Pensacola, FL</p>
+            <p className="text-gray-600 text-xs mt-2">
+              © {currentYear} Disruptiv Solutions. All rights reserved.
+            </p>
           </div>
         </div>
       </div>

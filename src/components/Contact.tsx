@@ -6,7 +6,6 @@ const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    company: '',
     message: ''
   });
 
@@ -31,11 +30,13 @@ const Contact: React.FC = () => {
           <div className="space-y-8">
             <div>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
-                Let's Build Something
-                <span className="text-red-600"> Together</span>
+                Ready to Build Something Real?
               </h2>
+              <p className="text-gray-400 text-lg leading-relaxed mb-6">
+                Join the LaunchBox waitlist and be first to know when we launch.
+              </p>
               <p className="text-gray-400 text-lg leading-relaxed">
-                Need advisory on what to build first? Looking for a rapid build or white-label solution? Let's talk about how we can ship something that matters.
+                No fluff. No jargon. Just working apps and a community that gets it.
               </p>
             </div>
 
@@ -61,7 +62,8 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-white font-semibold mb-1">Location</h3>
-                  <p className="text-gray-400">Remote-first, Global reach</p>
+                  <p className="text-gray-400">Pensacola, FL</p>
+                  <p className="text-sm text-gray-500">Remote-first, Global reach</p>
                 </div>
               </div>
 
@@ -115,33 +117,17 @@ const Contact: React.FC = () => {
               </div>
 
               <div>
-                <label htmlFor="company" className="block text-sm font-medium text-gray-300 mb-2">
-                  Company
-                </label>
-                <input
-                  type="text"
-                  id="company"
-                  name="company"
-                  value={formData.company}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg text-white focus:border-red-600 focus:outline-none focus:ring-1 focus:ring-red-600 transition-colors"
-                  placeholder="Your company"
-                />
-              </div>
-
-              <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                  Message
+                  What do you want to build? (optional)
                 </label>
                 <textarea
                   id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  required
                   rows={5}
                   className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg text-white focus:border-red-600 focus:outline-none focus:ring-1 focus:ring-red-600 transition-colors resize-none"
-                  placeholder="Tell us about your project..."
+                  placeholder="Share your ideas..."
                 />
               </div>
 
@@ -149,8 +135,12 @@ const Contact: React.FC = () => {
                 type="submit"
                 className="w-full px-8 py-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors duration-300 shadow-lg hover:shadow-red-600/50"
               >
-                Send Message
+                Join the Waitlist
               </button>
+              
+              <p className="text-gray-500 text-sm text-center">
+                Questions? Email me: <a href="mailto:ian@ianmcdonald.me" className="text-red-600 hover:text-red-500 underline">ian@ianmcdonald.me</a>
+              </p>
             </form>
           </div>
         </div>
