@@ -122,7 +122,7 @@ const OurWork: React.FC = () => {
   const activeProject = projects[activeIndex];
 
   return (
-    <section id="work" className="min-h-screen bg-black overflow-hidden lg:relative pt-16">
+    <section id="work" className="min-h-screen bg-black overflow-hidden lg:relative pt-16 snap-start snap-always" style={{ scrollMarginTop: '80px' }}>
       <div className="lg:h-screen">
         {/* Header Section - Top */}
         <div className="py-8 px-6 lg:py-12 lg:relative lg:z-10">

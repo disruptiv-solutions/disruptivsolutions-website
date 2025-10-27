@@ -12,7 +12,7 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center bg-black overflow-hidden">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center bg-black overflow-hidden snap-start snap-always" style={{ scrollMarginTop: '80px' }}>
       {/* Video Background */}
       <div className="absolute inset-0 w-full h-full">
         <video
@@ -33,10 +33,10 @@ const Hero: React.FC = () => {
         <div className="space-y-8 lg:text-right max-w-2xl lg:mr-12">
             {/* Main Headline */}
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
-              I Build Practical
+              You Don't Need a CS Degree
               <br />
               <RotatingText 
-                texts={['AI Products', 'Real Solutions', 'Working Apps', 'Actual Tools']}
+                texts={['to Build Real Apps', 'to Start Shipping', 'to Create Value', 'to Build Your Dream']}
                 mainClassName="inline-block px-2 sm:px-2 md:px-3 bg-gradient-to-r from-red-600 to-red-700 text-white overflow-hidden py-0.5 sm:py-1 md:py-2 rounded-lg"
                 staggerFrom={"last"}
                 initial={{ y: "100%" }}
@@ -51,7 +51,11 @@ const Hero: React.FC = () => {
 
             {/* Subheadline */}
             <p className="text-xl md:text-2xl text-gray-300 max-w-2xl leading-relaxed">
-              Products that non-technical people actually use. From healthcare to shipping multi-tool AI platforms—I ship features, fix bugs, and teach people to build real apps. No jargon, no fluff.
+              You just need to start messy and build something today.
+              <br /><br />
+              I went from barely making rent to building an AI platform with 1,500+ active users—not because I'm special, but because I stopped waiting for permission.
+              <br /><br />
+              Now I teach others to do the same.
             </p>
 
             {/* CTA Buttons */}

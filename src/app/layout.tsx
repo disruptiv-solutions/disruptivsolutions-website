@@ -35,9 +35,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth snap-y snap-mandatory">
       <body
-        className={`${inter.variable} ${rosario.variable} antialiased bg-black text-white`}
+        className={`${inter.variable} ${rosario.variable} antialiased bg-black text-white snap-start`}
       >
         <NavigationWrapper />
         <main className="relative">
