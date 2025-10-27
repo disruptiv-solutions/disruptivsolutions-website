@@ -21,7 +21,6 @@ const Hero: React.FC = () => {
         </video>
         {/* Dark overlay from right */}
         <div className="absolute inset-0 bg-gradient-to-l from-black via-black/70 to-transparent"></div>
-        </div>
       </div>
 
       {/* Content wrapper positioned correctly */}
