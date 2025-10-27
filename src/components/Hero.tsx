@@ -7,7 +7,7 @@ import RotatingText from './RotatingText';
 const Hero: React.FC = () => {
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center bg-black overflow-hidden snap-start snap-always" style={{ scrollMarginTop: '80px', marginTop: '-80px' }}>
+    <section id="hero" className="relative min-h-screen flex items-center justify-center bg-black overflow-hidden snap-start snap-always" style={{ scrollMarginTop: '80px', paddingTop: '80px' }}>
       {/* Video Background */}
       <div className="absolute inset-0 w-full h-full">
         <video
@@ -23,7 +23,7 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-l from-black via-black/70 to-transparent"></div>
       </div>
 
-      <div className="w-full relative z-10 px-6 pt-72 min-h-screen flex items-center justify-end">
+      <div className="w-full relative z-10 px-6 pt-72 flex items-center justify-end" style={{ minHeight: 'calc(100vh - 80px)' }}>
         {/* Content aligned to the right */}
         <div className="space-y-8 lg:text-right max-w-2xl lg:mr-12">
             {/* Main Headline */}
