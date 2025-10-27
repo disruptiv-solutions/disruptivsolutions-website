@@ -7,7 +7,7 @@ import RotatingText from './RotatingText';
 const Hero: React.FC = () => {
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center bg-black snap-start snap-always" style={{ scrollMarginTop: '80px' }}>
+    <section id="hero" className="relative min-h-screen flex items-center justify-center bg-black snap-start snap-always" style={{ scrollMarginTop: '80px', overflow: 'hidden' }}>
       {/* Video Background */}
       <div className="absolute inset-0 w-full h-screen" style={{ clipPath: 'inset(0 0 0 0)' }}>
         <video
