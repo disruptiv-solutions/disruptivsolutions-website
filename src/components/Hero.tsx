@@ -7,9 +7,10 @@ import RotatingText from './RotatingText';
 const Hero: React.FC = () => {
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center bg-black snap-start snap-always" style={{ scrollMarginTop: '80px', overflow: 'hidden', position: 'relative', zIndex: 1 }}>
-      {/* Video Background */}
-      <div className="absolute inset-0 w-full h-screen" style={{ zIndex: -1 }}>
+    <section id="hero" className="relative min-h-screen flex items-center justify-center bg-black snap-start snap-always" style={{ scrollMarginTop: '80px' }}>
+      {/* Video Background - Fixed to viewport */}
+      <div className="fixed top-0 left-0 w-full h-screen pointer-events-none" style={{ zIndex: 0 }}>
+        <div className="absolute inset-0 w-full h-full">
         <video
           autoPlay
           muted
@@ -21,9 +22,11 @@ const Hero: React.FC = () => {
         </video>
         {/* Dark overlay from right */}
         <div className="absolute inset-0 bg-gradient-to-l from-black via-black/70 to-transparent"></div>
+        </div>
       </div>
 
-      <div className="w-full relative z-10 px-6 pt-72 min-h-screen flex items-center justify-end">
+      {/* Content wrapper positioned correctly */}
+      <div className="w-full relative px-6 pt-72 min-h-screen flex items-center justify-end" style={{ zIndex: 10 }}>
         {/* Content aligned to the right */}
         <div className="space-y-8 lg:text-right max-w-2xl lg:mr-12">
             {/* Main Headline */}
@@ -66,7 +69,7 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-12 left-0 right-0 flex justify-center animate-bounce">
+      <div className="absolute bottom-12 left-0 right-0 flex justify-center animate-bounce" style={{ zIndex: 10 }}>
         <svg
           className="w-6 h-6 text-gray-500"
           fill="none"
