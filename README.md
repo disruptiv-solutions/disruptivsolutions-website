@@ -1,5 +1,47 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## 🎥 Replicate Video Models Integration
+
+This project includes a complete implementation for fetching and displaying **Replicate's official AI video models**. Official models are production-ready, always-on, and have stable APIs.
+
+### Quick Setup
+
+1. **Get your Replicate API token** from [https://replicate.com/account/api-tokens](https://replicate.com/account/api-tokens)
+
+2. **Create `.env.local` file** in the project root:
+```bash
+REPLICATE_API_TOKEN=r8_your_token_here
+```
+
+3. **Run the development server**:
+```bash
+npm run dev
+```
+
+4. **View the video models** at [http://localhost:3000/video-models](http://localhost:3000/video-models)
+
+### Features
+
+✨ **Official Video Models Only** - Curated list of Replicate's production-ready video AI models
+- minimax/video-01 (Hailuo)
+- luma/ray (Dream Machine)
+- haiper-ai/haiper-video-2
+- tencent/hunyuan-video
+- bytedance/seedance-1-pro & seedance-1-lite
+
+📦 **Complete API Integration**
+- REST API endpoint: `/api/replicate/video-models`
+- React hook: `useVideoModels()`
+- Utility functions in `src/lib/replicate-video-models.ts`
+
+🎨 **Beautiful UI**
+- Responsive grid layout
+- Dark mode support
+- Loading and error states
+- Model cards with cover images and stats
+
+📚 **Full Documentation** - See [REPLICATE_SETUP.md](./REPLICATE_SETUP.md) for detailed documentation
+
 ## Getting Started
 
 First, run the development server:
