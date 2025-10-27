@@ -7,10 +7,10 @@ const MyStory: React.FC = () => {
   return (
     <section 
       id="mystory"
-      className="min-h-screen flex items-center justify-center bg-black snap-start snap-always"
+      className="bg-black snap-start snap-always"
       style={{ scrollMarginTop: '80px' }}
     >
-      <div className="max-w-4xl mx-auto px-6 py-20 w-full">
+      <div className="max-w-4xl mx-auto px-6 py-32 w-full min-h-screen flex flex-col justify-center">
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-10">
           From Side Hustle to Building Products People Pay For
         </h2>
