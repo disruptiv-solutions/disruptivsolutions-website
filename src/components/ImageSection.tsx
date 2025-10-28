@@ -41,7 +41,7 @@ const ImageSection: React.FC<ImageSectionProps> = ({
   useEffect(() => {
     // Set the actual section height on client mount
     if (typeof window !== 'undefined') {
-      setSectionHeight(window.innerHeight);
+      setSectionHeight(window.innerHeight - 65);
     }
 
     const handleScroll = () => {
@@ -49,28 +49,22 @@ const ImageSection: React.FC<ImageSectionProps> = ({
       if (!section) return;
 
       const rect = section.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
       const sectionHeight = section.offsetHeight;
       
       // Calculate scroll progress: 0 to 1 through the section
-      // On mobile (h-screen), this will stay at 0
-      const progress = Math.max(0, Math.min(1, -rect.top / (sectionHeight - windowHeight)));
+      const progress = Math.max(0, Math.min(1, -rect.top / sectionHeight));
       setScrollProgress(progress);
     };
 
     const handleResize = () => {
       if (typeof window !== 'undefined') {
-        setSectionHeight(window.innerHeight);
+        setSectionHeight(window.innerHeight - 65);
       }
     };
 
-    // Only add scroll listener on desktop
-    if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      handleScroll();
-    }
-
+    window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleResize);
+    handleScroll();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -107,11 +101,7 @@ const ImageSection: React.FC<ImageSectionProps> = ({
 
   // Calculate which approach should be centered based on scroll
   const getActiveIndex = () => {
-    // On mobile, always show first approach (single section snap)
-    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
-      return 0;
-    }
-    // Desktop scroll calculation
+    // Adjusted thresholds to make "Learn in Public" display longer
     if (scrollProgress <= 0.2) return 0; // Start Messy: 0-20%
     if (scrollProgress < 0.4) return 1;  // Build Real Solutions: 20-40%
     if (scrollProgress < 0.6) return 2;  // Compound Your Skills: 40-60%
@@ -124,9 +114,10 @@ const ImageSection: React.FC<ImageSectionProps> = ({
     <section 
       ref={sectionRef}
       id="image-section"
-      className="bg-black snap-start relative h-screen"
+      className="bg-black snap-start relative"
+      style={{ height: 'calc((100vh - 65px) * 4)' }}
     >
-      <div className="absolute inset-0 w-full h-full">
+      <div className="sticky top-0 w-full h-screen relative">
         {/* Light Rays Background */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <LightRays
@@ -141,25 +132,12 @@ const ImageSection: React.FC<ImageSectionProps> = ({
             distortion={0.05}
           />
         </div>
-        {/* Content - Mobile: Simple centered, Desktop: Sticky scroll */}
-        <div className="relative z-10 w-full h-full flex items-center lg:hidden">
-          <div className="max-w-7xl mx-auto px-6 w-full h-full flex items-center justify-center">
-            <div className="max-w-xl text-center px-4 space-y-6">
-              <h3 className="text-3xl sm:text-4xl font-bold text-white mb-2">
-                {approaches[activeIndex].title}
-              </h3>
-              <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
-                {approaches[activeIndex].description}
-              </p>
-            </div>
-          </div>
-        </div>
-        {/* Desktop: Sticky scroll container */}
-        <div className="relative z-10 w-full h-full hidden lg:flex items-center">
-        <div className="max-w-7xl mx-auto px-6 w-full h-full flex items-center">
+        {/* Content */}
+        <div className="relative z-10 w-full h-full flex items-center">
+        <div className="max-w-7xl mx-auto px-6 w-full h-full flex items-center pt-[65px]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full h-full">
             {/* Left: Scroll Reveal Container - matches image height */}
-            <div className="relative w-full flex items-center justify-center overflow-hidden h-full" style={{ height: 'calc(100vh - 65px)' }}>
+            <div className="relative h-full flex items-center justify-center overflow-hidden" style={{ height: 'calc(100vh - 65px)' }}>
               <div className="relative w-full" style={{ height: 'calc((100vh - 65px) * 4)' }}>
                 {approaches.map((approach, index) => {
                   const isActive = index === activeIndex;
