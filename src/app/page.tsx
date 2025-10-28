@@ -11,8 +11,8 @@ export default function Home() {
     <>
       <Hero />
       <WhoThisIsFor />
-      <LaunchBox />
       <MyStory />
+      <LaunchBox />
       <Portfolio />
       <Approach />
       <Contact />

@@ -23,7 +23,7 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="min-h-screen flex items-center justify-center bg-black py-20 px-6 pt-32 snap-start snap-always" style={{ scrollMarginTop: '80px' }}>
+    <section id="contact" className="min-h-screen flex items-center justify-center bg-black py-20 px-6 pt-32 snap-start snap-always">
       <div className="max-w-7xl w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           {/* Left Side - Contact Info */}
@@ -150,4 +150,3 @@ const Contact: React.FC = () => {
 };
 
 export default Contact;
-

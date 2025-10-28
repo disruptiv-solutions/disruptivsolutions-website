@@ -131,31 +131,27 @@ const Portfolio: React.FC = () => {
   const activeProject = projects[activeIndex];
 
   return (
-    <section id="work" className="min-h-screen bg-black overflow-hidden lg:relative pt-16 snap-start snap-always" style={{ scrollMarginTop: '80px' }}>
+    <section id="work" className="min-h-screen bg-black overflow-hidden lg:relative snap-start snap-always">
       <div className="lg:h-screen">
-        {/* Header Section */}
-        <div className="py-8 px-6 lg:py-12 lg:relative lg:z-10">
-          <div className="max-w-7xl w-full mx-auto">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
-              Things I've Built
-            </h2>
-            <p className="text-gray-400 text-lg max-w-3xl">
-              From side projects to enterprise platforms—each one taught me something for the next.
-            </p>
-          </div>
-        </div>
-
         {/* Main Content Area */}
-        <div className="lg:absolute lg:inset-0 lg:flex lg:items-center">
+        <div className="lg:flex">
           <div className="max-w-7xl w-full mx-auto px-6 pb-20 lg:pb-0">
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_500px] gap-12 lg:h-screen lg:items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_500px] gap-12 lg:h-screen lg:items-start">
               {/* Left Side - Active Project Details */}
-              <div className="flex items-center justify-center min-h-[400px] lg:pl-0">
+              <div className="flex items-center justify-center min-h-[400px] lg:pl-0 lg:self-center">
                 <div 
                   className={`space-y-6 max-w-2xl transition-opacity duration-500 ${
                     isTransitioning ? 'opacity-0' : 'opacity-100'
                   }`}
                 >
+                  <div className="mb-4">
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-white">
+                      Things I've Built
+                    </h2>
+                    <p className="text-gray-400 text-lg max-w-3xl">
+                      From side projects to enterprise platforms—each one taught me something for the next.
+                    </p>
+                  </div>
                   <div>
                     <span className="text-red-500 text-sm font-semibold">{activeProject.tag}</span>
                     <h3 className="text-2xl font-bold text-white mb-2 mt-1">

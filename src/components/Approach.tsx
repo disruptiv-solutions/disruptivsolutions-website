@@ -8,7 +8,6 @@ const Approach: React.FC = () => {
     <section 
       id="approach"
       className="min-h-screen flex items-center justify-center bg-black snap-start snap-always"
-      style={{ scrollMarginTop: '80px' }}
     >
       <div className="max-w-4xl mx-auto px-6 py-20 w-full">
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-10">

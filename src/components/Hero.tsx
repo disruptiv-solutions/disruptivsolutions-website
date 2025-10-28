@@ -7,7 +7,7 @@ import RotatingText from './RotatingText';
 const Hero: React.FC = () => {
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center bg-black snap-start snap-always" style={{ scrollMarginTop: '80px', overflow: 'hidden' }}>
+    <section id="hero" className="relative min-h-screen flex items-center justify-center bg-black snap-start snap-always" style={{ overflow: 'hidden' }}>
       {/* Video Background */}
       <div className="absolute inset-0 w-full h-full" style={{ minHeight: '100vh' }}>
         <video
@@ -24,7 +24,7 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Content wrapper positioned correctly */}
-      <div className="w-full relative px-6 pt-72 min-h-screen flex items-center justify-end" style={{ zIndex: 10 }}>
+      <div className="w-full relative px-6 pt-72 flex items-center justify-end" style={{ zIndex: 10 }}>
         {/* Content aligned to the right */}
         <div className="space-y-8 lg:text-right max-w-2xl lg:mr-12">
             {/* Main Headline */}
@@ -54,15 +54,6 @@ const Hero: React.FC = () => {
               Now I teach others to do the same.
             </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col lg:flex-row gap-4 pt-4">
-              <button
-                onClick={() => document.getElementById('launchbox')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-10 py-5 bg-gradient-to-r from-red-600 to-red-700 border-2 border-red-600 text-white font-bold rounded-xl hover:from-red-700 hover:to-red-800 hover:border-red-700 transition-all duration-300 shadow-lg hover:shadow-red-600/50 hover:scale-105 transform flex items-center justify-center whitespace-nowrap"
-              >
-                Join the LaunchBox Waitlist
-              </button>
-            </div>
         </div>
       </div>
 
