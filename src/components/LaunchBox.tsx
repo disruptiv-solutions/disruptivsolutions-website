@@ -5,7 +5,9 @@ import React from 'react';
 
 const LaunchBox: React.FC = () => {
   const [scrollProgress, setScrollProgress] = React.useState(0);
+  const [activeCard, setActiveCard] = React.useState(0);
   const sectionRef = React.useRef<HTMLDivElement>(null);
+  const lastProgressRef = React.useRef(0);
 
   const handleWaitlist = () => {
     // Waitlist form is already in the LaunchBox component
@@ -27,21 +29,48 @@ const LaunchBox: React.FC = () => {
       // Calculate scroll progress: 0 to 1 through the section
       const progress = Math.max(0, Math.min(1, -rect.top / sectionHeight));
       setScrollProgress(progress);
+
+      // Determine which card should be expanded based on scroll progress
+      // Use hysteresis: different thresholds for scrolling up vs down to prevent rapid switching
+      const scrollingDown = progress > lastProgressRef.current;
+      lastProgressRef.current = progress;
+
+      let newCard: number;
+      
+      if (scrollingDown) {
+        // Scrolling down: higher thresholds to prevent premature switching
+        if (progress < 0.5) {
+          newCard = 0;  // First 50% = card 0 (hold)
+        } else if (progress < 0.85) {
+          newCard = 1;  // Next 35% = card 1 (hold)
+        } else {
+          newCard = 2; // Final 15% = card 2 (hold)
+        }
+      } else {
+        // Scrolling up: lower thresholds for easier back navigation
+        if (progress < 0.35) {
+          newCard = 0;
+        } else if (progress < 0.75) {
+          newCard = 1;
+        } else {
+          newCard = 2;
+        }
+      }
+
+      // Only update if card actually changed
+      if (newCard !== activeCard) {
+        setActiveCard(newCard);
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [activeCard]);
 
   // Determine which card should be expanded based on scroll progress
-  // Use wider thresholds to hold each card expanded longer, requiring more scroll
-  const getActiveCard = () => {
-    if (scrollProgress < 0.4) return 0;  // First 40% = card 0 (hold)
-    if (scrollProgress < 0.7) return 1;  // Next 30% = card 1 (hold)
-    return 2; // Final 30% = card 2 (hold)
-  };
+  const getActiveCard = () => activeCard;
 
   return (
     <section 
