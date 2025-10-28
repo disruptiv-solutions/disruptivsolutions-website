@@ -48,9 +48,9 @@ const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="hero" className="relative min-h-screen flex items-center justify-center bg-black snap-start" style={{ overflow: 'hidden' }}>
+    <section ref={sectionRef} id="hero" className="relative h-screen lg:min-h-screen flex items-center justify-center bg-black snap-start" style={{ overflow: 'hidden' }}>
       {/* Video Background */}
-      <div className="absolute inset-0 w-full h-full" style={{ minHeight: '100vh' }}>
+      <div className="absolute inset-0 w-full h-full">
         <video
           ref={videoRef}
           muted
@@ -65,20 +65,20 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Content wrapper positioned correctly */}
-      <div className="w-full relative px-6 pt-72 flex items-center justify-end" style={{ zIndex: 10 }}>
+      <div className="w-full relative px-6 pt-[85px] pb-6 lg:pt-72 flex items-center justify-end h-full" style={{ zIndex: 10 }}>
         {/* Content aligned to the right */}
-        <div className="space-y-8 lg:text-right max-w-2xl lg:mr-12">
+        <div className="space-y-4 lg:space-y-8 lg:text-right max-w-2xl lg:mr-12 w-full">
             {/* Main Headline */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-3 lg:mb-6">
               Ian McDonald
               <br />
-              <span className="text-3xl md:text-4xl lg:text-5xl font-normal text-gray-300">
+              <span className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-normal text-gray-300">
                 AI App Entrepreneur & Builder
               </span>
             </h1>
 
             {/* Subheadline */}
-            <p className="text-xl md:text-2xl text-gray-300 max-w-2xl leading-relaxed mb-8">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-2xl leading-relaxed mb-3 lg:mb-8">
               I teach non-technical people to build AI apps that actually work.
               <br /><br />
               From side hustles to enterprise platforms with 1,500+ users—I build in public and show others how to do the same.
@@ -138,7 +138,7 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-12 left-0 right-0 flex justify-center animate-bounce" style={{ zIndex: 10 }}>
+      <div className="absolute bottom-4 lg:bottom-12 left-0 right-0 flex justify-center animate-bounce" style={{ zIndex: 10 }}>
         <svg
           className="w-6 h-6 text-gray-500"
           fill="none"
