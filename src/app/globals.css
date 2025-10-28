@@ -151,6 +151,9 @@ h1, h2, h3, h4, h5, h6 {
   section[class*="snap-start"] {
     scroll-snap-align: start;
     scroll-snap-stop: always;
-    scroll-margin-top: 65px;
+  }
+  
+  section#who-this-is-for {
+    scroll-margin-top: 0;
   }
 }
