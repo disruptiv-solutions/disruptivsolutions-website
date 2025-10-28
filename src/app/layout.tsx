@@ -35,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth lg:snap-y overscroll-y-contain" style={{ scrollPaddingTop: '65px' }}>
+    <html lang="en" className="scroll-smooth snap-y overscroll-y-contain" style={{ scrollPaddingTop: '65px' }}>
       <body
         className={`${inter.variable} ${rosario.variable} antialiased bg-black text-white`}
       >

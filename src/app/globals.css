@@ -135,9 +135,22 @@ h1, h2, h3, h4, h5, h6 {
   animation-delay: 2s;
 }
 
-/* Disable scroll snap on mobile for better scroll experience */
+/* Mobile scroll snap - less sensitive with stop at each section */
 @media (max-width: 1023px) {
   html {
-    scroll-snap-type: none;
+    scroll-snap-type: y mandatory;
+    scroll-snap-stop: always;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  body {
+    overscroll-behavior-y: contain;
+    touch-action: pan-y;
+  }
+  
+  section[class*="snap-start"] {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    scroll-margin-top: 65px;
   }
 }
