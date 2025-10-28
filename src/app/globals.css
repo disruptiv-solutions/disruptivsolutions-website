@@ -210,57 +210,75 @@ footer {
   z-index: 1;
 }
 
-/* Fix Chrome mobile bottom gap - comprehensive fix */
+/* Fix Chrome mobile bottom gap - address bar behavior fix */
 @media (max-width: 1023px) {
+  /* Use fixed positioning to prevent Chrome from adding extra space */
   html {
-    height: 100vh;
-    height: 100dvh;
-    overflow: hidden;
     position: fixed;
     width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /* Prevent Chrome from adding extra space when address bar hides */
+    -webkit-text-size-adjust: 100%;
   }
   
   body {
-    height: 100vh;
-    height: 100dvh;
-    overflow: hidden;
     position: fixed;
     width: 100%;
+    height: 100%;
+    overflow: hidden;
     margin: 0;
     padding: 0;
+    /* Ensure body doesn't extend beyond viewport */
+    max-height: 100vh;
+    max-height: 100dvh;
   }
   
+  /* Make main the scrolling container */
   body > main {
-    height: 100vh;
-    height: 100dvh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-    position: relative;
+    /* Prevent bounce effect that can cause gaps */
+    overscroll-behavior: contain;
+    /* Use full height */
+    height: 100vh;
+    height: 100dvh;
   }
   
-  /* Ensure footer is the last element with no gap */
+  /* Footer must be inside main and extend to bottom */
   footer {
     margin: 0 !important;
     padding-top: 2rem !important;
     padding-bottom: 2rem !important;
     width: 100%;
-    border-bottom: none !important;
+    background: black !important;
+    position: relative;
+    /* Add extra padding to account for potential gap */
+    margin-bottom: 0 !important;
   }
   
-  /* Remove any pseudo-elements that might create space */
+  /* Remove any pseudo-elements */
   body::after,
   html::after,
   footer::after {
     display: none !important;
-    height: 0 !important;
-    content: none !important;
   }
   
-  /* Ensure no section or element creates bottom space */
+  /* Prevent sections from creating extra space */
   section:last-of-type {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
+  }
+  
+  /* Ensure main's last child (footer) has no gap */
+  main > :last-child {
+    margin-bottom: 0 !important;
   }
 }
 

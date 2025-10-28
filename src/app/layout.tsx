@@ -48,8 +48,8 @@ export default function RootLayout({
         <NavigationWrapper />
         <main className="relative">
           {children}
+          <Footer />
         </main>
-        <Footer />
       </body>
     </html>
   );
