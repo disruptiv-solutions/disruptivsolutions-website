@@ -156,13 +156,10 @@ h1, h2, h3, h4, h5, h6 {
   animation-delay: 2s;
 }
 
-/* Mobile scroll snap - less sensitive with stop at each section */
+/* Mobile scroll snap - apply to sections inside main container */
 @media (max-width: 1023px) {
-  html {
-    scroll-snap-type: y mandatory;
-    scroll-snap-stop: always;
-    -webkit-overflow-scrolling: touch;
-  }
+  /* Main container handles scrolling, so snapping is applied there */
+  /* No need for html/body scroll snap since main is the scroll container */
   
   body {
     overscroll-behavior-y: contain;
@@ -189,6 +186,12 @@ h1, h2, h3, h4, h5, h6 {
     scroll-snap-align: start;
     scroll-snap-stop: always;
     scroll-margin-top: 65px;
+  }
+  
+  /* Footer should not snap */
+  footer {
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
   }
 }
 
@@ -234,7 +237,7 @@ footer {
     max-height: 100dvh;
   }
   
-  /* Make main the scrolling container */
+  /* Make main the scrolling container with scroll snap */
   body > main {
     position: absolute;
     top: 0;
@@ -249,6 +252,10 @@ footer {
     /* Use full height */
     height: 100vh;
     height: 100dvh;
+    /* Enable scroll snapping on main (the scrolling container) */
+    scroll-snap-type: y mandatory;
+    scroll-snap-stop: always;
+    scroll-padding-top: 65px;
   }
   
   /* Footer must be inside main and extend to bottom */
