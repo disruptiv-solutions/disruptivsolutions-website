@@ -27,12 +27,6 @@ export const metadata: Metadata = {
     description: "From barely making rent to building an AI platform with 1,500+ active users. Join LaunchBox and build your first app in 30 days.",
     type: "website",
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-    viewportFit: 'cover',
-  },
 };
 
 export default function RootLayout({
@@ -48,8 +42,8 @@ export default function RootLayout({
         <NavigationWrapper />
         <main className="relative">
           {children}
-          <Footer />
         </main>
+        <Footer />
       </body>
     </html>
   );

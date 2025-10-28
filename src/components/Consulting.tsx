@@ -11,10 +11,9 @@ const Consulting: React.FC = () => {
   return (
     <section 
       id="consulting"
-      className="bg-black snap-start py-20 lg:py-0"
-      style={{ minHeight: '100vh' }}
+      className="bg-black snap-start py-20 lg:py-0 min-h-screen"
     >
-      <div className="max-w-7xl mx-auto px-6 w-full h-full lg:h-[calc(100vh-65px)]">
+      <div className="max-w-7xl mx-auto px-6 w-full lg:h-[calc(100vh-65px)]">
         <div className="lg:h-full flex items-center pt-16 lg:pt-0">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
             <div className="space-y-6">

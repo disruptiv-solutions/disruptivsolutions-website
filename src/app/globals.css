@@ -19,32 +19,11 @@
   --font-mono: var(--font-geist-mono);
 }
 
-html {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  overflow-x: hidden;
-}
-
 body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
   line-height: 1.6;
-  overflow-x: hidden;
-  position: relative;
-}
-
-/* Prevent body from extending beyond viewport */
-body::after {
-  content: '';
-  display: block;
-  height: 0;
-  clear: both;
-  visibility: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -156,205 +135,22 @@ h1, h2, h3, h4, h5, h6 {
   animation-delay: 2s;
 }
 
-/* Mobile scroll snap - apply to sections inside main container */
+/* Mobile scroll snap - less sensitive with stop at each section */
 @media (max-width: 1023px) {
-  /* Main container handles scrolling, so snapping is applied there */
-  /* No need for html/body scroll snap since main is the scroll container */
+  html {
+    scroll-snap-type: y mandatory;
+    scroll-snap-stop: always;
+    -webkit-overflow-scrolling: touch;
+  }
   
   body {
     overscroll-behavior-y: contain;
     touch-action: pan-y;
   }
   
-  /* Ensure major sections snap properly - Use dynamic viewport height for mobile Chrome */
-  section[id="hero"],
-  section[id="who-this-is-for"],
-  section[id="image-section"],
-  section[id="consulting"],
-  section[id="launchbox"],
-  section[id="work"] {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    scroll-margin-top: 65px;
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
-    min-height: 100dvh;
-  }
-  
-  /* Other snap points */
   section[class*="snap-start"] {
     scroll-snap-align: start;
     scroll-snap-stop: always;
     scroll-margin-top: 65px;
-  }
-  
-  /* Footer should not snap */
-  footer {
-    scroll-snap-align: none;
-    scroll-snap-stop: normal;
-  }
-}
-
-/* Fix bottom gap issue - ensure no extra space */
-body {
-  position: relative;
-  overflow-x: hidden;
-}
-
-body > main {
-  padding-bottom: 0;
-  margin-bottom: 0;
-}
-
-footer {
-  margin: 0 !important;
-  padding: 0 !important;
-  position: relative;
-  z-index: 1;
-}
-
-/* Fix Chrome mobile bottom gap - address bar behavior fix */
-@media (max-width: 1023px) {
-  /* Use fixed positioning to prevent Chrome from adding extra space */
-  html {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    /* Prevent Chrome from adding extra space when address bar hides */
-    -webkit-text-size-adjust: 100%;
-  }
-  
-  body {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-    /* Ensure body doesn't extend beyond viewport */
-    max-height: 100vh;
-    max-height: 100dvh;
-  }
-  
-  /* Make main the scrolling container with scroll snap */
-  body > main {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    /* Prevent bounce effect that can cause gaps */
-    overscroll-behavior: contain;
-    /* Use full height */
-    height: 100vh;
-    height: 100dvh;
-    /* Enable scroll snapping on main (the scrolling container) */
-    scroll-snap-type: y mandatory;
-    scroll-snap-stop: always;
-    scroll-padding-top: 65px;
-  }
-  
-  /* Footer must be inside main and extend to bottom */
-  footer {
-    margin: 0 !important;
-    padding-top: 2rem !important;
-    padding-bottom: calc(2rem + max(env(safe-area-inset-bottom, 0px), 60px)) !important;
-    width: 100%;
-    background: black !important;
-    position: relative;
-    margin-bottom: 0 !important;
-    /* Extend footer background to cover any gap */
-    box-shadow: 0 -100px 0 0 black;
-  }
-  
-  /* Alternative: Make footer stick to bottom if gap still appears */
-  footer::before {
-    content: '';
-    position: absolute;
-    bottom: -100px;
-    left: 0;
-    right: 0;
-    height: 100px;
-    background: black;
-    z-index: -1;
-    pointer-events: none;
-  }
-  
-  /* Remove any pseudo-elements */
-  body::after,
-  html::after,
-  footer::after {
-    display: none !important;
-  }
-  
-  /* Prevent sections from creating extra space */
-  section:last-of-type {
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-  }
-  
-  /* Ensure main's last child (footer) has no gap */
-  main > :last-child {
-    margin-bottom: 0 !important;
-  }
-}
-
-/* Prevent Chrome scrollbar and extra space issues */
-html {
-  scrollbar-gutter: stable;
-  box-sizing: border-box;
-  position: relative;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-/* Ensure no scroll margin bottom and prevent overflow */
-section {
-  scroll-margin-bottom: 0;
-}
-
-/* Prevent any section from creating extra bottom space on mobile */
-@media (max-width: 1023px) {
-  section {
-    max-width: 100vw;
-    overflow-x: hidden;
-  }
-  
-  /* Prevent LaunchBox and ImageSection from creating extra scroll space */
-  /* Override fixed heights on mobile to use dynamic viewport */
-  section[id="launchbox"] {
-    position: relative !important;
-    height: 100dvh !important;
-    min-height: 100dvh !important;
-    max-height: 100dvh !important;
-  }
-  
-  section[id="image-section"] {
-    position: relative !important;
-    height: 100dvh !important;
-    min-height: 100dvh !important;
-    max-height: 100dvh !important;
-  }
-  
-  /* Ensure Portfolio doesn't create extra space */
-  section[id="work"] {
-    height: 100dvh !important;
-    min-height: 100dvh !important;
-    max-height: 100dvh !important;
-  }
-  
-  /* Prevent any sticky elements from extending beyond viewport */
-  section[id="launchbox"] .sticky,
-  section[id="image-section"] .sticky {
-    max-height: 100dvh;
-    height: 100dvh;
   }
 }
