@@ -11,19 +11,19 @@ const Consulting: React.FC = () => {
   return (
     <section 
       id="consulting"
-      className="bg-black snap-start py-20 lg:py-0 min-h-screen"
+      className="bg-black snap-start pt-[65px] pb-20 lg:py-0 min-h-screen"
     >
       <div className="max-w-7xl mx-auto px-6 w-full lg:h-[calc(100vh-65px)]">
-        <div className="lg:h-full flex items-center pt-16 lg:pt-0">
+        <div className="lg:h-full flex items-center pt-0 lg:pt-0">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
             <div className="space-y-6">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
                 Consulting With Ian
               </h2>
-              <div className="flex flex-wrap gap-3 mb-8">
+              <div className="flex flex-row gap-3 mb-8">
                 <button 
                   onClick={() => setConsultLength('20')}
-                  className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                  className={`flex-1 px-4 sm:px-6 py-3 rounded-xl font-semibold transition-all duration-300 text-sm sm:text-base ${
                     consultLength === '20' 
                       ? 'bg-red-600 text-white shadow-lg shadow-red-600/50' 
                       : 'bg-white/10 text-gray-300 hover:bg-white/20 border border-white/5'
@@ -33,13 +33,12 @@ const Consulting: React.FC = () => {
                 </button>
                 <button 
                   onClick={() => setConsultLength('90')}
-                  className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                  className={`flex-1 px-4 sm:px-6 py-3 rounded-xl font-semibold transition-all duration-300 text-sm sm:text-base ${
                     consultLength === '90' 
                       ? 'bg-red-600 text-white shadow-lg shadow-red-600/50' 
                       : 'bg-white/10 text-gray-300 hover:bg-white/20 border border-white/5'
                   }`}
                 >
-                  <span className="line-through text-gray-400 mr-2">$135</span>
                   $89 - 90 min
                 </button>
               </div>
