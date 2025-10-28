@@ -23,28 +23,22 @@ html {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: auto;
-  min-height: 100%;
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  /* Use dynamic viewport height for mobile Chrome */
-  min-height: -webkit-fill-available;
-  min-height: 100dvh;
 }
 
 body {
   margin: 0;
   padding: 0;
   width: 100%;
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
-  /* Support for modern dynamic viewport units */
-  min-height: 100dvh;
+  height: 100%;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
   line-height: 1.6;
   overflow-x: hidden;
+  overflow-y: auto;
   position: relative;
 }
 
@@ -214,10 +208,59 @@ body > main {
 }
 
 footer {
-  margin-top: 0;
-  margin-bottom: 0;
+  margin: 0 !important;
+  padding: 0 !important;
   position: relative;
   z-index: 1;
+}
+
+/* Fix Chrome mobile bottom gap - comprehensive fix */
+@media (max-width: 1023px) {
+  html {
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  body {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Ensure footer is the last element with no gap */
+  footer {
+    margin: 0 !important;
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+    width: 100%;
+    border-bottom: none !important;
+  }
+  
+  /* Ensure footer inner content has no bottom padding/margin */
+  footer > * {
+    margin-bottom: 0 !important;
+  }
+  
+  footer .max-w-7xl {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  
+  /* Remove any pseudo-elements that might create space */
+  body::after,
+  html::after,
+  footer::after {
+    display: none !important;
+    height: 0 !important;
+    content: none !important;
+  }
+  
+  /* Critical: Ensure html and body don't extend beyond viewport */
+  html, body {
+    max-height: 100vh;
+    max-height: 100dvh;
+  }
 }
 
 /* Prevent Chrome scrollbar and extra space issues */
