@@ -153,9 +153,4 @@ h1, h2, h3, h4, h5, h6 {
     scroll-snap-stop: always;
     scroll-margin-top: 65px;
   }
-  
-  /* Ensure LaunchBox section snaps correctly */
-  section#launchbox {
-    scroll-margin-top: 65px;
-  }
 }
