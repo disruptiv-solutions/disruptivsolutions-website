@@ -11,43 +11,45 @@ const Portfolio: React.FC = () => {
 
   const projects = [
     {
-      title: "LaunchBox (Current Focus)",
-      tag: "Tools + Training + Community - Launching Q1 2025",
-      description: "Building in public: A platform where non-technical people learn to build AI-powered apps.",
+      title: "LaunchBox",
+      tag: "Building in Public - Launching Q1 2025",
+      logo: "/logo-launchbox.png", // Optional: path to logo image
+      description: "A platform where non-technical people learn to build AI-powered apps.",
       details: [
+        "Tools + Training + Community",
         "Working AI tools from day one (not just tutorials)",
         "Step-by-step builds you can actually finish",
-        "Community of builders who support each other",
-        "30-day promise: First app deployed or I help you fix it"
+        "Community of builders who support each other"
       ],
       traction: "50+ early members building together",
       tech: "Multi-model AI • Firebase/Firestore • Custom tooling",
       cta: "Join the Waitlist"
     },
     {
-      title: "AI for Business Platform",
-      tag: "Enterprise SaaS - Lead Architect",
-      description: "Lead architect for multi-model AI workspace serving 1,500+ active users.",
+      title: "Real AI",
+      tag: "Enterprise AI Workspace - Lead Architect",
+      logo: "/logo-realai.png", // Optional: path to logo image
+      description: "Multi-model AI workspace serving 1,500+ active users.",
       features: [
-        "Multi-model chat (OpenAI, Anthropic, and more)",
-        "Image and video generation tools",
-        "Knowledge bases and super-prompt builder",
-        "Brand voice and content tools"
+        "Built: Multi-model chat, image/video generation, knowledge bases, super-prompt builder, brand voice tools",
+        "Multi-model AI (OpenAI, Anthropic, and more)",
+        "Image and video generation",
+        "Knowledge bases and content tools"
       ],
-      impact: "Became the centerpiece of a thriving subscription community serving 1,300+ members.",
-      tech: "Multi-model AI • Firebase • React • Custom integrations"
+      impact: "Impact: Centerpiece of thriving subscription community (1,300+ members).",
+      tech: "Multi-model AI • Firebase • React"
     },
     {
       title: "ChatterCard",
-      tag: "Engagement Tool",
-      description: "Lightweight tool connecting content to clear actions.",
-      lesson: "Simple. Focused. Built to prove a point: you don't need massive complexity to create value.",
-      details: "Sometimes the best solutions are the simplest ones. Ship fast, test with real users, iterate.",
+      tag: "Proof-of-Concept Tool",
+      logo: "/logo-chattercard.png", // Optional: path to logo image
+      description: "Lightweight engagement tool connecting content to clear actions. Simple, focused, built to prove a point.",
       tech: "Simple & Focused"
     },
     {
       title: "Disruptiv Solutions",
       tag: "Client Work & White-Label Builds",
+      logo: "/logo-disruptiv.png", // Optional: path to logo image
       description: "Where it all started—rapid AI product development and white-label builds for founders who need to ship fast.",
       learnings: [
         "How to scope projects that actually ship",
@@ -59,6 +61,7 @@ const Portfolio: React.FC = () => {
     {
       title: "PokéScan",
       tag: "Weekend Project",
+      logo: "/logo-pokescan.png", // Optional: path to logo image
       description: "Built in a few hours using Cursor AI to organize my Pokémon card collection.",
       details: "Perfect? Nope. Useful? Absolutely.",
       lesson: "Don't wait for the perfect idea. Start building things that solve problems in your actual life. The skills you develop compound.",
@@ -131,27 +134,30 @@ const Portfolio: React.FC = () => {
   const activeProject = projects[activeIndex];
 
   return (
-    <section id="work" className="min-h-screen bg-black overflow-hidden lg:relative snap-start snap-always">
-      <div className="lg:h-screen">
+    <section id="work" className="h-screen bg-black overflow-hidden lg:relative snap-start">
+      <div className="h-full">
         {/* Main Content Area */}
-        <div className="lg:flex">
-          <div className="max-w-7xl w-full mx-auto px-6 pb-20 lg:pb-0">
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_500px] gap-12 lg:h-screen lg:items-start">
+        <div className="lg:flex h-full">
+          <div className="max-w-7xl w-full mx-auto px-6 h-full">
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_500px] gap-12 h-full lg:items-start">
               {/* Left Side - Active Project Details */}
-              <div className="flex items-center justify-center min-h-[400px] lg:pl-0 lg:self-center">
+              <div className="flex flex-col items-start justify-start h-full overflow-y-auto scrollbar-hide lg:pl-0 py-8">
+                {/* Static Title Section */}
+                <div className="mb-6 max-w-2xl w-full">
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-white">
+                    Things I've Built
+                  </h2>
+                  <p className="text-gray-400 text-lg max-w-3xl">
+                    From side projects to enterprise platforms—each one taught me something for the next.
+                  </p>
+                </div>
+                
+                {/* Dynamic Project Content */}
                 <div 
-                  className={`space-y-6 max-w-2xl transition-opacity duration-500 ${
+                  className={`space-y-6 max-w-2xl w-full transition-opacity duration-500 ${
                     isTransitioning ? 'opacity-0' : 'opacity-100'
                   }`}
                 >
-                  <div className="mb-4">
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-white">
-                      Things I've Built
-                    </h2>
-                    <p className="text-gray-400 text-lg max-w-3xl">
-                      From side projects to enterprise platforms—each one taught me something for the next.
-                    </p>
-                  </div>
                   <div>
                     <span className="text-red-500 text-sm font-semibold">{activeProject.tag}</span>
                     <h3 className="text-2xl font-bold text-white mb-2 mt-1">
@@ -250,7 +256,7 @@ const Portfolio: React.FC = () => {
               {/* Right Side - Infinite Scroll Showcase (Desktop Only) */}
               <div 
                 ref={scrollContainerRef}
-                className="hidden lg:block relative h-[600px] lg:h-screen overflow-hidden px-4"
+                className="hidden lg:block relative h-full overflow-hidden px-4"
               >
                 <style jsx>{`
                   @keyframes scroll-continuous {
@@ -286,20 +292,32 @@ const Portfolio: React.FC = () => {
                         className="mb-4 px-2 transition-all duration-500"
                       >
                         <div 
-                          className={`bg-zinc-900/50 border rounded-xl p-6 backdrop-blur-sm transition-all duration-500 ${
+                          className={`bg-transparent border rounded-xl p-6 transition-all duration-500 ${
                             isActive 
                               ? 'border-red-600 opacity-100 scale-105' 
                               : 'border-gray-800 opacity-50 scale-100'
                           }`}
                         >
-                          <h3 className="text-xl font-semibold text-white mb-3">
-                            {project.title}
-                          </h3>
-                          <p className="text-gray-400 mb-4 leading-relaxed">
+                          {project.logo ? (
+                            <div className="mb-4 flex items-center justify-center">
+                              <img 
+                                src={project.logo} 
+                                alt={project.title}
+                                className="h-16 w-auto object-contain"
+                              />
+                            </div>
+                          ) : (
+                            <>
+                              <h3 className="text-xl font-semibold text-white mb-3">
+                                {project.title}
+                              </h3>
+                              <p className="text-sm text-red-500 font-medium mb-3">
+                                {project.tech?.split(' • ')[0]}
+                              </p>
+                            </>
+                          )}
+                          <p className="text-gray-400 leading-relaxed">
                             {project.description}
-                          </p>
-                          <p className="text-sm text-red-500 font-medium">
-                            {project.tech?.split(' • ')[0]}
                           </p>
                         </div>
                       </div>

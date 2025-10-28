@@ -8,11 +8,11 @@ const LaunchBox: React.FC = () => {
   const sectionRef = React.useRef<HTMLDivElement>(null);
 
   const handleWaitlist = () => {
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    // Waitlist form is already in the LaunchBox component
   };
 
   const handleClass = () => {
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    // Class invitation form is already in the LaunchBox component
   };
 
   React.useEffect(() => {
@@ -37,10 +37,9 @@ const LaunchBox: React.FC = () => {
 
   // Determine which card should be expanded based on scroll progress
   const getActiveCard = () => {
-    if (scrollProgress < 0.25) return 0;
-    if (scrollProgress < 0.5) return 1;
-    if (scrollProgress < 0.75) return 2;
-    return 3;
+    if (scrollProgress < 0.333) return 0;
+    if (scrollProgress < 0.666) return 1;
+    return 2;
   };
 
   return (
@@ -48,11 +47,11 @@ const LaunchBox: React.FC = () => {
       ref={sectionRef}
       id="launchbox"
       className="bg-black snap-start"
-      style={{ height: 'calc((100vh - 65px) * 4)' }}
+      style={{ height: 'calc(100vh * 3)' }}
     >
       {/* Sticky Container - Stays in place while cards expand/collapse */}
-      <div className="sticky top-[65px] w-full flex items-center px-6" style={{ height: 'calc(100vh - 65px)' }}>
-        <div className="max-w-7xl mx-auto w-full h-full flex items-center">
+      <div className="sticky top-0 w-full h-screen flex items-center px-6">
+        <div className="max-w-7xl mx-auto w-full h-full flex items-center pt-[65px]">
           <div className="w-full h-full rounded-2xl overflow-hidden border-2 border-red-700/60 shadow-[0_0_50px_rgba(220,38,38,0.4)]">
             <ScrollableHighlights onWaitlist={handleWaitlist} onClassInvite={handleClass} activeCard={getActiveCard()} />
           </div>
@@ -62,7 +61,7 @@ const LaunchBox: React.FC = () => {
   );
 };
 
-// Internal component with 4 equal subsections
+// Internal component with 3 equal subsections
 interface ScrollableHighlightsProps {
   onWaitlist: () => void;
   onClassInvite: () => void;
@@ -70,9 +69,6 @@ interface ScrollableHighlightsProps {
 }
 
 const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist, onClassInvite, activeCard = 0 }) => {
-  const [consultDate, setConsultDate] = React.useState('');
-  const [consultTime, setConsultTime] = React.useState('12:00');
-  const [consultLength, setConsultLength] = React.useState<'20' | '90'>('20');
   const [nlName, setNlName] = React.useState('');
   const [nlEmail, setNlEmail] = React.useState('');
   const [nlPhone, setNlPhone] = React.useState('');
@@ -177,20 +173,20 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
 
       {/* Section 3: Ian's AI Newsletter */}
       <div
-        className={`${activeCard === 2 ? 'flex-1' : 'h-28'} bg-zinc-900/40 overflow-hidden transition-all duration-700 ease-in-out cursor-pointer p-6 lg:p-10 flex items-center`}
+        className={`${activeCard === 2 ? 'flex-1 overflow-y-auto' : 'h-28'} bg-zinc-900/40 overflow-hidden transition-all duration-700 ease-in-out cursor-pointer p-4 sm:p-6 lg:p-10 flex ${activeCard === 2 ? 'items-start lg:items-center' : 'items-center'}`}
       >
         <div className="w-full max-w-7xl mx-auto">
           {activeCard === 2 ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-start lg:items-center w-full h-full">
               {/* Left: Title + Content */}
-              <div>
-                <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">Ian's AI Newsletter</h3>
-              <p className="text-gray-100/90 text-lg leading-relaxed mb-4">No fluff. Practical tips, small wins, and build-in-public notes—sent occasionally when there's something worth your time.</p>
-              <p className="text-gray-400">You can unsubscribe anytime.</p>
+              <div className="min-w-0">
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">Ian's AI Newsletter</h3>
+              <p className="text-gray-100/90 text-base sm:text-lg leading-relaxed mb-4">No fluff. Practical tips, small wins, and build-in-public notes—sent occasionally when there's something worth your time.</p>
+              <p className="text-sm sm:text-base text-gray-400">You can unsubscribe anytime.</p>
             </div>
 
             {/* Right: Form */}
-            <div className="w-full">
+            <div className="w-full min-w-0">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -199,7 +195,7 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                   const mail = `mailto:ian@ianmcdonald.me?subject=Newsletter%20Signup&body=${body}`;
                   window.location.href = mail;
                 }}
-                className="rounded-2xl border border-gray-800 bg-black/30 backdrop-blur-md px-6 py-5 space-y-3"
+                className="rounded-2xl border border-gray-800 bg-black/30 backdrop-blur-md px-4 sm:px-6 py-4 sm:py-5 space-y-3"
               >
                 <div>
                   <label className="block text-sm text-gray-400 mb-1" htmlFor="nl-name">Your name</label>
@@ -209,7 +205,7 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                     value={nlName}
                     onChange={(e) => setNlName(e.target.value)}
                     required
-                    className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
+                    className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-11 sm:h-12 px-3 sm:px-4 text-sm sm:text-base focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
                     placeholder="Jane Doe"
                   />
                 </div>
@@ -221,7 +217,7 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                     value={nlEmail}
                     onChange={(e) => setNlEmail(e.target.value)}
                     required
-                    className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
+                    className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-11 sm:h-12 px-3 sm:px-4 text-sm sm:text-base focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
                     placeholder="you@email.com"
                   />
                 </div>
@@ -232,13 +228,13 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                     type="tel"
                     value={nlPhone}
                     onChange={(e) => setNlPhone(e.target.value)}
-                    className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
+                    className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-11 sm:h-12 px-3 sm:px-4 text-sm sm:text-base focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
                     placeholder="(555) 555-5555"
                   />
                 </div>
 
-                <div className="pt-2 flex justify-end">
-                  <button type="submit" className="inline-flex items-center gap-2 h-12 px-7 bg-gradient-to-r from-red-600 to-red-700 text-white text-base font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-colors w-full sm:w-auto">
+                <div className="pt-2">
+                  <button type="submit" className="inline-flex items-center justify-center gap-2 h-11 sm:h-12 px-6 sm:px-7 bg-gradient-to-r from-red-600 to-red-700 text-white text-sm sm:text-base font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-colors w-full">
                     Subscribe
                   </button>
                 </div>
@@ -248,86 +244,6 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
           ) : (
             <div className="flex items-center justify-between">
               <h3 className="text-2xl md:text-3xl font-bold text-white">Ian's AI Newsletter</h3>
-              <span className="text-gray-400">→</span>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Section 4: Consulting With Ian */}
-      <div
-        className={`${activeCard === 3 ? 'flex-1' : 'h-28'} bg-zinc-900/30 overflow-hidden transition-all duration-700 ease-in-out cursor-pointer p-6 lg:p-10 flex items-center`}
-      >
-        <div className="w-full max-w-7xl mx-auto">
-          {activeCard === 3 ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-              <div>
-                <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Consulting With Ian</h3>
-              <div className="flex gap-3 mb-6">
-                <button 
-                  onClick={(e) => { e.stopPropagation(); setConsultLength('20'); }}
-                  className={`px-6 py-3 rounded-xl font-semibold transition-colors ${
-                    consultLength === '20' 
-                      ? 'bg-red-600 text-white' 
-                      : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                  }`}
-                >
-                  20 min - Free
-                </button>
-                <button 
-                  onClick={(e) => { e.stopPropagation(); setConsultLength('90'); }}
-                  className={`px-6 py-3 rounded-xl font-semibold transition-colors ${
-                    consultLength === '90' 
-                      ? 'bg-red-600 text-white' 
-                      : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                  }`}
-                >
-                  <span className="line-through text-gray-400 mr-2">$135</span>
-                  $89 - 90 min
-                </button>
-              </div>
-              <p className="text-gray-100/90 text-lg leading-relaxed mb-5">Book a 1:1 consult to review your AI product, unblock builds, or plan your launch.</p>
-            </div>
-            <div className="w-full">
-              <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm px-6 py-5">
-                <label className="block text-sm text-gray-400 mb-2">Choose a date</label>
-                <input
-                  type="date"
-                  value={consultDate}
-                  onChange={(e) => { e.stopPropagation(); setConsultDate(e.target.value); }}
-                  className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
-                />
-
-                <div className="mt-4">
-                  <label className="block text-sm text-gray-400 mb-2">Choose time (EST)</label>
-                  <input
-                    type="time"
-                    value={consultTime}
-                    step={900}
-                    onChange={(e) => { e.stopPropagation(); setConsultTime(e.target.value); }}
-                    className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
-                  />
-                </div>
-
-                <div className="mt-5 flex justify-center">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      const body = `I'd like to book a ${consultLength === '20' ? '20 minute (free)' : '90 minute ($89)'} consult on ${consultDate || '[date]'} at ${consultTime} EST.`;
-                      const mail = `mailto:ian@ianmcdonald.me?subject=Consulting%20Request&body=${encodeURIComponent(body)}`;
-                      window.location.href = mail;
-                    }}
-                    className="inline-flex items-center gap-2 h-12 px-7 bg-gradient-to-r from-red-600 to-red-700 text-white text-base font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-colors"
-                  >
-                    Request Session
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          ) : (
-            <div className="flex items-center justify-between">
-              <h3 className="text-2xl md:text-3xl font-bold text-white">Consulting With Ian</h3>
               <span className="text-gray-400">→</span>
             </div>
           )}

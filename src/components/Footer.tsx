@@ -34,9 +34,6 @@ const Footer: React.FC = () => {
             <a href="#launchbox" className="hover:text-white transition-colors">
               LaunchBox
             </a>
-            <a href="#contact" className="hover:text-white transition-colors">
-              Contact
-            </a>
           </div>
 
           {/* Contact Info */}

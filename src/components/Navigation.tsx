@@ -14,7 +14,6 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
     { name: 'About', href: '#mystory' },
     { name: 'Work', href: '#work' },
     { name: 'LaunchBox', href: '#launchbox' },
-    { name: 'Contact', href: '#contact' },
   ];
 
   const handleNavClick = (href: string) => {

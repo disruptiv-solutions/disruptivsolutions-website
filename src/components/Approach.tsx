@@ -7,7 +7,7 @@ const Approach: React.FC = () => {
   return (
     <section 
       id="approach"
-      className="min-h-screen flex items-center justify-center bg-black snap-start snap-always"
+      className="min-h-screen flex items-center justify-center bg-black snap-start"
     >
       <div className="max-w-4xl mx-auto px-6 py-20 w-full">
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-10">
@@ -39,7 +39,7 @@ const Approach: React.FC = () => {
           <div>
             <h3 className="text-2xl font-bold text-white mb-4">Learn in Public</h3>
             <p className="text-gray-300 text-lg leading-relaxed">
-              From Disruptiv Solutions to ChatterCard to the AI for Business platform to LaunchBox—every project taught me something I used in the next one. Share your journey. Help others avoid your mistakes.
+              From Disruptiv Solutions to ChatterCard to the Real AI platform to LaunchBox—every project taught me something I used in the next one. Share your journey. Help others avoid your mistakes.
             </p>
           </div>
         </div>

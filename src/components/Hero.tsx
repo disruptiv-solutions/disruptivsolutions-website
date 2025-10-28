@@ -1,17 +1,58 @@
 'use client';
 
 /* eslint-disable react/no-unescaped-entities */
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import RotatingText from './RotatingText';
 
 const Hero: React.FC = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const sectionRef = useRef<HTMLElement>(null) as React.RefObject<HTMLElement>;
+  const hasPlayedRef = useRef(false);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const video = videoRef.current;
+    
+    if (!section || !video) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          // When hero section is fully/significantly visible (snapped into view)
+          if (entry.isIntersecting && entry.intersectionRatio > 0.7) {
+            // Only play if we haven't played yet for this entry
+            if (!hasPlayedRef.current) {
+              video.currentTime = 0;
+              video.play().catch((error) => {
+                console.warn('Video autoplay failed:', error);
+              });
+              hasPlayedRef.current = true;
+            }
+          } else if (!entry.isIntersecting || entry.intersectionRatio < 0.3) {
+            // Reset flag when section is no longer visible
+            hasPlayedRef.current = false;
+          }
+        });
+      },
+      {
+        threshold: [0, 0.3, 0.7, 1],
+        rootMargin: '0px'
+      }
+    );
+
+    observer.observe(section);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center bg-black snap-start snap-always" style={{ overflow: 'hidden' }}>
+    <section ref={sectionRef} id="hero" className="relative min-h-screen flex items-center justify-center bg-black snap-start" style={{ overflow: 'hidden' }}>
       {/* Video Background */}
       <div className="absolute inset-0 w-full h-full" style={{ minHeight: '100vh' }}>
         <video
-          autoPlay
+          ref={videoRef}
           muted
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
@@ -28,31 +69,70 @@ const Hero: React.FC = () => {
         {/* Content aligned to the right */}
         <div className="space-y-8 lg:text-right max-w-2xl lg:mr-12">
             {/* Main Headline */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
-              You Don&apos;t Need a CS Degree
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
+              Ian McDonald
               <br />
-              <RotatingText 
-                texts={['to Build Real Apps', 'to Start Shipping', 'to Create Value', 'to Build Your Dream']}
-                mainClassName="inline-block px-2 sm:px-2 md:px-3 bg-gradient-to-r from-red-600 to-red-700 text-white overflow-hidden py-0.5 sm:py-1 md:py-2 rounded-lg"
-                staggerFrom={"last"}
-                initial={{ y: "100%" }}
-                animate={{ y: 0 }}
-                exit={{ y: "-120%" }}
-                staggerDuration={0.025}
-                splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
-                transition={{ type: "spring", damping: 30, stiffness: 400 }}
-                rotationInterval={2000}
-              />
+              <span className="text-3xl md:text-4xl lg:text-5xl font-normal text-gray-300">
+                AI App Entrepreneur & Builder
+              </span>
             </h1>
 
             {/* Subheadline */}
-            <p className="text-xl md:text-2xl text-gray-300 max-w-2xl leading-relaxed">
-              You just need to start messy and build something today.
+            <p className="text-xl md:text-2xl text-gray-300 max-w-2xl leading-relaxed mb-8">
+              I teach non-technical people to build AI apps that actually work.
               <br /><br />
-              I went from barely making rent to building an AI platform with 1,500+ active users—not because I&apos;m special, but because I stopped waiting for permission.
+              From side hustles to enterprise platforms with 1,500+ users—I build in public and show others how to do the same.
               <br /><br />
-              Now I teach others to do the same.
+              <span className="text-white font-semibold">Currently building: LaunchBox</span>
             </p>
+
+            {/* CTAs */}
+            <div className="hidden lg:flex flex-col sm:flex-row gap-4">
+              <button
+                onClick={() => {
+                  const launchbox = document.getElementById('launchbox');
+                  if (launchbox) {
+                    const rect = launchbox.getBoundingClientRect();
+                    const scrollPosition = window.scrollY + rect.top;
+                    // Scroll to start of LaunchBox section (card 0)
+                    window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
+                  }
+                }}
+                className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50"
+              >
+                Join LaunchBox Waitlist
+              </button>
+              <button
+                onClick={() => {
+                  const launchbox = document.getElementById('launchbox');
+                  if (launchbox) {
+                    const rect = launchbox.getBoundingClientRect();
+                    const sectionHeight = window.innerHeight * 3;
+                    const scrollPosition = window.scrollY + rect.top + (sectionHeight / 3);
+                    // Scroll to 1/3 through LaunchBox section (card 1 - Free Class)
+                    window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
+                  }
+                }}
+                className="px-8 py-4 border-2 border-gray-300 text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-300"
+              >
+                Free Class
+              </button>
+              <button
+                onClick={() => {
+                  const launchbox = document.getElementById('launchbox');
+                  if (launchbox) {
+                    const rect = launchbox.getBoundingClientRect();
+                    const sectionHeight = window.innerHeight * 3;
+                    const scrollPosition = window.scrollY + rect.top + (sectionHeight * 2 / 3);
+                    // Scroll to 2/3 through LaunchBox section (card 2 - Newsletter)
+                    window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
+                  }
+                }}
+                className="px-8 py-4 border-2 border-gray-300 text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-300"
+              >
+                Join My Newsletter
+              </button>
+            </div>
 
         </div>
       </div>
