@@ -142,18 +142,26 @@ h1, h2, h3, h4, h5, h6 {
     scroll-snap-stop: always;
     -webkit-overflow-scrolling: touch;
   }
-  
+
   body {
     overscroll-behavior-y: contain;
     touch-action: pan-y;
   }
-  
+
   section[class*="snap-start"] {
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
-  
+
   section#who-this-is-for {
+    scroll-margin-top: 0;
+  }
+
+  section#consulting {
+    scroll-margin-top: -65px;
+  }
+
+  section#launchbox {
     scroll-margin-top: 0;
   }
 }
