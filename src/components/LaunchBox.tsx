@@ -54,7 +54,7 @@ const LaunchBox: React.FC = () => {
       {/* Sticky Container - Stays in place while cards expand/collapse */}
       <div className="sticky w-full flex items-center px-6" style={{ height: 'calc(100vh - 65px)', top: '65px' }}>
         <div className="max-w-7xl mx-auto w-full h-full flex items-center">
-          <div className="w-full h-full rounded-2xl overflow-hidden border-2 border-red-700/60 shadow-[0_0_50px_rgba(220,38,38,0.4)]">
+          <div className="w-full h-full rounded-2xl overflow-hidden border-2 border-red-700/60 shadow-[0_0_50px_rgba(220,38,38,0.4)] flex flex-col">
             <ScrollableHighlights onWaitlist={handleWaitlist} onClassInvite={handleClass} activeCard={getActiveCard()} />
           </div>
         </div>
@@ -175,11 +175,11 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
 
       {/* Section 3: Ian's AI Newsletter */}
       <div
-        className={`${activeCard === 2 ? 'flex-1 overflow-y-auto' : 'h-28'} bg-zinc-900/40 overflow-hidden transition-all duration-700 ease-in-out cursor-pointer p-4 sm:p-6 lg:p-10 flex ${activeCard === 2 ? 'items-start lg:items-center' : 'items-center'}`}
+        className={`${activeCard === 2 ? 'flex-1 overflow-y-auto' : 'h-28'} bg-zinc-900/40 overflow-hidden transition-all duration-700 ease-in-out cursor-pointer p-4 sm:p-6 lg:p-10 flex ${activeCard === 2 ? 'items-start lg:items-center' : 'items-center'} ${activeCard === 2 ? 'min-h-0' : ''}`}
       >
         <div className="w-full max-w-7xl mx-auto">
           {activeCard === 2 ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-start lg:items-center w-full h-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-start lg:items-center w-full h-full min-h-0">
               {/* Left: Title + Content */}
               <div className="min-w-0">
                 <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">Ian's AI Newsletter</h3>

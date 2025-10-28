@@ -163,11 +163,20 @@ h1, h2, h3, h4, h5, h6 {
 
   section#launchbox {
     scroll-margin-top: 0;
+    scroll-margin-bottom: 0;
     scroll-snap-stop: always;
   }
   
   /* Prevent too much momentum scrolling in LaunchBox */
   section#launchbox .sticky {
     overscroll-behavior-y: contain;
+  }
+  
+  /* Ensure LaunchBox sticky container fits within viewport on mobile */
+  @media (max-width: 1023px) {
+    section#launchbox .sticky {
+      max-height: calc(100vh - 65px);
+      overflow: hidden;
+    }
   }
 }
