@@ -115,7 +115,10 @@ const ImageSection: React.FC<ImageSectionProps> = ({
       ref={sectionRef}
       id="image-section"
       className="bg-black snap-start relative"
-      style={{ height: 'calc((100vh - 65px) * 4)' }}
+      style={{ 
+        height: 'calc((100vh - 65px) * 4)',
+        minHeight: '100vh'
+      }}
     >
       <div className="sticky top-0 w-full h-screen relative">
         {/* Light Rays Background */}

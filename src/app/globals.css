@@ -148,6 +148,20 @@ h1, h2, h3, h4, h5, h6 {
     touch-action: pan-y;
   }
   
+  /* Ensure major sections snap properly */
+  section[id="hero"],
+  section[id="who-this-is-for"],
+  section[id="image-section"],
+  section[id="consulting"],
+  section[id="launchbox"],
+  section[id="work"] {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    scroll-margin-top: 65px;
+    min-height: 100vh;
+  }
+  
+  /* Other snap points */
   section[class*="snap-start"] {
     scroll-snap-align: start;
     scroll-snap-stop: always;
