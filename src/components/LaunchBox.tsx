@@ -50,7 +50,7 @@ const LaunchBox: React.FC = () => {
       style={{ height: 'calc(100vh * 3)' }}
     >
       {/* Sticky Container - Stays in place while cards expand/collapse */}
-      <div className="sticky w-full flex items-center px-6" style={{ height: 'calc(100vh - 65px)', top: '65px' }}>
+      <div className="sticky w-full flex items-center px-6" style={{ height: 'calc(100vh - 65px)', top: 0 }}>
         <div className="max-w-7xl mx-auto w-full h-full flex items-center">
           <div className="w-full h-full rounded-2xl overflow-hidden border-2 border-red-700/60 shadow-[0_0_50px_rgba(220,38,38,0.4)]">
             <ScrollableHighlights onWaitlist={handleWaitlist} onClassInvite={handleClass} activeCard={getActiveCard()} />
