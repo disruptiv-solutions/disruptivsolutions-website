@@ -4,6 +4,8 @@
 import React from 'react';
 
 const Consulting: React.FC = () => {
+  const [consultName, setConsultName] = React.useState('');
+  const [consultEmail, setConsultEmail] = React.useState('');
   const [consultDate, setConsultDate] = React.useState('');
   const [consultTime, setConsultTime] = React.useState('12:00');
   const [consultLength, setConsultLength] = React.useState<'20' | '90'>('20');
@@ -71,11 +73,34 @@ const Consulting: React.FC = () => {
                   </h2>
                   <div className="rounded-2xl border border-red-600/20 bg-gradient-to-br from-zinc-900/50 to-black/50 backdrop-blur-sm px-4 sm:px-6 py-6 shadow-xl space-y-4">
                     <div>
+                      <label className="block text-sm text-gray-400 mb-2">Your name</label>
+                      <input
+                        type="text"
+                        value={consultName}
+                        onChange={(e) => setConsultName(e.target.value)}
+                        required
+                        className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
+                        placeholder="Jane Doe"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm text-gray-400 mb-2">Your email</label>
+                      <input
+                        type="email"
+                        value={consultEmail}
+                        onChange={(e) => setConsultEmail(e.target.value)}
+                        required
+                        className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
+                        placeholder="you@email.com"
+                      />
+                    </div>
+                    <div>
                       <label className="block text-sm text-gray-400 mb-2">Choose a date</label>
                       <input
                         type="date"
                         value={consultDate}
                         onChange={(e) => setConsultDate(e.target.value)}
+                        required
                         className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
                       />
                     </div>
@@ -86,6 +111,7 @@ const Consulting: React.FC = () => {
                         value={consultTime}
                         step={900}
                         onChange={(e) => setConsultTime(e.target.value)}
+                        required
                         className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
                       />
                     </div>
@@ -98,7 +124,11 @@ const Consulting: React.FC = () => {
                       </button>
                       <button
                         onClick={() => {
-                          const body = `I'd like to book a ${consultLength === '20' ? '20 minute (free)' : '90 minute ($89)'} consult on ${consultDate || '[date]'} at ${consultTime} EST.`;
+                          if (!consultName || !consultEmail || !consultDate || !consultTime) {
+                            alert('Please fill in all required fields');
+                            return;
+                          }
+                          const body = `Consulting Request%0A%0AName: ${consultName}%0AEmail: ${consultEmail}%0A%0AI'd like to book a ${consultLength === '20' ? '20 minute (free)' : '90 minute ($89)'} consult on ${consultDate} at ${consultTime} EST.`;
                           const mail = `mailto:ian@ianmcdonald.me?subject=Consulting%20Request&body=${encodeURIComponent(body)}`;
                           window.location.href = mail;
                         }}
@@ -124,30 +154,58 @@ const Consulting: React.FC = () => {
               )}
               {/* Desktop form */}
               <div className="hidden lg:block">
-                <div className="rounded-2xl border border-red-600/20 bg-gradient-to-br from-zinc-900/50 to-black/50 backdrop-blur-sm px-6 py-6 shadow-xl">
-                  <label className="block text-sm text-gray-400 mb-2">Choose a date</label>
-                  <input
-                    type="date"
-                    value={consultDate}
-                    onChange={(e) => setConsultDate(e.target.value)}
-                    className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600 mb-4"
-                  />
-
-                  <div className="mt-4">
+                <div className="rounded-2xl border border-red-600/20 bg-gradient-to-br from-zinc-900/50 to-black/50 backdrop-blur-sm px-6 py-6 shadow-xl space-y-4">
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-2">Your name</label>
+                    <input
+                      type="text"
+                      value={consultName}
+                      onChange={(e) => setConsultName(e.target.value)}
+                      required
+                      className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
+                      placeholder="Jane Doe"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-2">Your email</label>
+                    <input
+                      type="email"
+                      value={consultEmail}
+                      onChange={(e) => setConsultEmail(e.target.value)}
+                      required
+                      className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
+                      placeholder="you@email.com"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-2">Choose a date</label>
+                    <input
+                      type="date"
+                      value={consultDate}
+                      onChange={(e) => setConsultDate(e.target.value)}
+                      required
+                      className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
+                    />
+                  </div>
+                  <div>
                     <label className="block text-sm text-gray-400 mb-2">Choose time (EST)</label>
                     <input
                       type="time"
                       value={consultTime}
                       step={900}
                       onChange={(e) => setConsultTime(e.target.value)}
+                      required
                       className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
                     />
                   </div>
-
-                  <div className="mt-6 flex justify-center">
+                  <div className="pt-2 flex justify-center">
                     <button
                       onClick={() => {
-                        const body = `I'd like to book a ${consultLength === '20' ? '20 minute (free)' : '90 minute ($89)'} consult on ${consultDate || '[date]'} at ${consultTime} EST.`;
+                        if (!consultName || !consultEmail || !consultDate || !consultTime) {
+                          alert('Please fill in all required fields');
+                          return;
+                        }
+                        const body = `Consulting Request%0A%0AName: ${consultName}%0AEmail: ${consultEmail}%0A%0AI'd like to book a ${consultLength === '20' ? '20 minute (free)' : '90 minute ($89)'} consult on ${consultDate} at ${consultTime} EST.`;
                         const mail = `mailto:ian@ianmcdonald.me?subject=Consulting%20Request&body=${encodeURIComponent(body)}`;
                         window.location.href = mail;
                       }}
