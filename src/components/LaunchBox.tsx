@@ -36,10 +36,11 @@ const LaunchBox: React.FC = () => {
   }, []);
 
   // Determine which card should be expanded based on scroll progress
+  // Use wider thresholds to hold each card expanded longer, requiring more scroll
   const getActiveCard = () => {
-    if (scrollProgress < 0.333) return 0;
-    if (scrollProgress < 0.666) return 1;
-    return 2;
+    if (scrollProgress < 0.4) return 0;  // First 40% = card 0 (hold)
+    if (scrollProgress < 0.7) return 1;  // Next 30% = card 1 (hold)
+    return 2; // Final 30% = card 2 (hold)
   };
 
   return (
@@ -48,6 +49,7 @@ const LaunchBox: React.FC = () => {
       id="launchbox"
       className="bg-black snap-start"
       style={{ height: 'calc(100vh * 3)' }}
+      data-snap-section
     >
       {/* Sticky Container - Stays in place while cards expand/collapse */}
       <div className="sticky w-full flex items-center px-6" style={{ height: 'calc(100vh - 65px)', top: '65px' }}>
