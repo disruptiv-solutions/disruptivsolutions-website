@@ -23,8 +23,6 @@ html {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
-  overflow-y: auto;
   overflow-x: hidden;
 }
 
@@ -32,13 +30,11 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
   line-height: 1.6;
   overflow-x: hidden;
-  overflow-y: auto;
   position: relative;
 }
 
@@ -217,15 +213,30 @@ footer {
 /* Fix Chrome mobile bottom gap - comprehensive fix */
 @media (max-width: 1023px) {
   html {
-    height: 100%;
+    height: 100vh;
+    height: 100dvh;
     overflow: hidden;
+    position: fixed;
+    width: 100%;
   }
   
   body {
-    height: 100%;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body > main {
+    height: 100vh;
+    height: 100dvh;
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    position: relative;
   }
   
   /* Ensure footer is the last element with no gap */
@@ -237,16 +248,6 @@ footer {
     border-bottom: none !important;
   }
   
-  /* Ensure footer inner content has no bottom padding/margin */
-  footer > * {
-    margin-bottom: 0 !important;
-  }
-  
-  footer .max-w-7xl {
-    padding-bottom: 0 !important;
-    margin-bottom: 0 !important;
-  }
-  
   /* Remove any pseudo-elements that might create space */
   body::after,
   html::after,
@@ -256,10 +257,10 @@ footer {
     content: none !important;
   }
   
-  /* Critical: Ensure html and body don't extend beyond viewport */
-  html, body {
-    max-height: 100vh;
-    max-height: 100dvh;
+  /* Ensure no section or element creates bottom space */
+  section:last-of-type {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
   }
 }
 
