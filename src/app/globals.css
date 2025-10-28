@@ -255,12 +255,26 @@ footer {
   footer {
     margin: 0 !important;
     padding-top: 2rem !important;
-    padding-bottom: 2rem !important;
+    padding-bottom: calc(2rem + max(env(safe-area-inset-bottom, 0px), 60px)) !important;
     width: 100%;
     background: black !important;
     position: relative;
-    /* Add extra padding to account for potential gap */
     margin-bottom: 0 !important;
+    /* Extend footer background to cover any gap */
+    box-shadow: 0 -100px 0 0 black;
+  }
+  
+  /* Alternative: Make footer stick to bottom if gap still appears */
+  footer::before {
+    content: '';
+    position: absolute;
+    bottom: -100px;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: black;
+    z-index: -1;
+    pointer-events: none;
   }
   
   /* Remove any pseudo-elements */
