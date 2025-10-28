@@ -14,10 +14,11 @@ const Consulting: React.FC = () => {
   return (
     <section 
       id="consulting"
-      className="bg-black snap-start pt-[65px] pb-20 lg:py-0 min-h-screen"
+      className="bg-black snap-start min-h-screen"
+      style={{ height: '100vh', paddingTop: '65px' }}
     >
-      <div className="max-w-7xl mx-auto px-6 w-full lg:h-[calc(100vh-65px)]">
-        <div className="lg:h-full flex items-center pt-0 lg:pt-0">
+      <div className="max-w-7xl mx-auto px-6 w-full h-full lg:h-[calc(100vh-65px)]">
+        <div className="h-full flex items-center justify-center lg:items-center pt-0 lg:pt-0">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
             {/* Left: Content or Form based on state */}
             <div className="space-y-6">
