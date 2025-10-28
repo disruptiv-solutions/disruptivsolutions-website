@@ -7,10 +7,10 @@ const WhoThisIsFor: React.FC = () => {
   return (
     <section 
       id="who-this-is-for"
-      className="bg-black snap-start py-20 lg:py-0 min-h-screen"
+      className="bg-black snap-start pt-[65px] pb-20 lg:py-0 min-h-screen"
     >
       <div className="max-w-7xl mx-auto px-6 w-full lg:h-[calc(100vh-65px)]">
-        <div className="lg:h-full flex items-center pt-16 lg:pt-20">
+        <div className="lg:h-full flex items-center pt-0 lg:pt-20">
           <div className="grid grid-cols-1 lg:grid-cols-[2fr_1px_1fr] gap-12 items-center w-full h-full">
             {/* Left: Who This Is For - Static */}
             <div className="lg:pr-8 flex flex-col justify-center space-y-6">
