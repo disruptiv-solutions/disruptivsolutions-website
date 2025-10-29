@@ -4,6 +4,16 @@
 import React from 'react';
 
 const Consulting: React.FC = () => {
+  const [selectedSession, setSelectedSession] = React.useState<'20' | '90'>('20');
+
+  const handleBook = () => {
+    if (selectedSession === '20') {
+      window.open('https://calendar.app.google/koPerS8JKfqi5HGE8', '_blank', 'noopener,noreferrer');
+    } else {
+      window.open('https://calendar.app.google/hJsP5Jz11pHsPGhh9', '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
     <section 
       id="consulting"
@@ -17,24 +27,37 @@ const Consulting: React.FC = () => {
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
                 Consulting With Ian
               </h2>
-              <div className="flex flex-col sm:flex-row gap-3 mb-8">
-                <a
-                  href="https://calendar.app.google/koPerS8JKfqi5HGE8"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 px-4 sm:px-6 py-3 rounded-xl font-semibold transition-all duration-300 text-sm sm:text-base text-center bg-red-600 text-white shadow-lg shadow-red-600/50 hover:bg-red-700"
+              <div className="flex flex-col sm:flex-row gap-3 mb-6">
+                <button
+                  type="button"
+                  onClick={() => setSelectedSession('20')}
+                  className={`flex-1 px-4 sm:px-6 py-3 rounded-xl font-semibold transition-all duration-300 text-sm sm:text-base text-center ${
+                    selectedSession === '20'
+                      ? 'bg-red-600 text-white shadow-lg shadow-red-600/50'
+                      : 'bg-white/10 text-gray-300 hover:bg-white/20 border border-white/5'
+                  }`}
                 >
                   20 min - Free
-                </a>
-                <a
-                  href="https://calendar.app.google/hJsP5Jz11pHsPGhh9"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 px-4 sm:px-6 py-3 rounded-xl font-semibold transition-all duration-300 text-sm sm:text-base text-center bg-white/10 text-gray-300 hover:bg-white/20 border border-white/5"
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedSession('90')}
+                  className={`flex-1 px-4 sm:px-6 py-3 rounded-xl font-semibold transition-all duration-300 text-sm sm:text-base text-center ${
+                    selectedSession === '90'
+                      ? 'bg-red-600 text-white shadow-lg shadow-red-600/50'
+                      : 'bg-white/10 text-gray-300 hover:bg-white/20 border border-white/5'
+                  }`}
                 >
                   $89 - 90 min
-                </a>
+                </button>
               </div>
+              <button
+                type="button"
+                onClick={handleBook}
+                className="w-full px-6 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white text-base sm:text-lg font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50 mb-6"
+              >
+                Book Session
+              </button>
               <p className="text-gray-100/90 text-lg leading-relaxed mb-6">
                 Book a 1:1 consult to review your AI product, unblock builds, or plan your launch.
               </p>
