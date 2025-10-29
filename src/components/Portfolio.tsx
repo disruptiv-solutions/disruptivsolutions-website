@@ -108,15 +108,15 @@ const Portfolio: React.FC = () => {
         setTimeout(() => {
           setActiveIndex(closestIndex);
           setIsTransitioning(false);
-        }, 300);
+        }, 400);
       }
     };
 
-    const interval = setInterval(detectCenterCard, 150);
+    const interval = setInterval(detectCenterCard, 300);
     return () => clearInterval(interval);
   }, [activeIndex, projects.length]);
 
-  // Auto-cycle through projects on mobile every 3 seconds
+  // Auto-cycle through projects on mobile every 5 seconds
   useEffect(() => {
     if (typeof window !== 'undefined' && window.innerWidth >= 1024) return;
 
@@ -125,8 +125,8 @@ const Portfolio: React.FC = () => {
       setTimeout(() => {
           setActiveIndex((prevIndex) => (prevIndex + 1) % projects.length);
           setIsTransitioning(false);
-      }, 300);
-    }, 3000);
+      }, 400);
+    }, 5000);
     
     return () => clearInterval(interval);
   }, [activeIndex, projects.length]);
@@ -154,7 +154,7 @@ const Portfolio: React.FC = () => {
                 
                 {/* Dynamic Project Content */}
                 <div 
-                  className={`space-y-6 max-w-2xl w-full transition-opacity duration-500 ${
+                  className={`space-y-6 max-w-2xl w-full transition-opacity duration-700 ${
                     isTransitioning ? 'opacity-0' : 'opacity-100'
                   }`}
                 >
@@ -269,7 +269,7 @@ const Portfolio: React.FC = () => {
                   }
 
                   .scroll-animation {
-                    animation: scroll-continuous 30s linear infinite;
+                    animation: scroll-continuous 50s linear infinite;
                   }
 
                   .scroll-animation:hover {
@@ -289,10 +289,10 @@ const Portfolio: React.FC = () => {
                         ref={(el) => {
                           cardsRef.current[index] = el;
                         }}
-                        className="mb-4 px-2 transition-all duration-500"
+                        className="mb-4 px-2 transition-all duration-700"
                       >
                         <div 
-                          className={`bg-transparent border rounded-xl p-6 transition-all duration-500 ${
+                          className={`bg-transparent border rounded-xl p-6 transition-all duration-700 ${
                             isActive 
                               ? 'border-red-600 opacity-100 scale-105' 
                               : 'border-gray-800 opacity-50 scale-100'
