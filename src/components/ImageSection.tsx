@@ -37,11 +37,13 @@ const ImageSection: React.FC<ImageSectionProps> = ({
   const [scrollProgress, setScrollProgress] = useState(0);
   const [sectionHeight, setSectionHeight] = useState(800); // Safe default for SSR
   const [tilt, setTilt] = useState({ x: -5, y: 8 }); // Default tilt for 3D effect
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // Set the actual section height on client mount
+    // Set the actual section height on client mount and detect mobile
     if (typeof window !== 'undefined') {
       setSectionHeight(window.innerHeight - 65);
+      setIsMobile(window.innerWidth < 1024);
     }
 
     const handleScroll = () => {
@@ -59,6 +61,7 @@ const ImageSection: React.FC<ImageSectionProps> = ({
     const handleResize = () => {
       if (typeof window !== 'undefined') {
         setSectionHeight(window.innerHeight - 65);
+        setIsMobile(window.innerWidth < 1024);
       }
     };
 
@@ -124,8 +127,8 @@ const ImageSection: React.FC<ImageSectionProps> = ({
             raysOrigin="top-center"
             raysColor="#ef4444"
             raysSpeed={1.5}
-            lightSpread={0.6}
-            rayLength={1.5}
+            lightSpread={isMobile ? 0.4 : 0.6}
+            rayLength={isMobile ? 2.5 : 1.5}
             followMouse={true}
             mouseInfluence={0.1}
             noiseAmount={0.1}
