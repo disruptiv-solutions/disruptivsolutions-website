@@ -209,7 +209,7 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                     <svg className="w-5 h-5 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                   </div>
                   <div>
-                    <p className="text-white font-medium">Monday, Nov 13</p>
+                    <p className="text-white font-medium">Thursday, Nov 13</p>
                     <p className="text-sm text-gray-400">12:00 PM EST</p>
                   </div>
                 </div>
@@ -218,7 +218,7 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                     <svg className="w-5 h-5 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                   </div>
                   <div>
-                    <p className="text-white font-medium">Saturday, Nov 18</p>
+                    <p className="text-white font-medium">Saturday, Nov 15</p>
                     <p className="text-sm text-gray-400">12:00 PM EST</p>
                   </div>
                 </div>
