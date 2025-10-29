@@ -130,6 +130,9 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
   const [nlName, setNlName] = React.useState('');
   const [nlEmail, setNlEmail] = React.useState('');
   const [nlPhone, setNlPhone] = React.useState('');
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [submitSuccess, setSubmitSuccess] = React.useState(false);
+  const [submitError, setSubmitError] = React.useState<string | null>(null);
   const [rocketFrame, setRocketFrame] = React.useState<0 | 1>(0);
   // Toggle rocket frame continuously (only between rocket and rocket2, box stays static)
   React.useEffect(() => {
