@@ -9,7 +9,8 @@ const LaunchBox: React.FC = () => {
   const lastProgressRef = React.useRef(0);
 
   const handleWaitlist = () => {
-    // Waitlist form is already in the LaunchBox component
+    // Navigate to waitlist signup page
+    window.location.href = '/waitlist';
   };
 
   const handleClass = () => {

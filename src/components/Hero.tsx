@@ -88,13 +88,7 @@ const Hero: React.FC = () => {
             <div className="hidden lg:flex flex-col sm:flex-row gap-4">
               <button
                 onClick={() => {
-                  const launchbox = document.getElementById('launchbox');
-                  if (launchbox) {
-                    const rect = launchbox.getBoundingClientRect();
-                    const scrollPosition = window.scrollY + rect.top;
-                    // Scroll to start of LaunchBox section (card 0)
-                    window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
-                  }
+                  window.location.href = '/waitlist';
                 }}
                 className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50"
               >
