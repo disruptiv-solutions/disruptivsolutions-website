@@ -30,7 +30,7 @@ const LaunchBoxWaitlist: React.FC = () => {
     };
 
     try {
-      const response = await fetch('/api/newsletter-signup', {
+      const response = await fetch('/api/waitlist-signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
