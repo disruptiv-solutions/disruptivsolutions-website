@@ -138,7 +138,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Mobile scroll snap - less sensitive with stop at each section */
 @media (max-width: 1023px) {
   html {
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: y proximity;
     scroll-snap-stop: always;
     -webkit-overflow-scrolling: touch;
   }
@@ -180,9 +180,9 @@ h1, h2, h3, h4, h5, h6 {
     }
   }
   
-  /* Portfolio section: disable snap on mobile to allow footer access */
+  /* Portfolio section: use proximity snap on mobile to allow footer access */
   section#work {
     scroll-snap-stop: normal;
-    scroll-snap-align: none;
+    scroll-snap-align: start;
   }
 }
