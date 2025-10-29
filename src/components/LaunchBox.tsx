@@ -13,7 +13,8 @@ const LaunchBox: React.FC = () => {
   };
 
   const handleClass = () => {
-    // Class invitation form is already in the LaunchBox component
+    // Navigate to free class signup page
+    window.location.href = '/free-class';
   };
 
   React.useEffect(() => {
