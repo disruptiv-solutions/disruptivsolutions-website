@@ -38,7 +38,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth snap-y overscroll-y-contain" style={{ scrollPaddingTop: '65px' }}>
-      <head>
+      <body
+        className={`${inter.variable} ${rosario.variable} antialiased bg-black text-white`}
+      >
         {/* Google tag (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-F7F28TQPBP"
@@ -52,10 +54,6 @@ export default function RootLayout({
             gtag('config', 'G-F7F28TQPBP');
           `}
         </Script>
-      </head>
-      <body
-        className={`${inter.variable} ${rosario.variable} antialiased bg-black text-white`}
-      >
         <NavigationWrapper />
         <main className="relative">
           {children}
