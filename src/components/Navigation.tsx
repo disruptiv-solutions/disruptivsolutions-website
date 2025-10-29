@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 
 interface NavigationProps {
   activeSection?: string;
@@ -8,6 +9,8 @@ interface NavigationProps {
 
 const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
   const navigationItems = [
     { name: 'Home', href: '#hero' },
@@ -20,17 +23,39 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
   const handleNavClick = (href: string) => {
     if (href.startsWith('#')) {
       const targetId = href.substring(1);
-      const targetElement = document.getElementById(targetId);
       
-      if (targetElement) {
-        const headerOffset = 80; // Height of fixed header
-        const elementPosition = targetElement.offsetTop;
-        const offsetPosition = targetId === 'hero' ? 0 : elementPosition - headerOffset;
+      // If not on root page, navigate to root with hash, then scroll
+      if (pathname !== '/') {
+        // Navigate to root page with hash
+        router.push(`/#${targetId}`);
+        
+        // Wait for navigation, then scroll to section
+        setTimeout(() => {
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            const headerOffset = 80; // Height of fixed header
+            const elementPosition = targetElement.offsetTop;
+            const offsetPosition = targetId === 'hero' ? 0 : elementPosition - headerOffset;
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }, 100);
+      } else {
+        // Already on root page, just scroll to section
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          const headerOffset = 80; // Height of fixed header
+          const elementPosition = targetElement.offsetTop;
+          const offsetPosition = targetId === 'hero' ? 0 : elementPosition - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
       }
     }
     
