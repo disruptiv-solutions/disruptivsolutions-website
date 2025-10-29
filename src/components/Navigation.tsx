@@ -73,7 +73,10 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
         <div className="max-w-7xl mx-auto px-6 h-full">
           <div className="flex items-center justify-between h-full">
             {/* Logo with Image */}
-            <div className="flex items-center gap-3">
+            <button
+              onClick={() => handleNavClick('#hero')}
+              className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer"
+            >
               <img 
                 src="/DS-Logo.svg" 
                 alt="Ian McDonald" 
@@ -82,7 +85,7 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
               <span className="text-xl font-bold text-white">
                 Ian <span className="text-gray-400 font-normal">McDonald</span>
               </span>
-            </div>
+            </button>
 
             {/* Navigation Links - Desktop */}
             <nav className="hidden md:flex items-center space-x-8">
@@ -147,7 +150,12 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
             <div className="flex flex-col h-full">
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-800">
-                <div className="flex items-center gap-3">
+                <button
+                  onClick={() => {
+                    handleNavClick('#hero');
+                  }}
+                  className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer"
+                >
                   <img 
                     src="/DS-Logo.svg" 
                     alt="Ian McDonald" 
@@ -156,7 +164,7 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
                   <span className="text-lg font-bold text-white">
                     Ian <span className="text-gray-400 font-normal">McDonald</span>
                   </span>
-                </div>
+                </button>
                 <button 
                   onClick={toggleMobileMenu}
                   className="text-gray-300 hover:text-white transition-colors p-2"
