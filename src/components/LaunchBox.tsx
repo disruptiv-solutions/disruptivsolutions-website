@@ -141,18 +141,19 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
     <div className="h-full flex flex-col">
       {/* Section 1: LaunchBox Waitlist */}
       <div
-        className={`${activeCard === 0 ? 'flex-1' : 'h-28'} bg-gradient-to-r from-red-900/40 via-red-900/30 to-red-800/20 overflow-hidden transition-all duration-700 ease-in-out cursor-pointer`}
+        className={`${activeCard === 0 ? 'flex-1' : 'h-28'} bg-white overflow-hidden transition-all duration-700 ease-in-out cursor-pointer`}
       >
         <div className={`h-full p-6 lg:p-10 flex items-center ${activeCard !== 0 ? 'justify-between' : ''}`}>
           <div className="w-full max-w-7xl mx-auto">
             {activeCard === 0 ? (
               <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8">
                 <div>
-                  <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">Join the LaunchBox Waitlist</h3>
-                  <p className="text-gray-100/90 mb-5">Be first to get invites, resources, and early builds.</p>
+                  <h3 className="text-3xl md:text-4xl font-bold text-black mb-3">Join the LaunchBox Waitlist</h3>
+                  <p className="text-gray-700 mb-5">Be first to get invites, resources, and early builds.</p>
                   <button
                     onClick={(e) => { e.stopPropagation(); onWaitlist(); }}
-                    className="inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl shadow-lg hover:from-red-700 hover:to-red-800 transition-colors"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 text-white font-semibold rounded-xl shadow-lg hover:opacity-90 transition-opacity"
+                    style={{ backgroundColor: '#ea580c' }}
                   >
                     Join the Waitlist
                   </button>
@@ -174,8 +175,8 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
               </div>
             ) : (
               <div className="flex items-center gap-4">
-                <h3 className="text-2xl md:text-3xl font-bold text-white">Join the LaunchBox Waitlist</h3>
-                <span className="text-gray-400">→</span>
+                <h3 className="text-2xl md:text-3xl font-bold text-black">Join the LaunchBox Waitlist</h3>
+                <span className="text-gray-600">→</span>
               </div>
             )}
           </div>
