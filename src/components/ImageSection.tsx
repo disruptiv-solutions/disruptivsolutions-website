@@ -127,11 +127,13 @@ const ImageSection: React.FC<ImageSectionProps> = ({
             raysOrigin="top-center"
             raysColor="#ef4444"
             raysSpeed={1.5}
-            lightSpread={isMobile ? 0.4 : 0.6}
-            rayLength={isMobile ? 2.5 : 1.5}
-            followMouse={true}
+            lightSpread={isMobile ? 0.3 : 0.6}
+            rayLength={isMobile ? 4.0 : 1.5}
+            fadeDistance={isMobile ? 0.3 : 1.0}
+            saturation={isMobile ? 1.5 : 1.0}
+            followMouse={!isMobile}
             mouseInfluence={0.1}
-            noiseAmount={0.1}
+            noiseAmount={0.05}
             distortion={0.05}
           />
         </div>
