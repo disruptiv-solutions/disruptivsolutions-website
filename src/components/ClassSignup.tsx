@@ -256,10 +256,10 @@ const ClassSignup: React.FC = () => {
           <div className="mt-12 text-center text-gray-400">
             <p className="mb-2">Questions? Email us at</p>
             <a 
-              href="mailto:ian@ianmcdonald.me" 
+              href="mailto:ian@ianmcdonald.ai" 
               className="text-red-500 hover:text-red-400 underline"
             >
-              ian@ianmcdonald.me
+              ian@ianmcdonald.ai
             </a>
           </div>
         </div>

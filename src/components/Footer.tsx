@@ -39,8 +39,8 @@ const Footer: React.FC = () => {
           {/* Contact Info */}
           <div className="text-gray-500 text-sm text-center md:text-right">
             <p>
-              <a href="mailto:ian@ianmcdonald.me" className="hover:text-white transition-colors">
-                ian@ianmcdonald.me
+              <a href="mailto:ian@ianmcdonald.ai" className="hover:text-white transition-colors">
+                ian@ianmcdonald.ai
               </a>
             </p>
             <p className="mt-1">Pensacola, FL</p>
