@@ -61,7 +61,7 @@ const ClassSignup: React.FC = () => {
     };
 
     try {
-      const response = await fetch('https://hook.us1.make.com/p8ayph9uua1j3axvrjzpt3bvfywb98h8', {
+      const response = await fetch('/api/class-signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -70,7 +70,8 @@ const ClassSignup: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to submit signup. Please try again.');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to submit signup. Please try again.');
       }
 
       setSubmitSuccess(true);
