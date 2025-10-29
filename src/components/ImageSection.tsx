@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useRef, useEffect, useState } from 'react';
-import ScrollReveal from './ScrollReveal';
 import LightRays from './LightRays';
 
 interface ImageSectionProps {

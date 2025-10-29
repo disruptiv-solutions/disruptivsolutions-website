@@ -1,8 +1,6 @@
 'use client';
 
-/* eslint-disable react/no-unescaped-entities */
 import React, { useRef, useEffect } from 'react';
-import RotatingText from './RotatingText';
 
 const Hero: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);

@@ -4,7 +4,6 @@
 import React from 'react';
 
 const LaunchBox: React.FC = () => {
-  const [scrollProgress, setScrollProgress] = React.useState(0);
   const [activeCard, setActiveCard] = React.useState(0);
   const sectionRef = React.useRef<HTMLDivElement>(null);
   const lastProgressRef = React.useRef(0);
@@ -28,7 +27,7 @@ const LaunchBox: React.FC = () => {
       
       // Calculate scroll progress: 0 to 1 through the section
       const progress = Math.max(0, Math.min(1, -rect.top / sectionHeight));
-      setScrollProgress(progress);
+      // Note: scrollProgress is tracked but used via activeCard state instead
 
       // Determine which card should be expanded based on scroll progress
       // Use hysteresis: different thresholds for scrolling up vs down to prevent rapid switching
