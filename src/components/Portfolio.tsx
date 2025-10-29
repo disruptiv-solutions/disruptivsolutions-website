@@ -13,7 +13,6 @@ const Portfolio: React.FC = () => {
     {
       title: "LaunchBox",
       tag: "Building in Public - Launching Q1 2025",
-      logo: "/logo-launchbox.png", // Optional: path to logo image
       description: "A platform where non-technical people learn to build AI-powered apps.",
       details: [
         "Tools + Training + Community",
@@ -28,7 +27,6 @@ const Portfolio: React.FC = () => {
     {
       title: "Real AI",
       tag: "Enterprise AI Workspace - Lead Architect",
-      logo: "/logo-realai.png", // Optional: path to logo image
       description: "Multi-model AI workspace serving 1,500+ active users.",
       features: [
         "Built: Multi-model chat, image/video generation, knowledge bases, super-prompt builder, brand voice tools",
@@ -42,14 +40,12 @@ const Portfolio: React.FC = () => {
     {
       title: "ChatterCard",
       tag: "Proof-of-Concept Tool",
-      logo: "/logo-chattercard.png", // Optional: path to logo image
       description: "Lightweight engagement tool connecting content to clear actions. Simple, focused, built to prove a point.",
       tech: "Simple & Focused"
     },
     {
       title: "Disruptiv Solutions",
       tag: "Client Work & White-Label Builds",
-      logo: "/logo-disruptiv.png", // Optional: path to logo image
       description: "Where it all started—rapid AI product development and white-label builds for founders who need to ship fast.",
       learnings: [
         "How to scope projects that actually ship",
@@ -61,7 +57,6 @@ const Portfolio: React.FC = () => {
     {
       title: "PokéScan",
       tag: "Weekend Project",
-      logo: "/logo-pokescan.png", // Optional: path to logo image
       description: "Built in a few hours using Cursor AI to organize my Pokémon card collection.",
       details: "Perfect? Nope. Useful? Absolutely.",
       lesson: "Don't wait for the perfect idea. Start building things that solve problems in your actual life. The skills you develop compound.",
@@ -298,24 +293,12 @@ const Portfolio: React.FC = () => {
                               : 'border-gray-800 opacity-50 scale-100'
                           }`}
                         >
-                          {project.logo ? (
-                            <div className="mb-4 flex items-center justify-center">
-                              <img 
-                                src={project.logo} 
-                                alt={project.title}
-                                className="h-16 w-auto object-contain"
-                              />
-                            </div>
-                          ) : (
-                            <>
-                              <h3 className="text-xl font-semibold text-white mb-3">
-                                {project.title}
-                              </h3>
-                              <p className="text-sm text-red-500 font-medium mb-3">
-                                {project.tech?.split(' • ')[0]}
-                              </p>
-                            </>
-                          )}
+                          <h3 className="text-xl font-semibold text-white mb-3">
+                            {project.title}
+                          </h3>
+                          <p className="text-sm text-red-500 font-medium mb-3">
+                            {project.tag}
+                          </p>
                           <p className="text-gray-400 leading-relaxed">
                             {project.description}
                           </p>
