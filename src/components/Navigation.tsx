@@ -12,9 +12,9 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
   const navigationItems = [
     { name: 'Home', href: '#hero' },
     { name: 'About', href: '#who-this-is-for' },
-    { name: 'Work', href: '#work' },
-    { name: 'Highlights', href: '#launchbox' },
     { name: 'Consulting', href: '#consulting' },
+    { name: 'Highlights', href: '#launchbox' },
+    { name: 'Work', href: '#work' },
   ];
 
   const handleNavClick = (href: string) => {
