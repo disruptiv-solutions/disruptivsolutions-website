@@ -51,6 +51,54 @@ const Consulting: React.FC = () => {
                   $89 - 90 min
                 </button>
               </div>
+              
+              {/* Dynamic content based on selected session */}
+              {selectedSession === '20' ? (
+                <>
+                  <p className="text-gray-100/90 text-lg leading-relaxed mb-6">
+                    Quick 20-minute consult to get unblocked on your build or get clarity on your next steps.
+                  </p>
+                  <div className="space-y-3 text-gray-400 mb-6">
+                    <p className="flex items-start gap-3">
+                      <span className="text-red-600 font-bold mt-1">✓</span>
+                      <span>Get quick answers to your build questions</span>
+                    </p>
+                    <p className="flex items-start gap-3">
+                      <span className="text-red-600 font-bold mt-1">✓</span>
+                      <span>Unblock yourself on a specific issue</span>
+                    </p>
+                    <p className="flex items-start gap-3">
+                      <span className="text-red-600 font-bold mt-1">✓</span>
+                      <span>Get direction on your next steps</span>
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="text-gray-100/90 text-lg leading-relaxed mb-6">
+                    Comprehensive 90-minute deep dive to review your AI product strategy, plan your launch, or work through complex challenges.
+                  </p>
+                  <div className="space-y-3 text-gray-400 mb-6">
+                    <p className="flex items-start gap-3">
+                      <span className="text-red-600 font-bold mt-1">✓</span>
+                      <span>Full product strategy review and roadmap</span>
+                    </p>
+                    <p className="flex items-start gap-3">
+                      <span className="text-red-600 font-bold mt-1">✓</span>
+                      <span>Complete launch planning and execution</span>
+                    </p>
+                    <p className="flex items-start gap-3">
+                      <span className="text-red-600 font-bold mt-1">✓</span>
+                      <span>Deep dive into technical architecture</span>
+                    </p>
+                    <p className="flex items-start gap-3">
+                      <span className="text-red-600 font-bold mt-1">✓</span>
+                      <span>Long-term growth strategy</span>
+                    </p>
+                  </div>
+                </>
+              )}
+
               <button
                 type="button"
                 onClick={handleBook}
@@ -58,23 +106,6 @@ const Consulting: React.FC = () => {
               >
                 Book Session
               </button>
-              <p className="text-gray-100/90 text-lg leading-relaxed mb-6">
-                Book a 1:1 consult to review your AI product, unblock builds, or plan your launch.
-              </p>
-              <div className="space-y-3 text-gray-400 mb-6">
-                <p className="flex items-start gap-3">
-                  <span className="text-red-600 font-bold mt-1">✓</span>
-                  <span>Get unstuck on your build</span>
-                </p>
-                <p className="flex items-start gap-3">
-                  <span className="text-red-600 font-bold mt-1">✓</span>
-                  <span>Review your AI product strategy</span>
-                </p>
-                <p className="flex items-start gap-3">
-                  <span className="text-red-600 font-bold mt-1">✓</span>
-                  <span>Plan your launch roadmap</span>
-                </p>
-              </div>
             </div>
             
             {/* Right: Empty placeholder or remove if not needed */}
