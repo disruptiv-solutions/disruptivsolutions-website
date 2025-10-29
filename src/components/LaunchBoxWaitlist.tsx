@@ -27,6 +27,7 @@ const LaunchBoxWaitlist: React.FC = () => {
       name,
       email,
       phone: phone || 'N/A',
+      subscribeNewsletter: subscribeNewsletter,
       timestamp: new Date().toISOString()
     };
 
