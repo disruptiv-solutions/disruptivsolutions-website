@@ -10,6 +10,9 @@ const Consulting: React.FC = () => {
   const [consultTime, setConsultTime] = React.useState('12:00');
   const [consultLength, setConsultLength] = React.useState<'20' | '90'>('20');
   const [showForm, setShowForm] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [submitSuccess, setSubmitSuccess] = React.useState(false);
+  const [submitError, setSubmitError] = React.useState<string | null>(null);
 
   return (
     <section 
@@ -115,26 +118,94 @@ const Consulting: React.FC = () => {
                         className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
                       />
                     </div>
+                    {/* Success/Error Messages */}
+                    {submitSuccess && (
+                      <div className="p-3 rounded-lg bg-green-900/30 border border-green-600/50">
+                        <p className="text-green-400 text-sm font-medium">
+                          ✓ Successfully requested session! You'll receive a confirmation email shortly.
+                        </p>
+                      </div>
+                    )}
+
+                    {submitError && (
+                      <div className="p-3 rounded-lg bg-red-900/30 border border-red-600/50">
+                        <p className="text-red-400 text-sm font-medium">
+                          {submitError}
+                        </p>
+                      </div>
+                    )}
+
                     <div className="flex gap-3 pt-2">
                       <button
-                        onClick={() => setShowForm(false)}
+                        type="button"
+                        onClick={() => {
+                          setShowForm(false);
+                          setSubmitSuccess(false);
+                          setSubmitError(null);
+                        }}
                         className="flex-1 h-12 px-6 border-2 border-gray-600 text-white text-base font-semibold rounded-xl hover:bg-white/10 transition-all duration-300"
                       >
                         Back
                       </button>
                       <button
-                        onClick={() => {
+                        type="button"
+                        onClick={async () => {
                           if (!consultName || !consultEmail || !consultDate || !consultTime) {
-                            alert('Please fill in all required fields');
+                            setSubmitError('Please fill in all required fields');
                             return;
                           }
-                          const body = `Consulting Request%0A%0AName: ${consultName}%0AEmail: ${consultEmail}%0A%0AI'd like to book a ${consultLength === '20' ? '20 minute (free)' : '90 minute ($89)'} consult on ${consultDate} at ${consultTime} EST.`;
-                          const mail = `mailto:ian@ianmcdonald.me?subject=Consulting%20Request&body=${encodeURIComponent(body)}`;
-                          window.location.href = mail;
+
+                          setIsSubmitting(true);
+                          setSubmitError(null);
+
+                          const webhookData = {
+                            name: consultName,
+                            email: consultEmail,
+                            date: consultDate,
+                            time: consultTime,
+                            sessionLength: consultLength === '20' ? '20 minutes (free)' : '90 minutes ($89)',
+                            timestamp: new Date().toISOString()
+                          };
+
+                          try {
+                            const response = await fetch('/api/consulting', {
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify(webhookData),
+                            });
+
+                            const contentType = response.headers.get('content-type');
+                            if (!contentType || !contentType.includes('application/json')) {
+                              throw new Error('Server returned an invalid response. Please try again.');
+                            }
+
+                            if (!response.ok) {
+                              const errorData = await response.json().catch(() => ({ error: 'Failed to submit consulting request. Please try again.' }));
+                              throw new Error(errorData.error || 'Failed to submit consulting request. Please try again.');
+                            }
+
+                            setSubmitSuccess(true);
+                            setConsultName('');
+                            setConsultEmail('');
+                            setConsultDate('');
+                            setConsultTime('12:00');
+
+                            setTimeout(() => {
+                              setSubmitSuccess(false);
+                              setShowForm(false);
+                            }, 5000);
+                          } catch (error) {
+                            setSubmitError(error instanceof Error ? error.message : 'An error occurred. Please try again.');
+                          } finally {
+                            setIsSubmitting(false);
+                          }
                         }}
-                        className="flex-1 h-12 px-6 bg-gradient-to-r from-red-600 to-red-700 text-white text-base font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50"
+                        disabled={isSubmitting}
+                        className="flex-1 h-12 px-6 bg-gradient-to-r from-red-600 to-red-700 text-white text-base font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        Request Session
+                        {isSubmitting ? 'Submitting...' : 'Request Session'}
                       </button>
                     </div>
                   </div>
@@ -198,20 +269,82 @@ const Consulting: React.FC = () => {
                       className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
                     />
                   </div>
+                  {/* Success/Error Messages */}
+                  {submitSuccess && (
+                    <div className="p-3 rounded-lg bg-green-900/30 border border-green-600/50">
+                      <p className="text-green-400 text-sm font-medium">
+                        ✓ Successfully requested session! You'll receive a confirmation email shortly.
+                      </p>
+                    </div>
+                  )}
+
+                  {submitError && (
+                    <div className="p-3 rounded-lg bg-red-900/30 border border-red-600/50">
+                      <p className="text-red-400 text-sm font-medium">
+                        {submitError}
+                      </p>
+                    </div>
+                  )}
+
                   <div className="pt-2 flex justify-center">
                     <button
-                      onClick={() => {
+                      type="button"
+                      onClick={async () => {
                         if (!consultName || !consultEmail || !consultDate || !consultTime) {
-                          alert('Please fill in all required fields');
+                          setSubmitError('Please fill in all required fields');
                           return;
                         }
-                        const body = `Consulting Request%0A%0AName: ${consultName}%0AEmail: ${consultEmail}%0A%0AI'd like to book a ${consultLength === '20' ? '20 minute (free)' : '90 minute ($89)'} consult on ${consultDate} at ${consultTime} EST.`;
-                        const mail = `mailto:ian@ianmcdonald.me?subject=Consulting%20Request&body=${encodeURIComponent(body)}`;
-                        window.location.href = mail;
+
+                        setIsSubmitting(true);
+                        setSubmitError(null);
+
+                        const webhookData = {
+                          name: consultName,
+                          email: consultEmail,
+                          date: consultDate,
+                          time: consultTime,
+                          sessionLength: consultLength === '20' ? '20 minutes (free)' : '90 minutes ($89)',
+                          timestamp: new Date().toISOString()
+                        };
+
+                        try {
+                          const response = await fetch('/api/consulting', {
+                            method: 'POST',
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(webhookData),
+                          });
+
+                          const contentType = response.headers.get('content-type');
+                          if (!contentType || !contentType.includes('application/json')) {
+                            throw new Error('Server returned an invalid response. Please try again.');
+                          }
+
+                          if (!response.ok) {
+                            const errorData = await response.json().catch(() => ({ error: 'Failed to submit consulting request. Please try again.' }));
+                            throw new Error(errorData.error || 'Failed to submit consulting request. Please try again.');
+                          }
+
+                          setSubmitSuccess(true);
+                          setConsultName('');
+                          setConsultEmail('');
+                          setConsultDate('');
+                          setConsultTime('12:00');
+
+                          setTimeout(() => {
+                            setSubmitSuccess(false);
+                          }, 5000);
+                        } catch (error) {
+                          setSubmitError(error instanceof Error ? error.message : 'An error occurred. Please try again.');
+                        } finally {
+                          setIsSubmitting(false);
+                        }
                       }}
-                      className="inline-flex items-center gap-2 h-12 px-8 bg-gradient-to-r from-red-600 to-red-700 text-white text-base font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50 hover:scale-105"
+                      disabled={isSubmitting}
+                      className="inline-flex items-center gap-2 h-12 px-8 bg-gradient-to-r from-red-600 to-red-700 text-white text-base font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Request Session
+                      {isSubmitting ? 'Submitting...' : 'Request Session'}
                     </button>
                   </div>
                 </div>
