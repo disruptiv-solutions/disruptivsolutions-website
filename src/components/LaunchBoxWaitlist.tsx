@@ -7,6 +7,7 @@ const LaunchBoxWaitlist: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [subscribeNewsletter, setSubscribeNewsletter] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -49,10 +50,28 @@ const LaunchBoxWaitlist: React.FC = () => {
         throw new Error(errorData.error || 'Failed to join waitlist. Please try again.');
       }
 
+      // If newsletter checkbox is checked, also submit to newsletter webhook
+      if (subscribeNewsletter) {
+        try {
+          await fetch('/api/newsletter-signup', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(webhookData),
+          });
+          // Note: We don't fail the whole submission if newsletter signup fails
+        } catch (newsletterError) {
+          console.error('Newsletter signup error:', newsletterError);
+          // Continue anyway - waitlist signup was successful
+        }
+      }
+
       setSubmitSuccess(true);
       setName('');
       setEmail('');
       setPhone('');
+      setSubscribeNewsletter(false);
 
       setTimeout(() => {
         setSubmitSuccess(false);
@@ -128,6 +147,20 @@ const LaunchBoxWaitlist: React.FC = () => {
                     className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
                     placeholder="(555) 555-5555"
                   />
+                </div>
+
+                {/* Newsletter Checkbox */}
+                <div className="flex items-center gap-3 pt-2">
+                  <input
+                    type="checkbox"
+                    id="newsletter-waitlist"
+                    checked={subscribeNewsletter}
+                    onChange={(e) => setSubscribeNewsletter(e.target.checked)}
+                    className="mt-1 w-5 h-5 text-red-600 bg-zinc-900 border-gray-700 rounded focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-zinc-900 cursor-pointer"
+                  />
+                  <label htmlFor="newsletter-waitlist" className="text-gray-300 cursor-pointer text-sm">
+                    I&apos;d also like to sign up for the newsletter
+                  </label>
                 </div>
               </div>
 
