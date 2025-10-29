@@ -97,7 +97,7 @@ const ClassSignup: React.FC = () => {
   return (
     <>
       <Navigation />
-      <section className="min-h-screen pt-[65px] px-6 py-12 lg:py-20">
+      <section className="min-h-screen pt-24 px-6 py-12 lg:py-20">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
