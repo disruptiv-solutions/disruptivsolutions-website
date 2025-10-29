@@ -36,23 +36,50 @@ const LaunchBox: React.FC = () => {
 
       let newCard: number;
       
+      // Check if mobile for slower scrolling
+      const isMobile = window.innerWidth < 1024;
+      
       if (scrollingDown) {
         // Scrolling down: higher thresholds to prevent premature switching
-        if (progress < 0.5) {
-          newCard = 0;  // First 50% = card 0 (hold)
-        } else if (progress < 0.85) {
-          newCard = 1;  // Next 35% = card 1 (hold)
+        if (isMobile) {
+          // Mobile: much slower progression
+          if (progress < 0.6) {
+            newCard = 0;  // First 60% = card 0 (hold longer)
+          } else if (progress < 0.9) {
+            newCard = 1;  // Next 30% = card 1 (hold longer)
+          } else {
+            newCard = 2; // Final 10% = card 2 (hold longer)
+          }
         } else {
-          newCard = 2; // Final 15% = card 2 (hold)
+          // Desktop: original thresholds
+          if (progress < 0.5) {
+            newCard = 0;  // First 50% = card 0 (hold)
+          } else if (progress < 0.85) {
+            newCard = 1;  // Next 35% = card 1 (hold)
+          } else {
+            newCard = 2; // Final 15% = card 2 (hold)
+          }
         }
       } else {
         // Scrolling up: lower thresholds for easier back navigation
-        if (progress < 0.35) {
-          newCard = 0;
-        } else if (progress < 0.75) {
-          newCard = 1;
+        if (isMobile) {
+          // Mobile: slower back navigation too
+          if (progress < 0.4) {
+            newCard = 0;
+          } else if (progress < 0.8) {
+            newCard = 1;
+          } else {
+            newCard = 2;
+          }
         } else {
-          newCard = 2;
+          // Desktop: original thresholds
+          if (progress < 0.35) {
+            newCard = 0;
+          } else if (progress < 0.75) {
+            newCard = 1;
+          } else {
+            newCard = 2;
+          }
         }
       }
 

@@ -138,7 +138,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Mobile scroll snap - less sensitive with stop at each section */
 @media (max-width: 1023px) {
   html {
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: y proximity;
     scroll-snap-stop: always;
     -webkit-overflow-scrolling: touch;
   }
@@ -172,6 +172,21 @@ h1, h2, h3, h4, h5, h6 {
     overscroll-behavior-y: contain;
   }
   
+  /* Add scroll momentum damping on mobile for LaunchBox */
+  @media (max-width: 1023px) {
+    section#launchbox {
+      scroll-behavior: smooth;
+      scroll-snap-stop: always;
+    }
+    
+    /* Add momentum damping for smoother card transitions */
+    section#launchbox .sticky {
+      overscroll-behavior-y: contain;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+  }
+  
   /* Ensure LaunchBox sticky container fits within viewport on mobile */
   @media (max-width: 1023px) {
     section#launchbox .sticky {
@@ -184,6 +199,5 @@ h1, h2, h3, h4, h5, h6 {
   section#work {
     scroll-snap-stop: normal;
     scroll-snap-align: start;
-    scroll-margin-top: 0;
   }
 }
