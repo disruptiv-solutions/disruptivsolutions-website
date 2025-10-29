@@ -134,14 +134,14 @@ const Portfolio: React.FC = () => {
   const activeProject = projects[activeIndex];
 
   return (
-    <section id="work" className="h-screen bg-black overflow-hidden lg:relative snap-start">
+    <section id="work" className="h-screen bg-black overflow-hidden lg:relative snap-start pt-[65px] lg:pt-0">
       <div className="h-full">
         {/* Main Content Area */}
         <div className="lg:flex h-full">
           <div className="max-w-7xl w-full mx-auto px-6 h-full">
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_500px] gap-12 h-full lg:items-start">
               {/* Left Side - Active Project Details */}
-              <div className="flex flex-col items-start justify-start h-full overflow-y-auto scrollbar-hide lg:pl-0 py-8">
+              <div className="flex flex-col items-start justify-start h-full overflow-y-auto scrollbar-hide lg:pl-0 pt-4 lg:py-8">
                 {/* Static Title Section */}
                 <div className="mb-6 max-w-2xl w-full">
                   <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-white">
