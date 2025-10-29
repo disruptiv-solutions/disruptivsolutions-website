@@ -278,8 +278,14 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                       body: JSON.stringify(webhookData),
                     });
 
+                    // Check if response is actually JSON
+                    const contentType = response.headers.get('content-type');
+                    if (!contentType || !contentType.includes('application/json')) {
+                      throw new Error('Server returned an invalid response. Please try again.');
+                    }
+
                     if (!response.ok) {
-                      const errorData = await response.json();
+                      const errorData = await response.json().catch(() => ({ error: 'Failed to subscribe. Please try again.' }));
                       throw new Error(errorData.error || 'Failed to subscribe. Please try again.');
                     }
 
