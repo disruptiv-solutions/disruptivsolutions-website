@@ -215,7 +215,7 @@ const ClassSignup: React.FC = () => {
                   className="mt-1 w-5 h-5 text-red-600 bg-zinc-900 border-gray-700 rounded focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-zinc-900 cursor-pointer"
                 />
                 <label htmlFor="newsletter" className="text-gray-300 cursor-pointer">
-                  I'd like to receive newsletter updates and alerts
+                  I&apos;d like to receive newsletter updates and alerts
                 </label>
               </div>
 
@@ -223,7 +223,7 @@ const ClassSignup: React.FC = () => {
               {submitSuccess && (
                 <div className="p-4 rounded-lg bg-green-900/30 border border-green-600/50">
                   <p className="text-green-400 font-medium">
-                    ✓ Successfully signed up! You'll receive a confirmation email with the Zoom link and class details.
+                    ✓ Successfully signed up! You&apos;ll receive a confirmation email with the Zoom link and class details.
                   </p>
                 </div>
               )}
@@ -246,7 +246,7 @@ const ClassSignup: React.FC = () => {
                   {isSubmitting ? 'Submitting...' : 'Sign Up for Free Class'}
                 </button>
                 <p className="text-xs text-gray-500 text-center mt-4">
-                  By signing up, you'll receive a confirmation email with the Zoom link and class details.
+                  By signing up, you&apos;ll receive a confirmation email with the Zoom link and class details.
                 </p>
               </div>
             </form>

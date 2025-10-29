@@ -135,7 +135,7 @@ const LaunchBoxWaitlist: React.FC = () => {
               {submitSuccess && (
                 <div className="p-4 rounded-lg bg-green-900/30 border border-green-600/50">
                   <p className="text-green-400 font-medium">
-                    ✓ Successfully joined the waitlist! You'll receive updates about LaunchBox launches and early access.
+                    ✓ Successfully joined the waitlist! You&apos;ll receive updates about LaunchBox launches and early access.
                   </p>
                 </div>
               )}
@@ -159,7 +159,7 @@ const LaunchBoxWaitlist: React.FC = () => {
                   {isSubmitting ? 'Joining Waitlist...' : 'Join the Waitlist'}
                 </button>
                 <p className="text-xs text-gray-500 text-center mt-4">
-                  By joining, you'll be notified when LaunchBox launches and get early access to resources.
+                  By joining, you&apos;ll be notified when LaunchBox launches and get early access to resources.
                 </p>
               </div>
             </form>
