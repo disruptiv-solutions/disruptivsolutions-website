@@ -15,7 +15,10 @@ const ClassSignup: React.FC = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [selectedSession, setSelectedSession] = useState<string>('');
+  const [subscribeNewsletter, setSubscribeNewsletter] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const sessions: Session[] = [
     {
@@ -32,41 +35,62 @@ const ClassSignup: React.FC = () => {
     }
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!name || !email || !selectedSession) {
-      alert('Please fill in all required fields and select a session.');
+      setSubmitError('Please fill in all required fields and select a session.');
       return;
     }
 
     setIsSubmitting(true);
+    setSubmitError(null);
 
     const selectedSessionData = sessions.find(s => s.id === selectedSession);
     const sessionInfo = selectedSessionData 
       ? `${selectedSessionData.date} at ${selectedSessionData.time}`
       : '';
 
-    const subject = encodeURIComponent('Free AI App Building Class Signup');
-    const body = encodeURIComponent(
-      `Free AI App Building Class Signup\n\n` +
-      `Name: ${name}\n` +
-      `Email: ${email}\n` +
-      `Phone: ${phone || 'N/A'}\n` +
-      `Selected Session: ${sessionInfo}\n`
-    );
+    const webhookData = {
+      name,
+      email,
+      phone: phone || 'N/A',
+      selectedSession: sessionInfo,
+      subscribeNewsletter,
+      timestamp: new Date().toISOString()
+    };
 
-    const mailtoLink = `mailto:ian@ianmcdonald.me?subject=${subject}&body=${body}`;
-    window.location.href = mailtoLink;
+    try {
+      const response = await fetch('https://hook.us1.make.com/p8ayph9uua1j3axvrjzpt3bvfywb98h8', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(webhookData),
+      });
 
-    // Reset form after a short delay
-    setTimeout(() => {
-      setIsSubmitting(false);
+      if (!response.ok) {
+        throw new Error('Failed to submit signup. Please try again.');
+      }
+
+      setSubmitSuccess(true);
+      
+      // Reset form after successful submission
       setName('');
       setEmail('');
       setPhone('');
       setSelectedSession('');
-    }, 1000);
+      setSubscribeNewsletter(false);
+
+      // Reset success message after 5 seconds
+      setTimeout(() => {
+        setSubmitSuccess(false);
+      }, 5000);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'An error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -179,6 +203,37 @@ const ClassSignup: React.FC = () => {
                   ))}
                 </div>
               </div>
+
+              {/* Newsletter Checkbox */}
+              <div className="flex items-start gap-3 p-4 rounded-lg border border-gray-700 bg-white/5">
+                <input
+                  type="checkbox"
+                  id="newsletter"
+                  checked={subscribeNewsletter}
+                  onChange={(e) => setSubscribeNewsletter(e.target.checked)}
+                  className="mt-1 w-5 h-5 text-red-600 bg-zinc-900 border-gray-700 rounded focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-zinc-900 cursor-pointer"
+                />
+                <label htmlFor="newsletter" className="text-gray-300 cursor-pointer">
+                  I'd like to receive newsletter updates and alerts
+                </label>
+              </div>
+
+              {/* Success/Error Messages */}
+              {submitSuccess && (
+                <div className="p-4 rounded-lg bg-green-900/30 border border-green-600/50">
+                  <p className="text-green-400 font-medium">
+                    ✓ Successfully signed up! You'll receive a confirmation email with the Zoom link and class details.
+                  </p>
+                </div>
+              )}
+
+              {submitError && (
+                <div className="p-4 rounded-lg bg-red-900/30 border border-red-600/50">
+                  <p className="text-red-400 font-medium">
+                    {submitError}
+                  </p>
+                </div>
+              )}
 
               {/* Submit Button */}
               <div className="pt-4">
