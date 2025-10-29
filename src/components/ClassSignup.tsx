@@ -159,7 +159,7 @@ const ClassSignup: React.FC = () => {
                         checked={selectedSession === session.id}
                         onChange={(e) => setSelectedSession(e.target.value)}
                         required
-                        className="w-5 h-5 text-red-600 focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-zinc-900"
+                        className="w-5 h-5 text-red-600 focus:outline-none"
                       />
                       <div className="flex items-center gap-3 flex-1">
                         <div className="w-10 h-10 rounded-lg bg-red-600/20 flex items-center justify-center flex-shrink-0">
