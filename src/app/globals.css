@@ -165,6 +165,7 @@ h1, h2, h3, h4, h5, h6 {
     scroll-margin-top: 0;
     scroll-margin-bottom: 0;
     scroll-snap-stop: always;
+    scroll-snap-type: y mandatory;
   }
   
   /* Prevent too much momentum scrolling in LaunchBox */
