@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Rosario } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import NavigationWrapper from "@/components/NavigationWrapper";
 import Footer from "@/components/Footer";
@@ -37,6 +38,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth snap-y overscroll-y-contain" style={{ scrollPaddingTop: '65px' }}>
+      <head>
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-F7F28TQPBP"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-F7F28TQPBP');
+          `}
+        </Script>
+      </head>
       <body
         className={`${inter.variable} ${rosario.variable} antialiased bg-black text-white`}
       >
