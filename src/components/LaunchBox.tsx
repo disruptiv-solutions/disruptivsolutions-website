@@ -247,12 +247,52 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
             {/* Right: Form */}
             <div className="w-full min-w-0">
               <form
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  const body = `Newsletter signup%0AName: ${nlName}%0AEmail: ${nlEmail}%0APhone: ${nlPhone || 'N/A'}`;
-                  const mail = `mailto:ian@ianmcdonald.me?subject=Newsletter%20Signup&body=${body}`;
-                  window.location.href = mail;
+
+                  if (!nlName || !nlEmail) {
+                    setSubmitError('Please fill in your name and email.');
+                    return;
+                  }
+
+                  setIsSubmitting(true);
+                  setSubmitError(null);
+
+                  const webhookData = {
+                    name: nlName,
+                    email: nlEmail,
+                    phone: nlPhone || 'N/A',
+                    timestamp: new Date().toISOString()
+                  };
+
+                  try {
+                    const response = await fetch('/api/newsletter-signup', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify(webhookData),
+                    });
+
+                    if (!response.ok) {
+                      const errorData = await response.json();
+                      throw new Error(errorData.error || 'Failed to subscribe. Please try again.');
+                    }
+
+                    setSubmitSuccess(true);
+                    setNlName('');
+                    setNlEmail('');
+                    setNlPhone('');
+
+                    setTimeout(() => {
+                      setSubmitSuccess(false);
+                    }, 5000);
+                  } catch (error) {
+                    setSubmitError(error instanceof Error ? error.message : 'An error occurred. Please try again.');
+                  } finally {
+                    setIsSubmitting(false);
+                  }
                 }}
                 className="rounded-2xl border border-gray-800 bg-black/30 backdrop-blur-md px-4 sm:px-6 py-4 sm:py-5 space-y-3"
               >
@@ -292,9 +332,30 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                   />
                 </div>
 
+                {/* Success/Error Messages */}
+                {submitSuccess && (
+                  <div className="p-3 rounded-lg bg-green-900/30 border border-green-600/50">
+                    <p className="text-green-400 text-sm font-medium">
+                      ✓ Successfully subscribed! Check your email for confirmation.
+                    </p>
+                  </div>
+                )}
+
+                {submitError && (
+                  <div className="p-3 rounded-lg bg-red-900/30 border border-red-600/50">
+                    <p className="text-red-400 text-sm font-medium">
+                      {submitError}
+                    </p>
+                  </div>
+                )}
+
                 <div className="pt-2">
-                  <button type="submit" className="inline-flex items-center justify-center gap-2 h-11 sm:h-12 px-6 sm:px-7 bg-gradient-to-r from-red-600 to-red-700 text-white text-sm sm:text-base font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-colors w-full">
-                    Subscribe
+                  <button 
+                    type="submit" 
+                    disabled={isSubmitting}
+                    className="inline-flex items-center justify-center gap-2 h-11 sm:h-12 px-6 sm:px-7 bg-gradient-to-r from-red-600 to-red-700 text-white text-sm sm:text-base font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-colors w-full disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? 'Subscribing...' : 'Subscribe'}
                   </button>
                 </div>
               </form>
