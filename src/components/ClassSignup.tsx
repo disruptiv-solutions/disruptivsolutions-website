@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Navigation from './Navigation';
+import { trackFormSubmission, trackButtonClick } from '@/lib/analytics';
 
 interface Session {
   id: string;
@@ -38,7 +39,10 @@ const ClassSignup: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    console.log('[ClassSignup] Form submission started');
+    
     if (!name || !email || !selectedSession) {
+      console.log('[ClassSignup] Validation failed - missing required fields');
       setSubmitError('Please fill in all required fields and select a session.');
       return;
     }
@@ -61,6 +65,8 @@ const ClassSignup: React.FC = () => {
     };
 
     try {
+      console.log('[ClassSignup] Sending webhook data:', webhookData);
+      
       const response = await fetch('/api/class-signup', {
         method: 'POST',
         headers: {
@@ -69,12 +75,25 @@ const ClassSignup: React.FC = () => {
         body: JSON.stringify(webhookData),
       });
 
+      console.log('[ClassSignup] API response status:', response.status);
+
       if (!response.ok) {
         const errorData = await response.json();
+        console.error('[ClassSignup] API error:', errorData);
         throw new Error(errorData.error || 'Failed to submit signup. Please try again.');
       }
 
+      console.log('[ClassSignup] Webhook success');
       setSubmitSuccess(true);
+      
+      // Track form submission
+      console.log('[ClassSignup] Tracking analytics event');
+      trackFormSubmission('free_class_signup', {
+        session_date: selectedSessionData?.date || '',
+        session_time: selectedSessionData?.time || '',
+        with_newsletter: subscribeNewsletter,
+        page_location: '/free-class',
+      });
       
       // Reset form after successful submission
       setName('');
@@ -241,12 +260,23 @@ const ClassSignup: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
+                  onClick={() => {
+                    if (!isSubmitting) {
+                      trackButtonClick('signup_free_class', 'free_class_page');
+                    }
+                  }}
                   className="w-full px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50 disabled:opacity-50 disabled:cursor-not-allowed text-lg"
                 >
                   {isSubmitting ? 'Submitting...' : 'Sign Up for Free Class'}
                 </button>
                 <p className="text-xs text-gray-500 text-center mt-4">
                   By signing up, you&apos;ll receive a confirmation email with the Google Meet link and class details.
+                  <br />
+                  By submitting this form, you agree to our{' '}
+                  <a href="/privacy" className="text-red-500 hover:text-red-400 underline" target="_blank" rel="noopener noreferrer">
+                    Privacy Policy
+                  </a>
+                  {' '}and consent to being contacted for event updates and marketing purposes.
                 </p>
               </div>
             </form>

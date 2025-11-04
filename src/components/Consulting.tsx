@@ -1,14 +1,26 @@
 'use client';
 
 import React from 'react';
+import { trackButtonClick, trackExternalLink, trackFormSubmission } from '@/lib/analytics';
 
 const Consulting: React.FC = () => {
   const [selectedSession, setSelectedSession] = React.useState<'20' | '90'>('20');
 
   const handleBook = () => {
+    // Track button click
+    trackButtonClick('book_session', 'consulting_section');
+    
+    // Track consulting request
+    trackFormSubmission('consulting_request', {
+      session_length: selectedSession === '20' ? '20min' : '90min',
+    });
+    
+    // Track external link click
     if (selectedSession === '20') {
+      trackExternalLink('https://calendar.app.google/koPerS8JKfqi5HGE8', '20min Free Session');
       window.open('https://calendar.app.google/koPerS8JKfqi5HGE8', '_blank', 'noopener,noreferrer');
     } else {
+      trackExternalLink('https://calendar.app.google/hJsP5Jz11pHsPGhh9', '90min Paid Session');
       window.open('https://calendar.app.google/hJsP5Jz11pHsPGhh9', '_blank', 'noopener,noreferrer');
     }
   };

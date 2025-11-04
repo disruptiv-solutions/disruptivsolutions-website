@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Navigation from './Navigation';
+import { trackFormSubmission, trackButtonClick } from '@/lib/analytics';
 
 const LaunchBoxWaitlist: React.FC = () => {
   const [name, setName] = useState('');
@@ -32,6 +33,9 @@ const LaunchBoxWaitlist: React.FC = () => {
     };
 
     try {
+      console.log('[LaunchBoxWaitlist] Form submission started');
+      console.log('[LaunchBoxWaitlist] Sending webhook data:', webhookData);
+      
       const response = await fetch('/api/waitlist-signup', {
         method: 'POST',
         headers: {
@@ -39,6 +43,8 @@ const LaunchBoxWaitlist: React.FC = () => {
         },
         body: JSON.stringify(webhookData),
       });
+      
+      console.log('[LaunchBoxWaitlist] API response status:', response.status);
 
       // Check if response is actually JSON
       const contentType = response.headers.get('content-type');
@@ -51,19 +57,30 @@ const LaunchBoxWaitlist: React.FC = () => {
         throw new Error(errorData.error || 'Failed to join waitlist. Please try again.');
       }
 
+      console.log('[LaunchBoxWaitlist] Webhook success');
+      
+      // Track waitlist signup
+      console.log('[LaunchBoxWaitlist] Tracking analytics event');
+      trackFormSubmission('waitlist_signup', {
+        with_newsletter: subscribeNewsletter,
+        page_location: '/waitlist',
+      });
+
       // If newsletter checkbox is checked, also submit to newsletter webhook
       if (subscribeNewsletter) {
+        console.log('[LaunchBoxWaitlist] Also sending to newsletter webhook');
         try {
-          await fetch('/api/newsletter-signup', {
+          const newsletterResponse = await fetch('/api/newsletter-signup', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(webhookData),
           });
+          console.log('[LaunchBoxWaitlist] Newsletter webhook response:', newsletterResponse.status);
           // Note: We don't fail the whole submission if newsletter signup fails
         } catch (newsletterError) {
-          console.error('Newsletter signup error:', newsletterError);
+          console.error('[LaunchBoxWaitlist] Newsletter signup error:', newsletterError);
           // Continue anyway - waitlist signup was successful
         }
       }
@@ -187,6 +204,11 @@ const LaunchBoxWaitlist: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
+                  onClick={() => {
+                    if (!isSubmitting) {
+                      trackButtonClick('join_waitlist', 'waitlist_page');
+                    }
+                  }}
                   className="w-full px-8 py-4 text-white font-bold rounded-xl shadow-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed text-lg"
                   style={{ backgroundColor: '#ea580c' }}
                 >
@@ -194,6 +216,12 @@ const LaunchBoxWaitlist: React.FC = () => {
                 </button>
                 <p className="text-xs text-gray-500 text-center mt-4">
                   By joining, you&apos;ll be notified when LaunchBox launches and get early access to resources.
+                  <br />
+                  By submitting this form, you agree to our{' '}
+                  <a href="/privacy" className="text-red-500 hover:text-red-400 underline" target="_blank" rel="noopener noreferrer">
+                    Privacy Policy
+                  </a>
+                  {' '}and consent to being contacted for marketing purposes.
                 </p>
               </div>
             </form>

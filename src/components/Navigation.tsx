@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { trackButtonClick } from '@/lib/analytics';
 
 interface NavigationProps {
   activeSection?: string;
@@ -23,6 +24,10 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
   const handleNavClick = (href: string) => {
     if (href.startsWith('#')) {
       const targetId = href.substring(1);
+      
+      // Track navigation button click
+      const navItem = navigationItems.find(item => item.href === href);
+      trackButtonClick('nav_click', navItem?.name || targetId);
       
       // If not on root page, navigate to root with hash, then scroll
       if (pathname !== '/') {

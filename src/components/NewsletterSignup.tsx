@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Navigation from './Navigation';
+import { trackFormSubmission, trackButtonClick } from '@/lib/analytics';
 
 const NewsletterSignup: React.FC = () => {
   const [name, setName] = useState('');
@@ -30,6 +31,9 @@ const NewsletterSignup: React.FC = () => {
     };
 
     try {
+      console.log('[NewsletterSignup] Form submission started');
+      console.log('[NewsletterSignup] Sending webhook data:', webhookData);
+      
       const response = await fetch('/api/newsletter-signup', {
         method: 'POST',
         headers: {
@@ -37,6 +41,8 @@ const NewsletterSignup: React.FC = () => {
         },
         body: JSON.stringify(webhookData),
       });
+      
+      console.log('[NewsletterSignup] API response status:', response.status);
 
       // Check if response is actually JSON
       const contentType = response.headers.get('content-type');
@@ -48,6 +54,15 @@ const NewsletterSignup: React.FC = () => {
         const errorData = await response.json().catch(() => ({ error: 'Failed to subscribe. Please try again.' }));
         throw new Error(errorData.error || 'Failed to subscribe. Please try again.');
       }
+
+      console.log('[NewsletterSignup] Webhook success');
+      
+      // Track newsletter signup
+      console.log('[NewsletterSignup] Tracking analytics event');
+      trackFormSubmission('newsletter_signup', {
+        page_location: '/newsletter',
+        source: 'newsletter_page',
+      });
 
       setSubmitSuccess(true);
       setName('');
@@ -153,12 +168,23 @@ const NewsletterSignup: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
+                  onClick={() => {
+                    if (!isSubmitting) {
+                      trackButtonClick('subscribe_newsletter', 'newsletter_page');
+                    }
+                  }}
                   className="w-full px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50 disabled:opacity-50 disabled:cursor-not-allowed text-lg"
                 >
                   {isSubmitting ? 'Subscribing...' : 'Subscribe to Newsletter'}
                 </button>
                 <p className="text-xs text-gray-500 text-center mt-4">
                   By subscribing, you&apos;ll receive weekly updates about building AI products and practical insights.
+                  <br />
+                  By submitting this form, you agree to our{' '}
+                  <a href="/privacy" className="text-red-500 hover:text-red-400 underline" target="_blank" rel="noopener noreferrer">
+                    Privacy Policy
+                  </a>
+                  {' '}and consent to being contacted for marketing purposes.
                 </p>
               </div>
             </form>

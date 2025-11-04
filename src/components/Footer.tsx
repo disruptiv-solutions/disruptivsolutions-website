@@ -34,6 +34,9 @@ const Footer: React.FC = () => {
             <a href="#launchbox" className="hover:text-white transition-colors">
               LaunchBox
             </a>
+            <a href="/privacy" className="hover:text-white transition-colors">
+              Privacy Policy
+            </a>
           </div>
 
           {/* Contact Info */}
