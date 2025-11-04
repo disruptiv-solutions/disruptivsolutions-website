@@ -1,10 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Navigation from './Navigation';
+import { trackSectionView } from '@/lib/analytics';
 
 const NavigationWrapper = () => {
   const [activeSection, setActiveSection] = useState('hero');
+  const lastTrackedSection = useRef<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,6 +45,12 @@ const NavigationWrapper = () => {
             break;
           }
         }
+      }
+      
+      // Track section view if section changed (avoid duplicate tracking)
+      if (currentSection !== lastTrackedSection.current && currentSection) {
+        trackSectionView(currentSection);
+        lastTrackedSection.current = currentSection;
       }
       
       setActiveSection(currentSection);

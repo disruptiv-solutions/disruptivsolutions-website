@@ -2,6 +2,7 @@
 
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
+import { trackFormSubmission, trackButtonClick } from '@/lib/analytics';
 
 const LaunchBox: React.FC = () => {
   const [activeCard, setActiveCard] = React.useState(0);
@@ -9,11 +10,15 @@ const LaunchBox: React.FC = () => {
   const lastProgressRef = React.useRef(0);
 
   const handleWaitlist = () => {
+    // Track button click
+    trackButtonClick('join_waitlist', 'launchbox_card');
     // Navigate to waitlist signup page
     window.location.href = '/waitlist';
   };
 
   const handleClass = () => {
+    // Track button click
+    trackButtonClick('free_class_button', 'launchbox_card');
     // Navigate to free class signup page
     window.location.href = '/free-class';
   };
@@ -271,6 +276,9 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                   };
 
                   try {
+                    console.log('[LaunchBox:Newsletter] Form submission started');
+                    console.log('[LaunchBox:Newsletter] Sending webhook data:', webhookData);
+                    
                     const response = await fetch('/api/newsletter-signup', {
                       method: 'POST',
                       headers: {
@@ -278,6 +286,8 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                       },
                       body: JSON.stringify(webhookData),
                     });
+                    
+                    console.log('[LaunchBox:Newsletter] API response status:', response.status);
 
                     // Check if response is actually JSON
                     const contentType = response.headers.get('content-type');
@@ -289,6 +299,15 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                       const errorData = await response.json().catch(() => ({ error: 'Failed to subscribe. Please try again.' }));
                       throw new Error(errorData.error || 'Failed to subscribe. Please try again.');
                     }
+
+                    console.log('[LaunchBox:Newsletter] Webhook success');
+                    
+                    // Track newsletter signup from LaunchBox card
+                    console.log('[LaunchBox:Newsletter] Tracking analytics event');
+                    trackFormSubmission('newsletter_signup', {
+                      page_location: '/',
+                      source: 'launchbox_card',
+                    });
 
                     setSubmitSuccess(true);
                     setNlName('');
@@ -363,10 +382,22 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                   <button 
                     type="submit" 
                     disabled={isSubmitting}
+                    onClick={() => {
+                      if (!isSubmitting) {
+                        trackButtonClick('subscribe_newsletter', 'launchbox_card');
+                      }
+                    }}
                     className="inline-flex items-center justify-center gap-2 h-11 sm:h-12 px-6 sm:px-7 bg-gradient-to-r from-red-600 to-red-700 text-white text-sm sm:text-base font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-colors w-full disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? 'Subscribing...' : 'Subscribe'}
                   </button>
+                  <p className="text-xs text-gray-400 text-center mt-2">
+                    By submitting, you agree to our{' '}
+                    <a href="/privacy" className="text-red-500 hover:text-red-400 underline" target="_blank" rel="noopener noreferrer">
+                      Privacy Policy
+                    </a>
+                    {' '}and consent to marketing communications.
+                  </p>
                 </div>
               </form>
             </div>

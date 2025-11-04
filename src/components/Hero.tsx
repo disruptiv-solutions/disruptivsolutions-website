@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
+import { trackButtonClick, trackVideoPlay } from '@/lib/analytics';
 
 const Hero: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -21,7 +22,10 @@ const Hero: React.FC = () => {
             // Only play if we haven't played yet for this entry
             if (!hasPlayedRef.current) {
               video.currentTime = 0;
-              video.play().catch((error) => {
+              video.play().then(() => {
+                // Track video play event
+                trackVideoPlay('hero_video');
+              }).catch((error) => {
                 console.warn('Video autoplay failed:', error);
               });
               hasPlayedRef.current = true;
@@ -88,6 +92,7 @@ const Hero: React.FC = () => {
             <div className="hidden lg:flex flex-col sm:flex-row gap-4">
               <button
                 onClick={() => {
+                  trackButtonClick('join_waitlist', 'hero_section');
                   window.location.href = '/waitlist';
                 }}
                 className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50"
@@ -96,6 +101,7 @@ const Hero: React.FC = () => {
               </button>
               <button
                 onClick={() => {
+                  trackButtonClick('free_class_button', 'hero_section');
                   const launchbox = document.getElementById('launchbox');
                   if (launchbox) {
                     const rect = launchbox.getBoundingClientRect();
@@ -111,6 +117,7 @@ const Hero: React.FC = () => {
               </button>
               <button
                 onClick={() => {
+                  trackButtonClick('subscribe_newsletter', 'hero_section');
                   const launchbox = document.getElementById('launchbox');
                   if (launchbox) {
                     const rect = launchbox.getBoundingClientRect();
