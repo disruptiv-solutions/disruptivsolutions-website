@@ -12,7 +12,7 @@ const Portfolio: React.FC = () => {
   const projects = [
     {
       title: "LaunchBox",
-      tag: "Building in Public - Launching Q1 2025",
+      tag: "Building in Public - Launching Q1 2026",
       description: "A platform where non-technical people learn to build AI-powered apps.",
       details: [
         "Tools + Training + Community",
