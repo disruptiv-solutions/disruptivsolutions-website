@@ -4,6 +4,17 @@ import React, { useState } from 'react';
 import Navigation from './Navigation';
 import { trackFormSubmission, trackButtonClick } from '@/lib/analytics';
 
+// Meta Pixel TypeScript declaration
+declare global {
+  interface Window {
+    fbq: (
+      action: string,
+      event: string,
+      params?: Record<string, unknown>
+    ) => void;
+  }
+}
+
 interface Session {
   id: string;
   date: string;
@@ -94,6 +105,12 @@ const ClassSignup: React.FC = () => {
         with_newsletter: subscribeNewsletter,
         page_location: '/free-class',
       });
+
+      // Track Meta Pixel CompleteRegistration event
+      if (typeof window !== 'undefined' && window.fbq) {
+        window.fbq('track', 'CompleteRegistration');
+        console.log('[ClassSignup] Meta Pixel CompleteRegistration event tracked');
+      }
       
       // Reset form after successful submission
       setName('');

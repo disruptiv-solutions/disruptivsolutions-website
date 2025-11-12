@@ -114,6 +114,29 @@ h1, h2, h3, h4, h5, h6 {
   display: none;
 }
 
+/* Seamless scrollbar for textareas */
+.seamless-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(220, 38, 38, 0.3) transparent;
+}
+
+.seamless-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.seamless-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.seamless-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(220, 38, 38, 0.3);
+  border-radius: 3px;
+}
+
+.seamless-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(220, 38, 38, 0.5);
+}
+
 /* Animation delays */
 .animation-delay-200 {
   animation-delay: 0.2s;

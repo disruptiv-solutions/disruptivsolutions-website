@@ -1,0 +1,233 @@
+DIGITAL BUSINESS CARD GENERATOR - AI-POWERED WEBSITE BUILDER WORKSHOP
+=====================================================================
+
+SLIDE 1: OVERVIEW
+-----------------
+
+Header (only visible on Slide 1):
+Digital Business Card Generator
+AI-Powered Website Builder Workshop
+
+Main Content:
+Welcome! 👋
+
+Let's build your AI-powered website together
+
+What we'll do today:
+• Briefly learn how AI app development works.
+• Record or type your professional bio and details.
+• Use AI to enhance your bio and generate a custom prompt.
+• Copy that prompt into Firebase Studio to build your site.
+• Make a quick edit and deploy your site to the web!
+
+
+SLIDE 2: INTRODUCTION (Who's Teaching This?)
+----------------------------------------------
+
+Top Section (Text + Photo side-by-side):
+
+Left Side:
+Who's Teaching This?
+
+Hi, I'm Ian McDonald
+
+I went from healthcare worker to self-taught app developer in 18 months.
+
+I've built:
+• An AI platform with 1,500+ active users
+• Enterprise tools without a computer science degree
+• This workshop to prove you don't need to be "technical"
+
+I'm not here to sell you a course. I'm here to show you what's possible when you just start building.
+
+Let's do this together.
+
+Right Side:
+[Photo placeholder - square image]
+
+Bottom Section (Full Width):
+Quick Facts:
+
+→ Self-taught developer (18 months)
+→ Built apps serving 1,500+ users
+→ Healthcare background → Tech
+→ Currently building LaunchBox
+→ Teaching while building in public
+
+
+SLIDE 3: WHY THIS WORKSHOP?
+----------------------------
+
+Why This Workshop?
+
+I learned by doing. No bootcamps. No CS degree. Just AI tools, curiosity, 
+and refusing to quit when it got tough.
+
+If I can do it, you can too.
+
+Today, you'll see exactly how AI makes app development accessible to anyone 
+willing to learn and experiment.
+
+
+SLIDE 4: AI BASICS
+------------------
+
+Understanding AI Development
+
+The "Magic": AI & App Dev Basics
+
+The "Old Way" (Traditional Development)
+Normally, to build a website, you'd have to write hundreds of lines of code in languages like HTML, CSS, and JavaScript. You'd also need to learn frameworks, databases, and how to set up a server. It's powerful, but has a very steep learning curve.
+
+The "New Way" (AI-Powered Development)
+Today, we're using a new approach. We will use AI to be our developer. We'll describe what we want in plain English (our "prompt"), and an AI platform like Firebase Studio will write all that complex code for us.
+
+What We Are (and Aren't) Building
+Our site today is a simple "static" site—it just displays information. More complex apps might need a database (to store user signups) or authentication (to let users log in). We aren't doing that today, but it's good to know those are the "next steps" in app development.
+
+
+SLIDE 5: YOUR INFORMATION
+--------------------------
+
+Left Panel:
+-----------
+Your Information
+
+Fill in your details to generate your custom prompt. These answers feed the AI so the more detailed you are, the better your website will reflect you.
+
+WHAT TO INCLUDE
+
+Name & Title
+Introduce yourself so the prompt uses your professional identity.
+
+Location & Email
+Helps the AI tailor copy and add contact sections automatically.
+
+Bio
+Share what you do, who you help, and what makes you unique. Aim for 2–3 paragraphs.
+
+Optional Extras
+Add phone, website, social links, and brand colors to personalize the output.
+
+Need a starting point? Start typing or press the microphone button to talk through your bio, then use AI Enhance to polish it.
+
+
+Right Panel (Form):
+-------------------
+Your Information
+
+Name * (required)
+Placeholder: Jane Doe
+
+Title * (required)
+Placeholder: Software Engineer, Product Manager, etc.
+
+Location * (City, State/Region) (required)
+Placeholder: New York, NY or London, UK
+
+Email * (required)
+Placeholder: jane@example.com
+
+Additional Information
+
+Phone (optional)
+Placeholder: (555) 555-5555
+
+Website (optional)
+Placeholder: https://yourwebsite.com
+
+Company Name (optional)
+Placeholder: Acme Inc.
+
+Industry (optional)
+Placeholder: Technology, Healthcare, Finance, etc.
+
+Social Media Links (optional)
+[Add Social button]
+Platform options: LinkedIn, Twitter, Instagram, Facebook, GitHub, YouTube, TikTok, Other
+
+Bio * (Tell us about your company and the services/products you offer - 2-3 short paragraphs) (required)
+Placeholder: Tell us about your company, what services or products you offer, your background, and what makes you unique...
+[Microphone button for voice recording]
+[AI Enhance button]
+
+Profile Image (Optional)
+Upload a square 1:1 headshot (recommended 1024×1024, minimum 512×512), preferably of yourself. Max file size 5MB.
+
+Image URL
+Placeholder: https://example.com/image.jpg
+
+Upload File
+[Click to upload button]
+
+Color Palette
+Choose your color scheme (hex codes will be included in the prompt)
+
+Primary Color
+[Color picker] Default: #dc2626
+
+Secondary Color
+[Color picker] Default: #991b1b
+
+Tertiary Color
+[Color picker] Default: #fef2f2
+
+Text Color
+[Color picker] Default: #000000
+
+[Generate AI Prompt button]
+
+
+SLIDE 6: PROMPT
+---------------
+
+Left Panel:
+-----------
+Your Custom Prompt 🎉
+
+Copy this and paste it into Firebase Studio
+
+
+Right Panel:
+------------
+Generated Prompt
+[Copy Prompt button]
+
+[Generated prompt text appears here in a scrollable container]
+
+Now, copy this prompt. We will go to Firebase Studio together and paste this in to build your website!
+
+[Edit Form & Generate Again button]
+
+
+SLIDE 7: FINISH
+---------------
+
+You're All Set! 🚀
+
+Ready to build your website in Firebase Studio
+
+All set!
+
+You've generated your prompt and are ready for the next stage: building in Firebase Studio.
+You can go back to make edits or copy the prompt again.
+
+[Back to Form button]
+[Copy Prompt button]
+
+
+NAVIGATION (Bottom of all slides):
+-----------------------------------
+• Progress dots (7 dots showing current position)
+• Previous button (left) - disabled on Slide 1
+• Step labels in center: 1. Overview | 2. Intro | 3. Why | 4. AI Basics | 5. Your Info | 6. Prompt | 7. Finish
+• Next/Start/Generate & Next/Finish button (right)
+  - Slide 1: "Start"
+  - Slides 2-4: "Next"
+  - Slide 5: "Generate & Next" (disabled if form invalid)
+  - Slide 6: "Finish"
+  - Slide 7: No button (end of slideshow)
+
+Keyboard shortcuts: ← → to navigate
+
+Slide counter (top right): Shows "Slide X of 7"
