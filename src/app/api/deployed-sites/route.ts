@@ -154,11 +154,12 @@ export async function POST(request: NextRequest) {
       },
       { status: 201 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('[API:deployed-sites] POST error:', error);
     
     // Check if it's a Firestore not initialized error
-    if (error?.code === 'not-found' || error?.message?.includes('NOT_FOUND')) {
+    const errorObj = error as { code?: string; message?: string };
+    if (errorObj?.code === 'not-found' || errorObj?.message?.includes('NOT_FOUND')) {
       return NextResponse.json(
         { 
           error: 'Database not initialized. Please enable Firestore in Firebase Console.',

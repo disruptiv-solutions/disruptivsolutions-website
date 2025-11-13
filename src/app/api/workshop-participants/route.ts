@@ -9,9 +9,6 @@ import {
   query,
   orderBy,
   limit as firestoreLimit,
-  startAfter,
-  getDoc,
-  Timestamp,
 } from 'firebase/firestore';
 
 export const dynamic = 'force-dynamic';

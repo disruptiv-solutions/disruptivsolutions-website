@@ -46,7 +46,7 @@ async function getPollResults(): Promise<PollResponse> {
   }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const pollVotes = await getPollResults();
     const total = pollVotes.clueless + pollVotes.little + pollVotes.goodAmount + pollVotes.expert;

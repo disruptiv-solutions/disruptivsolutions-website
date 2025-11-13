@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
     const session = formData.get('session') as string;
 
     // Prepare webhook payload
-    const webhookData: any = {
+    const webhookData: Record<string, string> = {
       name,
       title,
       location,

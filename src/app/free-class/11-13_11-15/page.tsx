@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { trackButtonClick } from '@/lib/analytics';
+import { OverviewStep } from '@/components/class-registration/steps/OverviewStep';
 import { AboutMeStep } from '@/components/class-registration/steps/AboutMeStep';
 import { ParticipantIntroductionStep } from '@/components/class-registration/steps/ParticipantIntroductionStep';
 import { AIKnowledgePollStep } from '@/components/class-registration/steps/AIKnowledgePollStep';
@@ -24,8 +25,6 @@ import type { FormData } from '@/components/class-registration/types';
 export default function ClassRegistrationPage() {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [showTransition, setShowTransition] = useState(false);
-  const [transitionFadingOut, setTransitionFadingOut] = useState(false);
   
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -110,12 +109,6 @@ export default function ClassRegistrationPage() {
   const handleStepClick = (step: number) => {
     const isFormValid = formData.name && formData.title && formData.location && formData.bio && formData.email;
     
-    // Reset transition state when navigating away
-    if (showTransition) {
-      setShowTransition(false);
-      setTransitionFadingOut(false);
-    }
-    
     if (currentStep > step) {
       setCurrentStep(step);
       return;
@@ -143,32 +136,12 @@ export default function ClassRegistrationPage() {
         setCurrentStep(12);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
-    } else if (currentStep === 3) {
-      // Show transition animation before moving to slide 4
-      setShowTransition(true);
-      setTransitionFadingOut(false);
-      
-      // After 2 seconds, start fade out
-      setTimeout(() => {
-        setTransitionFadingOut(true);
-        // After fade out completes, move to slide 4
-        setTimeout(() => {
-          setShowTransition(false);
-          setTransitionFadingOut(false);
-          handleStepClick(4);
-        }, 500); // Wait for fade out animation to complete
-      }, 2000); // Show message for 2 seconds before fading out
     } else {
       handleStepClick(currentStep + 1);
     }
   };
 
   const handlePrevSlide = () => {
-    // Reset transition state when going back
-    if (currentStep === 4) {
-      setShowTransition(false);
-      setTransitionFadingOut(false);
-    }
     setCurrentStep((s) => Math.max(1, s - 1));
   };
 
@@ -201,15 +174,8 @@ export default function ClassRegistrationPage() {
                       Welcome! 👋
                     </h2>
                     <p className="text-xl md:text-2xl text-white">
-                      Let&apos;s build your AI-powered website together
+                      Let's build your AI-powered website together
                     </p>
-                    <div className="pt-8">
-                      <div className="inline-block bg-red-600/20 border-2 border-red-500/50 rounded-xl px-6 py-4 backdrop-blur-sm">
-                        <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-red-400 font-mono tracking-wide">
-                          ianmcdonald.ai/free-class/1
-                        </p>
-                      </div>
-                    </div>
                   </div>
                 </div>
               )}
@@ -219,7 +185,7 @@ export default function ClassRegistrationPage() {
                 <div className="animate-fade-in">
                   <div className="text-center max-w-5xl mx-auto">
                     <h2 className="text-5xl md:text-6xl font-bold text-white mb-12">
-                      What we&apos;ll do today
+                      What we'll do today
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       <div className="bg-zinc-900/40 border border-gray-800 rounded-2xl p-6 text-center hover:border-gray-700 transition-colors">
@@ -258,7 +224,7 @@ export default function ClassRegistrationPage() {
                         </div>
                         <h3 className="text-xl font-semibold text-white mb-2">Build Your Site</h3>
                         <p className="text-gray-400 text-sm">
-                          Copy the prompt into Lovable&apos;s platform
+                          Copy the prompt into Lovable's platform
                         </p>
                       </div>
                       
@@ -286,30 +252,15 @@ export default function ClassRegistrationPage() {
                 </div>
               )}
 
-              {/* Transition Animation between Slide 3 and 4 */}
-              {showTransition && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
-                  <div
-                    className={`transition-opacity duration-500 ${
-                      transitionFadingOut ? 'opacity-0' : 'opacity-100'
-                    }`}
-                  >
-                    <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white text-center animate-fade-in">
-                      If I can do it you can too.
-                    </h2>
-                  </div>
-                </div>
-              )}
-
               {/* Step 3: About Me */}
-              {currentStep === 3 && !showTransition && (
+              {currentStep === 3 && (
                 <div className="animate-fade-in">
                   <AboutMeStep />
                 </div>
               )}
 
               {/* Step 4: Participant Introduction */}
-              {currentStep === 4 && !showTransition && (
+              {currentStep === 4 && (
                 <div className="animate-fade-in">
                   <ParticipantIntroductionStep />
                 </div>
@@ -458,7 +409,7 @@ export default function ClassRegistrationPage() {
                           {' '}to build your website.
                         </p>
                         <p className="text-sm text-gray-500">
-                          We&apos;ll walk through this together in the next step.
+                          We'll walk through this together in the next step.
                         </p>
                       </div>
                     </aside>
