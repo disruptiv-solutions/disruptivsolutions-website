@@ -43,7 +43,7 @@ const Consulting: React.FC = () => {
     trackFormSubmission('consulting_request', {
       session_length: session.id === '20' ? '20min' : '90min',
     });
-
+    
     trackExternalLink(session.bookingUrl, session.analyticsLabel);
     window.open(session.bookingUrl, '_blank', 'noopener,noreferrer');
   };
@@ -68,9 +68,9 @@ const Consulting: React.FC = () => {
                 {sessions.map((session) => {
                   const isSelected = session.id === selectedSession;
                   return (
-                    <button
+                <button
                       key={session.id}
-                      type="button"
+                  type="button"
                       onClick={() => handleSelect(session.id)}
                       onKeyDown={(event) => {
                         if (event.key === 'Enter' || event.key === ' ') {
@@ -82,26 +82,26 @@ const Consulting: React.FC = () => {
                         isSelected
                           ? 'border-red-500 bg-red-500/10 shadow-lg shadow-red-500/20'
                           : 'border-transparent hover:border-red-400/60 hover:bg-red-500/5'
-                      }`}
+                  }`}
                       aria-pressed={isSelected}
                     >
                       <span className="text-sm text-gray-200 font-medium">{session.label}</span>
                       <span className={`text-xs font-semibold ${session.highlightClass}`}>
                         {session.description}
                       </span>
-                    </button>
+                </button>
                   );
                 })}
               </div>
-              <button
-                type="button"
+                <button
+                  type="button"
                 onClick={handleBook}
                 className="w-full px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white text-base font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50"
               >
                 Book Consulting Session
-              </button>
-            </div>
-            
+                </button>
+              </div>
+              
             {/* Right: Group Cohort - 3 columns */}
             <div className="lg:col-span-3 w-full">
               <div className="bg-gradient-to-br from-red-900/40 via-red-800/20 to-transparent border-2 border-red-600/30 rounded-3xl p-8 lg:p-10 h-full flex flex-col backdrop-blur-sm shadow-2xl shadow-red-900/20">
@@ -148,18 +148,18 @@ const Consulting: React.FC = () => {
                   </div>
                 </div>
 
-                <button
-                  type="button"
+              <button
+                type="button"
                   onClick={() => {
                     trackButtonClick('view_cohort', 'consulting_section');
                     trackExternalLink('https://ianmcdonald.ai/cohort', 'Group Cohort');
                     window.open('https://ianmcdonald.ai/cohort', '_blank', 'noopener,noreferrer');
                   }}
                   className="w-full px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white text-lg font-bold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-xl hover:shadow-red-600/60 mt-6"
-                >
+              >
                   Join Group Cohort →
-                </button>
-              </div>
+              </button>
+            </div>
             </div>
           </div>
         </div>

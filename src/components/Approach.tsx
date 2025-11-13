@@ -27,14 +27,14 @@ const Approach: React.FC = () => {
               Each version is better than the last. Small improvements compound fast.
             </p>
           </div>
-
+          
           <div>
             <h3 className="text-2xl font-bold text-white mb-4">Ship Real Value</h3>
             <p className="text-gray-300 text-lg leading-relaxed">
               Build features people use in the real world. Focus on practical outcomes.
             </p>
           </div>
-
+          
           <div>
             <h3 className="text-2xl font-bold text-white mb-4">Keep Going</h3>
             <p className="text-gray-300 text-lg leading-relaxed">
