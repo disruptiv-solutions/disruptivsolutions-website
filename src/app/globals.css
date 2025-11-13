@@ -190,12 +190,12 @@ h1, h2, h3, h4, h5, h6 {
     scroll-snap-stop: always;
   }
   
-  /* Prevent too much momentum scrolling in LaunchBox */
+  /* Prevent too much momentum scrolling in Launchbox */
   section#launchbox .sticky {
     overscroll-behavior-y: contain;
   }
   
-  /* Add scroll momentum damping on mobile for LaunchBox */
+  /* Add scroll momentum damping on mobile for Launchbox */
   @media (max-width: 1023px) {
     section#launchbox {
       scroll-behavior: smooth;
@@ -210,7 +210,7 @@ h1, h2, h3, h4, h5, h6 {
     }
   }
   
-  /* Ensure LaunchBox sticky container fits within viewport on mobile */
+  /* Ensure Launchbox sticky container fits within viewport on mobile */
   @media (max-width: 1023px) {
     section#launchbox .sticky {
       max-height: calc(100vh - 65px);

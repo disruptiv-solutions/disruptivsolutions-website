@@ -18,7 +18,7 @@ export const FinishStep: React.FC<FinishStepProps> = ({
       <h2 className="text-2xl font-bold text-white">All set!</h2>
       <p className="text-gray-300">
         You've generated your prompt and are ready for the next
-        stage: building in <strong>Firebase Studio</strong>.
+        stage: building in <strong>Lovable's app building platform</strong>.
         <br />
         You can go back to make edits or copy the prompt again.
       </p>

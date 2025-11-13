@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Navigation from './Navigation';
 import { trackFormSubmission, trackButtonClick } from '@/lib/analytics';
 
-const LaunchBoxWaitlist: React.FC = () => {
+const LaunchboxWaitlist: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -33,8 +33,8 @@ const LaunchBoxWaitlist: React.FC = () => {
     };
 
     try {
-      console.log('[LaunchBoxWaitlist] Form submission started');
-      console.log('[LaunchBoxWaitlist] Sending webhook data:', webhookData);
+      console.log('[LaunchboxWaitlist] Form submission started');
+      console.log('[LaunchboxWaitlist] Sending webhook data:', webhookData);
       
       const response = await fetch('/api/waitlist-signup', {
         method: 'POST',
@@ -44,7 +44,7 @@ const LaunchBoxWaitlist: React.FC = () => {
         body: JSON.stringify(webhookData),
       });
       
-      console.log('[LaunchBoxWaitlist] API response status:', response.status);
+      console.log('[LaunchboxWaitlist] API response status:', response.status);
 
       // Check if response is actually JSON
       const contentType = response.headers.get('content-type');
@@ -57,10 +57,10 @@ const LaunchBoxWaitlist: React.FC = () => {
         throw new Error(errorData.error || 'Failed to join waitlist. Please try again.');
       }
 
-      console.log('[LaunchBoxWaitlist] Webhook success');
+      console.log('[LaunchboxWaitlist] Webhook success');
       
       // Track waitlist signup
-      console.log('[LaunchBoxWaitlist] Tracking analytics event');
+      console.log('[LaunchboxWaitlist] Tracking analytics event');
       trackFormSubmission('waitlist_signup', {
         with_newsletter: subscribeNewsletter,
         page_location: '/waitlist',
@@ -68,7 +68,7 @@ const LaunchBoxWaitlist: React.FC = () => {
 
       // If newsletter checkbox is checked, also submit to newsletter webhook
       if (subscribeNewsletter) {
-        console.log('[LaunchBoxWaitlist] Also sending to newsletter webhook');
+        console.log('[LaunchboxWaitlist] Also sending to newsletter webhook');
         try {
           const newsletterResponse = await fetch('/api/newsletter-signup', {
             method: 'POST',
@@ -77,10 +77,10 @@ const LaunchBoxWaitlist: React.FC = () => {
             },
             body: JSON.stringify(webhookData),
           });
-          console.log('[LaunchBoxWaitlist] Newsletter webhook response:', newsletterResponse.status);
+          console.log('[LaunchboxWaitlist] Newsletter webhook response:', newsletterResponse.status);
           // Note: We don't fail the whole submission if newsletter signup fails
         } catch (newsletterError) {
-          console.error('[LaunchBoxWaitlist] Newsletter signup error:', newsletterError);
+          console.error('[LaunchboxWaitlist] Newsletter signup error:', newsletterError);
           // Continue anyway - waitlist signup was successful
         }
       }
@@ -109,7 +109,7 @@ const LaunchBoxWaitlist: React.FC = () => {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-              Join the LaunchBox Waitlist
+              Join the Launchbox Waitlist
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 leading-relaxed">
               Be first to get invites, resources, and early builds.
@@ -186,7 +186,7 @@ const LaunchBoxWaitlist: React.FC = () => {
               {submitSuccess && (
                 <div className="p-4 rounded-lg bg-green-900/30 border border-green-600/50">
                   <p className="text-green-400 font-medium">
-                    ✓ Successfully joined the waitlist! You&apos;ll receive updates about LaunchBox launches and early access.
+                    ✓ Successfully joined the waitlist! You&apos;ll receive updates about Launchbox launches and early access.
                   </p>
                 </div>
               )}
@@ -215,7 +215,7 @@ const LaunchBoxWaitlist: React.FC = () => {
                   {isSubmitting ? 'Joining Waitlist...' : 'Join the Waitlist'}
                 </button>
                 <p className="text-xs text-gray-500 text-center mt-4">
-                  By joining, you&apos;ll be notified when LaunchBox launches and get early access to resources.
+                  By joining, you&apos;ll be notified when Launchbox launches and get early access to resources.
                   <br />
                   By submitting this form, you agree to our{' '}
                   <a href="/privacy" className="text-red-500 hover:text-red-400 underline" target="_blank" rel="noopener noreferrer">
@@ -243,5 +243,5 @@ const LaunchBoxWaitlist: React.FC = () => {
   );
 };
 
-export default LaunchBoxWaitlist;
+export default LaunchboxWaitlist;
 

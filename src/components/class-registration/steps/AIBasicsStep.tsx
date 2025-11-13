@@ -27,7 +27,7 @@ export const AIBasicsStep: React.FC = () => {
           <strong>be</strong> our developer. We'll describe{' '}
           <strong>what</strong> we want in plain English (our
           "prompt"), and an AI platform like{' '}
-          <strong>Firebase Studio</strong> will write all that complex
+          <strong>Lovable's app building platform</strong> will write all that complex
           code <strong>for</strong> us.
         </p>
       </div>

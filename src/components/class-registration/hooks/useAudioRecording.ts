@@ -9,6 +9,14 @@ export const useAudioRecording = (onTranscriptUpdate: (text: string | ((prev: st
   const [useWebSpeechAPI, setUseWebSpeechAPI] = useState(false);
   const finalTranscriptRef = useRef<string>('');
   const baseBioRef = useRef<string>('');
+  const fallbackToOpenAIRef = useRef<((currentBio: string) => Promise<void>) | null>(null);
+
+  const isChromeBrowser = (): boolean => {
+    if (typeof window === 'undefined') return false;
+    // Check if Chrome (Chromium-based browsers)
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    return userAgent.includes('chrome') && !userAgent.includes('edge');
+  };
 
   const isWebSpeechAPIAvailable = (): boolean => {
     if (typeof window === 'undefined') return false;
@@ -17,7 +25,7 @@ export const useAudioRecording = (onTranscriptUpdate: (text: string | ((prev: st
     return !!SpeechRecognition;
   };
 
-  const startRecordingWithWebSpeech = (currentBio: string) => {
+  const startRecordingWithWebSpeech = (currentBio: string, fallbackFn?: (bio: string) => Promise<void>) => {
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
@@ -55,15 +63,35 @@ export const useAudioRecording = (onTranscriptUpdate: (text: string | ((prev: st
       }
     };
 
-    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+    recognition.onerror = async (event: SpeechRecognitionErrorEvent) => {
       console.error('Speech recognition error:', event.error, event.message);
-      if (event.error === 'no-speech' || event.error === 'audio-capture') {
-        throw new Error('Microphone not detected. Please check your microphone permissions.');
-      } else if (event.error === 'not-allowed') {
-        throw new Error('Microphone permission denied. Please allow microphone access.');
-      } else {
+      setIsRecording(false);
+      setSpeechRecognition(null);
+      
+      // Stop recognition to clean up
+      try {
         recognition.stop();
-        throw new Error('Speech recognition error. Falling back to OpenAI transcription.');
+      } catch (e) {
+        // Ignore errors when stopping
+      }
+      
+      // Fall back to OpenAI transcription for any error
+      if (fallbackFn) {
+        console.log('Falling back to OpenAI transcription due to Web Speech API error');
+        try {
+          await fallbackFn(baseBioRef.current);
+        } catch (err) {
+          console.error('OpenAI transcription also failed:', err);
+          setIsRecording(false);
+        }
+      } else if (fallbackToOpenAIRef.current) {
+        console.log('Falling back to OpenAI transcription due to Web Speech API error');
+        try {
+          await fallbackToOpenAIRef.current(baseBioRef.current);
+        } catch (err) {
+          console.error('OpenAI transcription also failed:', err);
+          setIsRecording(false);
+        }
       }
     };
 
@@ -195,20 +223,38 @@ export const useAudioRecording = (onTranscriptUpdate: (text: string | ((prev: st
 
   const startRecording = async (currentBio: string) => {
     try {
-      const isAvailable = isWebSpeechAPIAvailable();
+      const isChrome = isChromeBrowser();
+      const isWebSpeechAvailable = isWebSpeechAPIAvailable();
 
-      if (isAvailable) {
+      // Create fallback function
+      const fallbackToOpenAI = async (bio: string) => {
+        baseBioRef.current = bio;
+        await startRecordingWithOpenAI();
+      };
+      fallbackToOpenAIRef.current = fallbackToOpenAI;
+
+      // Use Web Speech API if Chrome and available
+      if (isChrome && isWebSpeechAvailable) {
         try {
-          startRecordingWithWebSpeech(currentBio);
+          console.log('Using Google Web Speech API (Chrome)');
+          startRecordingWithWebSpeech(currentBio, fallbackToOpenAI);
         } catch (error) {
-          console.log('Falling back to OpenAI transcription');
-          await startRecordingWithOpenAI();
+          console.error('Web Speech API failed, falling back to OpenAI:', error);
+          // Fall back to OpenAI if Web Speech fails
+          await fallbackToOpenAI(currentBio);
         }
       } else {
+        // Use OpenAI transcription for non-Chrome browsers or if Web Speech not available
+        if (!isChrome) {
+          console.log('Not Chrome browser, using OpenAI transcription API');
+        } else {
+          console.log('Web Speech API not available, using OpenAI transcription API');
+        }
         await startRecordingWithOpenAI();
       }
     } catch (error) {
       console.error('Error starting recording:', error);
+      setIsRecording(false);
       throw error;
     }
   };

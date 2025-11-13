@@ -20,13 +20,13 @@ const rosario = Rosario({
 });
 
 export const metadata: Metadata = {
-  title: "Ian McDonald — Build Real Apps Without a CS Degree | LaunchBox",
+  title: "Ian McDonald — Build Real Apps Without a CS Degree | Launchbox",
   description: "From barely making rent to building an AI platform with 1,500+ active users. I teach others to build their dreams the same way I built mine. No jargon, no fluff—just real apps.",
-  keywords: ["Ian McDonald", "LaunchBox", "Launch Box", "AI for Business", "AI product builder", "build without CS degree", "practical AI", "AI training", "no-code AI", "ChatterCard", "Disruptiv Solutions"],
+  keywords: ["Ian McDonald", "Launchbox", "Launch Box", "AI for Business", "AI product builder", "build without CS degree", "practical AI", "AI training", "no-code AI", "ChatterCard", "Disruptiv Solutions"],
   authors: [{ name: "Ian McDonald" }],
   openGraph: {
     title: "Ian McDonald — Build Real Apps Without a CS Degree",
-    description: "From barely making rent to building an AI platform with 1,500+ active users. Join LaunchBox and build your first app in 30 days.",
+    description: "From barely making rent to building an AI platform with 1,500+ active users. Join Launchbox and build your first app in 30 days.",
     type: "website",
   },
 };

@@ -17,7 +17,7 @@ export const OverviewStep: React.FC<OverviewStepProps> = ({ onNext }) => {
           Use AI to enhance your bio and generate a custom prompt.
         </li>
         <li>
-          Copy that prompt into <strong>Firebase Studio</strong> to
+          Copy that prompt into <strong>Lovable's app building platform</strong> to
           build your site.
         </li>
         <li>Make a quick edit and deploy your site to the web!</li>

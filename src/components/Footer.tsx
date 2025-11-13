@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
               Work
             </a>
             <a href="#launchbox" className="hover:text-white transition-colors">
-              LaunchBox
+              Launchbox
             </a>
             <a href="/privacy" className="hover:text-white transition-colors">
               Privacy Policy

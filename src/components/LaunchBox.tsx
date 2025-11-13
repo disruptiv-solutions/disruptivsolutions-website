@@ -4,7 +4,7 @@
 import React from 'react';
 import { trackFormSubmission, trackButtonClick } from '@/lib/analytics';
 
-const LaunchBox: React.FC = () => {
+const Launchbox: React.FC = () => {
   const [activeCard, setActiveCard] = React.useState(0);
   const sectionRef = React.useRef<HTMLDivElement>(null);
   const lastProgressRef = React.useRef(0);
@@ -148,7 +148,7 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
 
   return (
     <div className="h-full flex flex-col">
-      {/* Section 1: LaunchBox Waitlist */}
+      {/* Section 1: Launchbox Waitlist */}
       <div
         className={`${activeCard === 0 ? 'flex-1' : 'h-28'} bg-white overflow-hidden transition-all duration-700 ease-in-out cursor-pointer`}
       >
@@ -157,7 +157,7 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
             {activeCard === 0 ? (
               <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8">
                 <div>
-                  <h3 className="text-3xl md:text-4xl font-bold text-black mb-3">Join the LaunchBox Waitlist</h3>
+                  <h3 className="text-3xl md:text-4xl font-bold text-black mb-3">Join the Launchbox Waitlist</h3>
                   <p className="text-gray-700 mb-5">Be first to get invites, resources, and early builds.</p>
                   <button
                     onClick={(e) => { e.stopPropagation(); onWaitlist(); }}
@@ -176,7 +176,7 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                     />
                     <img
                       src={rocketFrame === 0 ? '/rocket.png' : '/rocket2.png'}
-                      alt="LaunchBox"
+                      alt="Launchbox"
                       className="absolute inset-0 w-full h-full object-contain drop-shadow-[0_10px_30px_rgba(220,38,38,0.35)]"
                     />
                   </div>
@@ -184,7 +184,7 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
               </div>
             ) : (
               <div className="flex items-center gap-4">
-                <h3 className="text-2xl md:text-3xl font-bold text-black">Join the LaunchBox Waitlist</h3>
+                <h3 className="text-2xl md:text-3xl font-bold text-black">Join the Launchbox Waitlist</h3>
                 <span className="text-gray-600">→</span>
               </div>
             )}
@@ -276,8 +276,8 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                   };
 
                   try {
-                    console.log('[LaunchBox:Newsletter] Form submission started');
-                    console.log('[LaunchBox:Newsletter] Sending webhook data:', webhookData);
+                    console.log('[Launchbox:Newsletter] Form submission started');
+                    console.log('[Launchbox:Newsletter] Sending webhook data:', webhookData);
                     
                     const response = await fetch('/api/newsletter-signup', {
                       method: 'POST',
@@ -287,7 +287,7 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                       body: JSON.stringify(webhookData),
                     });
                     
-                    console.log('[LaunchBox:Newsletter] API response status:', response.status);
+                    console.log('[Launchbox:Newsletter] API response status:', response.status);
 
                     // Check if response is actually JSON
                     const contentType = response.headers.get('content-type');
@@ -300,10 +300,10 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                       throw new Error(errorData.error || 'Failed to subscribe. Please try again.');
                     }
 
-                    console.log('[LaunchBox:Newsletter] Webhook success');
+                    console.log('[Launchbox:Newsletter] Webhook success');
                     
-                    // Track newsletter signup from LaunchBox card
-                    console.log('[LaunchBox:Newsletter] Tracking analytics event');
+                    // Track newsletter signup from Launchbox card
+                    console.log('[Launchbox:Newsletter] Tracking analytics event');
                     trackFormSubmission('newsletter_signup', {
                       page_location: '/',
                       source: 'launchbox_card',
@@ -414,4 +414,4 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
   );
 };
 
-export default LaunchBox;
+export default Launchbox;

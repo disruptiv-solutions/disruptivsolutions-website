@@ -14,19 +14,19 @@ export const PromptStep: React.FC<PromptStepProps> = ({
   onEdit,
 }) => {
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-2xl font-bold text-white">
+    <div className="space-y-4">
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-xl font-bold text-white">
           Generated Prompt
         </h2>
         <button
           onClick={onCopy}
-          className="px-4 py-2 bg-zinc-800 text-white rounded-lg border border-gray-700 hover:bg-zinc-700 transition-colors flex items-center gap-2"
+          className="px-3 py-1.5 bg-zinc-800 text-white text-sm rounded-lg border border-gray-700 hover:bg-zinc-700 transition-colors flex items-center gap-2"
         >
           {copied ? (
             <>
               <svg
-                className="w-5 h-5 text-green-400"
+                className="w-4 h-4 text-green-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -43,7 +43,7 @@ export const PromptStep: React.FC<PromptStepProps> = ({
           ) : (
             <>
               <svg
-                className="w-5 h-5"
+                className="w-4 h-4"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -60,22 +60,22 @@ export const PromptStep: React.FC<PromptStepProps> = ({
           )}
         </button>
       </div>
-      <div className="bg-black/50 rounded-lg border border-gray-700 p-6">
-        <pre className="text-gray-300 whitespace-pre-wrap font-mono text-sm leading-relaxed">
+      <div className="bg-black/50 rounded-lg border border-gray-700 p-4">
+        <pre className="text-gray-300 whitespace-pre-wrap font-mono text-xs leading-relaxed">
           {generatedPrompt}
         </pre>
       </div>
-      <p className="text-sm text-gray-400 mt-4">
+      <p className="text-xs text-gray-400 mt-3">
         Now, copy this prompt. We will go to{' '}
-        <strong>Firebase Studio</strong> together and paste this in to
+        <strong>Lovable's app building platform</strong> together and paste this in to
         build your website!
       </p>
 
-      <div className="pt-4 border-t border-gray-700">
+      <div className="pt-3 border-t border-gray-700">
         <button
           type="button"
           onClick={onEdit}
-          className="w-full px-8 py-4 bg-zinc-800 text-white font-bold rounded-xl hover:bg-zinc-700 transition-all duration-300 border border-gray-700 hover:border-gray-600 text-lg"
+          className="w-full px-6 py-3 bg-zinc-800 text-white font-semibold rounded-xl hover:bg-zinc-700 transition-all duration-300 border border-gray-700 hover:border-gray-600 text-base"
         >
           Edit Form & Generate Again
         </button>

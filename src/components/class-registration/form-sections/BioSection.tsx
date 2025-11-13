@@ -27,7 +27,7 @@ export const BioSection: React.FC<BioSectionProps> = ({
     <div>
       <label
         htmlFor="bio"
-        className="block text-sm text-gray-400 mb-2"
+        className="block text-xs text-gray-400 mb-1.5"
       >
         Bio <span className="text-red-500">*</span>
         <span className="text-gray-500 text-xs ml-2">
@@ -41,14 +41,14 @@ export const BioSection: React.FC<BioSectionProps> = ({
           value={bio}
           onChange={(e) => onBioChange(e.target.value)}
           required
-          rows={6}
-          className="w-full bg-transparent text-white px-4 py-3 pb-3 focus:outline-none transition-all resize-y overflow-y-auto flex-1 min-h-[150px] seamless-scrollbar"
+          rows={4}
+          className="w-full bg-transparent text-white px-3 py-2 pb-2 text-sm focus:outline-none transition-all resize-y overflow-y-auto flex-1 min-h-[120px] seamless-scrollbar"
           placeholder="Tell us about your company, what services or products you offer, your background, and what makes you unique..."
         />
         {/* Footer with controls */}
-        <div className="px-3 py-3 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            {/* Pause/Stop Button */}
+        <div className="px-3 py-2 flex items-center justify-between gap-2">
+          {/* Microphone button commented out temporarily */}
+          {/* <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={isRecording ? onStopRecording : onStartRecording}
@@ -93,7 +93,6 @@ export const BioSection: React.FC<BioSectionProps> = ({
                 </svg>
               )}
             </button>
-            {/* Recording Indicator */}
             {isRecording && (
               <div className="px-2 py-1 bg-red-600/20 border border-red-600/50 rounded text-xs text-red-400 flex items-center gap-1.5">
                 <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
@@ -105,7 +104,7 @@ export const BioSection: React.FC<BioSectionProps> = ({
                 Transcribing...
               </div>
             )}
-          </div>
+          </div> */}
           {/* AI Enhance Button */}
           <button
             type="button"

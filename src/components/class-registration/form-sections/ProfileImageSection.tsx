@@ -37,7 +37,7 @@ export const ProfileImageSection: React.FC<ProfileImageSectionProps> = ({
 
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-bold text-white mb-2">
+      <h2 className="text-xl font-bold text-white mb-2">
         Profile Image (Optional)
       </h2>
       <p className="text-sm text-gray-400 mb-4">
@@ -60,7 +60,7 @@ export const ProfileImageSection: React.FC<ProfileImageSectionProps> = ({
             value={profileImageUrl}
             onChange={(e) => onUrlChange(e.target.value)}
             disabled={!!profileImageFile}
-            className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-10 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             placeholder="https://example.com/image.jpg"
           />
         </div>

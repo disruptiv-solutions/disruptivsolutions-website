@@ -22,15 +22,11 @@ export const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({
   onEmailChange,
 }) => {
   return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-white mb-2">
-        Your Information
-      </h2>
-
+    <div className="space-y-4">
       <div>
         <label
           htmlFor="name"
-          className="block text-sm text-gray-400 mb-2"
+          className="block text-xs text-gray-400 mb-1.5"
         >
           Name <span className="text-red-500">*</span>
         </label>
@@ -40,7 +36,7 @@ export const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({
           value={name}
           onChange={(e) => onNameChange(e.target.value)}
           required
-          className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
+          className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-10 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
           placeholder="Jane Doe"
         />
       </div>
@@ -48,7 +44,7 @@ export const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({
       <div>
         <label
           htmlFor="title"
-          className="block text-sm text-gray-400 mb-2"
+          className="block text-xs text-gray-400 mb-1.5"
         >
           Title <span className="text-red-500">*</span>
         </label>
@@ -58,7 +54,7 @@ export const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({
           value={title}
           onChange={(e) => onTitleChange(e.target.value)}
           required
-          className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
+          className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-10 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
           placeholder="Software Engineer, Product Manager, etc."
         />
       </div>
@@ -66,7 +62,7 @@ export const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({
       <div>
         <label
           htmlFor="location"
-          className="block text-sm text-gray-400 mb-2"
+          className="block text-xs text-gray-400 mb-1.5"
         >
           Location <span className="text-red-500">*</span>
           <span className="text-gray-500 text-xs ml-2">
@@ -79,7 +75,7 @@ export const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({
           value={location}
           onChange={(e) => onLocationChange(e.target.value)}
           required
-          className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
+          className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-10 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
           placeholder="New York, NY or London, UK"
         />
       </div>
@@ -87,7 +83,7 @@ export const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({
       <div>
         <label
           htmlFor="email"
-          className="block text-sm text-gray-400 mb-2"
+          className="block text-xs text-gray-400 mb-1.5"
         >
           Email <span className="text-red-500">*</span>
         </label>
@@ -97,7 +93,7 @@ export const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({
           value={email}
           onChange={(e) => onEmailChange(e.target.value)}
           required
-          className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
+          className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-10 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
           placeholder="jane@example.com"
         />
       </div>

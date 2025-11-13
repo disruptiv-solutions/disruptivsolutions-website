@@ -51,15 +51,15 @@ export const AdditionalInfoSection: React.FC<AdditionalInfoSectionProps> = ({
   };
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-white mb-2">
+    <div className="space-y-4">
+      <h2 className="text-xl font-bold text-white mb-2">
         Additional Information
       </h2>
 
       <div>
         <label
           htmlFor="phone"
-          className="block text-sm text-gray-400 mb-2"
+          className="block text-xs text-gray-400 mb-1.5"
         >
           Phone{' '}
           <span className="text-gray-500 text-xs">(optional)</span>
@@ -69,7 +69,7 @@ export const AdditionalInfoSection: React.FC<AdditionalInfoSectionProps> = ({
           type="tel"
           value={phone}
           onChange={(e) => onPhoneChange(e.target.value)}
-          className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
+          className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-10 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
           placeholder="(555) 555-5555"
         />
       </div>
@@ -77,7 +77,7 @@ export const AdditionalInfoSection: React.FC<AdditionalInfoSectionProps> = ({
       <div>
         <label
           htmlFor="website"
-          className="block text-sm text-gray-400 mb-2"
+          className="block text-xs text-gray-400 mb-1.5"
         >
           Website{' '}
           <span className="text-gray-500 text-xs">(optional)</span>
@@ -87,7 +87,7 @@ export const AdditionalInfoSection: React.FC<AdditionalInfoSectionProps> = ({
           type="url"
           value={website}
           onChange={(e) => onWebsiteChange(e.target.value)}
-          className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
+          className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-10 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
           placeholder="https://yourwebsite.com"
         />
       </div>
@@ -95,7 +95,7 @@ export const AdditionalInfoSection: React.FC<AdditionalInfoSectionProps> = ({
       <div>
         <label
           htmlFor="company"
-          className="block text-sm text-gray-400 mb-2"
+          className="block text-xs text-gray-400 mb-1.5"
         >
           Company Name{' '}
           <span className="text-gray-500 text-xs">(optional)</span>
@@ -105,7 +105,7 @@ export const AdditionalInfoSection: React.FC<AdditionalInfoSectionProps> = ({
           type="text"
           value={company}
           onChange={(e) => onCompanyChange(e.target.value)}
-          className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
+          className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-10 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
           placeholder="Acme Inc."
         />
       </div>
@@ -113,7 +113,7 @@ export const AdditionalInfoSection: React.FC<AdditionalInfoSectionProps> = ({
       <div>
         <label
           htmlFor="industry"
-          className="block text-sm text-gray-400 mb-2"
+          className="block text-xs text-gray-400 mb-1.5"
         >
           Industry{' '}
           <span className="text-gray-500 text-xs">(optional)</span>
@@ -123,7 +123,7 @@ export const AdditionalInfoSection: React.FC<AdditionalInfoSectionProps> = ({
           type="text"
           value={industry}
           onChange={(e) => onIndustryChange(e.target.value)}
-          className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
+          className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-10 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
           placeholder="Technology, Healthcare, Finance, etc."
         />
       </div>

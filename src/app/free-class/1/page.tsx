@@ -2,14 +2,21 @@
 
 import React, { useState } from 'react';
 import { trackButtonClick } from '@/lib/analytics';
-import { Stepper } from '@/components/class-registration/Stepper';
 import { OverviewStep } from '@/components/class-registration/steps/OverviewStep';
-import { IntroductionStep } from '@/components/class-registration/steps/IntroductionStep';
-import { WhyWorkshopStep } from '@/components/class-registration/steps/WhyWorkshopStep';
-import { AIBasicsStep } from '@/components/class-registration/steps/AIBasicsStep';
+import { AboutMeStep } from '@/components/class-registration/steps/AboutMeStep';
+import { ParticipantIntroductionStep } from '@/components/class-registration/steps/ParticipantIntroductionStep';
+import { AIKnowledgePollStep } from '@/components/class-registration/steps/AIKnowledgePollStep';
+import { WhyWorkshopStep1 } from '@/components/class-registration/steps/WhyWorkshopStep1';
+import { WhyWorkshopStep2 } from '@/components/class-registration/steps/WhyWorkshopStep2';
+import { WhyWorkshopStep3 } from '@/components/class-registration/steps/WhyWorkshopStep3';
+import { TheConceptStep } from '@/components/class-registration/steps/TheConceptStep';
+import { WhatYoullDoStep } from '@/components/class-registration/steps/WhatYoullDoStep';
 import { FormStep } from '@/components/class-registration/steps/FormStep';
 import { PromptStep } from '@/components/class-registration/steps/PromptStep';
-import { FinishStep } from '@/components/class-registration/steps/FinishStep';
+import { CelebrationStep } from '@/components/class-registration/steps/CelebrationStep';
+import { WhatsNextStep } from '@/components/class-registration/steps/WhatsNextStep';
+import { GoDeeperStep } from '@/components/class-registration/steps/GoDeeperStep';
+import { ThankYouStep } from '@/components/class-registration/steps/ThankYouStep';
 import { useAudioRecording } from '@/components/class-registration/hooks/useAudioRecording';
 import { useBioEnhancement } from '@/components/class-registration/hooks/useBioEnhancement';
 import { usePromptGeneration } from '@/components/class-registration/hooks/usePromptGeneration';
@@ -18,6 +25,8 @@ import type { FormData } from '@/components/class-registration/types';
 export default function ClassRegistrationPage() {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [showTransition, setShowTransition] = useState(false);
+  const [transitionFadingOut, setTransitionFadingOut] = useState(false);
   
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -94,7 +103,7 @@ export default function ClassRegistrationPage() {
     e.preventDefault();
     const success = await generatePrompt(formData);
     if (success) {
-      setCurrentStep(4);
+      setCurrentStep(12);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -102,39 +111,65 @@ export default function ClassRegistrationPage() {
   const handleStepClick = (step: number) => {
     const isFormValid = formData.name && formData.title && formData.location && formData.bio && formData.email;
     
+    // Reset transition state when navigating away
+    if (showTransition) {
+      setShowTransition(false);
+      setTransitionFadingOut(false);
+    }
+    
     if (currentStep > step) {
       setCurrentStep(step);
       return;
     }
     
-    if (step > 5 && !isFormValid) {
-      setCurrentStep(5);
+    if (step > 11 && !isFormValid) {
+      setCurrentStep(11);
       return;
     }
     
-    if (step > 6 && !generatedPrompt) {
-      setCurrentStep(5);
+    if (step > 12 && !generatedPrompt) {
+      setCurrentStep(11);
       return;
     }
     
-    if (step <= 7) {
+    if (step <= 16) {
       setCurrentStep(step);
     }
   };
 
   const handleNextSlide = async () => {
-    if (currentStep === 5) {
+    if (currentStep === 11) {
       const success = await generatePrompt(formData);
       if (success) {
-        setCurrentStep(6);
+        setCurrentStep(12);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
+    } else if (currentStep === 3) {
+      // Show transition animation before moving to slide 4
+      setShowTransition(true);
+      setTransitionFadingOut(false);
+      
+      // After 2 seconds, start fade out
+      setTimeout(() => {
+        setTransitionFadingOut(true);
+        // After fade out completes, move to slide 4
+        setTimeout(() => {
+          setShowTransition(false);
+          setTransitionFadingOut(false);
+          handleStepClick(4);
+        }, 500); // Wait for fade out animation to complete
+      }, 2000); // Show message for 2 seconds before fading out
     } else {
       handleStepClick(currentStep + 1);
     }
   };
 
   const handlePrevSlide = () => {
+    // Reset transition state when going back
+    if (currentStep === 4) {
+      setShowTransition(false);
+      setTransitionFadingOut(false);
+    }
     setCurrentStep((s) => Math.max(1, s - 1));
   };
 
@@ -146,111 +181,205 @@ export default function ClassRegistrationPage() {
       <div className="relative h-screen flex flex-col">
         {/* Header with Logo/Title */}
         <header className="absolute left-0 right-0 z-10 px-8 py-6 flex items-center justify-between pointer-events-none top-16 md:top-[4.5rem]">
-          <div className="pointer-events-auto">
-            {currentStep === 1 && (
-              <>
-                <h1 className="text-2xl font-bold text-white">
-                  Digital Business Card Generator
-                </h1>
-                <p className="text-sm text-gray-400 mt-1">
-                  AI-Powered Website Builder Workshop
-                </p>
-              </>
-            )}
-          </div>
+          <div className="pointer-events-auto" />
           <div className="text-right pointer-events-auto">
             <div className="text-sm text-gray-400">
-              Slide {currentStep} of 7
+              Slide {currentStep} of 16
             </div>
           </div>
         </header>
 
         {/* Main Slide Content */}
-        <main className="flex-1 flex items-center justify-center px-8 py-24">
+        <main className="flex-1 flex items-center justify-center px-8 py-12 md:py-16 overflow-y-auto">
           <div className="w-full max-w-7xl">
             {/* Slide Transition Container */}
             <div className="transition-all duration-500 ease-in-out">
-              {/* Step 1: Overview */}
+              {/* Step 1: Welcome */}
               {currentStep === 1 && (
                 <div className="animate-fade-in">
-                  <div className="text-center max-w-4xl mx-auto">
-                    <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+                  <div className="text-center max-w-4xl mx-auto space-y-6">
+                    <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
                       Welcome! 👋
                     </h2>
-                    <p className="text-xl md:text-2xl text-white mb-12">
+                    <p className="text-xl md:text-2xl text-white">
                       Let's build your AI-powered website together
                     </p>
-                    <div className="max-w-3xl mx-auto bg-zinc-900/60 rounded-3xl border border-gray-800 p-12">
-                      <h3 className="text-2xl font-bold text-white mb-6">
-                        What we'll do today
-                      </h3>
-                      <ul className="list-disc list-inside text-gray-300 space-y-3 text-left text-lg">
-                        <li>Briefly learn how AI app development works.</li>
-                        <li>Record or type your professional bio and details.</li>
-                        <li>
-                          Use AI to enhance your bio and generate a custom prompt.
-                        </li>
-                        <li>
-                          Copy that prompt into <strong>Firebase Studio</strong> to
-                          build your site.
-                        </li>
-                        <li>Make a quick edit and deploy your site to the web!</li>
-                      </ul>
+                    <div className="pt-8">
+                      <div className="inline-block bg-red-600/20 border-2 border-red-500/50 rounded-xl px-6 py-4 backdrop-blur-sm">
+                        <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-red-400 font-mono tracking-wide">
+                          ianmcdonald.ai/free-class/1
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* Step 2: Introduction */}
+              {/* Step 2: Agenda */}
               {currentStep === 2 && (
-                <div className="animate-fade-in pb-44">
-                  <IntroductionStep />
+                <div className="animate-fade-in">
+                  <div className="text-center max-w-5xl mx-auto">
+                    <h2 className="text-5xl md:text-6xl font-bold text-white mb-12">
+                      What we'll do today
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      <div className="bg-zinc-900/40 border border-gray-800 rounded-2xl p-6 text-center hover:border-gray-700 transition-colors">
+                        <div className="w-16 h-16 mx-auto mb-4">
+                          <img src="/icons/brain.png" alt="Brain" className="w-full h-full object-contain" />
+                        </div>
+                        <h3 className="text-xl font-semibold text-white mb-2">Learn AI Basics</h3>
+                        <p className="text-gray-400 text-sm">
+                          Understand how AI app development works
+                        </p>
+                      </div>
+                      
+                      <div className="bg-zinc-900/40 border border-gray-800 rounded-2xl p-6 text-center hover:border-gray-700 transition-colors">
+                        <div className="w-16 h-16 mx-auto mb-4">
+                          <img src="/icons/pencil.png" alt="Pencil" className="w-full h-full object-contain" />
+                        </div>
+                        <h3 className="text-xl font-semibold text-white mb-2">Share Your Story</h3>
+                        <p className="text-gray-400 text-sm">
+                          Record or type your professional bio and details
+                        </p>
+                      </div>
+                      
+                      <div className="bg-zinc-900/40 border border-gray-800 rounded-2xl p-6 text-center hover:border-gray-700 transition-colors">
+                        <div className="w-16 h-16 mx-auto mb-4">
+                          <img src="/icons/stars.png" alt="Stars" className="w-full h-full object-contain" />
+                        </div>
+                        <h3 className="text-xl font-semibold text-white mb-2">AI Enhancement</h3>
+                        <p className="text-gray-400 text-sm">
+                          Let AI enhance your bio and generate a custom prompt
+                        </p>
+                      </div>
+                      
+                      <div className="bg-zinc-900/40 border border-gray-800 rounded-2xl p-6 text-center hover:border-gray-700 transition-colors">
+                        <div className="w-16 h-16 mx-auto mb-4">
+                          <img src="/icons/rocket.png" alt="Rocket" className="w-full h-full object-contain" />
+                        </div>
+                        <h3 className="text-xl font-semibold text-white mb-2">Build Your Site</h3>
+                        <p className="text-gray-400 text-sm">
+                          Copy the prompt into Lovable's platform
+                        </p>
+                      </div>
+                      
+                      <div className="bg-zinc-900/40 border border-gray-800 rounded-2xl p-6 text-center hover:border-gray-700 transition-colors">
+                        <div className="w-16 h-16 mx-auto mb-4">
+                          <img src="/icons/eisel.png" alt="Easel" className="w-full h-full object-contain" />
+                        </div>
+                        <h3 className="text-xl font-semibold text-white mb-2">Quick Edit</h3>
+                        <p className="text-gray-400 text-sm">
+                          Make a quick edit to personalize your site
+                        </p>
+                      </div>
+                      
+                      <div className="bg-zinc-900/40 border border-gray-800 rounded-2xl p-6 text-center hover:border-gray-700 transition-colors">
+                        <div className="w-16 h-16 mx-auto mb-4">
+                          <img src="/icons/globe.png" alt="Globe" className="w-full h-full object-contain" />
+                        </div>
+                        <h3 className="text-xl font-semibold text-white mb-2">Deploy Live</h3>
+                        <p className="text-gray-400 text-sm">
+                          Publish your site to the web instantly
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
 
-              {/* Step 3: Why Workshop */}
-              {currentStep === 3 && (
-                <div className="animate-fade-in">
-                  <WhyWorkshopStep />
-                </div>
-              )}
-
-              {/* Step 4: AI Basics */}
-              {currentStep === 4 && (
-                <div className="animate-fade-in">
-                  <div className="text-center mb-12">
-                    <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
-                      Understanding AI Development
+              {/* Transition Animation between Slide 3 and 4 */}
+              {showTransition && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
+                  <div
+                    className={`transition-opacity duration-500 ${
+                      transitionFadingOut ? 'opacity-0' : 'opacity-100'
+                    }`}
+                  >
+                    <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white text-center animate-fade-in">
+                      If I can do it you can too.
                     </h2>
                   </div>
-                  <div className="max-w-4xl mx-auto bg-zinc-900/60 rounded-3xl border border-gray-800 p-12">
-                    <AIBasicsStep />
-                  </div>
                 </div>
               )}
 
-              {/* Step 5: Form */}
+              {/* Step 3: About Me */}
+              {currentStep === 3 && !showTransition && (
+                <div className="animate-fade-in">
+                  <AboutMeStep />
+                </div>
+              )}
+
+              {/* Step 4: Participant Introduction */}
+              {currentStep === 4 && !showTransition && (
+                <div className="animate-fade-in">
+                  <ParticipantIntroductionStep />
+                </div>
+              )}
+
+              {/* Step 5: AI Knowledge Poll */}
               {currentStep === 5 && (
-                <div className="animate-fade-in pb-44">
-                  <div className="flex flex-col lg:flex-row gap-12 items-start lg:items-stretch">
-                    <aside className="w-full lg:max-w-sm xl:max-w-md flex flex-col gap-6 pb-12">
-                      <div className="space-y-3">
-                        <h2 className="text-4xl md:text-5xl font-bold text-white">
+                <div className="animate-fade-in">
+                  <AIKnowledgePollStep />
+                </div>
+              )}
+
+              {/* Step 6: Why Workshop - Part 1 */}
+              {currentStep === 6 && (
+                <div className="animate-fade-in">
+                  <WhyWorkshopStep1 />
+                </div>
+              )}
+
+              {/* Step 7: Why Workshop - Part 2 */}
+              {currentStep === 7 && (
+                <div className="animate-fade-in">
+                  <WhyWorkshopStep2 />
+                </div>
+              )}
+
+              {/* Step 8: The Concept */}
+              {currentStep === 8 && (
+                <div className="animate-fade-in">
+                  <TheConceptStep />
+                </div>
+              )}
+
+              {/* Step 9: Why Workshop - Part 3 */}
+              {currentStep === 9 && (
+                <div className="animate-fade-in">
+                  <WhyWorkshopStep3 />
+                </div>
+              )}
+
+              {/* Step 10: What You'll Do Today */}
+              {currentStep === 10 && (
+                <div className="animate-fade-in">
+                  <WhatYoullDoStep />
+                </div>
+              )}
+
+              {/* Step 11: Form */}
+              {currentStep === 11 && (
+                <div className="animate-fade-in">
+                  <div className="flex flex-col lg:flex-row gap-8 items-start lg:items-stretch">
+                    <aside className="w-full lg:max-w-xs xl:max-w-sm flex flex-col gap-4">
+                      <div className="space-y-2">
+                        <h2 className="text-3xl md:text-4xl font-bold text-white">
                           Your Information
                         </h2>
-                        <p className="text-lg text-gray-400">
+                        <p className="text-base text-gray-400">
                           Fill in your details to generate your custom prompt.
                           These answers feed the AI so the more detailed you are,
                           the better your website will reflect you.
                         </p>
                       </div>
 
-                      <div className="bg-zinc-900/60 border border-gray-800 rounded-2xl p-6 flex-1 flex flex-col">
-                        <div className="space-y-5">
-                          <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-300">
+                      <div className="bg-zinc-900/60 border border-gray-800 rounded-2xl p-5 flex-1 flex flex-col">
+                        <div className="space-y-4">
+                          <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-300">
                             What to include
                           </h3>
-                          <ul className="space-y-3 text-gray-300 text-sm leading-relaxed">
+                          <ul className="space-y-2.5 text-gray-300 text-xs leading-relaxed">
                             <li>
                               <span className="text-white font-semibold">Name &amp; Title</span>
                               <span className="block text-gray-400">
@@ -278,7 +407,7 @@ export default function ClassRegistrationPage() {
                             </li>
                           </ul>
                         </div>
-                        <div className="pt-4 mt-auto border-t border-gray-800 text-sm text-gray-300">
+                        <div className="pt-3 mt-auto border-t border-gray-800 text-xs text-gray-300">
                           Need a starting point? Start typing or press the microphone button to talk through your bio,
                           then use <span className="text-red-400 font-semibold">AI Enhance</span> to polish it.
                         </div>
@@ -286,7 +415,7 @@ export default function ClassRegistrationPage() {
                     </aside>
 
                     <div className="flex-1 w-full">
-                      <div className="bg-zinc-900/60 rounded-3xl border border-gray-800 p-8 lg:p-12 max-h-[calc(100vh-260px)] overflow-y-auto pb-24">
+                      <div className="bg-zinc-900/60 rounded-3xl border border-gray-800 p-6 lg:p-8 max-h-[calc(100vh-200px)] overflow-y-auto">
                         <FormStep
                           formData={formData}
                           imagePreview={imagePreview}
@@ -294,7 +423,6 @@ export default function ClassRegistrationPage() {
                           transcriptionText={transcriptionText}
                           isEnhancingBio={isEnhancingBio}
                           bioEnhanceError={bioEnhanceError}
-                          isGeneratingPrompt={isGeneratingPrompt}
                           promptError={promptError}
                           onFormDataChange={handleFormDataChange}
                           onImagePreviewChange={setImagePreview}
@@ -309,26 +437,40 @@ export default function ClassRegistrationPage() {
                 </div>
               )}
 
-              {/* Step 6: Prompt */}
-              {currentStep === 6 && generatedPrompt && (
-                <div className="animate-fade-in pb-44">
-                  <div className="flex flex-col lg:flex-row gap-12 items-start lg:items-stretch">
-                    <aside className="w-full lg:max-w-sm xl:max-w-md space-y-4">
-                      <h2 className="text-4xl md:text-5xl font-bold text-white">
+              {/* Step 12: Prompt */}
+              {currentStep === 12 && generatedPrompt && (
+                <div className="animate-fade-in">
+                  <div className="flex flex-col lg:flex-row gap-8 items-start lg:items-stretch">
+                    <aside className="w-full lg:max-w-xs xl:max-w-sm space-y-4 flex flex-col justify-center">
+                      <h2 className="text-3xl md:text-4xl font-bold text-white">
                         Your Custom Prompt 🎉
                       </h2>
-                      <p className="text-lg text-gray-400">
-                        Copy this and paste it into Firebase Studio
-                      </p>
+                      <div className="space-y-3">
+                        <p className="text-base text-gray-400">
+                          Copy this prompt and paste it into{' '}
+                          <a 
+                            href="https://lovable.dev" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-red-400 hover:text-red-300 underline font-semibold"
+                          >
+                            lovable.dev
+                          </a>
+                          {' '}to build your website.
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          We'll walk through this together in the next step.
+                        </p>
+                      </div>
                     </aside>
                     
                     <div className="flex-1 w-full">
-                      <div className="bg-zinc-900/60 rounded-3xl border border-gray-800 p-12 max-h-[calc(100vh-240px)] overflow-y-auto">
+                      <div className="bg-zinc-900/60 rounded-3xl border border-gray-800 p-6 lg:p-8 max-h-[calc(100vh-200px)] overflow-y-auto">
                         <PromptStep
                           generatedPrompt={generatedPrompt}
                           copied={copied}
                           onCopy={copyToClipboard}
-                          onEdit={() => setCurrentStep(5)}
+                          onEdit={() => setCurrentStep(11)}
                         />
                       </div>
                     </div>
@@ -336,25 +478,31 @@ export default function ClassRegistrationPage() {
                 </div>
               )}
 
-              {/* Step 7: Finish */}
-              {currentStep === 7 && (
+              {/* Step 13: Celebration */}
+              {currentStep === 13 && (
                 <div className="animate-fade-in">
-                  <div className="text-center mb-12">
-                    <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
-                      You're All Set! 🚀
-                    </h2>
-                    <p className="text-xl text-white">
-                      Ready to build your website in Firebase Studio
-                    </p>
-                  </div>
-                  <div className="max-w-3xl mx-auto bg-zinc-900/60 rounded-3xl border border-gray-800 p-12">
-                    <FinishStep
-                      generatedPrompt={generatedPrompt}
-                      copied={copied}
-                      onCopy={copyToClipboard}
-                      onBackToForm={() => setCurrentStep(5)}
-                    />
-                  </div>
+                  <CelebrationStep />
+                </div>
+              )}
+
+              {/* Step 14: What's Next */}
+              {currentStep === 14 && (
+                <div className="animate-fade-in">
+                  <WhatsNextStep />
+                </div>
+              )}
+
+              {/* Step 15: Go Deeper */}
+              {currentStep === 15 && (
+                <div className="animate-fade-in">
+                  <GoDeeperStep />
+                </div>
+              )}
+
+              {/* Step 16: Thank You */}
+              {currentStep === 16 && (
+                <div className="animate-fade-in">
+                  <ThankYouStep />
                 </div>
               )}
             </div>
@@ -364,24 +512,6 @@ export default function ClassRegistrationPage() {
         {/* Footer Navigation */}
         <footer className="absolute bottom-0 left-0 right-0 z-10 px-8 py-6 bg-gradient-to-t from-black/80 to-transparent">
           <div className="max-w-6xl mx-auto">
-            {/* Progress Dots */}
-            <div className="flex items-center justify-center gap-3 mb-6">
-              {[1, 2, 3, 4, 5, 6, 7].map((step) => (
-                <button
-                  key={step}
-                  onClick={() => handleStepClick(step)}
-                  className={`h-3 rounded-full transition-all duration-300 ${
-                    currentStep === step
-                      ? 'w-12 bg-red-600'
-                      : currentStep > step
-                      ? 'w-3 bg-red-600/40 hover:bg-red-600/60'
-                      : 'w-3 bg-gray-700 hover:bg-gray-600'
-                  }`}
-                  aria-label={`Go to slide ${step}`}
-                />
-              ))}
-            </div>
-
             {/* Navigation Buttons */}
             <div className="flex items-center justify-between">
               <button
@@ -410,42 +540,33 @@ export default function ClassRegistrationPage() {
                 <span className="font-semibold">Previous</span>
               </button>
 
-              {/* Step Labels */}
-              <div className="hidden md:flex items-center gap-4 text-sm">
-                {[
-                  { num: 1, label: 'Overview' },
-                  { num: 2, label: 'Intro' },
-                  { num: 3, label: 'Why' },
-                  { num: 4, label: 'AI Basics' },
-                  { num: 5, label: 'Your Info' },
-                  { num: 6, label: 'Prompt' },
-                  { num: 7, label: 'Finish' },
-                ].map((step) => (
+              {/* Progress Dots - Centered */}
+              <div className="flex items-center justify-center gap-3">
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map((step) => (
                   <button
-                    key={step.num}
-                    onClick={() => handleStepClick(step.num)}
-                    className={`transition-colors ${
-                      currentStep === step.num
-                        ? 'text-white font-semibold'
-                        : currentStep > step.num
-                        ? 'text-red-400 hover:text-red-300'
-                        : 'text-gray-500'
+                    key={step}
+                    onClick={() => handleStepClick(step)}
+                    className={`h-3 rounded-full transition-all duration-300 ${
+                      currentStep === step
+                        ? 'w-12 bg-red-600'
+                        : currentStep > step
+                        ? 'w-3 bg-red-600/40 hover:bg-red-600/60'
+                        : 'w-3 bg-gray-700 hover:bg-gray-600'
                     }`}
-                  >
-                    {step.num}. {step.label}
-                  </button>
+                    aria-label={`Go to slide ${step}`}
+                  />
                 ))}
               </div>
 
-              {currentStep < 7 ? (
+              {currentStep < 16 ? (
                 <button
                   type="button"
                   onClick={handleNextSlide}
                   disabled={
-                    (currentStep === 5 && !isFormValid) || isGeneratingPrompt
+                    (currentStep === 11 && !isFormValid) || isGeneratingPrompt
                   }
                   className={`group flex items-center gap-2 px-6 py-3 rounded-xl transition-all font-semibold ${
-                    (currentStep === 3 && !isFormValid) || isGeneratingPrompt
+                    (currentStep === 11 && !isFormValid) || isGeneratingPrompt
                       ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
                       : 'bg-red-600 text-white hover:bg-red-700 shadow-lg shadow-red-600/30'
                   }`}
@@ -479,10 +600,8 @@ export default function ClassRegistrationPage() {
                       <span>
                         {currentStep === 1
                           ? 'Start'
-                          : currentStep === 5
+                          : currentStep === 11
                           ? 'Generate & Next'
-                          : currentStep === 6
-                          ? 'Finish'
                           : 'Next'}
                       </span>
                       <svg

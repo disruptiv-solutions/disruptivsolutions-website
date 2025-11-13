@@ -39,7 +39,7 @@ const Approach: React.FC = () => {
           <div>
             <h3 className="text-2xl font-bold text-white mb-4">Learn in Public</h3>
             <p className="text-gray-300 text-lg leading-relaxed">
-              From Disruptiv Solutions to ChatterCard to the Real AI platform to LaunchBox—every project taught me something I used in the next one. Share your journey. Help others avoid your mistakes.
+              From Disruptiv Solutions to ChatterCard to the Real AI platform to Launchbox—every project taught me something I used in the next one. Share your journey. Help others avoid your mistakes.
             </p>
           </div>
         </div>

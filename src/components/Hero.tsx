@@ -85,7 +85,7 @@ const Hero: React.FC = () => {
               <br /><br />
               From side hustles to enterprise platforms with 1,500+ users—I build in public and show others how to do the same.
               <br /><br />
-              <span className="text-white font-semibold">Currently building: LaunchBox</span>
+              <span className="text-white font-semibold">Currently building: Launchbox</span>
             </p>
 
             {/* CTAs */}
@@ -97,7 +97,7 @@ const Hero: React.FC = () => {
                 }}
                 className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50"
               >
-                Join LaunchBox Waitlist
+                Join Launchbox Waitlist
               </button>
               <button
                 onClick={() => {
@@ -107,7 +107,7 @@ const Hero: React.FC = () => {
                     const rect = launchbox.getBoundingClientRect();
                     const sectionHeight = window.innerHeight * 3;
                     const scrollPosition = window.scrollY + rect.top + (sectionHeight / 3);
-                    // Scroll to 1/3 through LaunchBox section (card 1 - Free Class)
+                    // Scroll to 1/3 through Launchbox section (card 1 - Free Class)
                     window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
                   }
                 }}
@@ -123,7 +123,7 @@ const Hero: React.FC = () => {
                     const rect = launchbox.getBoundingClientRect();
                     const sectionHeight = window.innerHeight * 3;
                     const scrollPosition = window.scrollY + rect.top + (sectionHeight * 2 / 3);
-                    // Scroll to 2/3 through LaunchBox section (card 2 - Newsletter)
+                    // Scroll to 2/3 through Launchbox section (card 2 - Newsletter)
                     window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
                   }
                 }}

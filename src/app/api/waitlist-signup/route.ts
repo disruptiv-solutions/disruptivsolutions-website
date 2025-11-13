@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     console.log('[API:waitlist-signup] Received request:', JSON.stringify(body, null, 2));
 
-    // Forward the request to the Make.com webhook for LaunchBox waitlist
+    // Forward the request to the Make.com webhook for Launchbox waitlist
     console.log('[API:waitlist-signup] Sending to webhook:', webhookUrl);
     const response = await fetch(webhookUrl, {
       method: 'POST',

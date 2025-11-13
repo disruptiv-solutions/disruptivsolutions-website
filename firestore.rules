@@ -1,0 +1,62 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Deployed sites collection - public read, anyone can write (for workshop participants)
+    match /deployed-sites/{siteId} {
+      // Allow anyone to read deployed sites
+      allow read: if true;
+      
+      // Allow anyone to create new sites (for workshop participants)
+      allow create: if request.resource.data.keys().hasAll(['url', 'description', 'timestamp'])
+                    && request.resource.data.url is string
+                    && request.resource.data.description is string
+                    && request.resource.data.description.size() <= 60
+                    && request.resource.data.timestamp is number;
+      
+      // Prevent updates and deletes (sites are immutable once submitted)
+      allow update, delete: if false;
+    }
+    
+    // Workshop participants collection - public read, anyone can write and delete
+    match /workshop-participants/{participantId} {
+      // Allow anyone to read participants
+      allow read: if true;
+      
+      // Allow anyone to create new participants
+      allow create: if request.resource.data.keys().hasAll(['name', 'location', 'wantToBuild', 'timestamp'])
+                    && request.resource.data.name is string
+                    && request.resource.data.location is string
+                    && request.resource.data.wantToBuild is string
+                    && request.resource.data.wantToBuild.size() <= 100
+                    && request.resource.data.timestamp is number;
+      
+      // Allow anyone to delete participants (for removing sticky notes)
+      allow delete: if true;
+      
+      // Prevent updates
+      allow update: if false;
+    }
+    
+    // AI knowledge poll collection - public read, anyone can write
+    match /ai-knowledge-poll/{pollId} {
+      // Allow anyone to read poll results
+      allow read: if true;
+      
+      // Allow anyone to submit poll responses with validation
+      allow create: if request.resource.data.keys().hasAll(['option', 'timestamp'])
+                    && request.resource.data.option is string
+                    && request.resource.data.option in ['clueless', 'little', 'goodAmount', 'expert']
+                    && request.resource.data.timestamp is number;
+      
+      // Prevent updates and deletes
+      allow update, delete: if false;
+    }
+    
+    // Default: deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+

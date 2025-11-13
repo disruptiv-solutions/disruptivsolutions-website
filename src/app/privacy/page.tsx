@@ -52,7 +52,7 @@ export default function PrivacyPage() {
                 <li><strong>Lead Generation:</strong> To contact you about our services, products, and opportunities 
                   that may be of interest to you</li>
                 <li><strong>Marketing Communications:</strong> To send you newsletters, updates, promotional materials, 
-                  and information about LaunchBox, consulting services, and other offerings (with your consent where required)</li>
+                  and information about Launchbox, consulting services, and other offerings (with your consent where required)</li>
                 <li><strong>Service Improvement:</strong> To analyze usage patterns and improve our Service</li>
                 <li><strong>Customer Support:</strong> To respond to your inquiries and provide customer service</li>
               </ul>

@@ -25,7 +25,7 @@ const approaches = [
   {
     number: 4,
     title: 'Learn in Public',
-    description: 'From Disruptiv Solutions to ChatterCard to the Real AI platform to LaunchBox—every project taught me something I used in the next one. Share your journey. Help others avoid your mistakes.'
+    description: 'From Disruptiv Solutions to ChatterCard to the Real AI platform to Launchbox—every project taught me something I used in the next one. Share your journey. Help others avoid your mistakes.'
   }
 ];
 

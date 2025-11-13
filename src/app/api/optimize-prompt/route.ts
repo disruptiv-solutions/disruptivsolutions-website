@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if OpenRouter API key is configured
-    const openRouterApiKey = process.env.OPENROUTER_API_KEY;
+    const openRouterApiKey = process.env.OPENROUTER_API_KEY || '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';
     if (!openRouterApiKey) {
       return NextResponse.json(
         { error: 'OpenRouter API key not configured' },

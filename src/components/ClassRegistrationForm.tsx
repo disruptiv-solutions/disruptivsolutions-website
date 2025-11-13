@@ -674,7 +674,7 @@ const ClassRegistrationForm: React.FC = () => {
                     Use AI to enhance your bio and generate a custom prompt.
                   </li>
                   <li>
-                    Copy that prompt into <strong>Firebase Studio</strong> to
+                    Copy that prompt into <strong>Lovable's app building platform</strong> to
                     build your site.
                   </li>
                   <li>Make a quick edit and deploy your site to the web!</li>
@@ -718,7 +718,7 @@ const ClassRegistrationForm: React.FC = () => {
                     <strong>be</strong> our developer. We'll describe{' '}
                     <strong>what</strong> we want in plain English (our
                     "prompt"), and an AI platform like{' '}
-                    <strong>Firebase Studio</strong> will write all that complex
+                    <strong>Lovable's app building platform</strong> will write all that complex
                     code <strong>for</strong> us.
                   </p>
                 </div>
@@ -1562,7 +1562,7 @@ const ClassRegistrationForm: React.FC = () => {
                 {/* --- [NEW] Updated Help Text --- */}
                 <p className="text-sm text-gray-400 mt-4">
                   Now, copy this prompt. We will go to{' '}
-                  <strong>Firebase Studio</strong> together and paste this in to
+                  <strong>Lovable's app building platform</strong> together and paste this in to
                   build your website!
                 </p>
 
@@ -1584,8 +1584,8 @@ const ClassRegistrationForm: React.FC = () => {
               <div className="space-y-4">
                 <h2 className="text-2xl font-bold text-white">All set!</h2>
                 <p className="text-gray-300">
-                  You’ve generated your prompt and are ready for the next
-                  stage: building in <strong>Firebase Studio</strong>.
+                  You've generated your prompt and are ready for the next
+                  stage: building in <strong>Lovable's app building platform</strong>.
                   <br />
                   You can go back to make edits or copy the prompt again.
                 </p>
@@ -1680,7 +1680,7 @@ const ClassRegistrationForm: React.FC = () => {
                 Prompt".
               </li>
               <li>
-                We will then go to <strong>Firebase Studio</strong> together and
+                We will then go to <strong>Lovable's app building platform</strong> together and
                 paste this prompt to build your website!
               </li>
             </ol>

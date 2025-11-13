@@ -1,14 +1,14 @@
 # Overview
 
-This is a Next.js-based personal portfolio and business website for Ian McDonald / Disruptiv Solutions LLC. The site showcases Ian's journey from struggling entrepreneur to AI product builder, featuring consulting services, the LaunchBox training platform, and a portfolio of AI projects. The site includes an integration with Replicate's API to showcase official AI video generation models.
+This is a Next.js-based personal portfolio and business website for Ian McDonald / Disruptiv Solutions LLC. The site showcases Ian's journey from struggling entrepreneur to AI product builder, featuring consulting services, the Launchbox training platform, and a portfolio of AI projects. The site includes an integration with Replicate's API to showcase official AI video generation models.
 
-**Primary Purpose**: Personal brand + consulting services + LaunchBox product marketing + portfolio showcase
+**Primary Purpose**: Personal brand + consulting services + Launchbox product marketing + portfolio showcase
 
 **Key Features**:
 - Scroll-based narrative storytelling with snap sections
 - Replicate AI video models integration (fetch and display official models)
 - Consulting booking system (20-min free, 90-min paid)
-- LaunchBox product marketing with waitlist/class signup
+- Launchbox product marketing with waitlist/class signup
 - Interactive portfolio carousel
 - Custom animations using GSAP and Framer Motion
 
@@ -38,7 +38,7 @@ Preferred communication style: Simple, everyday language.
 - Scroll-snapping navigation with smooth scrolling
 
 **Component Architecture**:
-- Section-based layout with snap scrolling (Hero, WhoThisIsFor, ImageSection, Consulting, LaunchBox, Portfolio)
+- Section-based layout with snap scrolling (Hero, WhoThisIsFor, ImageSection, Consulting, Launchbox, Portfolio)
 - Reusable components: Navigation, Footer, ScrollReveal, RotatingText, LightRays
 - Custom hooks pattern for data fetching (`useVideoModels`)
 - Ref-based scroll progress tracking for parallax and animation effects

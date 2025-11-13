@@ -1,92 +1,259 @@
-DIGITAL BUSINESS CARD GENERATOR - AI-POWERED WEBSITE BUILDER WORKSHOP
-=====================================================================
+AI-POWERED WEBSITE BUILDER WORKSHOP - SLIDESHOW CONTENT
+=======================================================
 
-SLIDE 1: OVERVIEW
------------------
-
-Header (only visible on Slide 1):
-Digital Business Card Generator
-AI-Powered Website Builder Workshop
+SLIDE 1: WELCOME
+----------------
 
 Main Content:
 Welcome! 👋
 
 Let's build your AI-powered website together
 
-What we'll do today:
-• Briefly learn how AI app development works.
-• Record or type your professional bio and details.
-• Use AI to enhance your bio and generate a custom prompt.
-• Copy that prompt into Firebase Studio to build your site.
-• Make a quick edit and deploy your site to the web!
+
+SLIDE 2: AGENDA (What we'll do today)
+--------------------------------------
+
+Main Content:
+What we'll do today
+
+[Grid of 6 cards with icons and descriptions]
+
+Card 1:
+[Brain icon]
+Learn AI Basics
+Understand how AI app development works
+
+Card 2:
+[Pencil icon]
+Share Your Story
+Record or type your professional bio and details
+
+Card 3:
+[Stars icon]
+AI Enhancement
+Let AI enhance your bio and generate a custom prompt
+
+Card 4:
+[Rocket icon]
+Build Your Site
+Copy the prompt into Lovable's platform
+
+Card 5:
+[Easel icon]
+Quick Edit
+Make a quick edit to personalize your site
+
+Card 6:
+[Globe icon]
+Deploy Live
+Publish your site to the web instantly
 
 
-SLIDE 2: INTRODUCTION (Who's Teaching This?)
-----------------------------------------------
+SLIDE 3: A BIT ABOUT ME
+-----------------------
 
-Top Section (Text + Photo side-by-side):
-
-Left Side:
-Who's Teaching This?
+A Bit About Me
 
 Hi, I'm Ian McDonald
 
-I went from healthcare worker to self-taught app developer in 18 months.
+On January 1st, 2024, after losing my dad, I made a bet on myself. I decided 
+to teach myself how to build apps with AI—no computer science degree, no bootcamp, 
+just curiosity and refusing to quit when it got hard.
 
-I've built:
-• An AI platform with 1,500+ active users
-• Enterprise tools without a computer science degree
-• This workshop to prove you don't need to be "technical"
+18 months later, I've built:
 
-I'm not here to sell you a course. I'm here to show you what's possible when you just start building.
+→ An AI platform serving nearly 2,000 active users
 
-Let's do this together.
+→ Enterprise tools used by real businesses
 
-Right Side:
-[Photo placeholder - square image]
+→ A growing waitlist for Launchbox—my platform that helps creators like me 
+  offer courses, education, tools, and community all in one place
 
-Bottom Section (Full Width):
-Quick Facts:
-
-→ Self-taught developer (18 months)
-→ Built apps serving 1,500+ users
-→ Healthcare background → Tech
-→ Currently building LaunchBox
-→ Teaching while building in public
+Layout:
+- Two-column layout (text on left, image on right)
+- Image: `iananddad.jpg` (1:1), rounded corners, red border
 
 
-SLIDE 3: WHY THIS WORKSHOP?
-----------------------------
+SLIDE 4: PARTICIPANT INTRODUCTION
+----------------------------------
 
-Why This Workshop?
+Left Side (Form):
+Introduce Yourself
 
-I learned by doing. No bootcamps. No CS degree. Just AI tools, curiosity, 
-and refusing to quit when it got tough.
+We'd love to know who's here! Share a bit about yourself.
 
-If I can do it, you can too.
+Name *
+[Text input with "Anonymous" button]
 
-Today, you'll see exactly how AI makes app development accessible to anyone 
-willing to learn and experiment.
+Location *
+[Text input]
+
+What do you want to build? * (max 100 characters)
+[Text input]
+
+[Color picker - 12 color options for sticky note]
+
+[Add to Board button]
+
+Right Side (Sticky Notes Board):
+[Scrollable container showing sticky notes in 3x3 grid]
+- Each sticky note shows: Name, Location, What they want to build
+- Notes are color-coded based on user selection
+- Live-updating from all participants
+- Infinite scroll (loads 50 at a time, newest first)
+- Text truncates if too long
+
+[Clear Board button]
 
 
-SLIDE 4: AI BASICS
-------------------
+SLIDE 5: AI KNOWLEDGE POLL (KEEP AS IS)
+---------------------------
 
-Understanding AI Development
+Main Content:
+How much do you know about AI app Development?
 
-The "Magic": AI & App Dev Basics
+[4 square image placeholders with vote counts above]
 
-The "Old Way" (Traditional Development)
-Normally, to build a website, you'd have to write hundreds of lines of code in languages like HTML, CSS, and JavaScript. You'd also need to learn frameworks, databases, and how to set up a server. It's powerful, but has a very steep learning curve.
+Option 1:
+[Vote count - dynamic size based on votes]
+[Clueless image]
+Clueless
 
-The "New Way" (AI-Powered Development)
-Today, we're using a new approach. We will use AI to be our developer. We'll describe what we want in plain English (our "prompt"), and an AI platform like Firebase Studio will write all that complex code for us.
+Option 2:
+[Vote count - dynamic size based on votes]
+[Beginner image]
+A little
 
-What We Are (and Aren't) Building
-Our site today is a simple "static" site—it just displays information. More complex apps might need a database (to store user signups) or authentication (to let users log in). We aren't doing that today, but it's good to know those are the "next steps" in app development.
+Option 3:
+[Vote count - dynamic size based on votes]
+[Proficient image]
+A good amount
+
+Option 4:
+[Vote count - dynamic size based on votes]
+[Wizard image]
+Expert
+
+[After voting: "Thanks for voting! Results update in real-time."]
 
 
-SLIDE 5: YOUR INFORMATION
+SLIDE 6: WHY THIS WORKSHOP? - PART 1 (KEEP AS IS)
+--------------------------------------------------
+
+Most people think building is for "tech people"
+
+
+SLIDE 7: WHY THIS WORKSHOP? - PART 2 (KEEP AS IS)
+--------------------------------------------------
+
+AI changed that
+
+BEFORE: Complex code
+[Code example showing intimidating syntax:]
+function createWebsite() {
+  const server = require("express")();
+  const db = new Database({
+    host: "localhost",
+    port: 5432,
+    user: "admin",
+  });
+  server.get("/", (req, res) => {
+    res.render("index", {
+      data: fetchData()
+    });
+  });
+}
+
+Intimidating, right?
+
+AFTER: Simple conversation
+[Chat interface example:]
+"Build me a professional website with my bio, contact info, and a modern design"
+
+✓ I'll create that for you right away...
+
+→ Website built in minutes
+
+That's it. Really.
+
+
+SLIDE 8: THE CONCEPT (NEW - REPLACES OLD AI BASICS)
+----------------------------------------------------
+
+[Top text - Large, centered]
+This website...
+
+[Center - Website screenshot placeholder]
+[Impressive-looking professional website with modern design, multiple sections]
+
+[Bottom text - appears after pause]
+...was built with this:
+
+[Prompt text box]
+"Build a professional website for a marketing consultant. Include bio section, 
+services overview, testimonials, and contact form. Modern design with blue and 
+white color scheme."
+
+[Final line - Large text]
+That's AI development.
+Plain English → Working Website
+
+
+SLIDE 9: WHY THIS WORKSHOP? - PART 3 (KEEP AS IS)
+--------------------------------------------------
+
+Today:
+
+60 minutes
+1 live website
+Built by YOU
+
+The barrier isn't technical anymore.
+It's belief.
+
+Let's prove it.
+
+
+SLIDE 10: WHAT YOU'LL DO TODAY (NEW - REPLACES OLD AI BASICS)
+--------------------------------------------------------------
+
+What You'll Actually Do Today
+
+[Four steps in columns with icons and time estimates]
+
+STEP 1: TELL YOUR STORY (5 min)
+[Pencil icon]
+Fill out form with your info:
+- Name & title
+- Bio & background
+- Contact details
+
+STEP 2: AI GENERATES PROMPT (1 min)
+[Stars icon]
+Platform creates your custom building instructions
+- Tailored to your info
+- Ready to use immediately
+
+STEP 3: BUILD IN LOVABLE (15 min)
+[Rocket icon]
+Paste prompt, watch AI build your site
+- See it happen in real-time
+- Make quick edits
+- Customize as you go
+
+STEP 4: DEPLOY & SHARE (5 min)
+[Globe icon]
+Click deploy, get your live URL
+- Live on the internet
+- Ready to share
+- Yours to keep
+
+[Bottom banner]
+Total time: ~30 minutes
+Result: Live website YOU built with AI
+
+
+SLIDE 11: YOUR INFORMATION
 --------------------------
 
 Left Panel:
@@ -178,14 +345,14 @@ Text Color
 [Generate AI Prompt button]
 
 
-SLIDE 6: PROMPT
----------------
+SLIDE 12: PROMPT
+----------------
 
 Left Panel:
 -----------
 Your Custom Prompt 🎉
 
-Copy this and paste it into Firebase Studio
+Copy this and paste it into Lovable's app building platform
 
 
 Right Panel:
@@ -195,39 +362,327 @@ Generated Prompt
 
 [Generated prompt text appears here in a scrollable container]
 
-Now, copy this prompt. We will go to Firebase Studio together and paste this in to build your website!
+Now, copy this prompt. We will go to Lovable's app building platform together and paste this in to build your website!
 
 [Edit Form & Generate Again button]
 
 
-SLIDE 7: FINISH
+SLIDE 13: SHARE YOUR SITE! 🚀 (SUBMIT DEPLOYED SITE)
+------------------------------------------------------
+
+Title:
+------
+Share Your Site! 🚀
+
+Subtitle:
+---------
+You just deployed your site. Let's celebrate together!
+
+Form Fields:
+------------
+1. Your Site URL * (required)
+   - Input type: URL
+   - Placeholder: "https://your-site.lovable.app"
+   - Help text: "Paste your deployed site URL from Lovable"
+   - Validation: Must be valid HTTP/HTTPS URL
+
+2. What does your site do? * (required)
+   - Input type: Text
+   - Placeholder: "Personal portfolio, Business card, Consulting site..."
+   - Character limit: 60 characters
+   - Shows character count: "X/60 characters"
+
+Submit Button:
+--------------
+[Submit My Site]
+- Disabled if form invalid or submitting
+- Shows loading spinner when submitting
+- Changes to "Submitting..." during submission
+
+Success State:
+--------------
+After successful submission:
+✅ Site Submitted!
+"Your site will appear on the next slide with everyone else's builds."
+"Click 'Next' to see the showcase!"
+
+Error Handling:
 ---------------
+- Displays error message if submission fails
+- Red border/background for error state
 
-You're All Set! 🚀
+Skip Option:
+------------
+"Your site will be displayed in a showcase with other participants."
+"You can skip this step if you prefer not to share."
 
-Ready to build your website in Firebase Studio
+Technical:
+----------
+- Submits to Firebase Firestore collection: 'deployed-sites'
+- Stores: url, description, timestamp
+- Real-time updates on next slide (Celebration)
 
-All set!
 
-You've generated your prompt and are ready for the next stage: building in Firebase Studio.
-You can go back to make edits or copy the prompt again.
+SLIDE 14: YOU JUST BUILT THAT! 🎉 (CELEBRATION - LIVE SHOWCASE)
+----------------------------------------------------------------
 
-[Back to Form button]
-[Copy Prompt button]
+Title:
+------
+You Just Built That! 🎉
+
+Subtitle:
+---------
+Real sites from real people in this workshop.
+
+Body - Live Website Grid:
+-------------------------
+[3-column grid on desktop (3x2 = 6 visible), 2 on tablet, 1 on mobile]
+[Scrollable container to show all submitted sites]
+[Auto-refreshes every 10 seconds for new submissions]
+
+Each Site Card Contains:
+------------------------
+1. iframe Preview (top section):
+   - Height: 192px (h-48)
+   - Shows live preview of the actual deployed site
+   - Scaled down to 50% (transform scale-[0.5])
+   - Non-interactive (pointer-events-none)
+   - Sandbox: allow-same-origin (for security)
+   
+2. Hover Overlay:
+   - Transparent background
+   - Shows "Visit Site →" button on hover
+   - Red tint overlay (bg-red-600/10)
+   - Smooth transition effects
+
+3. Description Section (bottom):
+   - Site description (from user submission)
+   - Full URL displayed below
+   - Text truncates if too long (line-clamp-2, truncate)
+
+Click Behavior:
+---------------
+- Entire card is clickable
+- Opens site in new tab (window.open with noopener,noreferrer)
+- Cursor changes to pointer on hover
+- Shadow effect increases on hover
+
+Empty State:
+------------
+If no sites submitted yet:
+"No sites submitted yet. Be the first!"
+"Sites will appear here as participants submit them."
+
+Loading State:
+--------------
+"Loading sites..."
+[Shows while fetching from Firebase]
+
+Technical:
+----------
+- Fetches from Firebase Firestore collection: 'deployed-sites'
+- Displays up to 50 most recent sites
+- Sorted by timestamp (newest first)
+- Polls every 10 seconds for updates
+- Scrollable container: max-height: calc(100vh - 400px)
+- Grid: 3 columns on large screens, 2 on medium, 1 on small
+
+Sharing Instructions:
+---------------------
+Share what you built:
+→ Post your site URL on social media
+→ Tag me: @ianmcdonald (Facebook / LinkedIn / Twitter)
+→ Use #BuiltWithAI
+
+CTA Button:
+-----------
+[Share This Workshop →]
+- Copies workshop URL to clipboard: https://[domain]/free-class/1
+- Shows "Link copied! Paste it into your post." on success
+- Reverts to "Copies the workshop link..." after 2 seconds
+
+Presenter Script:
+-----------------
+"Look at what we just created together. These are real sites built by real people 
+in this room. Share yours! Tag me so I can celebrate with you. And if you know 
+someone who needs to see this is possible, share this workshop link with them. 
+It's free to use as a resource."
+
+
+SLIDE 15: WHAT'S NEXT? (CONVERSION SLIDE)
+------------------------------------------
+
+Title:
+------
+Ready to Build More?
+
+Subtitle:
+---------
+Pick the next step that fits where you are right now.
+
+Section 1 - Launchbox Waitlist (Hero Banner - Most Prominent):
+---------------------------------------------------------------
+🚀 JOIN LAUNCHBOX WAITLIST
+
+The platform I'm building for creators who want to offer courses, community, 
+and AI tools—all in one place. Be the first to know when it launches and get 
+founder pricing.
+
+CTA: [Join Waitlist →]
+URL: https://launchbox.ai/waitlist
+
+Visual: Gradient red background, large centered button, shadow effects
+
+Section 2 - Secondary CTAs (Three Equal Columns):
+--------------------------------------------------
+
+Column 1 – 📬 Get Future Workshops
+Never miss a class. Join my newsletter for:
+→ Free workshop announcements
+→ AI building tips
+→ New tools & resources
+
+CTA: [Subscribe →]
+URL: https://ianmcdonald.ai/newsletter
+
+Column 2 – 👥 Join the Community
+Learn with others inside the Idea to AI Facebook group:
+→ Share what you're building
+→ Get help when you're stuck
+→ Connect with other builders
+
+CTA: [Join Group →]
+URL: https://www.facebook.com/groups/ideatoai
+
+Column 3 – 🤝 Connect With Me
+Let's stay in touch:
+→ Add me on Facebook
+→ Follow on LinkedIn
+→ DM me if you want to talk through your next build
+
+CTA: [Connect →]
+URL: https://www.linkedin.com/in/ianmcdonald/
+
+Section 3 - Special Offer (Highlighted Box - Conversion Focus):
+----------------------------------------------------------------
+💡 SPECIAL WORKSHOP OFFER - LIMITED SPOTS
+
+Want to go deeper? I'm taking 10 people through a 4-week intensive:
+
+"AI App Development Bootcamp"
+→ 4 live group sessions (90 min each)
+→ Build 4 real apps together
+→ Direct feedback & troubleshooting
+→ Small group (max 10 people)
+
+Investment: $297 (normally $497)
+Workshop attendee pricing - expires in 48 hours
+
+CTA: [Claim Your Spot →]
+URL: https://ianmcdonald.ai/bootcamp
+
+OR
+
+1-on-1 Consulting: $197/90 min
+Custom help building your specific app idea
+
+CTA: [Book Consulting →]
+URL: https://ianmcdonald.ai/consulting
+
+Visual: Two-column layout on desktop, bootcamp on left (larger), consulting on right (smaller card)
+
+Section 4 - Feedback Form (Bottom):
+------------------------------------
+📝 Help me improve
+
+2-minute survey — What did you think? What do you want to learn next?
+
+CTA: [Share Your Feedback →]
+URL: https://ianmcdonald.ai/feedback
+
+Presenter Script:
+-----------------
+"Okay, so what's next? Few things:
+
+First, Launchbox. That's the platform I'm building where creators can offer 
+courses, community, and AI tools all in one place. If that sounds interesting, 
+join the waitlist. Founders get special pricing when it launches.
+
+Second, I'm doing more workshops like this. If you want to know when the next 
+one is, join my newsletter. I also share AI tips and tools I'm using as I build.
+
+Third, join the Facebook group - Idea to AI. That's where we hang out between 
+workshops. Share what you're building, ask questions, help each other out.
+
+Now, here's the thing. Today we built something simple. But what if you want 
+to build something MORE?
+
+I'm running a 4-week bootcamp starting [DATE]. Small group - max 10 people. 
+We meet live every week for 90 minutes, and we build REAL apps together. 
+Not toys. Real tools you can use in your business.
+
+Week 1: Landing page with lead capture
+Week 2: Custom tool or calculator
+Week 3: Dashboard with data
+Week 4: Whatever YOU want to build
+
+Normally $497. For you, because you showed up today, it's $297. But that 
+expires Friday.
+
+If you're thinking 'I want to keep going, I want to build more, I want Ian's 
+help'—grab one of those 10 spots.
+
+Or, if you have a specific app idea and want 1-on-1 help, I do consulting. 
+90 minutes, $197, we build your thing together.
+
+Links are on the screen. And there's a feedback form—please fill it out. 
+Tell me what you loved, what you didn't, what you want to learn next. 
+That helps me make these better.
+
+Any questions?"
+
+Conversion Strategy:
+--------------------
+- Launchbox waitlist = primary CTA (future revenue, audience building)
+- Newsletter/Community = free engagement (retention)
+- Bootcamp = immediate revenue ($297 × 10 = $2,970 for 6 hours work)
+- Consulting = high-touch upsell ($197/session)
+- 48-hour urgency on bootcamp (converts while energy is high)
+- Expected conversion: 10-15% bootcamp, 30-40% waitlist, 50-60% newsletter
 
 
 NAVIGATION (Bottom of all slides):
 -----------------------------------
-• Progress dots (7 dots showing current position)
+• Progress dots centered between Previous / Next buttons (15 total)
 • Previous button (left) - disabled on Slide 1
-• Step labels in center: 1. Overview | 2. Intro | 3. Why | 4. AI Basics | 5. Your Info | 6. Prompt | 7. Finish
-• Next/Start/Generate & Next/Finish button (right)
+• Next/Start/Generate & Next button (right)
   - Slide 1: "Start"
-  - Slides 2-4: "Next"
-  - Slide 5: "Generate & Next" (disabled if form invalid)
-  - Slide 6: "Finish"
-  - Slide 7: No button (end of slideshow)
+  - Slides 2-10, 12-14: "Next"
+  - Slide 11: "Generate & Next" (disabled if form invalid)
+  - Slide 15: No next button (end of slideshow)
 
 Keyboard shortcuts: ← → to navigate
 
-Slide counter (top right): Shows "Slide X of 7"
+Slide counter (top right): Shows "Slide X of 15"
+
+
+NOTES:
+------
+• Header titles removed from all slides (no "Digital Business Card Generator" or "AI-Powered Website Builder Workshop")
+• All references to "Firebase Studio" replaced with "Lovable's app building platform"
+• All instances of "LaunchBox" changed to "Launchbox" (lowercase 'b')
+• Slide 2 uses custom icons instead of emojis: brain.png, pencil.png, stars.png, rocket.png, eisel.png, globe.png
+• Slide 3 updated with new bio (18 months, 2,000 users, Launchbox positioning)
+• Slide 4 (Participant Introduction) is an interactive board with live updates via Firebase Firestore
+• Slide 5 (AI Knowledge Poll) uses custom images: clueless.png, beginner.png, proficient.png, wizard.png
+• Slides 6-7: "Why This Workshop?" (parts 1 & 2) build tension before revealing the concept
+• Slide 8: "The Concept" - Visual demonstration of presentation + prompt (replaces old wordy AI Basics)
+• Slide 9: "Why This Workshop?" Part 3 - Reinforces belief barrier message
+• Slide 10: "What You'll Do Today" - 4-step process with time estimates
+• Slide 13: "Share Your Site!" - Form to submit deployed site URL and description
+• Slide 14: "Celebration" - Live showcase of participant sites with iframe previews (3x2 scrollable grid)
+• Slide 15: Conversion-focused offers and feedback
+• Workshop participants persist in Firebase Firestore with real-time updates
+• Sticky notes support 12 color options and display up to 100 most recent entries
+• Deployed sites persist in Firebase Firestore ('deployed-sites' collection)
+• Site showcase displays live iframe previews with click-through to actual sites
