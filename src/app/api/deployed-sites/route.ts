@@ -172,7 +172,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       { 
         error: 'Failed to submit site',
-        details: error?.message || 'Unknown error'
+        details: errorObj?.message || 'Unknown error'
       },
       { status: 500 }
     );
