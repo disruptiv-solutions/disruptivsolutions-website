@@ -1,6 +1,5 @@
 'use client';
 
-/* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 
 const Approach: React.FC = () => {
@@ -18,28 +17,28 @@ const Approach: React.FC = () => {
           <div>
             <h3 className="text-2xl font-bold text-white mb-4">Start Messy</h3>
             <p className="text-gray-300 text-lg leading-relaxed">
-              There's nothing you can imagine that you can't start building. Not everything needs to be perfect or a billion-dollar idea. Ship something today.
+              Don't wait for perfect. Start with a messy version. Launch fast, learn fast.
             </p>
           </div>
           
           <div>
-            <h3 className="text-2xl font-bold text-white mb-4">Build Real Solutions</h3>
+            <h3 className="text-2xl font-bold text-white mb-4">Iterate Quickly</h3>
             <p className="text-gray-300 text-lg leading-relaxed">
-              Products that non-technical people actually use. I ship features, fix bugs, and teach people to build real apps. No jargon, no fluff.
+              Each version is better than the last. Small improvements compound fast.
             </p>
           </div>
-          
+
           <div>
-            <h3 className="text-2xl font-bold text-white mb-4">Compound Your Skills</h3>
+            <h3 className="text-2xl font-bold text-white mb-4">Ship Real Value</h3>
             <p className="text-gray-300 text-lg leading-relaxed">
-              Every build teaches you something. Weekend projects become portfolio pieces. Portfolio pieces become confidence. Confidence becomes momentum.
+              Build features people use in the real world. Focus on practical outcomes.
             </p>
           </div>
-          
+
           <div>
-            <h3 className="text-2xl font-bold text-white mb-4">Learn in Public</h3>
+            <h3 className="text-2xl font-bold text-white mb-4">Keep Going</h3>
             <p className="text-gray-300 text-lg leading-relaxed">
-              From Disruptiv Solutions to ChatterCard to the Real AI platform to Launchbox—every project taught me something I used in the next one. Share your journey. Help others avoid your mistakes.
+              Momentum matters. Keep stacking wins one after the other.
             </p>
           </div>
         </div>

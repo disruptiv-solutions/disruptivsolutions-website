@@ -1,6 +1,5 @@
 'use client';
 
-/* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import { trackFormSubmission, trackButtonClick } from '@/lib/analytics';
 
@@ -18,9 +17,8 @@ const Launchbox: React.FC = () => {
 
   const handleClass = () => {
     // Track button click
-    trackButtonClick('free_class_button', 'launchbox_card');
-    // Navigate to free class signup page
-    window.location.href = '/free-class';
+    trackButtonClick('join_free_class', 'launchbox_card');
+    window.location.href = '/free-class/1';
   };
 
   React.useEffect(() => {

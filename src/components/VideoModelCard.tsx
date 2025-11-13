@@ -29,7 +29,6 @@ export const VideoModelCard = ({
       {/* Cover Image */}
       {coverImage ? (
         <div className="w-full h-48 bg-slate-200 dark:bg-slate-700 relative">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={coverImage}
             alt={`${name} preview`}

@@ -1,6 +1,5 @@
 'use client';
 
-/* eslint-disable react/no-unescaped-entities */
 import React, { useState, useEffect, useRef } from 'react';
 
 const Portfolio: React.FC = () => {

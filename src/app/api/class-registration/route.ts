@@ -2,6 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
+type WebhookPayloadValue =
+  | string
+  | {
+      filename: string;
+      contentType: string;
+      size: number;
+      data: string;
+    };
+
 export async function POST(request: NextRequest) {
   const webhookUrl = 'https://hook.us1.make.com/p8ayph9uua1j3axvrjzpt3bvfywb98h8';
   
@@ -21,7 +30,7 @@ export async function POST(request: NextRequest) {
     const session = formData.get('session') as string;
 
     // Prepare webhook payload
-    const webhookData: Record<string, string> = {
+    const webhookData: Record<string, WebhookPayloadValue> = {
       name,
       title,
       location,
