@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PersonalInfoSection } from '../form-sections/PersonalInfoSection';
 import { AdditionalInfoSection } from '../form-sections/AdditionalInfoSection';
 import { BioSection } from '../form-sections/BioSection';
 import { ProfileImageSection } from '../form-sections/ProfileImageSection';
 import { ColorPaletteSection } from '../form-sections/ColorPaletteSection';
+import { uploadFileToStorage } from '@/lib/firebase';
 import type { FormData, SocialLink } from '../types';
 
 interface FormStepProps {
@@ -37,16 +38,52 @@ export const FormStep: React.FC<FormStepProps> = ({
   onEnhanceBio,
   onSubmit,
 }) => {
-  const handleFileChange = (file: File | null) => {
-    onFormDataChange('profileImageFile', file);
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        onImagePreviewChange(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    } else {
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [imageUploadError, setImageUploadError] = useState<string | null>(null);
+
+  const handleFileChange = async (file: File | null) => {
+    if (!file) {
+      onFormDataChange('profileImageFile', null);
       onImagePreviewChange(null);
+      return;
+    }
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      setImageUploadError('Please select a valid image file.');
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      setImageUploadError('File size must be less than 5MB.');
+      return;
+    }
+
+    onFormDataChange('profileImageFile', file);
+    onFormDataChange('profileImageUrl', ''); // Clear URL if file is selected
+    setImageUploadError(null);
+    setIsUploadingImage(true);
+
+    // Create preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      onImagePreviewChange(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+
+    // Upload to Firebase Storage
+    try {
+      const downloadURL = await uploadFileToStorage(file);
+      onFormDataChange('profileImageUrl', downloadURL);
+      setIsUploadingImage(false);
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      setImageUploadError(
+        error instanceof Error ? error.message : 'Failed to upload image. Please try again.'
+      );
+      setIsUploadingImage(false);
+      // Keep the file and preview so user can retry
     }
   };
 
@@ -54,6 +91,8 @@ export const FormStep: React.FC<FormStepProps> = ({
     onFormDataChange('profileImageFile', null);
     onFormDataChange('profileImageUrl', '');
     onImagePreviewChange(null);
+    setImageUploadError(null);
+    setIsUploadingImage(false);
   };
 
   return (
@@ -98,6 +137,8 @@ export const FormStep: React.FC<FormStepProps> = ({
         profileImageUrl={formData.profileImageUrl}
         profileImageFile={formData.profileImageFile}
         imagePreview={imagePreview}
+        isUploadingImage={isUploadingImage}
+        imageUploadError={imageUploadError}
         onUrlChange={(value) => onFormDataChange('profileImageUrl', value)}
         onFileChange={handleFileChange}
         onRemoveImage={handleRemoveImage}

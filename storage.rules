@@ -1,0 +1,23 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Profile images folder - allow public uploads and reads
+    match /profile-images/{imageId} {
+      // Allow anyone to read/download images
+      allow read: if true;
+      
+      // Allow anyone to upload images with validation
+      allow write: if request.resource.size < 5 * 1024 * 1024  // Max 5MB
+                   && request.resource.contentType.matches('image/.*');  // Only image files
+      
+      // Prevent deletion (optional - remove if you want users to be able to delete)
+      allow delete: if false;
+    }
+    
+    // Default: deny all other access
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
