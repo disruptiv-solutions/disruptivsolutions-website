@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { trackButtonClick } from '@/lib/analytics';
 import { AboutMeStep } from '@/components/class-registration/steps/AboutMeStep';
 import { ParticipantIntroductionStep } from '@/components/class-registration/steps/ParticipantIntroductionStep';
@@ -107,7 +107,7 @@ export default function ClassRegistrationPage() {
     }
   };
 
-  const handleStepClick = (step: number) => {
+  const handleStepClick = useCallback((step: number) => {
     const isFormValid = formData.name && formData.title && formData.location && formData.bio && formData.email;
     
     // Reset transition state when navigating away
@@ -134,9 +134,9 @@ export default function ClassRegistrationPage() {
     if (step <= 16) {
       setCurrentStep(step);
     }
-  };
+  }, [currentStep, formData, generatedPrompt, showTransition]);
 
-  const handleNextSlide = async () => {
+  const handleNextSlide = useCallback(async () => {
     if (currentStep === 11) {
       const success = await generatePrompt(formData);
       if (success) {
@@ -161,16 +161,48 @@ export default function ClassRegistrationPage() {
     } else {
       handleStepClick(currentStep + 1);
     }
-  };
+  }, [currentStep, formData, generatePrompt, handleStepClick, setCurrentStep]);
 
-  const handlePrevSlide = () => {
+  const handlePrevSlide = useCallback(() => {
     // Reset transition state when going back
     if (currentStep === 4) {
       setShowTransition(false);
       setTransitionFadingOut(false);
     }
     setCurrentStep((s) => Math.max(1, s - 1));
-  };
+  }, [currentStep]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target) {
+        const tagName = target.tagName;
+        const isFormElement =
+          tagName === 'INPUT' ||
+          tagName === 'TEXTAREA' ||
+          tagName === 'SELECT' ||
+          target.isContentEditable;
+        if (isFormElement) {
+          return;
+        }
+      }
+
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        void handleNextSlide();
+      }
+
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        handlePrevSlide();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleNextSlide, handlePrevSlide]);
 
   const isFormValid = formData.name && formData.title && formData.location && formData.bio && formData.email;
 
