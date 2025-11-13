@@ -60,13 +60,25 @@ export const trackFormSubmission = (
  */
 export const trackButtonClick = (
   buttonName: string,
-  location?: string
+  locationOrData?: string | Record<string, unknown>
 ): void => {
+  const extraData: Record<string, unknown> =
+    typeof locationOrData === 'string'
+      ? { location: locationOrData }
+      : (locationOrData ?? {});
+
+  const locationValue = typeof extraData.location === 'string'
+    ? (extraData.location as string)
+    : typeof locationOrData === 'string'
+    ? locationOrData
+    : 'unknown';
+
   trackEvent('button_click', {
     event_category: 'engagement',
     event_label: buttonName,
     button_name: buttonName,
-    location: location || 'unknown',
+    ...extraData,
+    location: locationValue,
   });
 };
 

@@ -1,17 +1,20 @@
 import { initializeApp, getApps, cert, App } from 'firebase-admin/app';
 import { getFirestore, Firestore } from 'firebase-admin/firestore';
-import { getStorage, Bucket } from 'firebase-admin/storage';
+import { getStorage } from 'firebase-admin/storage';
+
+type AdminStorage = ReturnType<typeof getStorage>;
+type AdminBucket = ReturnType<AdminStorage['bucket']>;
 
 interface FirebaseAdminInitResult {
   adminApp: App | null;
   adminDb: Firestore | null;
-  adminStorage: Bucket | null;
+  adminStorage: AdminBucket | null;
   error?: string;
 }
 
 let cachedApp: App | null = null;
 let cachedDb: Firestore | null = null;
-let cachedStorage: Bucket | null = null;
+let cachedStorage: AdminBucket | null = null;
 
 export const initFirebaseAdmin = (): FirebaseAdminInitResult => {
   if (cachedApp && cachedDb && cachedStorage) {

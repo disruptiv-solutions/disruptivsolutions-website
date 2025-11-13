@@ -119,8 +119,10 @@ export async function POST(request: NextRequest) {
       const filePath = `deployed-sites/${docRef.id}.png`;
       const file = adminStorage.file(filePath);
       await file.save(screenshotBuffer, {
-        contentType: 'image/png',
-        cacheControl: 'public,max-age=31536000,immutable',
+        metadata: {
+          contentType: 'image/png',
+          cacheControl: 'public,max-age=31536000,immutable',
+        },
       });
 
       await file.makePublic();
