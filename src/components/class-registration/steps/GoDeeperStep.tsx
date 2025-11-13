@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { FeedbackModal } from './FeedbackModal';
 
 const COHORT_URL = 'https://ianmcdonald.ai/cohort';
 const CONSULTING_URL = 'https://ianmcdonald.ai/consulting';
-const FEEDBACK_URL = 'https://ianmcdonald.ai/feedback';
 
 const openLink = (url: string) => {
   window.open(url, '_blank', 'noopener,noreferrer');
@@ -48,9 +48,11 @@ const useCountdown = (hours: number) => {
 
 export const GoDeeperStep: React.FC = () => {
   const countdown = useCountdown(48);
+  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
 
   return (
-    <div className="max-w-6xl mx-auto space-y-4 pb-20 w-full">
+    <>
+      <div className="max-w-6xl mx-auto space-y-4 pb-20 w-full">
       <div className="text-center space-y-2">
         <h2 className="text-4xl md:text-5xl font-bold text-white">
           Ready to Go Deeper?
@@ -139,13 +141,20 @@ export const GoDeeperStep: React.FC = () => {
         </p>
         <button
           type="button"
-          onClick={() => openLink(FEEDBACK_URL)}
+          onClick={() => setIsFeedbackModalOpen(true)}
           className="px-5 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all text-sm"
         >
           Share Your Feedback →
         </button>
       </div>
-    </div>
+      </div>
+
+      {/* Feedback Modal */}
+      <FeedbackModal
+        isOpen={isFeedbackModalOpen}
+        onClose={() => setIsFeedbackModalOpen(false)}
+      />
+    </>
   );
 };
 

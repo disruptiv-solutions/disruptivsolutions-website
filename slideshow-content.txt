@@ -367,303 +367,330 @@ Now, copy this prompt. We will go to Lovable's app building platform together an
 [Edit Form & Generate Again button]
 
 
-SLIDE 13: SHARE YOUR SITE! 🚀 (SUBMIT DEPLOYED SITE)
-------------------------------------------------------
+SLIDE 13: CELEBRATION 🎉
+------------------------
 
+Title (Animated - appears first):
+----------------------------------
+You just did that! 🎉
+- Large, centered text (text-5xl md:text-7xl)
+- Shows for 3 seconds, then fades out
+- Transition animation
+
+Main Content (appears after fade):
+-----------------------------------
 Title:
 ------
-Share Your Site! 🚀
+Now you can share your site
 
 Subtitle:
 ---------
-You just deployed your site. Let's celebrate together!
+You've seen how easy it is to build something real. Here's what's next.
 
-Form Fields:
-------------
-1. Your Site URL * (required)
-   - Input type: URL
-   - Placeholder: "https://your-site.lovable.app"
-   - Help text: "Paste your deployed site URL from Lovable"
-   - Validation: Must be valid HTTP/HTTPS URL
+Motivational Content:
+---------------------
+[Gradient box with red border and background]
 
-2. What does your site do? * (required)
-   - Input type: Text
-   - Placeholder: "Personal portfolio, Business card, Consulting site..."
-   - Character limit: 60 characters
-   - Shows character count: "X/60 characters"
+Main Message:
+"You just built a website in minutes. Think about what that means for you."
+
+Three Key Points:
+-----------------
+1. Get the wheels turning
+   → You've proven to yourself that building with AI is possible. 
+     Use this momentum to keep learning and building.
+
+2. Build sites for others
+   → Local businesses need websites. You now have the skills to help them. 
+     Start with friends, family, or small businesses in your area.
+
+3. Dive deeper into AI app development
+   → This is just the beginning. There's so much more to learn about building 
+     AI-powered applications, automation, and tools that solve real problems.
+
+Visual:
+-------
+- Gradient background (from-red-600/20 via-red-500/10 to-transparent)
+- Red border (border-red-500/30)
+- Rounded corners (rounded-2xl)
+- Padding and spacing for readability
+
+
+SLIDE 14: WHAT'S NEXT?
+----------------------
+
+Title:
+------
+What's Next?
+
+Subtitle:
+---------
+Join the community, stay connected, and keep building.
+
+Layout:
+-------
+[2-column grid on desktop, stacked on mobile]
+
+Column 1 - Launchbox Waitlist (Left - Larger):
+-----------------------------------------------
+🚀 JOIN LAUNCHBOX WAITLIST
+
+The platform I'm building for creators who want to offer courses,
+community, and AI tools—all in one place. Be the first to know when it
+launches and get founder pricing.
+
+CTA: [Join Waitlist →]
+URL: https://www.ianmcdonald.ai/waitlist
+
+Visual: Gradient red background, border, shadow effects
+
+Column 2 - Secondary CTAs (Right):
+----------------------------------
+
+Top Row (2 columns):
+- 📬 Get Future Workshops
+  Never miss a class. Join my newsletter for workshop announcements,
+  AI building tips, and new tools & resources.
+  CTA: [Subscribe →]
+  URL: https://www.ianmcdonald.ai/newsletter
+
+- 👥 Join the Community
+  Learn with others inside the Idea to AI Facebook group. Share what
+  you're building, get help when you're stuck, and connect with other
+  builders.
+  CTA: [Join Group →]
+  URL: https://www.facebook.com/groups/2000295250823114
+
+Bottom Section - Social Media Links:
+-------------------------------------
+🤝 Connect With Me
+
+Follow me on social media for more AI building tips, updates, and 
+behind-the-scenes content.
+
+[Social media icons in a row]
+- Facebook: https://www.facebook.com/ian.mcmonster/
+- LinkedIn: https://www.linkedin.com/in/ian-mcdonald-673225243/
+- Instagram: https://www.instagram.com/disruptiv.solutions/
+- TikTok: https://www.tiktok.com/@ianmcdonaldai
+- YouTube: https://www.youtube.com/@IansDisruptivSolutions/shorts
+
+
+SLIDE 15: GO DEEPER?
+--------------------
+
+Title:
+------
+Ready to Go Deeper?
+
+Subtitle:
+---------
+Take your AI app development skills to the next level.
+
+Layout:
+-------
+[2-column grid on desktop, stacked on mobile]
+
+Column 1 - 1-on-1 Consulting (Left):
+------------------------------------
+💼 1-on-1 Consulting
+
+90-minute consulting session tailored to your app idea or business use case. 
+Get personalized guidance on your next build.
+
+Price: $197 per session
+
+CTA: [Book Consulting →]
+URL: https://ianmcdonald.ai/consulting
+
+Visual: Gradient background, red border, shadow effects
+
+Column 2 - Group Cohort (Right):
+--------------------------------
+👥 Group Cohort
+
+4-week intensive with live sessions. Master the core fundamentals of AI app 
+development with direct feedback in a small group.
+
+Price: $297 (normally $497)
+Workshop attendee pricing
+
+[Countdown Timer - Top Right]
+Offer ends in: [48-hour countdown timer]
+Format: HH:MM:SS
+
+CTA: [Join Group Cohort →]
+URL: https://ianmcdonald.ai/cohort
+
+Visual: Gradient background, red border, shadow effects, countdown badge
+
+Bottom Section - Feedback Modal:
+---------------------------------
+📝 Help me improve
+
+2-minute survey — What did you think? What do you want to learn next?
+
+CTA: [Share Your Feedback →]
+- Opens modal popup with feedback form
+- Modal overlay (dark background, centered)
+- Close button (X) in top right corner
+- Click outside modal to close
+
+FEEDBACK MODAL FORM:
+--------------------
+Title: 📋 Feedback Form - 5 Questions
+Subtitle: Keep it SHORT. 2 minutes max.
+
+Question 1: Overall Experience
+------------------------------
+Label: "How would you rate this workshop?"
+
+[5-star rating system]
+- ⭐⭐⭐⭐⭐ (5 stars) - Clickable
+- ⭐⭐⭐⭐ (4 stars) - Clickable
+- ⭐⭐⭐ (3 stars) - Clickable
+- ⭐⭐ (2 stars) - Clickable
+- ⭐ (1 star) - Clickable
+
+Visual: Stars are clickable buttons, selected star and all previous stars are highlighted (filled)
+Required: Yes
+
+Question 2: Most Valuable Part
+--------------------------------
+Label: "What was the most valuable part of this workshop?"
+
+[Text input - optional]
+- Placeholder: "e.g., Seeing it actually work, Building something real..."
+- Character limit: 200 characters
+- Shows character count: "X/200 characters"
+- Multi-line textarea
+
+Question 3: What to Improve
+---------------------------
+Label: "What was confusing or could be improved?"
+
+[Text input - optional]
+- Placeholder: "e.g., Form section was rushed, Needed more time to deploy..."
+- Character limit: 200 characters
+- Shows character count: "X/200 characters"
+- Multi-line textarea
+
+Question 4: What They Want Next
+---------------------------------
+Label: "What do you want to learn next? (Check all that apply)"
+
+[Checkboxes - multiple selection allowed]
+☐ Building more complex apps (databases, user logins)
+☐ AI tools for specific industries (real estate, coaching, fitness, etc.)
+☐ How to charge clients for apps you build
+☐ Marketing and launching apps
+☐ Building apps that make passive income
+☐ Other: [Text input - appears when "Other" is checked]
+  - Placeholder: "Tell us what you want to learn..."
+  - Character limit: 100 characters
+
+Question 5: Interest in Going Deeper
+-------------------------------------
+Label: "Would you be interested in the 4-week Group Cohort? ($297, normally $497)"
+
+[Radio buttons - single selection]
+○ Yes, I want to join (send me details)
+○ Maybe, tell me more
+○ No, not right now
+
+If "Yes" or "Maybe" selected:
+- Auto-send email with cohort details and payment link
+- Show confirmation message: "We'll send you cohort details via email!"
+
+BONUS Question (Optional):
+--------------------------
+Label: "Can we feature your site as an example?"
+
+[Radio buttons - single selection]
+○ Yes! Here's my site URL: [Text input - appears when "Yes" is selected]
+  - Placeholder: "https://your-site.lovable.app"
+  - Input type: URL
+  - Validation: Must be valid HTTP/HTTPS URL
+○ No thanks
+
+Review Permission Checkbox:
+----------------------------
+☐ I'm okay with you using my feedback as a review/testimonial
+- Optional checkbox
+- If checked, feedback can be used publicly (with attribution if provided)
 
 Submit Button:
 --------------
-[Submit My Site]
-- Disabled if form invalid or submitting
+[Submit Feedback]
+- Disabled until Question 1 (star rating) is answered
 - Shows loading spinner when submitting
 - Changes to "Submitting..." during submission
 
 Success State:
 --------------
 After successful submission:
-✅ Site Submitted!
-"Your site will appear on the next slide with everyone else's builds."
-"Click 'Next' to see the showcase!"
+✅ Thank you for your feedback!
+"Your input helps me make these workshops better."
+
+[Close Modal button]
 
 Error Handling:
 ---------------
 - Displays error message if submission fails
 - Red border/background for error state
-
-Skip Option:
-------------
-"Your site will be displayed in a showcase with other participants."
-"You can skip this step if you prefer not to share."
+- Form remains open on error
 
 Technical:
 ----------
-- Submits to Firebase Firestore collection: 'deployed-sites'
-- Stores: url, description, timestamp
-- Real-time updates on next slide (Celebration)
+- Modal opens when "Share Your Feedback" button is clicked
+- Modal closes on: X button, outside click, or after successful submission
+- Submits to API endpoint: /api/feedback (or similar)
+- Data is sent to webhook: https://hook.us1.make.com/gchrhv7pxont0b5c6cdcjl1owmsnxnp6
+- Webhook payload includes: rating, valuable_part, improvements, next_topics (array), cohort_interest, site_url, review_permission, timestamp
+- If cohort_interest is "Yes" or "Maybe", trigger email automation
+- Countdown timer starts from component mount (48 hours)
+- Updates every second
+- Shows hours, minutes, seconds in HH:MM:SS format
+- Stops at 00:00:00
 
 
-SLIDE 14: YOU JUST BUILT THAT! 🎉 (CELEBRATION - LIVE SHOWCASE)
-----------------------------------------------------------------
-
-Title:
-------
-You Just Built That! 🎉
-
-Subtitle:
----------
-Real sites from real people in this workshop.
-
-Body - Live Website Grid:
--------------------------
-[3-column grid on desktop (3x2 = 6 visible), 2 on tablet, 1 on mobile]
-[Scrollable container to show all submitted sites]
-[Auto-refreshes every 10 seconds for new submissions]
-
-Each Site Card Contains:
-------------------------
-1. iframe Preview (top section):
-   - Height: 192px (h-48)
-   - Shows live preview of the actual deployed site
-   - Scaled down to 50% (transform scale-[0.5])
-   - Non-interactive (pointer-events-none)
-   - Sandbox: allow-same-origin (for security)
-   
-2. Hover Overlay:
-   - Transparent background
-   - Shows "Visit Site →" button on hover
-   - Red tint overlay (bg-red-600/10)
-   - Smooth transition effects
-
-3. Description Section (bottom):
-   - Site description (from user submission)
-   - Full URL displayed below
-   - Text truncates if too long (line-clamp-2, truncate)
-
-Click Behavior:
----------------
-- Entire card is clickable
-- Opens site in new tab (window.open with noopener,noreferrer)
-- Cursor changes to pointer on hover
-- Shadow effect increases on hover
-
-Empty State:
-------------
-If no sites submitted yet:
-"No sites submitted yet. Be the first!"
-"Sites will appear here as participants submit them."
-
-Loading State:
---------------
-"Loading sites..."
-[Shows while fetching from Firebase]
-
-Technical:
-----------
-- Fetches from Firebase Firestore collection: 'deployed-sites'
-- Displays up to 50 most recent sites
-- Sorted by timestamp (newest first)
-- Polls every 10 seconds for updates
-- Scrollable container: max-height: calc(100vh - 400px)
-- Grid: 3 columns on large screens, 2 on medium, 1 on small
-
-Sharing Instructions:
----------------------
-Share what you built:
-→ Post your site URL on social media
-→ Tag me: @ianmcdonald (Facebook / LinkedIn / Twitter)
-→ Use #BuiltWithAI
-
-CTA Button:
------------
-[Share This Workshop →]
-- Copies workshop URL to clipboard: https://[domain]/free-class/1
-- Shows "Link copied! Paste it into your post." on success
-- Reverts to "Copies the workshop link..." after 2 seconds
-
-Presenter Script:
------------------
-"Look at what we just created together. These are real sites built by real people 
-in this room. Share yours! Tag me so I can celebrate with you. And if you know 
-someone who needs to see this is possible, share this workshop link with them. 
-It's free to use as a resource."
-
-
-SLIDE 15: WHAT'S NEXT? (CONVERSION SLIDE)
-------------------------------------------
+SLIDE 16: THANK YOU 🙏
+----------------------
 
 Title:
 ------
-Ready to Build More?
+Thank You! 🙏
 
 Subtitle:
 ---------
-Pick the next step that fits where you are right now.
+I hope you enjoyed building your first AI-powered website.
 
-Section 1 - Launchbox Waitlist (Hero Banner - Most Prominent):
----------------------------------------------------------------
-🚀 JOIN LAUNCHBOX WAITLIST
+Closing Message:
+----------------
+Keep building, keep learning, and keep creating amazing things!
 
-The platform I'm building for creators who want to offer courses, community, 
-and AI tools—all in one place. Be the first to know when it launches and get 
-founder pricing.
-
-CTA: [Join Waitlist →]
-URL: https://launchbox.ai/waitlist
-
-Visual: Gradient red background, large centered button, shadow effects
-
-Section 2 - Secondary CTAs (Three Equal Columns):
---------------------------------------------------
-
-Column 1 – 📬 Get Future Workshops
-Never miss a class. Join my newsletter for:
-→ Free workshop announcements
-→ AI building tips
-→ New tools & resources
-
-CTA: [Subscribe →]
-URL: https://ianmcdonald.ai/newsletter
-
-Column 2 – 👥 Join the Community
-Learn with others inside the Idea to AI Facebook group:
-→ Share what you're building
-→ Get help when you're stuck
-→ Connect with other builders
-
-CTA: [Join Group →]
-URL: https://www.facebook.com/groups/ideatoai
-
-Column 3 – 🤝 Connect With Me
-Let's stay in touch:
-→ Add me on Facebook
-→ Follow on LinkedIn
-→ DM me if you want to talk through your next build
-
-CTA: [Connect →]
-URL: https://www.linkedin.com/in/ianmcdonald/
-
-Section 3 - Special Offer (Highlighted Box - Conversion Focus):
-----------------------------------------------------------------
-💡 SPECIAL WORKSHOP OFFER - LIMITED SPOTS
-
-Want to go deeper? I'm taking 10 people through a 4-week intensive:
-
-"AI App Development Bootcamp"
-→ 4 live group sessions (90 min each)
-→ Build 4 real apps together
-→ Direct feedback & troubleshooting
-→ Small group (max 10 people)
-
-Investment: $297 (normally $497)
-Workshop attendee pricing - expires in 48 hours
-
-CTA: [Claim Your Spot →]
-URL: https://ianmcdonald.ai/bootcamp
-
-OR
-
-1-on-1 Consulting: $197/90 min
-Custom help building your specific app idea
-
-CTA: [Book Consulting →]
-URL: https://ianmcdonald.ai/consulting
-
-Visual: Two-column layout on desktop, bootcamp on left (larger), consulting on right (smaller card)
-
-Section 4 - Feedback Form (Bottom):
-------------------------------------
-📝 Help me improve
-
-2-minute survey — What did you think? What do you want to learn next?
-
-CTA: [Share Your Feedback →]
-URL: https://ianmcdonald.ai/feedback
-
-Presenter Script:
------------------
-"Okay, so what's next? Few things:
-
-First, Launchbox. That's the platform I'm building where creators can offer 
-courses, community, and AI tools all in one place. If that sounds interesting, 
-join the waitlist. Founders get special pricing when it launches.
-
-Second, I'm doing more workshops like this. If you want to know when the next 
-one is, join my newsletter. I also share AI tips and tools I'm using as I build.
-
-Third, join the Facebook group - Idea to AI. That's where we hang out between 
-workshops. Share what you're building, ask questions, help each other out.
-
-Now, here's the thing. Today we built something simple. But what if you want 
-to build something MORE?
-
-I'm running a 4-week bootcamp starting [DATE]. Small group - max 10 people. 
-We meet live every week for 90 minutes, and we build REAL apps together. 
-Not toys. Real tools you can use in your business.
-
-Week 1: Landing page with lead capture
-Week 2: Custom tool or calculator
-Week 3: Dashboard with data
-Week 4: Whatever YOU want to build
-
-Normally $497. For you, because you showed up today, it's $297. But that 
-expires Friday.
-
-If you're thinking 'I want to keep going, I want to build more, I want Ian's 
-help'—grab one of those 10 spots.
-
-Or, if you have a specific app idea and want 1-on-1 help, I do consulting. 
-90 minutes, $197, we build your thing together.
-
-Links are on the screen. And there's a feedback form—please fill it out. 
-Tell me what you loved, what you didn't, what you want to learn next. 
-That helps me make these better.
-
-Any questions?"
-
-Conversion Strategy:
---------------------
-- Launchbox waitlist = primary CTA (future revenue, audience building)
-- Newsletter/Community = free engagement (retention)
-- Bootcamp = immediate revenue ($297 × 10 = $2,970 for 6 hours work)
-- Consulting = high-touch upsell ($197/session)
-- 48-hour urgency on bootcamp (converts while energy is high)
-- Expected conversion: 10-15% bootcamp, 30-40% waitlist, 50-60% newsletter
+Layout:
+-------
+- Centered text
+- Large title (text-6xl md:text-8xl)
+- Fade-in animation
+- Minimal design - focus on gratitude
 
 
 NAVIGATION (Bottom of all slides):
 -----------------------------------
-• Progress dots centered between Previous / Next buttons (15 total)
+• Progress dots centered between Previous / Next buttons (16 total)
 • Previous button (left) - disabled on Slide 1
 • Next/Start/Generate & Next button (right)
   - Slide 1: "Start"
   - Slides 2-10, 12-14: "Next"
   - Slide 11: "Generate & Next" (disabled if form invalid)
-  - Slide 15: No next button (end of slideshow)
+  - Slide 15: "Next"
+  - Slide 16: No next button (end of slideshow)
 
 Keyboard shortcuts: ← → to navigate
 
-Slide counter (top right): Shows "Slide X of 15"
+Slide counter (top right): Shows "Slide X of 16"
 
 
 NOTES:
@@ -679,10 +706,9 @@ NOTES:
 • Slide 8: "The Concept" - Visual demonstration of presentation + prompt (replaces old wordy AI Basics)
 • Slide 9: "Why This Workshop?" Part 3 - Reinforces belief barrier message
 • Slide 10: "What You'll Do Today" - 4-step process with time estimates
-• Slide 13: "Share Your Site!" - Form to submit deployed site URL and description
-• Slide 14: "Celebration" - Live showcase of participant sites with iframe previews (3x2 scrollable grid)
-• Slide 15: Conversion-focused offers and feedback
+• Slide 13: "Celebration" - Shows "You just did that!" message, then motivational content about next steps
+• Slide 14: "What's Next?" - Launchbox waitlist, newsletter, community, and social media links
+• Slide 15: "Go Deeper?" - Consulting and Group Cohort offers with 48-hour countdown timer
+• Slide 16: "Thank You" - Closing gratitude message
 • Workshop participants persist in Firebase Firestore with real-time updates
 • Sticky notes support 12 color options and display up to 100 most recent entries
-• Deployed sites persist in Firebase Firestore ('deployed-sites' collection)
-• Site showcase displays live iframe previews with click-through to actual sites
