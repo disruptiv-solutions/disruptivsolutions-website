@@ -20,11 +20,11 @@ async function getPollResults(): Promise<PollResponse> {
     const querySnapshot = await getDocs(votesRef);
 
     const results: PollResponse = {
-      clueless: 0,
-      little: 0,
-      goodAmount: 0,
-      expert: 0,
-    };
+  clueless: 0,
+  little: 0,
+  goodAmount: 0,
+  expert: 0,
+};
 
     querySnapshot.forEach((doc) => {
       const data = doc.data();

@@ -38,11 +38,11 @@ export const CelebrationStep: React.FC = () => {
           <div className="text-center space-y-2">
             <h2 className="text-3xl md:text-4xl font-bold text-white">
               Now you can share your site
-            </h2>
+        </h2>
             <p className="text-base md:text-lg text-gray-300">
               You've seen how easy it is to build something real. Here's what's next.
-            </p>
-          </div>
+        </p>
+      </div>
 
           <div className="space-y-4">
             {/* Motivational content */}
@@ -61,7 +61,7 @@ export const CelebrationStep: React.FC = () => {
                         You've proven to yourself that building with AI is possible. Use this momentum to keep learning and building.
                       </p>
                     </div>
-                  </div>
+        </div>
 
                   <div className="flex items-start gap-2.5">
                     <span className="text-red-400 text-xl mt-0.5">→</span>
@@ -69,9 +69,9 @@ export const CelebrationStep: React.FC = () => {
                       <p className="text-white font-semibold mb-0.5 text-base">Build sites for others</p>
                       <p className="text-gray-300 text-sm">
                         Local businesses need websites. You now have the skills to help them. Start with friends, family, or small businesses in your area.
-                      </p>
-                    </div>
-                  </div>
+          </p>
+        </div>
+                </div>
 
                   <div className="flex items-start gap-2.5">
                     <span className="text-red-400 text-xl mt-0.5">→</span>
@@ -83,8 +83,8 @@ export const CelebrationStep: React.FC = () => {
                     </div>
                   </div>
                 </div>
+                </div>
               </div>
-            </div>
           </div>
         </div>
       )}

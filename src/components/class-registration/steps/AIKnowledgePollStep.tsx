@@ -88,7 +88,7 @@ export const AIKnowledgePollStep: React.FC = () => {
 
       setSelectedOption(optionId);
       console.log('[AIKnowledgePollStep] Vote submitted successfully');
-      
+
       // Real-time listener will automatically update the votes
     } catch (error) {
       console.error('[AIKnowledgePollStep] Error submitting vote:', error);

@@ -40,6 +40,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# env variable reference files (contain sensitive data)
+VERCEL_ENV_VARIABLES.txt
+PRODUCTION_ENV_SETUP.md
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
