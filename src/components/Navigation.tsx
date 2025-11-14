@@ -22,6 +22,7 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
     { name: 'Consulting', href: '#consulting' },
     { name: 'Highlights', href: '#launchbox' },
     { name: 'Work', href: '#work' },
+    { name: 'Resources', href: '/resources' },
   ];
 
   const handleNavClick = (href: string) => {
@@ -65,6 +66,10 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
           });
         }
       }
+    } else if (href.startsWith('/')) {
+      const navItem = navigationItems.find(item => item.href === href);
+      trackButtonClick('nav_click', navItem?.name || href);
+      router.push(href);
     }
     
     // Close mobile menu after navigation
