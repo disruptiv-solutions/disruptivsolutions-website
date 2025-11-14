@@ -430,6 +430,7 @@ const fallbackResources: Record<string, ResourceContent> = {
     type: 'guide',
     icon: '✅',
     lastUpdated: 'November 2024',
+    published: true,
     content: {
       sections: [
         {
