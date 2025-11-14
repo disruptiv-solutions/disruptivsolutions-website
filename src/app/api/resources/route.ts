@@ -4,9 +4,6 @@ import {
   collection, 
   getDocs, 
   addDoc, 
-  doc, 
-  updateDoc, 
-  deleteDoc,
   query,
   orderBy,
   Timestamp
@@ -41,7 +38,7 @@ export async function GET(request: NextRequest) {
     const publishedOnly = searchParams.get('published') === 'true';
 
     const resourcesRef = collection(db, 'resources');
-    let q = query(resourcesRef, orderBy('createdAt', 'desc'));
+    const q = query(resourcesRef, orderBy('createdAt', 'desc'));
 
     const snapshot = await getDocs(q);
     const resources: Resource[] = [];
@@ -75,8 +72,6 @@ export async function POST(request: NextRequest) {
   try {
     // Verify admin status (check if user is admin)
     // Note: In production, verify using Firebase Admin SDK with auth token
-    const authHeader = request.headers.get('authorization');
-    // For now, we'll allow but log - in production verify token properly
     
     const body = await request.json();
     const { title, description, type, icon, content, published, userId } = body;

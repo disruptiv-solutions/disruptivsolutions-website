@@ -69,8 +69,9 @@ export default function ResourceManagementPage() {
       }
 
       fetchResources();
-    } catch (error: any) {
-      setError(error.message || 'Failed to update resource');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to update resource';
+      setError(errorMessage);
     }
   };
 
@@ -90,8 +91,9 @@ export default function ResourceManagementPage() {
       }
 
       fetchResources();
-    } catch (error: any) {
-      setError(error.message || 'Failed to delete resource');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to delete resource';
+      setError(errorMessage);
     }
   };
 

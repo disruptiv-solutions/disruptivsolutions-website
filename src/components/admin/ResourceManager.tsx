@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { auth } from '@/lib/firebase';
 
 interface ResourceSection {
   heading?: string;
@@ -142,8 +141,9 @@ export const ResourceManager: React.FC = () => {
       // Reset form and refresh list
       resetForm();
       fetchResources();
-    } catch (error: any) {
-      setError(error.message || 'An error occurred');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'An error occurred';
+      setError(errorMessage);
     }
   };
 
@@ -176,8 +176,9 @@ export const ResourceManager: React.FC = () => {
       }
 
       fetchResources();
-    } catch (error: any) {
-      setError(error.message || 'Failed to delete resource');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to delete resource';
+      setError(errorMessage);
     }
   };
 
@@ -198,8 +199,9 @@ export const ResourceManager: React.FC = () => {
       }
 
       fetchResources();
-    } catch (error: any) {
-      setError(error.message || 'Failed to update resource');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to update resource';
+      setError(errorMessage);
     }
   };
 
