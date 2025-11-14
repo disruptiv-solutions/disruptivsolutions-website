@@ -69,15 +69,17 @@ export async function PUT(
       );
     }
 
-    const updateData: Partial<{
-      title: string;
-      description: string;
-      type: string;
-      icon: string;
-      content: unknown;
-      published: boolean;
-      lastUpdated: typeof Timestamp;
-    }> = {
+    interface ResourceUpdateData {
+      title?: string;
+      description?: string;
+      type?: string;
+      icon?: string;
+      content?: unknown;
+      published?: boolean;
+      lastUpdated: Timestamp;
+    }
+
+    const updateData: ResourceUpdateData = {
       lastUpdated: Timestamp.now(),
     };
 
