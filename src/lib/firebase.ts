@@ -1,6 +1,7 @@
 import { initializeApp, getApps, FirebaseApp } from 'firebase/app';
 import { getFirestore, Firestore } from 'firebase/firestore';
 import { getStorage, FirebaseStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getAuth, Auth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'AIzaSyCPXFfcgUvK1vsRf7dI6jsFvrls19i2hh8',
@@ -24,6 +25,9 @@ export const db: Firestore = getFirestore(app);
 
 // Initialize Storage
 export const storage: FirebaseStorage = getStorage(app);
+
+// Initialize Auth
+export const auth: Auth = getAuth(app);
 
 /**
  * Uploads a file to Firebase Storage and returns the download URL

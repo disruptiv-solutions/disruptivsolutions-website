@@ -1,0 +1,197 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+
+interface Resource {
+  id: string;
+  title: string;
+  description: string;
+  type: 'article' | 'ad-landing' | 'blog' | 'prompts' | 'tool' | 'guide' | 'video' | 'all';
+  icon: string;
+  published: boolean;
+}
+
+const typeLabels = {
+  all: 'All Resources',
+  article: 'Articles',
+  'ad-landing': 'Ads / Landing Pages',
+  blog: 'Blog Posts',
+  prompts: 'Prompts',
+  tool: 'Tools',
+  guide: 'Guides',
+  video: 'Videos',
+};
+
+export default function ResourcesPage() {
+  const [activeFilter, setActiveFilter] = useState<'all' | 'article' | 'ad-landing' | 'blog' | 'prompts' | 'tool' | 'guide' | 'video'>('all');
+  const [resources, setResources] = useState<Resource[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchResources();
+  }, []);
+
+  const fetchResources = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/resources?published=true');
+      const data = await response.json();
+      if (data.success) {
+        setResources(data.resources || []);
+      } else {
+        setError('Failed to load resources');
+      }
+    } catch (error) {
+      console.error('Error fetching resources:', error);
+      setError('Failed to load resources');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filteredResources = activeFilter === 'all' 
+    ? resources 
+    : resources.filter(resource => resource.type === activeFilter);
+
+  return (
+    <div className="bg-black min-h-screen">
+      {/* Hero Section */}
+      <section className="relative min-h-[40vh] flex items-center justify-center bg-black pt-24 pb-16">
+        <div className="absolute inset-0 bg-gradient-to-b from-red-950/20 via-black to-black"></div>
+        
+        <div className="relative max-w-5xl mx-auto px-6 text-center space-y-6">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
+            Free Resources
+          </h1>
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
+            Everything you need to start building AI-powered applications. Prompts, guides, tutorials, and tools.
+          </p>
+        </div>
+      </section>
+
+      {/* Filter Buttons */}
+      <section className="bg-black border-b border-gray-800 sticky top-[65px] z-40 backdrop-blur-sm bg-black/80">
+        <div className="max-w-5xl mx-auto px-6 py-6">
+          <div className="flex flex-wrap gap-3 justify-center">
+            {(Object.keys(typeLabels) as Array<keyof typeof typeLabels>).map((type) => (
+              <button
+                key={type}
+                onClick={() => setActiveFilter(type)}
+                className={`px-6 py-2.5 rounded-full font-medium transition-all ${
+                  activeFilter === type
+                    ? 'bg-red-600 text-white shadow-lg shadow-red-600/40'
+                    : 'bg-zinc-900 text-gray-300 border border-gray-800 hover:border-gray-700 hover:bg-zinc-800'
+                }`}
+              >
+                {typeLabels[type]}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Resources List */}
+      <section className="bg-black py-16">
+        <div className="max-w-5xl mx-auto px-6">
+          {loading ? (
+            <div className="text-center py-20">
+              <p className="text-xl text-gray-400">Loading resources...</p>
+            </div>
+          ) : error ? (
+            <div className="text-center py-20">
+              <p className="text-xl text-red-400 mb-4">{error}</p>
+              <button
+                onClick={fetchResources}
+                className="px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-all"
+              >
+                Try Again
+              </button>
+            </div>
+          ) : filteredResources.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-xl text-gray-400">No resources found in this category.</p>
+              {activeFilter !== 'all' && (
+                <button
+                  onClick={() => setActiveFilter('all')}
+                  className="mt-4 px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-all"
+                >
+                  View All Resources
+                </button>
+              )}
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {/* Resource Count */}
+              <div className="mb-6">
+                <p className="text-sm text-gray-400">
+                  Showing {filteredResources.length} {filteredResources.length === 1 ? 'resource' : 'resources'}
+                  {activeFilter !== 'all' && ` in ${typeLabels[activeFilter]}`}
+                </p>
+              </div>
+              {filteredResources.map((resource) => (
+                <Link
+                  key={resource.id}
+                  href={`/resources/${resource.id}`}
+                  className="group block"
+                >
+                  <div className="bg-zinc-900 border border-gray-800 rounded-xl p-6 transition-all duration-300 hover:border-red-600/50 hover:bg-zinc-800/80 hover:shadow-lg hover:shadow-red-600/10">
+                    <div className="flex items-start gap-6">
+                      {/* Icon */}
+                      <div className="text-5xl flex-shrink-0">
+                        {resource.icon}
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between gap-4 mb-2">
+                          <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-red-400 transition-colors">
+                            {resource.title}
+                          </h3>
+                          <span className="px-3 py-1 bg-zinc-800 border border-gray-700 rounded-full text-xs font-semibold text-gray-400 whitespace-nowrap flex-shrink-0">
+                            {typeLabels[resource.type]}
+                          </span>
+                        </div>
+                        <p className="text-gray-400 leading-relaxed mb-3">
+                          {resource.description}
+                        </p>
+                        <div className="flex items-center gap-2 text-red-400 font-semibold text-sm group-hover:gap-3 transition-all">
+                          <span>View Resource</span>
+                          <span>→</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Bottom CTA */}
+      <section className="bg-black py-16 border-t border-gray-800">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center bg-gradient-to-br from-red-600/20 via-red-500/10 to-transparent border border-red-500/30 rounded-3xl p-8 md:p-12">
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+              Want More Resources?
+            </h3>
+            <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
+              Join my newsletter to get new resources, tutorials, and AI building tips delivered to your inbox every week.
+            </p>
+            <a
+              href="https://newsletter.example.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-8 py-4 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-all shadow-lg shadow-red-600/40"
+            >
+              Subscribe to Newsletter →
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+

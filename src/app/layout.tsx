@@ -5,6 +5,7 @@ import "./globals.css";
 import NavigationWrapper from "@/components/NavigationWrapper";
 import Footer from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/next";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -54,11 +55,13 @@ export default function RootLayout({
             gtag('config', 'G-F7F28TQPBP');
           `}
         </Script>
-        <NavigationWrapper />
-        <main className="relative">
-          {children}
-        </main>
-        <Footer />
+        <AuthProvider>
+          <NavigationWrapper />
+          <main className="relative">
+            {children}
+          </main>
+          <Footer />
+        </AuthProvider>
         <Analytics />
       </body>
     </html>

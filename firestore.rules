@@ -2,61 +2,73 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // Deployed sites collection - public read, anyone can write (for workshop participants)
-    match /deployed-sites/{siteId} {
-      // Allow anyone to read deployed sites
-      allow read: if true;
-      
-      // Allow anyone to create new sites (for workshop participants)
-      allow create: if request.resource.data.keys().hasAll(['url', 'description', 'timestamp'])
-                    && request.resource.data.url is string
-                    && request.resource.data.description is string
-                    && request.resource.data.description.size() <= 60
-                    && request.resource.data.timestamp is number;
-      
-      // Prevent updates and deletes (sites are immutable once submitted)
-      allow update, delete: if false;
+    // ============================================
+    // Helper Functions
+    // ============================================
+    
+    // Check if the authenticated user is an admin
+    // Add more admin UIDs to this array as needed
+    function isAdmin() {
+      return request.auth != null && 
+             request.auth.uid in ['Pw6izWRUHzam4qPrmEeE56fFsYC2'];
     }
     
-    // Workshop participants collection - public read, anyone can write and delete
-    match /workshop-participants/{participantId} {
-      // Allow anyone to read participants
+    // ============================================
+    // Resources Collection
+    // ============================================
+    // Stores blog posts, guides, prompts, and other resources
+    match /resources/{resourceId} {
+      // Read: Allow public reads (API routes filter by published status)
+      //       This allows orderBy queries to work properly
+      //       The API route filters out unpublished resources for public requests
       allow read: if true;
       
-      // Allow anyone to create new participants
-      allow create: if request.resource.data.keys().hasAll(['name', 'location', 'wantToBuild', 'timestamp'])
-                    && request.resource.data.name is string
-                    && request.resource.data.location is string
-                    && request.resource.data.wantToBuild is string
-                    && request.resource.data.wantToBuild.size() <= 100
-                    && request.resource.data.timestamp is number;
-      
-      // Allow anyone to delete participants (for removing sticky notes)
+      // Write: Allow all writes (admin verification happens in API routes)
+      //        API routes verify admin status before allowing create/update/delete
+      allow create: if true;
+      allow update: if true;
       allow delete: if true;
-      
-      // Prevent updates
-      allow update: if false;
     }
     
-    // AI knowledge poll collection - public read, anyone can write
-    match /ai-knowledge-poll/{pollId} {
-      // Allow anyone to read poll results
+    // ============================================
+    // Workshop Participants Collection
+    // ============================================
+    // Stores participant data for the workshop slideshow
+    match /workshop-participants/{participantId} {
+      // Read: Public (anyone can view participants)
       allow read: if true;
       
-      // Allow anyone to submit poll responses with validation
-      allow create: if request.resource.data.keys().hasAll(['option', 'timestamp'])
-                    && request.resource.data.option is string
-                    && request.resource.data.option in ['clueless', 'little', 'goodAmount', 'expert']
-                    && request.resource.data.timestamp is number;
+      // Create: Anyone can add themselves as a participant
+      allow create: if true;
       
-      // Prevent updates and deletes
-      allow update, delete: if false;
+      // Update: Users can only update their own data
+      allow update: if request.auth != null && request.auth.uid == participantId;
+      
+      // Delete: Only admins can delete participants
+      allow delete: if isAdmin();
     }
     
-    // Default: deny all other access
+    // ============================================
+    // Deployed Sites Collection
+    // ============================================
+    // Stores deployed site URLs for workshop showcase
+    match /deployed-sites/{siteId} {
+      // Read: Public (anyone can view submitted sites)
+      allow read: if true;
+      
+      // Create: Anyone can submit their deployed site
+      allow create: if true;
+      
+      // Delete: Only admins can delete sites
+      allow delete: if isAdmin();
+    }
+    
+    // ============================================
+    // Default Rule
+    // ============================================
+    // Deny all access to any other collections/documents
     match /{document=**} {
       allow read, write: if false;
     }
   }
 }
-
