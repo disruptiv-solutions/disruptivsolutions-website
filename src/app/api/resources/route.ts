@@ -17,6 +17,8 @@ interface Resource {
   description: string;
   type: 'article' | 'ad-landing' | 'blog' | 'prompts' | 'tool' | 'guide' | 'video';
   icon: string;
+  imageUrl?: string;
+  imagePrompt?: string;
   content: {
     sections: Array<{
       heading?: string;
@@ -74,7 +76,7 @@ export async function POST(request: NextRequest) {
     // Note: In production, verify using Firebase Admin SDK with auth token
     
     const body = await request.json();
-    const { title, description, type, icon, content, published, userId } = body;
+    const { title, description, type, icon, content, published, imageUrl, imagePrompt, userId } = body;
     
     // Verify admin if userId is provided
     if (userId) {
@@ -100,6 +102,8 @@ export async function POST(request: NextRequest) {
       description: description.trim(),
       type,
       icon,
+      imageUrl: imageUrl || '',
+      imagePrompt: imagePrompt || '',
       content,
       published: published ?? false,
       createdAt: Timestamp.now(),

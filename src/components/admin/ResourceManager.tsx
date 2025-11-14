@@ -17,6 +17,8 @@ interface Resource {
   description: string;
   type: 'article' | 'prompts' | 'tool' | 'guide' | 'video';
   icon: string;
+  imageUrl?: string;
+  imagePrompt?: string;
   content: {
     sections: ResourceSection[];
   };
@@ -46,6 +48,8 @@ export const ResourceManager: React.FC = () => {
     description: '',
     type: 'article' as Resource['type'],
     icon: '📄',
+    imageUrl: '',
+    imagePrompt: '',
     published: false,
     content: {
       sections: [] as ResourceSection[],
@@ -154,6 +158,8 @@ export const ResourceManager: React.FC = () => {
       description: resource.description,
       type: resource.type,
       icon: resource.icon,
+      imageUrl: resource.imageUrl || '',
+      imagePrompt: resource.imagePrompt || '',
       published: resource.published,
       content: resource.content,
     });

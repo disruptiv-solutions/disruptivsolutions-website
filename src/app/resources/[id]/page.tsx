@@ -11,6 +11,8 @@ interface ResourceContent {
   description: string;
   type: 'article' | 'ad-landing' | 'blog' | 'prompts' | 'tool' | 'guide' | 'video';
   icon: string;
+  imageUrl?: string;
+  imagePrompt?: string;
   lastUpdated?: string;
   createdAt?: string;
   content: {
@@ -26,7 +28,7 @@ interface ResourceContent {
 }
 
 // Fallback resources for backwards compatibility (can be removed later)
-const fallbackResources: Record<string, ResourceContent> = {
+const fallbackResources: Record<string, Omit<ResourceContent, 'published'>> = {
   'ai-prompts-library': {
     id: 'ai-prompts-library',
     title: 'AI Prompts Library',
@@ -581,7 +583,10 @@ export default function ResourcePage() {
         setResource(formattedResource);
       } else if (fallbackResources[resourceId]) {
         // Fallback to hardcoded resources for backwards compatibility
-        setResource(fallbackResources[resourceId]);
+        setResource({
+          ...fallbackResources[resourceId],
+          published: true,
+        });
       } else {
         setError('Resource not found');
       }
@@ -589,7 +594,10 @@ export default function ResourcePage() {
       console.error('Error fetching resource:', error);
       // Try fallback
       if (fallbackResources[id]) {
-        setResource(fallbackResources[id]);
+        setResource({
+          ...fallbackResources[id],
+          published: true,
+        });
       } else {
         setError('Failed to load resource');
       }
@@ -707,6 +715,23 @@ export default function ResourcePage() {
           <p className="text-lg md:text-xl text-gray-400 leading-relaxed">
             {resource.description}
           </p>
+
+        {resource.imageUrl && (
+          <div className="mt-8">
+            <div className="rounded-3xl overflow-hidden border border-gray-800 shadow-2xl shadow-black/40">
+              <img
+                src={resource.imageUrl}
+                alt={resource.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {resource.imagePrompt && (
+              <p className="text-xs text-gray-500 mt-3">
+                Image concept: {resource.imagePrompt}
+              </p>
+            )}
+          </div>
+        )}
         </div>
 
         {/* Resource Content */}

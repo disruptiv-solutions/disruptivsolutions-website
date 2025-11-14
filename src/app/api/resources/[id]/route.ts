@@ -46,7 +46,7 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
-    const { title, description, type, icon, content, published, userId } = body;
+    const { title, description, type, icon, content, published, imageUrl, imagePrompt, userId } = body;
     
     // Verify admin if userId is provided
     if (userId) {
@@ -78,6 +78,8 @@ export async function PUT(
     if (type !== undefined) updateData.type = type;
     if (icon !== undefined) updateData.icon = icon;
     if (content !== undefined) updateData.content = content;
+    if (imageUrl !== undefined) updateData.imageUrl = imageUrl;
+    if (imagePrompt !== undefined) updateData.imagePrompt = imagePrompt;
     if (published !== undefined) updateData.published = published;
 
     await updateDoc(resourceRef, updateData);
