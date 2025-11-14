@@ -264,6 +264,7 @@ const fallbackResources: Record<string, ResourceContent> = {
     type: 'prompts',
     icon: '💼',
     lastUpdated: 'November 2024',
+    published: true,
     content: {
       sections: [
         {
