@@ -69,17 +69,7 @@ export async function PUT(
       );
     }
 
-    interface ResourceUpdateData {
-      title?: string;
-      description?: string;
-      type?: string;
-      icon?: string;
-      content?: unknown;
-      published?: boolean;
-      lastUpdated: Timestamp;
-    }
-
-    const updateData: ResourceUpdateData = {
+    const updateData: Record<string, unknown> = {
       lastUpdated: Timestamp.now(),
     };
 
