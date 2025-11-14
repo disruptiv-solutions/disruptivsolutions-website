@@ -45,7 +45,7 @@ export default function ResourceEditPage() {
   const isNew = id === 'new';
   const { user } = useAuth();
   
-  const [resource, setResource] = useState<Resource | null>(null);
+  const [, setResource] = useState<Resource | null>(null);
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -178,9 +178,10 @@ export default function ResourceEditPage() {
       });
 
       setContentGenerated(true);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error generating content:', error);
-      setError(error.message || 'Failed to generate content with AI. Make sure OPENROUTER_API_KEY is set in .env.local');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to generate content with AI. Make sure OPENROUTER_API_KEY is set in .env.local';
+      setError(errorMessage);
     } finally {
       setGeneratingAI(false);
     }
@@ -229,8 +230,9 @@ export default function ResourceEditPage() {
         // Refresh resource data
         fetchResource(id);
       }
-    } catch (error: any) {
-      setError(error.message || 'An error occurred');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'An error occurred';
+      setError(errorMessage);
     } finally {
       setSaving(false);
     }

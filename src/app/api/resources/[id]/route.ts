@@ -69,7 +69,15 @@ export async function PUT(
       );
     }
 
-    const updateData: any = {
+    const updateData: Partial<{
+      title: string;
+      description: string;
+      type: string;
+      icon: string;
+      content: unknown;
+      published: boolean;
+      lastUpdated: typeof Timestamp;
+    }> = {
       lastUpdated: Timestamp.now(),
     };
 

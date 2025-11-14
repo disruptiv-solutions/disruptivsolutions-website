@@ -2,12 +2,40 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-interface GenerateResourceRequest {
-  resourceType: 'article' | 'ad-landing' | 'blog' | 'prompts' | 'tool' | 'guide' | 'video';
-  topic: string;
-  includeWebResearch: boolean;
-  deepResearch: boolean;
-  length: number; // 0-100 percentage
+interface OpenRouterRequest {
+  model: string;
+  messages: Array<{ role: string; content: string }>;
+  temperature: number;
+  max_tokens: number;
+  response_format: {
+    type: 'json_schema';
+    json_schema: {
+      name: string;
+      strict: boolean;
+      schema: Record<string, unknown>;
+    };
+  };
+}
+
+interface AIContent {
+  title: string;
+  description: string;
+  icon: string;
+  sections: Array<{
+    heading: string;
+    text?: string;
+    items?: string[];
+    code?: string;
+    note?: string;
+  }>;
+}
+
+interface FormattedSection {
+  heading: string;
+  text?: string;
+  items?: string[];
+  code?: string;
+  note?: string;
 }
 
 export async function POST(request: NextRequest) {
@@ -51,7 +79,7 @@ export async function POST(request: NextRequest) {
     };
 
     // Determine model - use :online variant for web research
-    let model = includeWebResearch ? 'openai/gpt-5.1:online' : 'openai/gpt-5.1';
+    const model = includeWebResearch ? 'openai/gpt-5.1:online' : 'openai/gpt-5.1';
     
     // Define JSON Schema for structured output
     // Note: With strict mode, nested objects must have a 'required' array
@@ -150,7 +178,7 @@ ${includeWebResearch
 Generate comprehensive, well-structured content following the JSON schema provided.`;
 
     // Build request body with structured outputs
-    const requestBody: any = {
+    const requestBody: OpenRouterRequest = {
       model,
       messages: [
         { role: 'system', content: systemPrompt },
@@ -163,7 +191,7 @@ Generate comprehensive, well-structured content following the JSON schema provid
         json_schema: {
           name: 'resource_content',
           strict: true, // Enforce strict schema compliance
-          schema: jsonSchema,
+          schema: jsonSchema as Record<string, unknown>,
         },
       },
     };
@@ -188,37 +216,38 @@ Generate comprehensive, well-structured content following the JSON schema provid
       );
     }
 
-    const data = await response.json();
-    let contentText = data.choices[0].message.content;
-    let aiContent: any;
+    const data = await response.json() as { choices: Array<{ message: { content: string | AIContent } }> };
+    let contentText: string | AIContent = data.choices[0].message.content;
+    let aiContent: AIContent;
 
     // With structured outputs, content should be valid JSON string
     // But we still need to parse it
     try {
       // Handle case where content might be a string or already parsed
       if (typeof contentText === 'string') {
-        contentText = contentText.trim();
+        const textContent = contentText.trim();
+        let jsonText = textContent;
         
         // Try to extract JSON from markdown code blocks if present (fallback)
-        const jsonMatch = contentText.match(/```(?:json)?\s*(\{[\s\S]*\})\s*```/);
+        const jsonMatch = jsonText.match(/```(?:json)?\s*(\{[\s\S]*\})\s*```/);
         if (jsonMatch) {
-          contentText = jsonMatch[1];
+          jsonText = jsonMatch[1];
         } else {
           // Find JSON object boundaries
-          const firstBrace = contentText.indexOf('{');
-          const lastBrace = contentText.lastIndexOf('}');
+          const firstBrace = jsonText.indexOf('{');
+          const lastBrace = jsonText.lastIndexOf('}');
           
           if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
-            contentText = contentText.substring(firstBrace, lastBrace + 1);
+            jsonText = jsonText.substring(firstBrace, lastBrace + 1);
           }
         }
         
-        aiContent = JSON.parse(contentText);
+        aiContent = JSON.parse(jsonText) as AIContent;
       } else {
         // Content is already an object
         aiContent = contentText;
       }
-    } catch (parseError: any) {
+    } catch (parseError: unknown) {
       console.error('[AI:generate-resource] JSON parse error:', parseError);
       console.error('[AI:generate-resource] Content text (first 500 chars):', 
         typeof contentText === 'string' ? contentText.substring(0, 500) : 'Not a string');
@@ -243,8 +272,8 @@ Generate comprehensive, well-structured content following the JSON schema provid
 
     // Format sections to match our structure
     // Filter out empty values (empty strings/arrays) since schema requires all fields
-    const formattedSections = aiContent.sections.map((section: any) => {
-      const formatted: any = {
+    const formattedSections: FormattedSection[] = aiContent.sections.map((section) => {
+      const formatted: FormattedSection = {
         heading: section.heading || '',
       };
       
