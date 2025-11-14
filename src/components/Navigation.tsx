@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { trackButtonClick } from '@/lib/analytics';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface NavigationProps {
   activeSection?: string;
@@ -10,8 +11,10 @@ interface NavigationProps {
 
 const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+  const { user, loading, isAdmin, signInWithGoogle, signOut } = useAuth();
 
   const navigationItems = [
     { name: 'Home', href: '#hero' },
@@ -72,6 +75,25 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const handleSignIn = async () => {
+    try {
+      await signInWithGoogle();
+      trackButtonClick('sign_in', 'Google');
+    } catch (error) {
+      console.error('Sign in error:', error);
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      setIsUserMenuOpen(false);
+      trackButtonClick('sign_out', 'User Menu');
+    } catch (error) {
+      console.error('Sign out error:', error);
+    }
+  };
+
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm border-b border-gray-800 h-16">
@@ -111,6 +133,82 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
                   </button>
                 );
               })}
+
+              {/* Auth Button/User Menu */}
+              {!loading && (
+                <>
+                  {user ? (
+                    <div className="relative">
+                      <button
+                        onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                        className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+                      >
+                        <div className="relative">
+                          <img
+                            src={user.photoURL || '/default-avatar.svg'}
+                            alt={user.displayName || 'User'}
+                            className="w-8 h-8 rounded-full border-2 border-gray-700"
+                          />
+                          {isAdmin && (
+                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-600 rounded-full border-2 border-black" title="Admin" />
+                          )}
+                        </div>
+                      </button>
+
+                      {/* User Dropdown Menu */}
+                      {isUserMenuOpen && (
+                        <>
+                          <div
+                            className="fixed inset-0 z-40"
+                            onClick={() => setIsUserMenuOpen(false)}
+                          />
+                          <div className="absolute right-0 mt-2 w-64 bg-zinc-900 border border-gray-800 rounded-xl shadow-lg z-50 overflow-hidden">
+                            <div className="p-4 border-b border-gray-800">
+                              <div className="flex items-center gap-2 mb-1">
+                                <p className="text-sm font-semibold text-white truncate">
+                                  {user.displayName}
+                                </p>
+                                {isAdmin && (
+                                  <span className="px-2 py-0.5 bg-red-600 text-white text-xs font-bold rounded">
+                                    ADMIN
+                                  </span>
+                                )}
+                              </div>
+                              <p className="text-xs text-gray-400 truncate">
+                                {user.email}
+                              </p>
+                            </div>
+                            {isAdmin && (
+                              <button
+                                onClick={() => {
+                                  router.push('/admin');
+                                  setIsUserMenuOpen(false);
+                                }}
+                                className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-gray-800 transition-colors border-b border-gray-800 font-semibold"
+                              >
+                                Admin Dashboard →
+                              </button>
+                            )}
+                            <button
+                              onClick={handleSignOut}
+                              className="w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-gray-800 transition-colors"
+                            >
+                              Sign Out
+                            </button>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  ) : (
+                    <button
+                      onClick={handleSignIn}
+                      className="px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition-all shadow-lg shadow-red-600/40"
+                    >
+                      Log In
+                    </button>
+                  )}
+                </>
+              )}
             </nav>
 
             {/* Mobile Menu Button */}
@@ -212,8 +310,69 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
                 </div>
               </nav>
 
+              {/* Auth Section - Mobile */}
+              {!loading && (
+                <div className="p-6 border-t border-gray-800">
+                  {user ? (
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-3">
+                        <div className="relative">
+                          <img
+                            src={user.photoURL || '/default-avatar.svg'}
+                            alt={user.displayName || 'User'}
+                            className="w-10 h-10 rounded-full border-2 border-gray-700"
+                          />
+                          {isAdmin && (
+                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-600 rounded-full border-2 border-black" title="Admin" />
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-0.5">
+                            <p className="text-sm font-semibold text-white truncate">
+                              {user.displayName}
+                            </p>
+                            {isAdmin && (
+                              <span className="px-2 py-0.5 bg-red-600 text-white text-xs font-bold rounded">
+                                ADMIN
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs text-gray-400 truncate">
+                            {user.email}
+                          </p>
+                        </div>
+                      </div>
+                      {isAdmin && (
+                        <button
+                          onClick={() => {
+                            router.push('/admin');
+                            setIsMobileMenuOpen(false);
+                          }}
+                          className="w-full px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition-all shadow-lg shadow-red-600/40"
+                        >
+                          Admin Dashboard →
+                        </button>
+                      )}
+                      <button
+                        onClick={handleSignOut}
+                        className="w-full px-4 py-2 bg-zinc-800 text-white text-sm font-medium rounded-lg hover:bg-zinc-700 transition-colors"
+                      >
+                        Sign Out
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={handleSignIn}
+                      className="w-full px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition-all shadow-lg shadow-red-600/40"
+                    >
+                      Log In with Google
+                    </button>
+                  )}
+                </div>
+              )}
+
               {/* Footer */}
-              <div className="p-6 border-t border-gray-800">
+              <div className="px-6 pb-6">
                 <p className="text-sm text-gray-400">
                   Practical AI products
                 </p>
