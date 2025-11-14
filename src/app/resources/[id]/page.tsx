@@ -177,6 +177,7 @@ const fallbackResources: Record<string, ResourceContent> = {
     type: 'video',
     icon: '🎥',
     lastUpdated: 'November 2024',
+    published: true,
     content: {
       sections: [
         {
