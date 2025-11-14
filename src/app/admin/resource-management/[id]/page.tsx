@@ -20,6 +20,8 @@ interface Resource {
   description: string;
   type: 'article' | 'ad-landing' | 'blog' | 'prompts' | 'tool' | 'guide' | 'video';
   icon: string;
+  imageUrl?: string;
+  imagePrompt?: string;
   content: {
     sections: ResourceSection[];
   };
@@ -50,6 +52,7 @@ export default function ResourceEditPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [generatingAI, setGeneratingAI] = useState(false);
+  const [generatingImage, setGeneratingImage] = useState(false);
   const [contentGenerated, setContentGenerated] = useState(false);
   
   // Initial form state for new resources
@@ -59,13 +62,16 @@ export default function ResourceEditPage() {
     deepResearch: false,
     topic: '',
     length: 50, // Default to medium length (50% = ~4000 tokens)
+    createImage: false,
   });
   
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Omit<Resource, 'id'>>({
     title: '',
     description: '',
     type: 'article' as Resource['type'],
     icon: '📄',
+    imageUrl: '',
+    imagePrompt: '',
     published: false,
     content: {
       sections: [] as ResourceSection[],
@@ -91,6 +97,8 @@ export default function ResourceEditPage() {
           description: data.resource.description,
           type: data.resource.type,
           icon: data.resource.icon,
+          imageUrl: data.resource.imageUrl || '',
+          imagePrompt: data.resource.imagePrompt || '',
           published: data.resource.published,
           content: data.resource.content,
         });
@@ -134,6 +142,54 @@ export default function ResourceEditPage() {
     });
   };
 
+  const generateImageFromContent = async (summary: {
+    title: string;
+    description: string;
+    type: Resource['type'];
+    content: Resource['content'];
+  }) => {
+    try {
+      setGeneratingImage(true);
+      const response = await fetch('/api/ai/generate-resource-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(summary),
+      });
+
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to generate image');
+      }
+
+      setFormData((prev) => ({
+        ...prev,
+        imageUrl: data.imageUrl,
+        imagePrompt: data.imagePrompt || '',
+      }));
+    } catch (error: unknown) {
+      console.error('Error generating image:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Failed to generate image';
+      setError(errorMessage);
+    } finally {
+      setGeneratingImage(false);
+    }
+  };
+
+  const handleManualImageGeneration = async () => {
+    if (!formData.title || formData.content.sections.length === 0) {
+      setError('Please generate content before creating an image.');
+      return;
+    }
+
+    await generateImageFromContent({
+      title: formData.title,
+      description: formData.description,
+      type: formData.type,
+      content: formData.content,
+    });
+  };
+
   const handleGenerateWithAI = async () => {
     // Validate required fields
     if (!initialForm.topic.trim()) {
@@ -173,11 +229,22 @@ export default function ResourceEditPage() {
         description: data.description,
         type: initialForm.resourceType,
         icon: data.icon || '📄',
+        imageUrl: '',
+        imagePrompt: '',
         published: false,
         content: data.content,
       });
 
       setContentGenerated(true);
+
+      if (initialForm.createImage) {
+        await generateImageFromContent({
+          title: data.title,
+          description: data.description,
+          type: initialForm.resourceType,
+          content: data.content,
+        });
+      }
     } catch (error: unknown) {
       console.error('Error generating content:', error);
       const errorMessage = error instanceof Error ? error.message : 'Failed to generate content with AI. Make sure OPENROUTER_API_KEY is set in .env.local';
@@ -370,6 +437,27 @@ export default function ResourceEditPage() {
                     </div>
                   </div>
 
+                  {/* Image Generation Option */}
+                  <div className="bg-zinc-800 border border-gray-700 rounded-xl p-6 space-y-3">
+                    <label className="block text-sm font-semibold text-white mb-2">
+                      Featured Image
+                    </label>
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={initialForm.createImage}
+                        onChange={(e) => setInitialForm({ ...initialForm, createImage: e.target.checked })}
+                        className="w-5 h-5 text-red-600 bg-zinc-900 border-gray-700 rounded focus:ring-red-600 mt-1"
+                      />
+                      <div>
+                        <span className="text-white font-semibold block">Generate hero image with AI</span>
+                        <p className="text-gray-400 text-sm">
+                          Automatically creates an optimized image prompt and generates a GPT-Image-1 Mini featured image for this resource.
+                        </p>
+                      </div>
+                    </label>
+                  </div>
+
                   {/* Topic Input */}
                   <div>
                     <label className="block text-sm font-semibold text-white mb-2">
@@ -542,6 +630,58 @@ export default function ResourceEditPage() {
                       <span className="text-white font-semibold">Published</span>
                     </label>
                   </div>
+                </div>
+
+                {/* Featured Image */}
+                <div className="border border-gray-800 rounded-xl p-4 bg-zinc-900/60 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <label className="block text-sm font-semibold text-white">
+                        Featured Image
+                      </label>
+                      <p className="text-xs text-gray-400">
+                        Optional hero image displayed on the public resource page.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleManualImageGeneration}
+                      disabled={generatingImage || formData.content.sections.length === 0}
+                      className="px-4 py-2 bg-purple-600 text-white text-xs font-semibold rounded-lg hover:bg-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {generatingImage ? 'Generating Image...' : 'Generate Image'}
+                    </button>
+                  </div>
+
+                  <input
+                    type="text"
+                    value={formData.imageUrl}
+                    onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                    placeholder="https://..."
+                    className="w-full px-4 py-2 bg-zinc-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-red-600 focus:border-red-600"
+                  />
+
+                  {formData.imageUrl && (
+                    <div className="rounded-lg overflow-hidden border border-gray-800">
+                      <img
+                        src={formData.imageUrl}
+                        alt="Resource featured"
+                        className="w-full h-48 object-cover"
+                      />
+                    </div>
+                  )}
+
+                  {formData.imagePrompt && (
+                    <div>
+                      <p className="text-xs text-gray-400 mb-1">Image Prompt</p>
+                      <textarea
+                        value={formData.imagePrompt}
+                        readOnly
+                        rows={3}
+                        className="w-full px-3 py-2 bg-zinc-900 border border-gray-800 rounded text-gray-300 text-sm"
+                      />
+                    </div>
+                  )}
                 </div>
 
                 {/* AI Generation Banner */}

@@ -11,6 +11,7 @@ interface Resource {
   description: string;
   type: 'article' | 'ad-landing' | 'blog' | 'prompts' | 'tool' | 'guide' | 'video';
   icon: string;
+  imageUrl?: string;
   published: boolean;
 }
 

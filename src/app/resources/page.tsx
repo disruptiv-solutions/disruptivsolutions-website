@@ -9,6 +9,7 @@ interface Resource {
   description: string;
   type: 'article' | 'ad-landing' | 'blog' | 'prompts' | 'tool' | 'guide' | 'video' | 'all';
   icon: string;
+  imageUrl?: string;
   published: boolean;
 }
 
