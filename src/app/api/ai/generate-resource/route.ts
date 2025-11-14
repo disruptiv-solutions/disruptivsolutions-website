@@ -217,7 +217,7 @@ Generate comprehensive, well-structured content following the JSON schema provid
     }
 
     const data = await response.json() as { choices: Array<{ message: { content: string | AIContent } }> };
-    let contentText: string | AIContent = data.choices[0].message.content;
+    const contentText: string | AIContent = data.choices[0].message.content;
     let aiContent: AIContent;
 
     // With structured outputs, content should be valid JSON string
