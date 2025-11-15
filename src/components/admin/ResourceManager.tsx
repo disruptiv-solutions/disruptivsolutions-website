@@ -217,6 +217,8 @@ export const ResourceManager: React.FC = () => {
       description: '',
       type: 'article',
       icon: '📄',
+      imageUrl: '',
+      imagePrompt: '',
       published: false,
       content: { sections: [] },
     });
