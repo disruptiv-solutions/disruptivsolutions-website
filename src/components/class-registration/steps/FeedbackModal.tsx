@@ -8,6 +8,7 @@ interface FeedbackModalProps {
 }
 
 interface FeedbackFormData {
+  name: string;
   rating: number | null;
   valuablePart: string;
   improvements: string;
@@ -40,6 +41,7 @@ const STAR_ICON_OUTLINE = (
 
 export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState<FeedbackFormData>({
+    name: '',
     rating: null,
     valuablePart: '',
     improvements: '',
@@ -79,6 +81,11 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!formData.name.trim()) {
+      setSubmitError('Please provide your name');
+      return;
+    }
+    
     if (!formData.rating) {
       setSubmitError('Please provide a rating');
       return;
@@ -100,6 +107,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
       }
 
       const payload = {
+        name: formData.name,
         rating: formData.rating,
         valuable_part: formData.valuablePart || '',
         improvements: formData.improvements || '',
@@ -142,6 +150,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
     setIsSuccess(false);
     setSubmitError(null);
     setFormData({
+      name: '',
       rating: null,
       valuablePart: '',
       improvements: '',
@@ -219,6 +228,21 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
                   📋 Feedback Form - 5 Questions
                 </h2>
                 <p className="text-sm text-gray-400">Keep it SHORT. 2 minutes max.</p>
+              </div>
+
+              {/* Question 0: Name */}
+              <div className="space-y-2">
+                <label htmlFor="name" className="block text-lg font-semibold text-white">
+                  Your Name <span className="text-red-400">*</span>
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+                  placeholder="e.g., John Smith"
+                  className="w-full px-4 py-3 bg-zinc-800 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
+                />
               </div>
 
               {/* Question 1: Rating */}
