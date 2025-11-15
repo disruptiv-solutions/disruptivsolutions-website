@@ -253,7 +253,46 @@ Total time: ~30 minutes
 Result: Live website YOU built with AI
 
 
-SLIDE 11: YOUR INFORMATION
+SLIDE 11: WHAT TO EXPECT WHEN WE BUILD IN LOVABLE
+-------------------------------------------------
+
+Title:
+------
+What to Expect While We Build in Lovable
+
+Section 1 — The Tool (Lovable.dev):
+-----------------------------------
+- We'll be building inside Lovable.dev. It's free and includes enough AI build credits for today's workshop.
+- If you've used it before and already hit a limit, follow along, take notes, and you can redo the steps later on your own account.
+- This slide reinforces the prep email so no one is surprised.
+
+Section 2 — Things Will Be a Little Messy (and That's Okay):
+------------------------------------------------------------
+- AI might pick a weird layout, use the wrong image, mess up copy, or even time out.
+- That's normal. Debugging small issues is part of what you're learning.
+- Goal: ship a live, imperfect version 1—not a polished portfolio site.
+
+Section 3 — How We'll Use Our Time:
+-----------------------------------
+- 5 minutes – Paste your prompt & run the first build
+- 10–15 minutes – Adjust layout, fix obvious issues, add your details
+- 5 minutes – Deploy and grab your live link
+- If tokens, accounts, or Wi-Fi cause issues, you'll still get the replay, slides, and your prompt.
+
+Section 4 — How I'll Handle Questions While We Build:
+-----------------------------------------------------
+- Channel: drop questions in chat while we build.
+- Checkpoints: after we generate the prompt, after the first Lovable build, after we deploy.
+- If you're really stuck, I'll note your name and hang back after the main 60 minutes for one-on-one help.
+
+Section 5 — Different Speeds Are Normal:
+----------------------------------------
+- If you finish early: tweak copy, try different colors, or add one extra section (testimonials, FAQs, etc.).
+- If you're behind: focus on getting a working v1. Design polish happens later.
+- This keeps fast folks from getting bored and slower folks from feeling rushed.
+
+
+SLIDE 12: YOUR INFORMATION
 --------------------------
 
 Left Panel:
@@ -345,7 +384,7 @@ Text Color
 [Generate AI Prompt button]
 
 
-SLIDE 12: PROMPT
+SLIDE 13: PROMPT
 ----------------
 
 Left Panel:
@@ -367,7 +406,7 @@ Now, copy this prompt. We will go to Lovable's app building platform together an
 [Edit Form & Generate Again button]
 
 
-SLIDE 13: CELEBRATION 🎉
+SLIDE 14: CELEBRATION 🎉
 ------------------------
 
 Title (Animated - appears first):
@@ -416,7 +455,7 @@ Visual:
 - Padding and spacing for readability
 
 
-SLIDE 14: WHAT'S NEXT?
+SLIDE 15: WHAT'S NEXT?
 ----------------------
 
 Title:
@@ -476,7 +515,7 @@ behind-the-scenes content.
 - YouTube: https://www.youtube.com/@IansDisruptivSolutions/shorts
 
 
-SLIDE 15: GO DEEPER?
+SLIDE 16: GO DEEPER?
 --------------------
 
 Title:
@@ -654,7 +693,7 @@ Technical:
 - Stops at 00:00:00
 
 
-SLIDE 16: THANK YOU 🙏
+SLIDE 17: THANK YOU 🙏
 ----------------------
 
 Title:
