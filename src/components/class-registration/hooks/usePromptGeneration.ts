@@ -2,6 +2,14 @@ import { useState } from 'react';
 import { trackButtonClick } from '@/lib/analytics';
 import type { FormData } from '../types';
 
+const normalizeUrl = (url?: string) => {
+  if (!url) return '';
+  const trimmed = url.trim();
+  if (!trimmed) return '';
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  return `https://${trimmed}`;
+};
+
 export const usePromptGeneration = () => {
   const [generatedPrompt, setGeneratedPrompt] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
@@ -38,7 +46,7 @@ export const usePromptGeneration = () => {
           bio,
           email,
           phone,
-          website,
+          website: normalizeUrl(website),
           company,
           industry,
           socialLinks,

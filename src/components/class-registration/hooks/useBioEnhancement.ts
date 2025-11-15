@@ -11,6 +11,14 @@ interface EnhanceBioParams {
   industry: string;
 }
 
+const normalizeUrl = (url?: string) => {
+  if (!url) return '';
+  const trimmed = url.trim();
+  if (!trimmed) return '';
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  return `https://${trimmed}`;
+};
+
 export const useBioEnhancement = () => {
   const [isEnhancingBio, setIsEnhancingBio] = useState(false);
   const [bioEnhanceError, setBioEnhanceError] = useState<string | null>(null);
@@ -38,7 +46,7 @@ export const useBioEnhancement = () => {
           title,
           location,
           bio,
-          website,
+          website: normalizeUrl(website),
           company,
           industry,
         }),

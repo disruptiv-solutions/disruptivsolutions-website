@@ -84,11 +84,11 @@ export const AdditionalInfoSection: React.FC<AdditionalInfoSectionProps> = ({
         </label>
         <input
           id="website"
-          type="url"
+          type="text"
           value={website}
           onChange={(e) => onWebsiteChange(e.target.value)}
           className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-10 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
-          placeholder="https://yourwebsite.com"
+          placeholder="yourwebsite.com"
         />
       </div>
 

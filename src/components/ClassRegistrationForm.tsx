@@ -884,11 +884,11 @@ const ClassRegistrationForm: React.FC = () => {
                     </label>
                     <input
                       id="website"
-                      type="url"
+                      type="text"
                       value={website}
                       onChange={(e) => setWebsite(e.target.value)}
                       className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
-                      placeholder="https://yourwebsite.com"
+                      placeholder="yourwebsite.com"
                     />
                   </div>
 
