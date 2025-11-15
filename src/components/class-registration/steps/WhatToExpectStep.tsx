@@ -4,19 +4,50 @@ interface SectionCardProps {
   highlight?: string;
   title: string;
   children: React.ReactNode;
+  showImage?: boolean;
 }
 
-const SectionCard: React.FC<SectionCardProps> = ({ highlight, title, children }) => (
-  <div className="bg-zinc-900/60 border border-gray-800 rounded-2xl p-6 space-y-3 hover:border-gray-700 transition-colors max-w-3xl mx-auto">
-    <div>
-      {highlight && (
-        <p className="text-sm uppercase tracking-wide text-red-400 font-semibold">{highlight}</p>
-      )}
-      <h3 className="text-2xl font-bold text-white">{title}</h3>
+const SectionCard: React.FC<SectionCardProps> = ({ highlight, title, children, showImage = false }) => {
+  if (showImage) {
+    return (
+      <div className="bg-zinc-900/60 border border-gray-800 rounded-2xl p-6 hover:border-gray-700 transition-colors max-w-6xl mx-auto w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          {/* Left side - Text content */}
+          <div className="space-y-4">
+            {highlight && (
+              <p className="text-sm uppercase tracking-wide text-red-400 font-semibold">{highlight}</p>
+            )}
+            <h3 className="text-2xl md:text-3xl font-bold text-white">{title}</h3>
+            <div className="space-y-3 text-gray-300 text-base leading-relaxed">{children}</div>
+          </div>
+          
+          {/* Right side - Image */}
+          <div className="flex justify-center lg:justify-end">
+            <div className="rounded-xl overflow-hidden border border-gray-700 shadow-lg max-w-md w-full">
+              <img 
+                src="/lovable-chat-preview.png" 
+                alt="Lovable chat interface preview" 
+                className="w-full h-auto"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-zinc-900/60 border border-gray-800 rounded-2xl p-6 space-y-3 hover:border-gray-700 transition-colors max-w-3xl mx-auto">
+      <div>
+        {highlight && (
+          <p className="text-sm uppercase tracking-wide text-red-400 font-semibold">{highlight}</p>
+        )}
+        <h3 className="text-2xl font-bold text-white">{title}</h3>
+      </div>
+      <div className="space-y-2 text-gray-300 text-base leading-relaxed">{children}</div>
     </div>
-    <div className="space-y-2 text-gray-300 text-base leading-relaxed">{children}</div>
-  </div>
-);
+  );
+};
 
 interface WhatToExpectStepProps {
   cardIndex: number;
@@ -24,23 +55,17 @@ interface WhatToExpectStepProps {
 }
 
 export const WhatToExpectStep: React.FC<WhatToExpectStepProps> = ({ cardIndex, totalCards }) => {
-  const cards: Array<{ highlight: string; title: string; content: React.ReactNode }> = [
+  const cards: Array<{ highlight: string; title: string; content: React.ReactNode; showImage?: boolean }> = [
     {
       highlight: 'The Platform',
       title: 'The Tool (Lovable.dev)',
+      showImage: true,
       content: (
         <>
           <p>
             We're building inside <span className="font-semibold text-white">Lovable.dev</span>.
             It's free and includes <span className="font-semibold text-white">5 credits</span> provided by Lovable—enough for about 5 messages between you and the AI.
           </p>
-          <div className="my-4 rounded-xl overflow-hidden border border-gray-700">
-            <img 
-              src="/lovable-chat-preview.png" 
-              alt="Lovable chat interface preview" 
-              className="w-full h-auto"
-            />
-          </div>
           <p className="text-sm text-gray-400">
             If you already burned through your credits previously, follow along, take notes, and rerun the steps later.
           </p>
@@ -102,7 +127,11 @@ export const WhatToExpectStep: React.FC<WhatToExpectStepProps> = ({ cardIndex, t
         </p>
       </div>
 
-      <SectionCard highlight={currentCard.highlight} title={currentCard.title}>
+      <SectionCard 
+        highlight={currentCard.highlight} 
+        title={currentCard.title}
+        showImage={currentCard.showImage}
+      >
         {currentCard.content}
       </SectionCard>
 
