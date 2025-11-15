@@ -266,7 +266,7 @@ Section 1 — The Tool (Lovable.dev):
 - If you've used it before and already hit a limit, follow along, take notes, and you can redo the steps later on your own account.
 - This slide reinforces the prep email so no one is surprised.
 
-Section 2 — Things Will Be a Little Messy (and That's Okay):
+Section 2 — Things Will Be a Little Messys (and That's Okay):
 ------------------------------------------------------------
 - AI might pick a weird layout, use the wrong image, mess up copy, or even time out.
 - That's normal. Debugging small issues is part of what you're learning.
