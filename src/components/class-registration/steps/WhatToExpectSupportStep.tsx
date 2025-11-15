@@ -96,14 +96,26 @@ export const WhatToExpectSupportStep: React.FC<WhatToExpectSupportStepProps> = (
       title: 'After the Workshop',
       content: (
         <>
-          <p>
-            You’ll get the replay, slides, and the form link so you can update your answers and regenerate your prompt whenever you want.
-          </p>
-          <p className="text-sm text-gray-300">
-            Want to improve your site later? Revisit the form, tweak your details, run a new prompt, and rebuild inside Lovable.
-          </p>
-          <p className="text-xs text-gray-500">
-            We’re getting to an 80% version together today. You can come back and make it a 100% version once you have breathing room.
+          <div className="space-y-4">
+            <p>
+              You'll get the replay, slides, and the form link so you can update your answers and regenerate your prompt whenever you want.
+            </p>
+            
+            <div className="rounded-xl overflow-hidden border border-gray-700 shadow-lg">
+              <img 
+                src="/video-lovable.png" 
+                alt="Lovable workshop replay preview" 
+                className="w-full h-auto"
+              />
+            </div>
+            
+            <p className="text-sm text-gray-300">
+              Want to improve your site later? Revisit the form, tweak your details, run a new prompt, and rebuild inside Lovable.
+            </p>
+          </div>
+          
+          <p className="text-xs text-gray-500 mt-6 pt-4 border-t border-gray-800">
+            We're getting to an 80% version together today. You can come back and make it a 100% version once you have breathing room.
           </p>
         </>
       ),
