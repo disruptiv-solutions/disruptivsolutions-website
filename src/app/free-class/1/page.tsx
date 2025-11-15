@@ -731,6 +731,24 @@ export default function ClassRegistrationPage() {
           animation: fade-in 0.5s ease-out;
         }
 
+        .delay-100 {
+          animation-delay: 0.1s;
+          opacity: 0;
+          animation-fill-mode: forwards;
+        }
+
+        .delay-200 {
+          animation-delay: 0.2s;
+          opacity: 0;
+          animation-fill-mode: forwards;
+        }
+
+        .delay-300 {
+          animation-delay: 0.3s;
+          opacity: 0;
+          animation-fill-mode: forwards;
+        }
+
         /* Custom scrollbar for form slide */
         .overflow-y-auto::-webkit-scrollbar {
           width: 8px;
