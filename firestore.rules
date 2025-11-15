@@ -41,11 +41,11 @@ service cloud.firestore {
       // Create: Anyone can add themselves as a participant
       allow create: if true;
       
-      // Update: Users can only update their own data
-      allow update: if request.auth != null && request.auth.uid == participantId;
+      // Update: Public (allow anyone to update for live workshop flexibility)
+      allow update: if true;
       
-      // Delete: Only admins can delete participants
-      allow delete: if isAdmin();
+      // Delete: Public (allow anyone to remove participants or clear the board)
+      allow delete: if true;
     }
     
     // ============================================
