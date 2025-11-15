@@ -10,6 +10,7 @@ import { WhyWorkshopStep2 } from '@/components/class-registration/steps/WhyWorks
 import { WhyWorkshopStep3 } from '@/components/class-registration/steps/WhyWorkshopStep3';
 import { TheConceptStep } from '@/components/class-registration/steps/TheConceptStep';
 import { WhatYoullDoStep } from '@/components/class-registration/steps/WhatYoullDoStep';
+import { WhatToExpectStep } from '@/components/class-registration/steps/WhatToExpectStep';
 import { FormStep } from '@/components/class-registration/steps/FormStep';
 import { PromptStep } from '@/components/class-registration/steps/PromptStep';
 import { CelebrationStep } from '@/components/class-registration/steps/CelebrationStep';
@@ -102,7 +103,7 @@ export default function ClassRegistrationPage() {
     e.preventDefault();
     const success = await generatePrompt(formData);
     if (success) {
-      setCurrentStep(12);
+      setCurrentStep(13);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -121,26 +122,26 @@ export default function ClassRegistrationPage() {
       return;
     }
     
-    if (step > 11 && !isFormValid) {
-      setCurrentStep(11);
+    if (step > 12 && !isFormValid) {
+      setCurrentStep(12);
       return;
     }
     
-    if (step > 12 && !generatedPrompt) {
-      setCurrentStep(11);
+    if (step > 13 && !generatedPrompt) {
+      setCurrentStep(12);
       return;
     }
     
-    if (step <= 16) {
+    if (step <= 17) {
       setCurrentStep(step);
     }
   }, [currentStep, formData, generatedPrompt, showTransition]);
 
   const handleNextSlide = useCallback(async () => {
-    if (currentStep === 11) {
+    if (currentStep === 12) {
       const success = await generatePrompt(formData);
       if (success) {
-        setCurrentStep(12);
+        setCurrentStep(13);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     } else if (currentStep === 3) {
@@ -389,8 +390,15 @@ export default function ClassRegistrationPage() {
                 </div>
               )}
 
-              {/* Step 11: Form */}
+              {/* Step 11: What to Expect */}
               {currentStep === 11 && (
+                <div className="animate-fade-in">
+                  <WhatToExpectStep />
+                </div>
+              )}
+
+              {/* Step 12: Form */}
+              {currentStep === 12 && (
                 <div className="animate-fade-in">
                   <div className="flex flex-col lg:flex-row gap-8 items-start lg:items-stretch">
                     <aside className="w-full lg:max-w-xs xl:max-w-sm flex flex-col gap-4">
@@ -468,8 +476,8 @@ export default function ClassRegistrationPage() {
                 </div>
               )}
 
-              {/* Step 12: Prompt */}
-              {currentStep === 12 && generatedPrompt && (
+              {/* Step 13: Prompt */}
+              {currentStep === 13 && generatedPrompt && (
                 <div className="animate-fade-in">
                   <div className="flex flex-col lg:flex-row gap-8 items-start lg:items-stretch">
                     <aside className="w-full lg:max-w-xs xl:max-w-sm space-y-4 flex flex-col justify-center">
@@ -501,7 +509,7 @@ export default function ClassRegistrationPage() {
                           generatedPrompt={generatedPrompt}
                           copied={copied}
                           onCopy={copyToClipboard}
-                          onEdit={() => setCurrentStep(11)}
+                          onEdit={() => setCurrentStep(12)}
                         />
                       </div>
                     </div>
@@ -509,29 +517,29 @@ export default function ClassRegistrationPage() {
                 </div>
               )}
 
-              {/* Step 13: Celebration */}
-              {currentStep === 13 && (
+              {/* Step 14: Celebration */}
+              {currentStep === 14 && (
                 <div className="animate-fade-in">
                   <CelebrationStep />
                 </div>
               )}
 
-              {/* Step 14: What's Next */}
-              {currentStep === 14 && (
+              {/* Step 15: What's Next */}
+              {currentStep === 15 && (
                 <div className="animate-fade-in">
                   <WhatsNextStep />
                 </div>
               )}
 
-              {/* Step 15: Go Deeper */}
-              {currentStep === 15 && (
+              {/* Step 16: Go Deeper */}
+              {currentStep === 16 && (
                 <div className="animate-fade-in">
                   <GoDeeperStep />
                 </div>
               )}
 
-              {/* Step 16: Thank You */}
-              {currentStep === 16 && (
+              {/* Step 17: Thank You */}
+              {currentStep === 17 && (
                 <div className="animate-fade-in">
                   <ThankYouStep />
                 </div>
@@ -573,7 +581,7 @@ export default function ClassRegistrationPage() {
 
               {/* Progress Dots - Centered */}
               <div className="flex items-center justify-center gap-3">
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map((step) => (
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].map((step) => (
                   <button
                     key={step}
                     onClick={() => handleStepClick(step)}
@@ -589,15 +597,15 @@ export default function ClassRegistrationPage() {
                 ))}
               </div>
 
-              {currentStep < 16 ? (
+              {currentStep < 17 ? (
                 <button
                   type="button"
                   onClick={handleNextSlide}
                   disabled={
-                    (currentStep === 11 && !isFormValid) || isGeneratingPrompt
+                    (currentStep === 12 && !isFormValid) || isGeneratingPrompt
                   }
                   className={`group flex items-center gap-2 px-6 py-3 rounded-xl transition-all font-semibold ${
-                    (currentStep === 11 && !isFormValid) || isGeneratingPrompt
+                    (currentStep === 12 && !isFormValid) || isGeneratingPrompt
                       ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
                       : 'bg-red-600 text-white hover:bg-red-700 shadow-lg shadow-red-600/30'
                   }`}
@@ -631,7 +639,7 @@ export default function ClassRegistrationPage() {
                       <span>
                         {currentStep === 1
                           ? 'Start'
-                          : currentStep === 11
+                          : currentStep === 12
                           ? 'Generate & Next'
                           : 'Next'}
                       </span>
