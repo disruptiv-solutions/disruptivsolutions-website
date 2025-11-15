@@ -10,6 +10,13 @@ export async function POST(request: NextRequest) {
     console.log('[API:feedback] Received request:', JSON.stringify(body, null, 2));
 
     // Validate required fields
+    if (!body.name || typeof body.name !== 'string' || body.name.trim() === '') {
+      return NextResponse.json(
+        { error: 'Name is required' },
+        { status: 400 }
+      );
+    }
+
     if (!body.rating || typeof body.rating !== 'number' || body.rating < 1 || body.rating > 5) {
       return NextResponse.json(
         { error: 'Valid rating is required' },
@@ -20,6 +27,7 @@ export async function POST(request: NextRequest) {
     // Prepare data for webhook
     const webhookPayload = {
       timestamp: body.timestamp || new Date().toISOString(),
+      name: body.name,
       rating: body.rating,
       valuable_part: body.valuable_part || '',
       improvements: body.improvements || '',
