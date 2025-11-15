@@ -4,8 +4,11 @@ const SectionCard: React.FC<{
   title: string;
   highlight?: string;
   children: React.ReactNode;
-}> = ({ title, highlight, children }) => (
-  <div className="bg-zinc-900/60 border border-gray-800 rounded-2xl p-6 space-y-3 hover:border-gray-700 transition-colors">
+  className?: string;
+}> = ({ title, highlight, children, className = '' }) => (
+  <div
+    className={`bg-zinc-900/60 border border-gray-800 rounded-2xl p-6 space-y-3 hover:border-gray-700 transition-colors ${className}`}
+  >
     <div>
       {highlight && (
         <p className="text-sm uppercase tracking-wide text-red-400 font-semibold">
@@ -34,8 +37,12 @@ export const WhatToExpectStep: React.FC = () => {
         </p>
       </div>
 
-      <div className="grid gap-6">
-        <SectionCard title="The Tool (Lovable.dev)" highlight="The Platform">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
+        <SectionCard
+          title="The Tool (Lovable.dev)"
+          highlight="The Platform"
+          className="h-full flex flex-col justify-between"
+        >
           <p>
             We’re building inside <span className="font-semibold text-white">Lovable.dev</span>.
             It’s free and includes enough AI build credits for today’s workshop.
@@ -48,6 +55,7 @@ export const WhatToExpectStep: React.FC = () => {
         <SectionCard
           title="Things Will Be a Little Messy (and That’s Okay)"
           highlight="Expectation Reset"
+          className="h-full flex flex-col justify-between"
         >
           <p>AI might:</p>
           <ul className="list-disc list-inside text-sm text-gray-300 space-y-1">
@@ -61,7 +69,11 @@ export const WhatToExpectStep: React.FC = () => {
           </p>
         </SectionCard>
 
-        <SectionCard title="How We’ll Use Our Time" highlight="Timeline">
+        <SectionCard
+          title="How We’ll Use Our Time"
+          highlight="Timeline"
+          className="h-full flex flex-col justify-between"
+        >
           <ul className="space-y-2 text-gray-300 text-sm">
             <li>
               <span className="font-semibold text-white">5 minutes</span> – Paste your prompt & run the first build
