@@ -55,6 +55,11 @@ export default function ClassRegistrationPage() {
     }));
   };
 
+  const [whatToExpectCard, setWhatToExpectCard] = useState(1);
+  const [supportCard, setSupportCard] = useState(1);
+  const WHAT_TO_EXPECT_TOTAL = 3;
+  const SUPPORT_TOTAL = 3;
+
   const { isRecording, transcriptionText, startRecording, stopRecording } = useAudioRecording(handleBioUpdate);
   
   const { isEnhancingBio, bioEnhanceError, enhanceBio } = useBioEnhancement();
@@ -119,6 +124,8 @@ export default function ClassRegistrationPage() {
     }
     
     if (currentStep > step) {
+      if (step === 11) setWhatToExpectCard(1);
+      if (step === 12) setSupportCard(1);
       setCurrentStep(step);
       return;
     }
@@ -132,13 +139,26 @@ export default function ClassRegistrationPage() {
       setCurrentStep(13);
       return;
     }
-    
+
+    if (step === 11) setWhatToExpectCard(1);
+    if (step === 12) setSupportCard(1);
+
     if (step <= 18) {
       setCurrentStep(step);
     }
   }, [currentStep, formData, generatedPrompt, showTransition]);
 
   const handleNextSlide = useCallback(async () => {
+    if (currentStep === 11 && whatToExpectCard < WHAT_TO_EXPECT_TOTAL) {
+      setWhatToExpectCard((prev) => prev + 1);
+      return;
+    }
+
+    if (currentStep === 12 && supportCard < SUPPORT_TOTAL) {
+      setSupportCard((prev) => prev + 1);
+      return;
+    }
+
     if (currentStep === 13) {
       const success = await generatePrompt(formData);
       if (success) {
@@ -163,16 +183,26 @@ export default function ClassRegistrationPage() {
     } else {
       handleStepClick(currentStep + 1);
     }
-  }, [currentStep, formData, generatePrompt, handleStepClick, setCurrentStep]);
+  }, [currentStep, formData, generatePrompt, handleStepClick, setCurrentStep, supportCard, whatToExpectCard]);
 
   const handlePrevSlide = useCallback(() => {
+    if (currentStep === 11 && whatToExpectCard > 1) {
+      setWhatToExpectCard((prev) => prev - 1);
+      return;
+    }
+
+    if (currentStep === 12 && supportCard > 1) {
+      setSupportCard((prev) => prev - 1);
+      return;
+    }
+
     // Reset transition state when going back
     if (currentStep === 4) {
       setShowTransition(false);
       setTransitionFadingOut(false);
     }
     setCurrentStep((s) => Math.max(1, s - 1));
-  }, [currentStep]);
+  }, [currentStep, supportCard, whatToExpectCard]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -391,17 +421,17 @@ export default function ClassRegistrationPage() {
                 </div>
               )}
 
-              {/* Step 11: What to Expect */}
+              {/* Step 11: What to Expect (card by card) */}
               {currentStep === 11 && (
                 <div className="animate-fade-in">
-                  <WhatToExpectStep />
+                  <WhatToExpectStep cardIndex={whatToExpectCard} totalCards={WHAT_TO_EXPECT_TOTAL} />
                 </div>
               )}
 
-              {/* Step 12: Support & Questions */}
+              {/* Step 12: Support & Questions (card by card) */}
               {currentStep === 12 && (
                 <div className="animate-fade-in">
-                  <WhatToExpectSupportStep />
+                  <WhatToExpectSupportStep cardIndex={supportCard} totalCards={SUPPORT_TOTAL} />
                 </div>
               )}
 
