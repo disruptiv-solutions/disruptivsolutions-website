@@ -64,19 +64,31 @@ export const WhatToExpectSupportStep: React.FC<WhatToExpectSupportStepProps> = (
       highlight: 'Pace & Reassurance',
       title: 'Different Speeds Are Normal',
       content: (
-        <div className="space-y-2">
-          <p>
-            <span className="font-semibold text-white">If you finish early:</span> polish your copy, try a new color palette,
-            or experiment with one extra section (testimonials, FAQs, etc.).
+        <>
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr,auto] gap-8 items-start">
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <img src="/bunny.png" alt="Fast bunny" className="w-12 h-12 flex-shrink-0" />
+                <p>
+                  <span className="font-semibold text-white">If you finish early:</span> polish your copy, try a new color palette,
+                  or experiment with one extra section (testimonials, FAQs, etc.).
+                </p>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <img src="/turtle.png" alt="Steady turtle" className="w-12 h-12 flex-shrink-0" />
+                <p>
+                  <span className="font-semibold text-white">If you fall behind:</span> stay focused on shipping a working v1.
+                  Design polish and fancy animations can happen later.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <p className="text-sm text-gray-400 mt-6 pt-4 border-t border-gray-800">
+            I don't want fast folks bored or slower folks rushed—that's why extra help happens after the main session.
           </p>
-          <p>
-            <span className="font-semibold text-white">If you fall behind:</span> stay focused on shipping a working v1.
-            Design polish and fancy animations can happen later.
-          </p>
-          <p className="text-sm text-gray-400">
-            I don’t want fast folks bored or slower folks rushed—that’s why extra help happens after the main session.
-          </p>
-        </div>
+        </>
       ),
     },
     {
