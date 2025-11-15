@@ -65,21 +65,41 @@ export const WhatToExpectSupportStep: React.FC<WhatToExpectSupportStepProps> = (
       title: 'Different Speeds Are Normal',
       content: (
         <>
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr,auto] gap-8 items-start">
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <img src="/bunny.png" alt="Fast bunny" className="w-12 h-12 flex-shrink-0" />
-                <p>
-                  <span className="font-semibold text-white">If you finish early:</span> polish your copy, try a new color palette,
-                  or experiment with one extra section (testimonials, FAQs, etc.).
+          <div className="space-y-6">
+            {/* Fast folks */}
+            <div className="flex items-center gap-6 bg-zinc-800/50 rounded-2xl p-6 border border-gray-700">
+              <div className="flex-shrink-0">
+                <img 
+                  src="/bunny.png" 
+                  alt="Fast bunny" 
+                  className="w-20 h-20 md:w-24 md:h-24 object-contain"
+                />
+              </div>
+              <div>
+                <p className="text-lg md:text-xl font-bold text-white mb-2">
+                  If you finish early:
+                </p>
+                <p className="text-gray-300">
+                  Polish your copy, try a new color palette, or experiment with one extra section (testimonials, FAQs, etc.).
                 </p>
               </div>
-              
-              <div className="flex items-start gap-3">
-                <img src="/turtle.png" alt="Steady turtle" className="w-12 h-12 flex-shrink-0" />
-                <p>
-                  <span className="font-semibold text-white">If you fall behind:</span> stay focused on shipping a working v1.
-                  Design polish and fancy animations can happen later.
+            </div>
+            
+            {/* Slower folks */}
+            <div className="flex items-center gap-6 bg-zinc-800/50 rounded-2xl p-6 border border-gray-700">
+              <div className="flex-shrink-0">
+                <img 
+                  src="/turtle.png" 
+                  alt="Steady turtle" 
+                  className="w-20 h-20 md:w-24 md:h-24 object-contain"
+                />
+              </div>
+              <div>
+                <p className="text-lg md:text-xl font-bold text-white mb-2">
+                  If you fall behind:
+                </p>
+                <p className="text-gray-300">
+                  Stay focused on shipping a working v1. Design polish and fancy animations can happen later.
                 </p>
               </div>
             </div>
