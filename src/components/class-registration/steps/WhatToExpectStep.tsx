@@ -20,7 +20,8 @@ const SectionCard: React.FC<{
 
 export const WhatToExpectStep: React.FC = () => {
   return (
-    <div className="max-w-5xl mx-auto space-y-8">
+    <div className="min-h-[calc(100vh-220px)] flex items-center">
+      <div className="max-w-5xl mx-auto space-y-8 w-full">
       <div className="text-center space-y-4">
         <p className="text-sm font-semibold tracking-[0.4em] text-red-400 uppercase">
           Lovable Build Prep
@@ -76,6 +77,7 @@ export const WhatToExpectStep: React.FC = () => {
             If tokens, account limits, or Wi-Fi get weird, you still get the replay, slides, and your prompt so you can rebuild later.
           </p>
         </SectionCard>
+      </div>
       </div>
     </div>
   );
