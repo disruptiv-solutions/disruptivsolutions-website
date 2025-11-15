@@ -31,9 +31,16 @@ export const WhatToExpectStep: React.FC<WhatToExpectStepProps> = ({ cardIndex, t
       content: (
         <>
           <p>
-            We’re building inside <span className="font-semibold text-white">Lovable.dev</span>.
-            It’s free and includes enough AI build credits for today’s workshop.
+            We're building inside <span className="font-semibold text-white">Lovable.dev</span>.
+            It's free and includes <span className="font-semibold text-white">5 credits</span> provided by Lovable—enough for about 5 messages between you and the AI.
           </p>
+          <div className="my-4 rounded-xl overflow-hidden border border-gray-700">
+            <img 
+              src="/lovable-chat-preview.png" 
+              alt="Lovable chat interface preview" 
+              className="w-full h-auto"
+            />
+          </div>
           <p className="text-sm text-gray-400">
             If you already burned through your credits previously, follow along, take notes, and rerun the steps later.
           </p>
