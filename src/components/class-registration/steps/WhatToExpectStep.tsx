@@ -102,24 +102,36 @@ export const WhatToExpectStep: React.FC<WhatToExpectStepProps> = ({ cardIndex, t
       title: 'How We\'ll Use Our Time',
       content: (
         <>
-          <ul className="space-y-2 text-gray-300 text-sm">
-            <li>
-              <span className="font-semibold text-white">7 minutes</span> – Fill in your information form
-            </li>
-            <li>
-              <span className="font-semibold text-white">5 minutes</span> – Follow along as we paste the prompt into Lovable & run the first build
-            </li>
-            <li>
-              <span className="font-semibold text-white">5 minutes</span> – Pause for questions (if there are any issues)
-            </li>
-            <li>
-              <span className="font-semibold text-white">5 minutes</span> – Add a new feature together
-            </li>
-            <li>
-              <span className="font-semibold text-white">5 minutes</span> – Final Q&A and wrap up
-            </li>
-          </ul>
-          <p className="text-sm text-gray-400 mt-3">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr,auto] gap-8 items-start">
+            <ul className="space-y-3 text-gray-300 text-base">
+              <li className="flex items-start gap-3">
+                <span className="font-bold text-white text-lg min-w-[5rem]">7 minutes</span>
+                <span>Fill in your information form</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="font-bold text-white text-lg min-w-[5rem]">5 minutes</span>
+                <span>Follow along as we paste the prompt into Lovable & run the first build</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="font-bold text-white text-lg min-w-[5rem]">5 minutes</span>
+                <span>Pause for questions (if there are any issues)</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="font-bold text-white text-lg min-w-[5rem]">5 minutes</span>
+                <span>Add a new feature together</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="font-bold text-white text-lg min-w-[5rem]">5 minutes</span>
+                <span>Final Q&A and wrap up</span>
+              </li>
+            </ul>
+            
+            <div className="hidden lg:flex items-center justify-center">
+              <div className="text-8xl opacity-20">🕐</div>
+            </div>
+          </div>
+          
+          <p className="text-sm text-gray-400 mt-6 pt-4 border-t border-gray-800">
             If tokens, account limits, or Wi-Fi get weird, you still get the replay, slides, and your prompt so you can rebuild later.
           </p>
         </>
