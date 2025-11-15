@@ -25,7 +25,7 @@ const SectionCard: React.FC<SectionCardProps> = ({ highlight, title, children, s
           <div className="flex justify-center lg:justify-end">
             <div className="rounded-xl overflow-hidden border border-gray-700 shadow-lg max-w-md w-full">
               <img 
-                src="/lovable-chat-preview.png" 
+                src="/PROMPTS GO HERE.png" 
                 alt="Lovable chat interface preview" 
                 className="w-full h-auto"
               />
