@@ -27,18 +27,35 @@ export const WhatToExpectSupportStep: React.FC<WhatToExpectSupportStepProps> = (
   const cards: Array<{ highlight: string; title: string; content: React.ReactNode }> = [
     {
       highlight: 'Live Support',
-      title: 'How I’ll Handle Questions While We Build',
+      title: 'How I\'ll Handle Questions While We Build',
       content: (
         <>
-          <p>Channel: drop questions in the chat while we’re building.</p>
-          <p>Checkpoints where I pause to help everyone at once:</p>
-          <ul className="list-disc list-inside text-sm text-gray-300 space-y-1">
-            <li>After we generate the prompt</li>
-            <li>After the first Lovable build finishes</li>
-            <li>After we deploy</li>
-          </ul>
-          <p className="text-sm text-gray-400">
-            If you’re still stuck, I’ll note your name and hang back after the main 60 minutes for one-on-one help.
+          <div className="space-y-4">
+            <p className="text-base">
+              <span className="font-semibold text-white">Channel:</span> Drop questions in the chat while we're building.
+            </p>
+            
+            <div>
+              <p className="font-semibold text-white mb-3">Checkpoints where I pause to help everyone at once:</p>
+              <ul className="space-y-2 text-gray-300 text-base pl-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-red-400 mt-1">•</span>
+                  <span>After we generate the prompt</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-400 mt-1">•</span>
+                  <span>After the first Lovable build finishes</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-400 mt-1">•</span>
+                  <span>After we deploy</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <p className="text-sm text-gray-400 mt-6 pt-4 border-t border-gray-800">
+            If you're still stuck, I'll note your name and hang back after the main 60 minutes for one-on-one help.
           </p>
         </>
       ),
