@@ -247,7 +247,7 @@ export default function ClassRegistrationPage() {
           <div className="pointer-events-auto" />
           <div className="text-right pointer-events-auto">
             <div className="text-sm text-gray-400">
-              Slide {currentStep} of 16
+              Slide {currentStep} of 18
             </div>
           </div>
         </header>
