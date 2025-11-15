@@ -99,21 +99,27 @@ export const WhatToExpectStep: React.FC<WhatToExpectStepProps> = ({ cardIndex, t
     },
     {
       highlight: 'Timeline',
-      title: 'How We’ll Use Our Time',
+      title: 'How We\'ll Use Our Time',
       content: (
         <>
           <ul className="space-y-2 text-gray-300 text-sm">
             <li>
-              <span className="font-semibold text-white">5 minutes</span> – Paste your prompt & run the first build
+              <span className="font-semibold text-white">7 minutes</span> – Fill in your information form
             </li>
             <li>
-              <span className="font-semibold text-white">10–15 minutes</span> – Fix layout, add your details, swap images
+              <span className="font-semibold text-white">5 minutes</span> – Follow along as we paste the prompt into Lovable & run the first build
             </li>
             <li>
-              <span className="font-semibold text-white">5 minutes</span> – Deploy & share the link
+              <span className="font-semibold text-white">5 minutes</span> – Pause for questions (if there are any issues)
+            </li>
+            <li>
+              <span className="font-semibold text-white">5 minutes</span> – Add a new feature together
+            </li>
+            <li>
+              <span className="font-semibold text-white">5 minutes</span> – Final Q&A and wrap up
             </li>
           </ul>
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-gray-400 mt-3">
             If tokens, account limits, or Wi-Fi get weird, you still get the replay, slides, and your prompt so you can rebuild later.
           </p>
         </>
