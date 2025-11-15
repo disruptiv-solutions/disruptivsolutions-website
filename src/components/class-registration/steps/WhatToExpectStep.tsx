@@ -74,7 +74,7 @@ export const WhatToExpectStep: React.FC<WhatToExpectStepProps> = ({ cardIndex, t
     },
     {
       highlight: 'Expectation Reset',
-      title: 'Things Will Be a Little Messy (and That’s Okay)',
+      title: 'Things Will Be a Little Messy (and That\'s Okay)',
       content: (
         <>
           <p>AI might:</p>
@@ -83,8 +83,15 @@ export const WhatToExpectStep: React.FC<WhatToExpectStepProps> = ({ cardIndex, t
             <li>Mess up some copy</li>
             <li>Throw an error or time out</li>
           </ul>
+          <div className="my-4 rounded-xl overflow-hidden border border-gray-700">
+            <img 
+              src="/build-error.png" 
+              alt="Example of a build error" 
+              className="w-full h-auto"
+            />
+          </div>
           <p>
-            That’s part of the lesson. We’re aiming for a <span className="text-white font-semibold">live, imperfect v1</span>,
+            That's part of the lesson. We're aiming for a <span className="text-white font-semibold">live, imperfect v1</span>,
             not a polished portfolio site.
           </p>
         </>
