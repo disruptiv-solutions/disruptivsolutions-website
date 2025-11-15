@@ -28,7 +28,7 @@ interface ResourceContent {
 }
 
 // Fallback resources for backwards compatibility (can be removed later)
-const fallbackResources: Record<string, Omit<ResourceContent, 'published'>> = {
+const fallbackResources: Record<string, ResourceContent> = {
   'ai-prompts-library': {
     id: 'ai-prompts-library',
     title: 'AI Prompts Library',
