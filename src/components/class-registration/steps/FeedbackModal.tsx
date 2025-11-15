@@ -443,12 +443,12 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
                   </label>
                   {formData.canFeature === 'yes' && (
                     <input
-                      type="url"
+                      type="text"
                       value={formData.siteUrl}
                       onChange={(e) =>
                         setFormData((prev) => ({ ...prev, siteUrl: e.target.value }))
                       }
-                      placeholder="https://your-site.lovable.app"
+                      placeholder="your-site.lovable.app"
                       className="w-full px-4 py-2 bg-zinc-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent ml-8"
                     />
                   )}
