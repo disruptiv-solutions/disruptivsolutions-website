@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { jsonrepair } from 'jsonrepair';
 
 export const dynamic = 'force-dynamic';
 
@@ -242,7 +243,12 @@ Generate comprehensive, well-structured content following the JSON schema provid
           }
         }
         
-        aiContent = JSON.parse(jsonText) as AIContent;
+        try {
+          aiContent = JSON.parse(jsonText) as AIContent;
+        } catch (parseErr) {
+          const repaired = jsonrepair(jsonText);
+          aiContent = JSON.parse(repaired) as AIContent;
+        }
       } else {
         // Content is already an object
         aiContent = contentText;
