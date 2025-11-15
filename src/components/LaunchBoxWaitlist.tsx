@@ -28,8 +28,9 @@ const LaunchboxWaitlist: React.FC = () => {
       name,
       email,
       phone: phone || 'N/A',
-      subscribeNewsletter: subscribeNewsletter,
-      timestamp: new Date().toISOString()
+      subscribeNewsletter,
+      listType: 'launchbox_founding_member_waitlist',
+      timestamp: new Date().toISOString(),
     };
 
     try {
@@ -46,7 +47,6 @@ const LaunchboxWaitlist: React.FC = () => {
       
       console.log('[LaunchboxWaitlist] API response status:', response.status);
 
-      // Check if response is actually JSON
       const contentType = response.headers.get('content-type');
       if (!contentType || !contentType.includes('application/json')) {
         throw new Error('Server returned an invalid response. Please try again.');
@@ -64,6 +64,7 @@ const LaunchboxWaitlist: React.FC = () => {
       trackFormSubmission('waitlist_signup', {
         with_newsletter: subscribeNewsletter,
         page_location: '/waitlist',
+        list_type: 'launchbox_founding_member_waitlist',
       });
 
       // If newsletter checkbox is checked, also submit to newsletter webhook
@@ -81,7 +82,6 @@ const LaunchboxWaitlist: React.FC = () => {
           // Note: We don't fail the whole submission if newsletter signup fails
         } catch (newsletterError) {
           console.error('[LaunchboxWaitlist] Newsletter signup error:', newsletterError);
-          // Continue anyway - waitlist signup was successful
         }
       }
 
@@ -108,16 +108,36 @@ const LaunchboxWaitlist: React.FC = () => {
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
+            <div className="flex justify-center mb-6">
+              <img 
+                src="/launchbox-no-text.png" 
+                alt="Launchbox Logo" 
+                className="h-20 md:h-24 w-auto"
+              />
+            </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-              Join the Launchbox Waitlist
+              Join the Launchbox Founding Member List
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 leading-relaxed">
-              Be first to get invites, resources, and early builds.
+            <p className="text-xl md:text-2xl text-gray-300 leading-relaxed mb-4">
+              Raise your hand early, lock in founding member pricing, and get first access when Launchbox goes live.
+            </p>
+            <p className="text-sm md:text-base text-gray-400 max-w-2xl mx-auto">
+              No payment today. This just tells me you want to be first in line when I open the doors.
             </p>
           </div>
 
           {/* Form Container */}
           <div className="bg-zinc-900/60 rounded-2xl border border-gray-800 p-8 lg:p-12">
+            {/* Quick expectations box */}
+            <div className="mb-8 rounded-xl border border-amber-500/30 bg-amber-500/5 p-4 text-sm text-amber-100">
+              <p className="font-semibold mb-1">What this means:</p>
+              <ul className="list-disc list-inside space-y-1 text-amber-50/90">
+                <li>You&apos;ll get behind-the-scenes updates as I build Launchbox.</li>
+                <li>You&apos;ll be first to hear when the platform is ready for private beta.</li>
+                <li>You&apos;ll get access to the lowest founding member pricing when I launch paid plans.</li>
+              </ul>
+            </div>
+
             <form onSubmit={handleSubmit} className="space-y-8">
               {/* Personal Information */}
               <div className="space-y-6">
@@ -186,7 +206,7 @@ const LaunchboxWaitlist: React.FC = () => {
               {submitSuccess && (
                 <div className="p-4 rounded-lg bg-green-900/30 border border-green-600/50">
                   <p className="text-green-400 font-medium">
-                    ✓ Successfully joined the waitlist! You&apos;ll receive updates about Launchbox launches and early access.
+                    ✓ You&apos;re on the Launchbox founding member list! You&apos;ll get early access updates and the lowest pricing when Launchbox goes live.
                   </p>
                 </div>
               )}
@@ -212,10 +232,10 @@ const LaunchboxWaitlist: React.FC = () => {
                   className="w-full px-8 py-4 text-white font-bold rounded-xl shadow-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed text-lg"
                   style={{ backgroundColor: '#ea580c' }}
                 >
-                  {isSubmitting ? 'Joining Waitlist...' : 'Join the Waitlist'}
+                  {isSubmitting ? 'Joining...' : 'Join the Founding Member List'}
                 </button>
                 <p className="text-xs text-gray-500 text-center mt-4">
-                  By joining, you&apos;ll be notified when Launchbox launches and get early access to resources.
+                  By joining, you&apos;ll be notified about Launchbox&apos;s private beta, launch timeline, and founding member pricing.
                   <br />
                   By submitting this form, you agree to our{' '}
                   <a href="/privacy" className="text-red-500 hover:text-red-400 underline" target="_blank" rel="noopener noreferrer">
@@ -229,7 +249,7 @@ const LaunchboxWaitlist: React.FC = () => {
 
           {/* Additional Info */}
           <div className="mt-12 text-center text-gray-400">
-            <p className="mb-2">Questions? Email us at</p>
+            <p className="mb-2">Questions? Email me at</p>
             <a 
               href="mailto:ian@ianmcdonald.ai" 
               className="text-red-500 hover:text-red-400 underline"
@@ -244,4 +264,3 @@ const LaunchboxWaitlist: React.FC = () => {
 };
 
 export default LaunchboxWaitlist;
-
