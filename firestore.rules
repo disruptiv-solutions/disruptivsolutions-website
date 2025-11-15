@@ -64,6 +64,21 @@ service cloud.firestore {
     }
     
     // ============================================
+    // AI Knowledge Poll Collection
+    // ============================================
+    // Stores votes for the AI knowledge poll on slide 5
+    match /ai-knowledge-poll/{voteId} {
+      // Read: Public (anyone can view poll results)
+      allow read: if true;
+      
+      // Create: Anyone can submit a vote
+      allow create: if true;
+      
+      // Delete: Only admins can delete votes
+      allow delete: if isAdmin();
+    }
+    
+    // ============================================
     // Default Rule
     // ============================================
     // Deny all access to any other collections/documents
