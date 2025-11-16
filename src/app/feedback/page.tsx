@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 
 interface FeedbackFormData {
   name: string;
@@ -163,19 +162,7 @@ export default function FeedbackPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Header */}
-      <header className="border-b border-gray-800 bg-black/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-4 py-6">
-          <Link href="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            Back to Home
-          </Link>
-        </div>
-      </header>
-
+    <div className="min-h-screen bg-black text-white pt-20">
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 py-12">
         {isSuccess ? (
@@ -523,13 +510,6 @@ export default function FeedbackPage() {
           </div>
         )}
       </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-800 mt-16">
-        <div className="max-w-4xl mx-auto px-4 py-8 text-center text-gray-500 text-sm">
-          <p>© {new Date().getFullYear()} Disruptiv Solutions. All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   );
 }
