@@ -1,0 +1,535 @@
+'use client';
+
+import React, { useState } from 'react';
+
+interface FeedbackFormData {
+  name: string;
+  rating: number | null;
+  valuablePart: string;
+  improvements: string;
+  nextTopics: {
+    complexApps: boolean;
+    industryTools: boolean;
+    chargingClients: boolean;
+    marketing: boolean;
+    passiveIncome: boolean;
+    other: boolean;
+    otherText: string;
+  };
+  cohortInterest: 'yes' | 'maybe' | 'no' | '';
+  siteUrl: string;
+  canFeature: 'yes' | 'no' | '';
+  reviewPermission: boolean;
+}
+
+const STAR_ICON = (
+  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+  </svg>
+);
+
+const STAR_ICON_OUTLINE = (
+  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+  </svg>
+);
+
+export default function FeedbackPage() {
+  const [formData, setFormData] = useState<FeedbackFormData>({
+    name: '',
+    rating: null,
+    valuablePart: '',
+    improvements: '',
+    nextTopics: {
+      complexApps: false,
+      industryTools: false,
+      chargingClients: false,
+      marketing: false,
+      passiveIncome: false,
+      other: false,
+      otherText: '',
+    },
+    cohortInterest: '',
+    siteUrl: '',
+    canFeature: '',
+    reviewPermission: false,
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const handleRatingClick = (rating: number) => {
+    setFormData((prev) => ({ ...prev, rating }));
+  };
+
+  const handleNextTopicChange = (key: keyof FeedbackFormData['nextTopics'], value: boolean) => {
+    setFormData((prev) => ({
+      ...prev,
+      nextTopics: {
+        ...prev.nextTopics,
+        [key]: value,
+      },
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.name.trim()) {
+      setSubmitError('Please provide your name');
+      return;
+    }
+    
+    if (!formData.rating) {
+      setSubmitError('Please provide a rating');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      // Prepare next topics array
+      const nextTopicsArray: string[] = [];
+      if (formData.nextTopics.complexApps) nextTopicsArray.push('complex_apps');
+      if (formData.nextTopics.industryTools) nextTopicsArray.push('industry_tools');
+      if (formData.nextTopics.chargingClients) nextTopicsArray.push('charging_clients');
+      if (formData.nextTopics.marketing) nextTopicsArray.push('marketing');
+      if (formData.nextTopics.passiveIncome) nextTopicsArray.push('passive_income');
+      if (formData.nextTopics.other && formData.nextTopics.otherText) {
+        nextTopicsArray.push(`other: ${formData.nextTopics.otherText}`);
+      }
+
+      const payload = {
+        name: formData.name,
+        rating: formData.rating,
+        valuable_part: formData.valuablePart || '',
+        improvements: formData.improvements || '',
+        next_topics: nextTopicsArray,
+        next_topic_other: formData.nextTopics.other ? formData.nextTopics.otherText : '',
+        cohort_interest: formData.cohortInterest,
+        site_url: formData.canFeature === 'yes' ? formData.siteUrl : '',
+        review_permission: formData.reviewPermission,
+        timestamp: new Date().toISOString(),
+      };
+
+      const response = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to submit feedback');
+      }
+
+      setIsSuccess(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+      setSubmitError(error instanceof Error ? error.message : 'Failed to submit feedback. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleReset = () => {
+    setIsSuccess(false);
+    setSubmitError(null);
+    setFormData({
+      name: '',
+      rating: null,
+      valuablePart: '',
+      improvements: '',
+      nextTopics: {
+        complexApps: false,
+        industryTools: false,
+        chargingClients: false,
+        marketing: false,
+        passiveIncome: false,
+        other: false,
+        otherText: '',
+      },
+      cohortInterest: '',
+      siteUrl: '',
+      canFeature: '',
+      reviewPermission: false,
+    });
+  };
+
+  return (
+    <div className="min-h-screen bg-black text-white">
+      {/* Header */}
+      <header className="border-b border-gray-800 bg-black/50 backdrop-blur-sm sticky top-0 z-10">
+        <div className="max-w-4xl mx-auto px-4 py-6">
+          <a href="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Home
+          </a>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-4xl mx-auto px-4 py-12">
+        {isSuccess ? (
+          <div className="text-center space-y-6 py-16">
+            <div className="text-8xl">✅</div>
+            <h1 className="text-4xl md:text-5xl font-bold text-white">
+              Thank you for your feedback!
+            </h1>
+            <p className="text-xl text-gray-300">
+              Your input helps me make these workshops better.
+            </p>
+            {formData.cohortInterest === 'yes' || formData.cohortInterest === 'maybe' ? (
+              <p className="text-lg text-red-400 mt-6">
+                We&apos;ll send you cohort details via email!
+              </p>
+            ) : null}
+            <button
+              type="button"
+              onClick={handleReset}
+              className="mt-8 px-8 py-3 bg-zinc-800 hover:bg-zinc-700 text-white rounded-xl font-semibold transition-colors"
+            >
+              Submit Another Response
+            </button>
+          </div>
+        ) : (
+          <div className="bg-zinc-900 border border-gray-800 rounded-2xl p-6 md:p-10">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              {/* Header */}
+              <div className="space-y-3 text-center">
+                <h1 className="text-4xl md:text-5xl font-bold text-white flex items-center justify-center gap-3">
+                  📋 Workshop Feedback
+                </h1>
+                <p className="text-lg text-gray-400">5 quick questions - 2 minutes max</p>
+              </div>
+
+              {/* Question 0: Name */}
+              <div className="space-y-3">
+                <label htmlFor="name" className="block text-xl font-semibold text-white">
+                  Your Name <span className="text-red-400">*</span>
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+                  placeholder="e.g., John Smith"
+                  className="w-full px-5 py-4 bg-zinc-800 border border-gray-700 rounded-xl text-white text-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
+                />
+              </div>
+
+              {/* Question 1: Rating */}
+              <div className="space-y-4">
+                <label className="block text-xl font-semibold text-white">
+                  How would you rate this workshop? <span className="text-red-400">*</span>
+                </label>
+                <div className="flex items-center gap-3 justify-center md:justify-start">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      onClick={() => handleRatingClick(star)}
+                      className={`transition-all hover:scale-110 ${
+                        formData.rating && star <= formData.rating
+                          ? 'text-yellow-400'
+                          : 'text-gray-600 hover:text-yellow-300'
+                      }`}
+                      aria-label={`Rate ${star} star${star > 1 ? 's' : ''}`}
+                    >
+                      {formData.rating && star <= formData.rating ? STAR_ICON : STAR_ICON_OUTLINE}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Question 2: Most Valuable Part */}
+              <div className="space-y-3">
+                <label htmlFor="valuable-part" className="block text-xl font-semibold text-white">
+                  What was the most valuable part of this workshop?
+                </label>
+                <textarea
+                  id="valuable-part"
+                  value={formData.valuablePart}
+                  onChange={(e) => {
+                    if (e.target.value.length <= 200) {
+                      setFormData((prev) => ({ ...prev, valuablePart: e.target.value }));
+                    }
+                  }}
+                  placeholder="e.g., Seeing it actually work, Building something real..."
+                  rows={4}
+                  className="w-full px-5 py-4 bg-zinc-800 border border-gray-700 rounded-xl text-white text-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent resize-none"
+                />
+                <p className="text-sm text-gray-400 text-right">
+                  {formData.valuablePart.length}/200 characters
+                </p>
+              </div>
+
+              {/* Question 3: What to Improve */}
+              <div className="space-y-3">
+                <label htmlFor="improvements" className="block text-xl font-semibold text-white">
+                  What was confusing or could be improved?
+                </label>
+                <textarea
+                  id="improvements"
+                  value={formData.improvements}
+                  onChange={(e) => {
+                    if (e.target.value.length <= 200) {
+                      setFormData((prev) => ({ ...prev, improvements: e.target.value }));
+                    }
+                  }}
+                  placeholder="e.g., Form section was rushed, Needed more time to deploy..."
+                  rows={4}
+                  className="w-full px-5 py-4 bg-zinc-800 border border-gray-700 rounded-xl text-white text-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent resize-none"
+                />
+                <p className="text-sm text-gray-400 text-right">
+                  {formData.improvements.length}/200 characters
+                </p>
+              </div>
+
+              {/* Question 4: What They Want Next */}
+              <div className="space-y-4">
+                <label className="block text-xl font-semibold text-white">
+                  What do you want to learn next? (Check all that apply)
+                </label>
+                <div className="space-y-3">
+                  {[
+                    { key: 'complexApps', label: 'Building more complex apps (databases, user logins)' },
+                    { key: 'industryTools', label: 'AI tools for specific industries (real estate, coaching, fitness, etc.)' },
+                    { key: 'chargingClients', label: 'How to charge clients for apps you build' },
+                    { key: 'marketing', label: 'Marketing and launching apps' },
+                    { key: 'passiveIncome', label: 'Building apps that make passive income' },
+                  ].map(({ key, label }) => (
+                    <label
+                      key={key}
+                      className="flex items-start gap-3 cursor-pointer group"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={formData.nextTopics[key as keyof typeof formData.nextTopics] as boolean}
+                        onChange={(e) =>
+                          handleNextTopicChange(key as keyof FeedbackFormData['nextTopics'], e.target.checked)
+                        }
+                        className="w-5 h-5 mt-0.5 rounded border-gray-600 bg-zinc-800 text-red-600 focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-zinc-900 cursor-pointer"
+                      />
+                      <span className="text-gray-300 text-lg group-hover:text-white transition-colors">
+                        {label}
+                      </span>
+                    </label>
+                  ))}
+                  <div className="space-y-3">
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input
+                        type="checkbox"
+                        checked={formData.nextTopics.other}
+                        onChange={(e) =>
+                          handleNextTopicChange('other', e.target.checked)
+                        }
+                        className="w-5 h-5 mt-0.5 rounded border-gray-600 bg-zinc-800 text-red-600 focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-zinc-900 cursor-pointer"
+                      />
+                      <span className="text-gray-300 text-lg group-hover:text-white transition-colors">
+                        Other:
+                      </span>
+                    </label>
+                    {formData.nextTopics.other && (
+                      <input
+                        type="text"
+                        value={formData.nextTopics.otherText}
+                        onChange={(e) => {
+                          if (e.target.value.length <= 100) {
+                            setFormData((prev) => ({
+                              ...prev,
+                              nextTopics: {
+                                ...prev.nextTopics,
+                                otherText: e.target.value,
+                              },
+                            }));
+                          }
+                        }}
+                        placeholder="Tell us what you want to learn..."
+                        maxLength={100}
+                        className="w-full px-5 py-3 bg-zinc-800 border border-gray-700 rounded-xl text-white text-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent ml-8"
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Question 5: Cohort Interest */}
+              <div className="space-y-4">
+                <label className="block text-xl font-semibold text-white">
+                  Would you be interested in the 4-week Group Cohort? ($297, normally $497)
+                </label>
+                <div className="space-y-3">
+                  {[
+                    { value: 'yes', label: 'Yes, I want to join (send me details)' },
+                    { value: 'maybe', label: 'Maybe, tell me more' },
+                    { value: 'no', label: 'No, not right now' },
+                  ].map(({ value, label }) => (
+                    <label
+                      key={value}
+                      className="flex items-center gap-3 cursor-pointer group"
+                    >
+                      <input
+                        type="radio"
+                        name="cohort-interest"
+                        value={value}
+                        checked={formData.cohortInterest === value}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            cohortInterest: e.target.value as 'yes' | 'maybe' | 'no',
+                          }))
+                        }
+                        className="w-5 h-5 border-gray-600 bg-zinc-800 text-red-600 focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-zinc-900 cursor-pointer"
+                      />
+                      <span className="text-gray-300 text-lg group-hover:text-white transition-colors">
+                        {label}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Bonus Question: Site Feature */}
+              <div className="space-y-4">
+                <label className="block text-xl font-semibold text-white">
+                  Can we feature your site as an example?
+                </label>
+                <div className="space-y-3">
+                  <label className="flex items-start gap-3 cursor-pointer group">
+                    <input
+                      type="radio"
+                      name="can-feature"
+                      value="yes"
+                      checked={formData.canFeature === 'yes'}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          canFeature: e.target.value as 'yes',
+                        }))
+                      }
+                      className="w-5 h-5 mt-0.5 border-gray-600 bg-zinc-800 text-red-600 focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-zinc-900 cursor-pointer"
+                    />
+                    <span className="text-gray-300 text-lg group-hover:text-white transition-colors">
+                      Yes! Here&apos;s my site URL:
+                    </span>
+                  </label>
+                  {formData.canFeature === 'yes' && (
+                    <input
+                      type="text"
+                      value={formData.siteUrl}
+                      onChange={(e) =>
+                        setFormData((prev) => ({ ...prev, siteUrl: e.target.value }))
+                      }
+                      placeholder="your-site.lovable.app"
+                      className="w-full px-5 py-3 bg-zinc-800 border border-gray-700 rounded-xl text-white text-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent ml-8"
+                    />
+                  )}
+                  <label className="flex items-center gap-3 cursor-pointer group">
+                    <input
+                      type="radio"
+                      name="can-feature"
+                      value="no"
+                      checked={formData.canFeature === 'no'}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          canFeature: e.target.value as 'no',
+                        }))
+                      }
+                      className="w-5 h-5 border-gray-600 bg-zinc-800 text-red-600 focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-zinc-900 cursor-pointer"
+                    />
+                    <span className="text-gray-300 text-lg group-hover:text-white transition-colors">
+                      No thanks
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Review Permission */}
+              <div className="space-y-3 pt-4 border-t border-gray-800">
+                <label className="flex items-start gap-3 cursor-pointer group">
+                  <input
+                    type="checkbox"
+                    checked={formData.reviewPermission}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        reviewPermission: e.target.checked,
+                      }))
+                    }
+                    className="w-5 h-5 mt-0.5 rounded border-gray-600 bg-zinc-800 text-red-600 focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-zinc-900 cursor-pointer"
+                  />
+                  <span className="text-gray-300 text-lg group-hover:text-white transition-colors">
+                    I&apos;m okay with you using my feedback as a review/testimonial
+                  </span>
+                </label>
+              </div>
+
+              {/* Error Message */}
+              {submitError && (
+                <div className="bg-red-600/20 border border-red-500/50 rounded-xl p-4">
+                  <p className="text-red-400">{submitError}</p>
+                </div>
+              )}
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={!formData.rating || isSubmitting}
+                className={`w-full px-8 py-5 rounded-xl font-bold text-xl transition-all ${
+                  !formData.rating || isSubmitting
+                    ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                    : 'bg-red-600 text-white hover:bg-red-700 shadow-lg shadow-red-600/40 hover:shadow-red-600/60'
+                }`}
+              >
+                {isSubmitting ? (
+                  <span className="flex items-center justify-center gap-3">
+                    <svg
+                      className="animate-spin h-6 w-6"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    Submitting...
+                  </span>
+                ) : (
+                  'Submit Feedback'
+                )}
+              </button>
+            </form>
+          </div>
+        )}
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-gray-800 mt-16">
+        <div className="max-w-4xl mx-auto px-4 py-8 text-center text-gray-500 text-sm">
+          <p>© {new Date().getFullYear()} Disruptiv Solutions. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
