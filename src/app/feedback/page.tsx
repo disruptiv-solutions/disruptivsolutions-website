@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 
 interface FeedbackFormData {
   name: string;
@@ -166,12 +167,12 @@ export default function FeedbackPage() {
       {/* Header */}
       <header className="border-b border-gray-800 bg-black/50 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 py-6">
-          <a href="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+          <Link href="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
             Back to Home
-          </a>
+          </Link>
         </div>
       </header>
 
