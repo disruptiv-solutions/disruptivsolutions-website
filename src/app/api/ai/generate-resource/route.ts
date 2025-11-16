@@ -241,10 +241,10 @@ Generate comprehensive, well-structured content following the JSON schema provid
 
     let aiContent: AIContent;
 
-    // With structured outputs, content should be valid JSON string
-    // But we still need to parse it
+    // With structured outputs (json_schema), OpenRouter returns valid JSON
+    // According to OpenRouter docs, content should be directly parseable JSON string
     try {
-      // Handle case where content might be a string or already parsed
+      // Handle case where content might be a string or already parsed object
       if (typeof contentText === 'string') {
         const textContent = contentText.trim();
         
@@ -253,45 +253,54 @@ Generate comprehensive, well-structured content following the JSON schema provid
           throw new Error('Content string is empty after trimming');
         }
         
-        let jsonText = textContent;
-        
-        // Try to extract JSON from markdown code blocks if present (fallback)
-        const jsonMatch = jsonText.match(/```(?:json)?\s*(\{[\s\S]*\})\s*```/);
-        if (jsonMatch) {
-          jsonText = jsonMatch[1];
-        } else {
-          // Find JSON object boundaries
-          const firstBrace = jsonText.indexOf('{');
-          const lastBrace = jsonText.lastIndexOf('}');
-          
-          if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
-            jsonText = jsonText.substring(firstBrace, lastBrace + 1);
-          } else {
-            // No JSON object found
-            throw new Error('No JSON object found in content string');
-          }
-        }
-        
-        // Validate we have JSON text before parsing
-        if (!jsonText || jsonText.trim().length === 0) {
-          throw new Error('Extracted JSON text is empty');
-        }
-        
+        // Strategy 1: Direct JSON parse (most common with structured outputs)
+        // OpenRouter with json_schema should return valid JSON directly
         try {
-          aiContent = JSON.parse(jsonText) as AIContent;
-        } catch {
-          // Try to repair malformed JSON
-          try {
-            const repaired = jsonrepair(jsonText);
-            aiContent = JSON.parse(repaired) as AIContent;
-          } catch {
-            // If repair also fails, throw to outer catch
-            throw new Error('Failed to parse or repair JSON');
+          aiContent = JSON.parse(textContent) as AIContent;
+        } catch (directParseError) {
+          // Strategy 2: Extract JSON from markdown code blocks (fallback for some models)
+          let jsonText = textContent;
+          const jsonMatch = jsonText.match(/```(?:json)?\s*(\{[\s\S]*\})\s*```/);
+          if (jsonMatch && jsonMatch[1]) {
+            jsonText = jsonMatch[1].trim();
+            try {
+              aiContent = JSON.parse(jsonText) as AIContent;
+            } catch {
+              // Continue to next strategy
+            }
+          }
+          
+          // Strategy 3: Extract JSON object boundaries (find first { to last })
+          if (!aiContent) {
+            const firstBrace = jsonText.indexOf('{');
+            const lastBrace = jsonText.lastIndexOf('}');
+            
+            if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+              const extractedJson = jsonText.substring(firstBrace, lastBrace + 1);
+              try {
+                aiContent = JSON.parse(extractedJson) as AIContent;
+              } catch {
+                // Continue to repair strategy
+              }
+            }
+          }
+          
+          // Strategy 4: Try JSON repair library (for malformed but fixable JSON)
+          if (!aiContent) {
+            try {
+              const repaired = jsonrepair(textContent);
+              aiContent = JSON.parse(repaired) as AIContent;
+            } catch (repairError) {
+              // All strategies failed
+              throw new Error(`Failed to parse JSON after all strategies. Direct parse error: ${directParseError instanceof Error ? directParseError.message : 'unknown'}`);
+            }
           }
         }
+      } else if (typeof contentText === 'object' && contentText !== null) {
+        // Content is already an object (shouldn't happen with structured outputs, but handle it)
+        aiContent = contentText as AIContent;
       } else {
-        // Content is already an object
-        aiContent = contentText;
+        throw new Error(`Unexpected content type: ${typeof contentText}`);
       }
     } catch (parseError: unknown) {
       console.error('[AI:generate-resource] JSON parse error:', parseError);
