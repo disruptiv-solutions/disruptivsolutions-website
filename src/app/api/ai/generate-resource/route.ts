@@ -53,7 +53,16 @@ export async function POST(request: NextRequest) {
 
     // Map length percentage (0-100) to max_tokens (500-16000)
     // 0% = 500 tokens (very short), 10% = 1000 tokens (short), 50% = 4000 tokens (medium), 100% = 16000 tokens (very long)
-    const maxTokens = Math.round(500 + (length / 100) * 15500);
+    let maxTokens = Math.round(500 + (length / 100) * 15500);
+    
+    // Reasoning models (like gpt-5.1, o1) use tokens for reasoning before generating content
+    // We need to increase max_tokens significantly to account for reasoning tokens
+    const isReasoningModel = model.includes('gpt-5.1') || model.includes('o1') || model.includes('reasoning');
+    if (isReasoningModel) {
+      // For reasoning models, multiply max_tokens by 2-3x to ensure content generation
+      // Reasoning typically uses 20-50% of tokens, so we need extra headroom
+      maxTokens = Math.max(maxTokens * 2.5, 2000); // Minimum 2000 tokens for reasoning models
+    }
     
     // Also calculate approximate sections based on length
     const sectionsCount = length <= 10 ? '2-3' : length <= 25 ? '3-5' : length <= 50 ? '5-8' : length <= 75 ? '8-12' : '12+';
@@ -229,12 +238,43 @@ Generate comprehensive, well-structured content following the JSON schema provid
     }
 
     const contentText: string | AIContent = data.choices[0]?.message?.content;
+    const finishReason = data.choices[0]?.finish_reason;
+    const reasoningTokens = data.usage?.completion_tokens_details?.reasoning_tokens;
     
     // Check if content exists
-    if (!contentText) {
+    if (!contentText || (typeof contentText === 'string' && contentText.trim().length === 0)) {
+      // Check if it's a token limit issue with reasoning models
+      if (finishReason === 'length' && reasoningTokens) {
+        console.error('[AI:generate-resource] Token limit hit - all tokens used for reasoning:', {
+          finishReason,
+          reasoningTokens,
+          totalTokens: data.usage?.total_tokens,
+          maxTokens,
+        });
+        return NextResponse.json(
+          { 
+            error: `Token limit reached. The model used all ${reasoningTokens} tokens for reasoning and couldn't generate content. Try reducing the content length or using a non-reasoning model.`,
+            details: {
+              finishReason,
+              reasoningTokens,
+              totalTokens: data.usage?.total_tokens,
+              suggestion: 'Try selecting a shorter content length or use a different model'
+            }
+          },
+          { status: 500 }
+        );
+      }
+      
       console.error('[AI:generate-resource] Empty content received:', JSON.stringify(data, null, 2));
       return NextResponse.json(
-        { error: 'AI service returned empty content. Please try again.' },
+        { 
+          error: 'AI service returned empty content. The model may have hit token limits or encountered an error.',
+          details: {
+            finishReason,
+            reasoningTokens,
+            suggestion: finishReason === 'length' ? 'Try reducing content length or increasing max_tokens' : 'Please try again'
+          }
+        },
         { status: 500 }
       );
     }
