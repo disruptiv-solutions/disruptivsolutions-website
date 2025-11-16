@@ -51,13 +51,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Map length percentage (0-100) to max_tokens (1000-16000)
-    // 0% = 1000 tokens (short), 50% = 4000 tokens (medium), 100% = 16000 tokens (very long)
-    const maxTokens = Math.round(1000 + (length / 100) * 15000);
+    // Map length percentage (0-100) to max_tokens (500-16000)
+    // 0% = 500 tokens (very short), 10% = 1000 tokens (short), 50% = 4000 tokens (medium), 100% = 16000 tokens (very long)
+    const maxTokens = Math.round(500 + (length / 100) * 15500);
     
     // Also calculate approximate sections based on length
-    const sectionsCount = length <= 25 ? '3-5' : length <= 50 ? '5-8' : length <= 75 ? '8-12' : '12+';
-    const lengthDescription = length <= 25 ? 'brief' : length <= 50 ? 'standard' : length <= 75 ? 'detailed' : 'extensive';
+    const sectionsCount = length <= 10 ? '2-3' : length <= 25 ? '3-5' : length <= 50 ? '5-8' : length <= 75 ? '8-12' : '12+';
+    const lengthDescription = length <= 10 ? 'very brief' : length <= 25 ? 'brief' : length <= 50 ? 'standard' : length <= 75 ? 'detailed' : 'extensive';
 
     // Use OpenRouter API
     const openRouterApiKey = process.env.OPENROUTER_API_KEY;
@@ -245,9 +245,15 @@ Generate comprehensive, well-structured content following the JSON schema provid
         
         try {
           aiContent = JSON.parse(jsonText) as AIContent;
-        } catch (parseErr) {
-          const repaired = jsonrepair(jsonText);
-          aiContent = JSON.parse(repaired) as AIContent;
+        } catch {
+          // Try to repair malformed JSON
+          try {
+            const repaired = jsonrepair(jsonText);
+            aiContent = JSON.parse(repaired) as AIContent;
+          } catch {
+            // If repair also fails, throw to outer catch
+            throw new Error('Failed to parse or repair JSON');
+          }
         }
       } else {
         // Content is already an object

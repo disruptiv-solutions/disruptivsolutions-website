@@ -483,7 +483,9 @@ export default function ResourceEditPage() {
                         Content Length
                       </label>
                       <span className="text-sm text-gray-400">
-                        {initialForm.length <= 25 
+                        {initialForm.length <= 10 
+                          ? 'Very Short (~200-500 words)' 
+                          : initialForm.length <= 25 
                           ? 'Short (~500-1,000 words)' 
                           : initialForm.length <= 50 
                           ? 'Medium (~1,000-2,000 words)' 
@@ -508,7 +510,9 @@ export default function ResourceEditPage() {
                       <span>Comprehensive</span>
                     </div>
                     <p className="text-gray-400 text-sm mt-2">
-                      {initialForm.length <= 25 
+                      {initialForm.length <= 10 
+                        ? 'Brief overview with 2-3 sections' 
+                        : initialForm.length <= 25 
                         ? 'Quick read with 3-5 sections' 
                         : initialForm.length <= 50 
                         ? 'Standard length with 5-8 sections' 
