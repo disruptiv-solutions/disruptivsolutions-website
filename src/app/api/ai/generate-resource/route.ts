@@ -218,7 +218,27 @@ Generate comprehensive, well-structured content following the JSON schema provid
     }
 
     const data = await response.json() as { choices: Array<{ message: { content: string | AIContent } }> };
-    const contentText: string | AIContent = data.choices[0].message.content;
+    
+    // Validate response structure
+    if (!data.choices || !Array.isArray(data.choices) || data.choices.length === 0) {
+      console.error('[AI:generate-resource] Invalid response structure:', JSON.stringify(data, null, 2));
+      return NextResponse.json(
+        { error: 'Invalid response from AI service. No choices returned.' },
+        { status: 500 }
+      );
+    }
+
+    const contentText: string | AIContent = data.choices[0]?.message?.content;
+    
+    // Check if content exists
+    if (!contentText) {
+      console.error('[AI:generate-resource] Empty content received:', JSON.stringify(data, null, 2));
+      return NextResponse.json(
+        { error: 'AI service returned empty content. Please try again.' },
+        { status: 500 }
+      );
+    }
+
     let aiContent: AIContent;
 
     // With structured outputs, content should be valid JSON string
@@ -227,6 +247,12 @@ Generate comprehensive, well-structured content following the JSON schema provid
       // Handle case where content might be a string or already parsed
       if (typeof contentText === 'string') {
         const textContent = contentText.trim();
+        
+        // Check if string is empty after trimming
+        if (!textContent) {
+          throw new Error('Content string is empty after trimming');
+        }
+        
         let jsonText = textContent;
         
         // Try to extract JSON from markdown code blocks if present (fallback)
@@ -240,7 +266,15 @@ Generate comprehensive, well-structured content following the JSON schema provid
           
           if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
             jsonText = jsonText.substring(firstBrace, lastBrace + 1);
+          } else {
+            // No JSON object found
+            throw new Error('No JSON object found in content string');
           }
+        }
+        
+        // Validate we have JSON text before parsing
+        if (!jsonText || jsonText.trim().length === 0) {
+          throw new Error('Extracted JSON text is empty');
         }
         
         try {
@@ -261,15 +295,20 @@ Generate comprehensive, well-structured content following the JSON schema provid
       }
     } catch (parseError: unknown) {
       console.error('[AI:generate-resource] JSON parse error:', parseError);
-      console.error('[AI:generate-resource] Content text (first 500 chars):', 
-        typeof contentText === 'string' ? contentText.substring(0, 500) : 'Not a string');
-      console.error('[AI:generate-resource] Content text (last 500 chars):', 
-        typeof contentText === 'string' && contentText.length > 500 
-          ? contentText.substring(Math.max(0, contentText.length - 500)) 
-          : 'N/A');
+      console.error('[AI:generate-resource] Content text type:', typeof contentText);
+      console.error('[AI:generate-resource] Content text value:', 
+        typeof contentText === 'string' 
+          ? (contentText.length > 0 ? contentText.substring(0, 1000) : '(empty string)')
+          : JSON.stringify(contentText, null, 2));
+      console.error('[AI:generate-resource] Full response data:', JSON.stringify(data, null, 2));
+      
+      const errorMessage = parseError instanceof Error ? parseError.message : 'Unknown parsing error';
       
       return NextResponse.json(
-        { error: 'Failed to parse AI response as JSON. The structured output may have failed.' },
+        { 
+          error: 'Failed to parse AI response as JSON. The structured output may have failed.',
+          details: errorMessage
+        },
         { status: 500 }
       );
     }
