@@ -11,10 +11,8 @@ interface Resource {
   icon: string;
   imageUrl?: string;
   published: boolean;
-  createdAt?: {
-    seconds?: number;
-    nanoseconds?: number;
-  } | string;
+  createdAt?: string | { seconds: number; nanoseconds: number };
+  lastUpdated?: string | { seconds: number; nanoseconds: number };
 }
 
 const typeLabels = {
@@ -26,6 +24,33 @@ const typeLabels = {
   tool: 'Tools',
   guide: 'Guides',
   video: 'Videos',
+};
+
+const formatDate = (date: string | { seconds: number; nanoseconds: number } | undefined): string => {
+  if (!date) return '';
+  
+  let dateObj: Date;
+  
+  if (typeof date === 'string') {
+    dateObj = new Date(date);
+  } else if (date && typeof date === 'object' && 'seconds' in date) {
+    // Firestore Timestamp format
+    dateObj = new Date(date.seconds * 1000);
+  } else {
+    return '';
+  }
+  
+  // Check if date is valid
+  if (isNaN(dateObj.getTime())) {
+    return '';
+  }
+  
+  // Format as "Month Day, Year" (e.g., "November 15, 2025")
+  return dateObj.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 };
 
 export default function ResourcesPage() {
@@ -44,6 +69,14 @@ export default function ResourcesPage() {
       const response = await fetch('/api/resources?published=true');
       const data = await response.json();
       if (data.success) {
+        // Debug: inspect date fields coming from API
+        if (Array.isArray(data.resources) && data.resources.length > 0) {
+          console.log('[Resources] Sample resource from API:', {
+            id: data.resources[0].id,
+            createdAt: data.resources[0].createdAt,
+            lastUpdated: data.resources[0].lastUpdated,
+          });
+        }
         setResources(data.resources || []);
       } else {
         setError('Failed to load resources');
@@ -154,33 +187,29 @@ export default function ResourcesPage() {
                           <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-red-400 transition-colors">
                             {resource.title}
                           </h3>
-                          <span className="px-3 py-1 bg-zinc-800 border border-gray-700 rounded-full text-xs font-semibold text-gray-400 whitespace-nowrap flex-shrink-0">
-                            {typeLabels[resource.type]}
-                          </span>
+                          <div className="flex flex-col items-end gap-1 flex-shrink-0">
+                            <span className="px-3 py-1 bg-zinc-800 border border-gray-700 rounded-full text-xs font-semibold text-gray-400 whitespace-nowrap">
+                              {typeLabels[resource.type]}
+                            </span>
+                            {(resource.lastUpdated || resource.createdAt) && (
+                              <span className="text-[11px] text-gray-500">
+                                Updated{' '}
+                                {formatDate(
+                                  (resource.lastUpdated ||
+                                    resource.createdAt) as
+                                    | string
+                                    | { seconds: number; nanoseconds: number }
+                                )}
+                              </span>
+                            )}
+                          </div>
                         </div>
                         <p className="text-gray-400 leading-relaxed mb-3">
                           {resource.description}
                         </p>
-                        <div className="flex items-center justify-between">
-                          {resource.createdAt && (
-                            <span className="text-xs text-gray-500">
-                              {(() => {
-                                let date: Date;
-                                if (typeof resource.createdAt === 'object' && resource.createdAt.seconds) {
-                                  date = new Date(resource.createdAt.seconds * 1000);
-                                } else if (typeof resource.createdAt === 'string') {
-                                  date = new Date(resource.createdAt);
-                                } else {
-                                  return null;
-                                }
-                                return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-                              })()}
-                            </span>
-                          )}
-                          <div className="flex items-center gap-2 text-red-400 font-semibold text-sm group-hover:gap-3 transition-all">
-                            <span>View Resource</span>
-                            <span>→</span>
-                          </div>
+                        <div className="flex items-center gap-2 text-red-400 font-semibold text-sm group-hover:gap-3 transition-all">
+                          <span>View Resource</span>
+                          <span>→</span>
                         </div>
                       </div>
                     </div>

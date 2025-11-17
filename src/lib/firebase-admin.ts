@@ -43,6 +43,18 @@ export const initFirebaseAdmin = (): FirebaseAdminInitResult => {
   try {
     const serviceAccount = JSON.parse(serviceAccountKey);
 
+    // Validate required fields
+    const requiredFields = ['type', 'project_id', 'private_key_id', 'private_key', 'client_email'];
+    const missingFields = requiredFields.filter(field => !serviceAccount[field]);
+    
+    if (missingFields.length > 0) {
+      throw new Error(
+        `Service account JSON is missing required fields: ${missingFields.join(', ')}. ` +
+        `Please download the complete service account JSON from Firebase Console: ` +
+        `Project Settings > Service Accounts > Generate New Private Key`
+      );
+    }
+
     const bucketName =
       configuredBucket || `${serviceAccount.project_id}.appspot.com`;
 

@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface ResourceContent {
   id: string;
@@ -13,6 +15,7 @@ interface ResourceContent {
   icon: string;
   imageUrl?: string;
   imagePrompt?: string;
+  tldr?: string;
   lastUpdated?: string;
   createdAt?: string;
   content: {
@@ -26,6 +29,32 @@ interface ResourceContent {
   };
   published: boolean;
 }
+
+const formatLastUpdatedDate = (value: unknown): string | undefined => {
+  if (!value) {
+    return undefined;
+  }
+
+  let dateObj: Date | null = null;
+
+  if (typeof value === 'string') {
+    dateObj = new Date(value);
+  } else if (typeof value === 'object' && value !== null && 'seconds' in (value as { seconds?: number })) {
+    const timestamp = value as { seconds?: number };
+    if (typeof timestamp.seconds === 'number') {
+      dateObj = new Date(timestamp.seconds * 1000);
+    }
+  }
+
+  if (!dateObj || isNaN(dateObj.getTime())) {
+    return undefined;
+  }
+
+  return dateObj.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+  });
+};
 
 // Fallback resources for backwards compatibility (can be removed later)
 const fallbackResources: Record<string, ResourceContent> = {
@@ -576,9 +605,7 @@ export default function ResourcePage() {
         // Format the resource data
         const formattedResource: ResourceContent = {
           ...data.resource,
-          lastUpdated: data.resource.lastUpdated 
-            ? new Date(data.resource.lastUpdated.seconds * 1000).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
-            : undefined,
+          lastUpdated: formatLastUpdatedDate(data.resource.lastUpdated),
         };
         setResource(formattedResource);
       } else if (fallbackResources[resourceId]) {
@@ -715,24 +742,41 @@ export default function ResourcePage() {
           <p className="text-lg md:text-xl text-gray-400 leading-relaxed">
             {resource.description}
           </p>
+        </div>
 
+        {/* Hero Image - Landscape */}
         {resource.imageUrl && (
-          <div className="mt-8">
+          <div className="mb-12 -mx-6">
             <div className="rounded-3xl overflow-hidden border border-gray-800 shadow-2xl shadow-black/40">
               <img
                 src={resource.imageUrl}
                 alt={resource.title}
-                className="w-full h-full object-cover"
+                className="w-full h-auto object-cover"
+                style={{ aspectRatio: '16/9' }}
               />
             </div>
-            {resource.imagePrompt && (
-              <p className="text-xs text-gray-500 mt-3">
+            {resource.imagePrompt && isAdmin && (
+              <p className="text-xs text-gray-500 mt-3 px-6">
                 Image concept: {resource.imagePrompt}
               </p>
             )}
           </div>
         )}
-        </div>
+
+        {/* TLDR Section */}
+        {resource.tldr && resource.tldr.trim() && (
+          <div className="mb-12 bg-gradient-to-br from-red-600/10 via-red-500/5 to-transparent border border-red-500/20 rounded-2xl p-6 md:p-8">
+            <div className="flex items-start gap-3">
+              <span className="text-2xl flex-shrink-0">⚡</span>
+              <div className="flex-1">
+                <h3 className="text-lg md:text-xl font-bold text-white mb-2">TL;DR</h3>
+                <p className="text-base md:text-lg text-gray-300 leading-relaxed">
+                  {resource.tldr}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Resource Content */}
         <div className="space-y-8">
@@ -744,18 +788,112 @@ export default function ResourcePage() {
                 </h2>
               )}
               
-              {section.text && (
-                <p className="text-base md:text-lg text-gray-400 leading-relaxed">
-                  {section.text}
-                </p>
-              )}
+              {section.text && (() => {
+                // Clean up citation markers and other artifacts from AI-generated content
+                let cleanText = section.text
+                  // Remove Unicode private use area characters first (weird boxes like E000-EFFF)
+                  .replace(/[\uE000-\uF8FF]/g, '')
+                  // Remove citation markers in various formats (be careful not to break markdown)
+                  .replace(/cite turn\d+[a-z]+\d+/gi, '') // "cite turn0news27"
+                  .replace(/cite turn\d+search\d+/gi, '') // "cite turn0search20"
+                  // Remove citation markers that might be wrapped in brackets or parentheses
+                  .replace(/\[cite[^\]]*\]/gi, '')
+                  .replace(/\(cite[^)]*\)/gi, '')
+                  // Remove standalone citation patterns
+                  .replace(/\bcite\s+turn\d+[a-z]+\d+\b/gi, '')
+                  // Clean up any double spaces that might have been left
+                  .replace(/  +/g, ' ')
+                  // Normalize line breaks (preserve markdown structure)
+                  .replace(/\n{3,}/g, '\n\n')
+                  // Remove spaces before punctuation that citation markers might have left
+                  .replace(/\s+([.,;:!?])/g, '$1')
+                  .trim();
+                
+                return (
+                  <div className="text-base md:text-lg text-gray-400 leading-relaxed prose prose-invert prose-headings:text-white prose-p:text-gray-400 prose-strong:text-white prose-code:text-red-400 prose-code:bg-zinc-900 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-pre:bg-zinc-900 prose-pre:border prose-pre:border-gray-800 prose-pre:rounded-xl prose-pre:p-6 prose-pre:overflow-x-auto prose-pre:text-sm prose-pre:text-gray-300 max-w-none">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                      p: ({ children }) => <p className="mb-4 last:mb-0">{children}</p>,
+                      strong: ({ children }) => <strong className="font-bold text-white">{children}</strong>,
+                      code: ({ inline, children, className }) => {
+                        if (inline) {
+                          return (
+                            <code className="text-red-400 bg-zinc-900 px-1.5 py-0.5 rounded text-sm font-mono">
+                              {children}
+                            </code>
+                          );
+                        }
+                        // For code blocks (not inline), render without extra wrapper
+                        // The pre component will handle the styling
+                        return (
+                          <code className="text-gray-300 font-mono text-sm">
+                            {children}
+                          </code>
+                        );
+                      },
+                      pre: ({ children }) => (
+                        <pre className="bg-zinc-900 border border-gray-800 rounded-xl p-6 overflow-x-auto text-sm text-gray-300 font-mono whitespace-pre-wrap my-4">
+                          {children}
+                        </pre>
+                      ),
+                      ul: ({ children }) => (
+                        <ul className="list-none space-y-3 my-4">
+                          {children}
+                        </ul>
+                      ),
+                      li: ({ children }) => (
+                        <li className="flex items-start gap-3">
+                          <span className="text-red-500 font-bold flex-shrink-0 mt-1">→</span>
+                          <span className="flex-1">{children}</span>
+                        </li>
+                      ),
+                      ol: ({ children }) => (
+                        <ol className="list-decimal list-inside space-y-3 my-4 ml-4">
+                          {children}
+                        </ol>
+                      ),
+                      h1: ({ children }) => <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 mt-8">{children}</h1>,
+                      h2: ({ children }) => <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 mt-6">{children}</h2>,
+                      h3: ({ children }) => <h3 className="text-xl md:text-2xl font-bold text-white mb-3 mt-4">{children}</h3>,
+                      blockquote: ({ children }) => (
+                        <blockquote className="border-l-4 border-red-500/50 pl-4 italic text-gray-300 my-4">
+                          {children}
+                        </blockquote>
+                      ),
+                      }}
+                    >
+                      {cleanText}
+                    </ReactMarkdown>
+                  </div>
+                );
+              })()}
               
               {section.items && (
                 <ul className="space-y-3">
                   {section.items.map((item, itemIndex) => (
                     <li key={itemIndex} className="flex items-start gap-3 text-gray-400">
                       <span className="text-red-500 font-bold flex-shrink-0 mt-1">→</span>
-                      <span className="leading-relaxed">{item}</span>
+                      <span className="leading-relaxed">
+                        <ReactMarkdown
+                          components={{
+                            p: ({ children }) => <>{children}</>,
+                            strong: ({ children }) => <strong className="font-bold text-white">{children}</strong>,
+                            code: ({ inline, children }) => {
+                              if (inline) {
+                                return (
+                                  <code className="text-red-400 bg-zinc-900 px-1.5 py-0.5 rounded text-sm font-mono">
+                                    {children}
+                                  </code>
+                                );
+                              }
+                              return <code>{children}</code>;
+                            },
+                          }}
+                        >
+                          {item}
+                        </ReactMarkdown>
+                      </span>
                     </li>
                   ))}
                 </ul>
