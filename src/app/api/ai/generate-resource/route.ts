@@ -330,7 +330,7 @@ Generate comprehensive, well-structured content following the JSON schema provid
       );
     }
 
-    let aiContent: AIContent;
+    let aiContent: AIContent | undefined = undefined;
 
     // With structured outputs (json_schema), OpenRouter returns valid JSON
     // According to OpenRouter docs, content should be directly parseable JSON string
@@ -409,6 +409,14 @@ Generate comprehensive, well-structured content following the JSON schema provid
           error: 'Failed to parse AI response as JSON. The structured output may have failed.',
           details: errorMessage
         },
+        { status: 500 }
+      );
+    }
+
+    // Ensure aiContent was successfully parsed
+    if (!aiContent) {
+      return NextResponse.json(
+        { error: 'Failed to parse AI response content' },
         { status: 500 }
       );
     }
