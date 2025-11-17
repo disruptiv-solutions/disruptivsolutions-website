@@ -29,6 +29,7 @@ interface Resource {
     sections: ResourceSection[];
   };
   published: boolean;
+  accessLevel?: 'public' | 'free' | 'premium';
 }
 
 const typeLabels = {
@@ -77,6 +78,7 @@ export default function ResourceEditPage() {
     imagePrompt: '',
     tldr: '',
     published: false,
+    accessLevel: 'public' as Resource['accessLevel'],
     content: {
       sections: [] as ResourceSection[],
     },
@@ -105,6 +107,7 @@ export default function ResourceEditPage() {
           imagePrompt: data.resource.imagePrompt || '',
           tldr: data.resource.tldr || '',
           published: data.resource.published,
+          accessLevel: data.resource.accessLevel || 'public',
           content: data.resource.content,
         });
       } else {
@@ -245,6 +248,7 @@ export default function ResourceEditPage() {
         imagePrompt: '',
         tldr: data.tldr || '',
         published: false,
+        accessLevel: data.accessLevel || 'public',
         content: data.content,
       });
 
@@ -688,18 +692,38 @@ export default function ResourceEditPage() {
                       className="w-full px-4 py-2 bg-zinc-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-red-600 focus:border-red-600"
                     />
                   </div>
+                </div>
 
-                  <div className="flex items-center gap-4 pt-8">
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={formData.published}
-                        onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
-                        className="w-4 h-4 text-red-600 bg-zinc-800 border-gray-700 rounded focus:ring-red-600"
-                      />
-                      <span className="text-white font-semibold">Published</span>
-                    </label>
-                  </div>
+                {/* Access Level */}
+                <div className="border border-gray-700 rounded-lg p-4 bg-zinc-800/50">
+                  <label className="block text-sm font-semibold text-white mb-2">
+                    Access Level *
+                  </label>
+                  <select
+                    value={formData.accessLevel || 'public'}
+                    onChange={(e) => setFormData({ ...formData, accessLevel: e.target.value as 'public' | 'free' | 'premium' })}
+                    required
+                    className="w-full px-4 py-2 bg-zinc-800 border border-gray-700 rounded-lg text-white focus:ring-red-600 focus:border-red-600"
+                  >
+                    <option value="public">Public - Anyone can view</option>
+                    <option value="free">Free - Requires free account</option>
+                    <option value="premium">Premium - Requires premium account</option>
+                  </select>
+                  <p className="text-gray-400 text-xs mt-1">
+                    Control who can access this resource. Only public resources are visible to non-authenticated users.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={formData.published}
+                      onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
+                      className="w-4 h-4 text-red-600 bg-zinc-800 border-gray-700 rounded focus:ring-red-600"
+                    />
+                    <span className="text-white font-semibold">Published</span>
+                  </label>
                 </div>
 
                 {/* Featured Image */}

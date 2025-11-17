@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface Resource {
   id: string;
@@ -13,6 +14,9 @@ interface Resource {
   published: boolean;
   createdAt?: string | { seconds: number; nanoseconds: number };
   lastUpdated?: string | { seconds: number; nanoseconds: number };
+  userHasAccess?: boolean;
+  requiredTier?: 'free' | 'premium' | null;
+  accessLevel?: 'public' | 'free' | 'premium';
 }
 
 const typeLabels = {
@@ -54,6 +58,7 @@ const formatDate = (date: string | { seconds: number; nanoseconds: number } | un
 };
 
 export default function ResourcesPage() {
+  const { user, isAdmin } = useAuth();
   const [activeFilter, setActiveFilter] = useState<'all' | 'article' | 'ad-landing' | 'blog' | 'prompts' | 'tool' | 'guide' | 'video'>('all');
   const [resources, setResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
@@ -61,12 +66,16 @@ export default function ResourcesPage() {
 
   useEffect(() => {
     fetchResources();
-  }, []);
+  }, [user]);
 
   const fetchResources = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/resources?published=true');
+      // Include userId in query params if user is logged in
+      const url = user?.uid 
+        ? `/api/resources?published=true&userId=${user.uid}`
+        : '/api/resources?published=true';
+      const response = await fetch(url);
       const data = await response.json();
       if (data.success) {
         // Debug: inspect date fields coming from API
@@ -168,54 +177,88 @@ export default function ResourcesPage() {
                   {activeFilter !== 'all' && ` in ${typeLabels[activeFilter]}`}
                 </p>
               </div>
-              {filteredResources.map((resource) => (
-                <Link
-                  key={resource.id}
-                  href={`/resources/${resource.id}`}
-                  className="group block"
-                >
-                  <div className="bg-zinc-900 border border-gray-800 rounded-xl p-6 transition-all duration-300 hover:border-red-600/50 hover:bg-zinc-800/80 hover:shadow-lg hover:shadow-red-600/10">
-                    <div className="flex items-start gap-6">
-                      {/* Icon */}
-                      <div className="text-5xl flex-shrink-0">
-                        {resource.icon}
-                      </div>
+              {filteredResources.map((resource) => {
+                // Check if resource is locked (user doesn't have access and is not admin)
+                const isLocked = !isAdmin && resource.userHasAccess === false;
+                const lockType = isLocked ? (resource.requiredTier === 'premium' ? 'premium' : 'free') : null;
 
-                      {/* Content */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between gap-4 mb-2">
-                          <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-red-400 transition-colors">
-                            {resource.title}
-                          </h3>
-                          <div className="flex flex-col items-end gap-1 flex-shrink-0">
-                            <span className="px-3 py-1 bg-zinc-800 border border-gray-700 rounded-full text-xs font-semibold text-gray-400 whitespace-nowrap">
-                              {typeLabels[resource.type]}
-                            </span>
-                            {(resource.lastUpdated || resource.createdAt) && (
-                              <span className="text-[11px] text-gray-500">
-                                Updated{' '}
-                                {formatDate(
-                                  (resource.lastUpdated ||
-                                    resource.createdAt) as
-                                    | string
-                                    | { seconds: number; nanoseconds: number }
-                                )}
-                              </span>
-                            )}
-                          </div>
+                return (
+                  <Link
+                    key={resource.id}
+                    href={`/resources/${resource.id}`}
+                    className="group block"
+                  >
+                    <div className={`bg-zinc-900 border rounded-xl p-6 transition-all duration-300 ${
+                      isLocked 
+                        ? 'border-yellow-600/50 bg-zinc-900/60 opacity-75 hover:border-yellow-600/70 hover:bg-zinc-800/60' 
+                        : 'border-gray-800 hover:border-red-600/50 hover:bg-zinc-800/80 hover:shadow-lg hover:shadow-red-600/10'
+                    }`}>
+                      <div className="flex items-start gap-6">
+                        {/* Icon with lock overlay */}
+                        <div className="text-5xl flex-shrink-0 relative">
+                          {resource.icon}
+                          {isLocked && (
+                            <div className="absolute -top-1 -right-1 bg-yellow-600 rounded-full p-1">
+                              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                              </svg>
+                            </div>
+                          )}
                         </div>
-                        <p className="text-gray-400 leading-relaxed mb-3">
-                          {resource.description}
-                        </p>
-                        <div className="flex items-center gap-2 text-red-400 font-semibold text-sm group-hover:gap-3 transition-all">
-                          <span>View Resource</span>
-                          <span>→</span>
+
+                        {/* Content */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-4 mb-2">
+                            <h3 className={`text-xl md:text-2xl font-bold transition-colors ${
+                              isLocked 
+                                ? 'text-gray-500' 
+                                : 'text-white group-hover:text-red-400'
+                            }`}>
+                              {resource.title}
+                            </h3>
+                            <div className="flex flex-col items-end gap-1 flex-shrink-0">
+                              <span className="px-3 py-1 bg-zinc-800 border border-gray-700 rounded-full text-xs font-semibold text-gray-400 whitespace-nowrap">
+                                {typeLabels[resource.type]}
+                              </span>
+                              {isLocked && (
+                                <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold whitespace-nowrap ${
+                                  lockType === 'premium'
+                                    ? 'bg-purple-600/20 text-purple-400 border border-purple-600/30'
+                                    : 'bg-blue-600/20 text-blue-400 border border-blue-600/30'
+                                }`}>
+                                  {lockType === 'premium' ? '🔒 Premium' : '🔒 Free'}
+                                </span>
+                              )}
+                              {(resource.lastUpdated || resource.createdAt) && (
+                                <span className="text-[11px] text-gray-500">
+                                  Updated{' '}
+                                  {formatDate(
+                                    (resource.lastUpdated ||
+                                      resource.createdAt) as
+                                      | string
+                                      | { seconds: number; nanoseconds: number }
+                                  )}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <p className={`leading-relaxed mb-3 ${isLocked ? 'text-gray-500' : 'text-gray-400'}`}>
+                            {resource.description}
+                          </p>
+                          <div className={`flex items-center gap-2 font-semibold text-sm group-hover:gap-3 transition-all ${
+                            isLocked
+                              ? 'text-yellow-500'
+                              : 'text-red-400'
+                          }`}>
+                            <span>{isLocked ? 'Locked Content' : 'View Resource'}</span>
+                            <span>→</span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                );
+              })}
             </div>
           )}
         </div>
