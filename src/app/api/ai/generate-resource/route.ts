@@ -51,6 +51,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Use OpenRouter API
+    const openRouterApiKey = process.env.OPENROUTER_API_KEY;
+    
+    if (!openRouterApiKey) {
+      return NextResponse.json(
+        { error: 'OpenRouter API key not configured. Please add OPENROUTER_API_KEY to your .env.local file.' },
+        { status: 500 }
+      );
+    }
+
+    // Determine model - use :online variant for web research
+    const model = includeWebResearch ? 'openai/gpt-5.1:online' : 'openai/gpt-5.1';
+    
     // Map length percentage (0-100) to max_tokens (500-16000)
     // 0% = 500 tokens (very short), 10% = 1000 tokens (short), 50% = 4000 tokens (medium), 100% = 16000 tokens (very long)
     let maxTokens = Math.round(500 + (length / 100) * 15500);
@@ -68,16 +81,6 @@ export async function POST(request: NextRequest) {
     const sectionsCount = length <= 10 ? '2-3' : length <= 25 ? '3-5' : length <= 50 ? '5-8' : length <= 75 ? '8-12' : '12+';
     const lengthDescription = length <= 10 ? 'very brief' : length <= 25 ? 'brief' : length <= 50 ? 'standard' : length <= 75 ? 'detailed' : 'extensive';
 
-    // Use OpenRouter API
-    const openRouterApiKey = process.env.OPENROUTER_API_KEY;
-    
-    if (!openRouterApiKey) {
-      return NextResponse.json(
-        { error: 'OpenRouter API key not configured. Please add OPENROUTER_API_KEY to your .env.local file.' },
-        { status: 500 }
-      );
-    }
-
     const typeInstructions: Record<string, string> = {
       article: 'Write a comprehensive, well-researched article with multiple sections covering the topic in detail. Include introduction, main content sections, and conclusion.',
       'ad-landing': 'Create a compelling landing page/ad copy with hero section, features, benefits, social proof, and strong call-to-action. Focus on conversion and persuasion.',
@@ -87,9 +90,6 @@ export async function POST(request: NextRequest) {
       guide: 'Create a detailed step-by-step guide with clear instructions, examples, and helpful tips. Make it easy to follow for beginners.',
       video: 'Write a script/outline for a video tutorial with engaging sections, talking points, and visual cues. Include introduction, main content, and conclusion.',
     };
-
-    // Determine model - use :online variant for web research
-    const model = includeWebResearch ? 'openai/gpt-5.1:online' : 'openai/gpt-5.1';
     
     // Define JSON Schema for structured output
     // Note: With strict mode, nested objects must have a 'required' array
