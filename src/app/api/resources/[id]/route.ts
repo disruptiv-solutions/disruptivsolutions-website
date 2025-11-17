@@ -22,7 +22,7 @@ export async function GET(
     }
 
     const data = resourceSnap.data();
-    const resource = {
+    const resource: Record<string, unknown> = {
       id: resourceSnap.id,
       ...data,
     };
