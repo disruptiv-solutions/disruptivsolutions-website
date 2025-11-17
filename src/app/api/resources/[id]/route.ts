@@ -22,12 +22,23 @@ export async function GET(
     }
 
     const data = resourceSnap.data();
+    const resource = {
+      id: resourceSnap.id,
+      ...data,
+    };
+    
+    // Convert Firestore Timestamps to serializable format
+    if (data.createdAt && typeof data.createdAt.toDate === 'function') {
+      resource.createdAt = data.createdAt.toDate().toISOString();
+    }
+    
+    if (data.lastUpdated && typeof data.lastUpdated.toDate === 'function') {
+      resource.lastUpdated = data.lastUpdated.toDate().toISOString();
+    }
+    
     return NextResponse.json({
       success: true,
-      resource: {
-        id: resourceSnap.id,
-        ...data,
-      },
+      resource,
     });
   } catch (error) {
     console.error('[API:resources:id] GET error:', error);
@@ -46,7 +57,7 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
-    const { title, description, type, icon, content, published, imageUrl, imagePrompt, userId } = body;
+    const { title, description, type, icon, content, published, imageUrl, imagePrompt, tldr, userId } = body;
     
     // Verify admin if userId is provided
     if (userId) {
@@ -76,10 +87,14 @@ export async function PUT(
     if (title !== undefined) updateData.title = title.trim();
     if (description !== undefined) updateData.description = description.trim();
     if (type !== undefined) updateData.type = type;
-    if (icon !== undefined) updateData.icon = icon;
+    if (icon !== undefined) {
+      // Default to 📄 if icon is empty or not provided
+      updateData.icon = icon && icon.trim() !== '' ? icon.trim() : '📄';
+    }
     if (content !== undefined) updateData.content = content;
     if (imageUrl !== undefined) updateData.imageUrl = imageUrl;
     if (imagePrompt !== undefined) updateData.imagePrompt = imagePrompt;
+    if (tldr !== undefined) updateData.tldr = tldr || '';
     if (published !== undefined) updateData.published = published;
 
     await updateDoc(resourceRef, updateData);

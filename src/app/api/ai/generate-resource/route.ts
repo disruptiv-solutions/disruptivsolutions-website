@@ -22,6 +22,7 @@ interface AIContent {
   title: string;
   description: string;
   icon: string;
+  tldr?: string;
   sections: Array<{
     heading: string;
     text?: string;
@@ -38,6 +39,33 @@ interface FormattedSection {
   code?: string;
   note?: string;
 }
+
+// Clean citation markers and artifacts from AI-generated content
+const cleanCitationMarkers = (text: string): string => {
+  if (!text || typeof text !== 'string') return text;
+  
+  return text
+    // Remove Unicode private use area characters (weird boxes like E000-EFFF)
+    .replace(/[\uE000-\uF8FF]/g, '')
+    // Remove citation markers in various formats
+    .replace(/cite turn\d+[a-z]+\d+/gi, '') // "cite turn0news27", "cite turn0search12"
+    .replace(/cite turn\d+search\d+/gi, '') // "cite turn0search20"
+    .replace(/cite turn\d+news\d+/gi, '') // "cite turn0news15"
+    // Remove citation markers that might be wrapped in brackets or parentheses
+    .replace(/\[cite[^\]]*\]/gi, '')
+    .replace(/\(cite[^)]*\)/gi, '')
+    // Remove standalone citation patterns with word boundaries
+    .replace(/\bcite\s+turn\d+[a-z]+\d+\b/gi, '')
+    // Remove any remaining citation-like patterns
+    .replace(/turn\d+[a-z]+\d+/gi, '')
+    // Clean up any double spaces that might have been left
+    .replace(/  +/g, ' ')
+    // Remove spaces before punctuation that citation markers might have left
+    .replace(/\s+([.,;:!?])/g, '$1')
+    // Normalize line breaks
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+};
 
 export async function POST(request: NextRequest) {
   try {
@@ -112,6 +140,10 @@ export async function POST(request: NextRequest) {
           type: 'string',
           description: 'Brief description (1-2 sentences)',
         },
+        tldr: {
+          type: 'string',
+          description: 'TLDR (Too Long; Didn\'t Read) - A concise 2-3 sentence summary of the key takeaways from this resource. Should be punchy and highlight the most important points.',
+        },
         icon: {
           type: 'string',
           description: 'Relevant emoji icon',
@@ -153,7 +185,7 @@ export async function POST(request: NextRequest) {
           },
         },
       },
-      required: ['title', 'description', 'icon', 'sections'],
+      required: ['title', 'description', 'icon', 'sections', 'tldr'],
       additionalProperties: false,
     };
 
@@ -169,6 +201,7 @@ IMPORTANT: All section fields are required in the JSON schema. For fields you do
 Guidelines:
 - Create ${sectionsCount} sections covering the topic ${lengthDescription === 'brief' ? 'concisely' : lengthDescription === 'standard' ? 'thoroughly' : lengthDescription === 'detailed' ? 'in detail' : 'comprehensively'}
 - Target length: ${lengthDescription} content (approximately ${length <= 25 ? '500-1,000' : length <= 50 ? '1,000-2,000' : length <= 75 ? '2,000-4,000' : '4,000+'} words)
+- ALWAYS include a TLDR field: A concise 2-3 sentence summary that captures the key takeaways. Make it punchy and highlight what readers will learn or gain from this resource.
 - Use clear, engaging headings that draw readers in
 - Include practical examples and actionable advice
 - Add code blocks where relevant (for technical content)
@@ -177,7 +210,7 @@ Guidelines:
 - Format code properly with syntax
 - Use bullet points for lists of features, steps, or tips
 - Write in a conversational, engaging tone
-- ${includeWebResearch ? 'Cite web sources when using research data. Include URLs in notes or text where relevant.' : ''}
+- ${includeWebResearch ? 'When using web research, incorporate information naturally into the content. DO NOT include citation markers like "cite turn0search12" or similar references. If you need to reference sources, do so naturally in the text (e.g., "According to recent research..." or "As reported by...") without using citation codes.' : ''}
 - ${length <= 25 ? 'Keep sections concise and focused. Avoid unnecessary elaboration.' : length >= 75 ? 'Provide comprehensive coverage with detailed explanations and examples.' : ''}`;
 
     const userPrompt = `Create content for a ${resourceType} resource about:
@@ -379,26 +412,29 @@ Generate comprehensive, well-structured content following the JSON schema provid
 
     // Format sections to match our structure
     // Filter out empty values (empty strings/arrays) since schema requires all fields
+    // Also clean citation markers from all text fields
     const formattedSections: FormattedSection[] = aiContent.sections.map((section) => {
       const formatted: FormattedSection = {
-        heading: section.heading || '',
+        heading: cleanCitationMarkers(section.heading || ''),
       };
       
-      // Only include non-empty fields
+      // Only include non-empty fields, and clean citation markers
       if (section.text && section.text.trim()) {
-        formatted.text = section.text;
+        formatted.text = cleanCitationMarkers(section.text);
       }
       
       if (Array.isArray(section.items) && section.items.length > 0) {
-        formatted.items = section.items.filter((item: string) => item && item.trim());
+        formatted.items = section.items
+          .filter((item: string) => item && item.trim())
+          .map((item: string) => cleanCitationMarkers(item));
       }
       
       if (section.code && section.code.trim()) {
-        formatted.code = section.code;
+        formatted.code = cleanCitationMarkers(section.code);
       }
       
       if (section.note && section.note.trim()) {
-        formatted.note = section.note;
+        formatted.note = cleanCitationMarkers(section.note);
       }
       
       return formatted;
@@ -406,8 +442,9 @@ Generate comprehensive, well-structured content following the JSON schema provid
 
     return NextResponse.json({
       success: true,
-      title: aiContent.title || topic,
-      description: aiContent.description || `Learn about ${topic}`,
+      title: cleanCitationMarkers(aiContent.title || topic),
+      description: cleanCitationMarkers(aiContent.description || `Learn about ${topic}`),
+      tldr: cleanCitationMarkers(aiContent.tldr || ''),
       icon: aiContent.icon || '📄',
       content: {
         sections: formattedSections,

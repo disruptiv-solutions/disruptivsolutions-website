@@ -19,6 +19,7 @@ interface Resource {
   icon: string;
   imageUrl?: string;
   imagePrompt?: string;
+  tldr?: string;
   content: {
     sections: Array<{
       heading?: string;
@@ -49,10 +50,23 @@ export async function GET(request: NextRequest) {
       const data = doc.data();
       // Filter by published status if requested
       if (!publishedOnly || data.published === true) {
-        resources.push({
+        // Convert Firestore Timestamps to serializable format
+        const resource: Resource = {
           id: doc.id,
           ...data,
-        } as Resource);
+        } as Resource;
+        
+        // Convert createdAt Timestamp to ISO string if it exists
+        if (data.createdAt && typeof data.createdAt.toDate === 'function') {
+          resource.createdAt = data.createdAt.toDate().toISOString();
+        }
+        
+        // Convert lastUpdated Timestamp to ISO string if it exists
+        if (data.lastUpdated && typeof data.lastUpdated.toDate === 'function') {
+          resource.lastUpdated = data.lastUpdated.toDate().toISOString();
+        }
+        
+        resources.push(resource);
       }
     });
 
@@ -76,7 +90,7 @@ export async function POST(request: NextRequest) {
     // Note: In production, verify using Firebase Admin SDK with auth token
     
     const body = await request.json();
-    const { title, description, type, icon, content, published, imageUrl, imagePrompt, userId } = body;
+    const { title, description, type, icon, content, published, imageUrl, imagePrompt, tldr, userId } = body;
     
     // Verify admin if userId is provided
     if (userId) {
@@ -89,10 +103,22 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Validation
-    if (!title || !description || !type || !icon || !content) {
+    // Validation with detailed error messages
+    const missingFields: string[] = [];
+    if (!title || title.trim() === '') missingFields.push('title');
+    if (!description || description.trim() === '') missingFields.push('description');
+    if (!type) missingFields.push('type');
+    // Icon is optional - will default to 📄 if not provided
+    if (!content || !content.sections || !Array.isArray(content.sections)) {
+      missingFields.push('content (sections array)');
+    }
+    
+    if (missingFields.length > 0) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { 
+          error: `Missing required fields: ${missingFields.join(', ')}`,
+          missingFields 
+        },
         { status: 400 }
       );
     }
@@ -101,9 +127,10 @@ export async function POST(request: NextRequest) {
       title: title.trim(),
       description: description.trim(),
       type,
-      icon,
+      icon: icon && icon.trim() !== '' ? icon.trim() : '📄', // Default icon if not provided
       imageUrl: imageUrl || '',
       imagePrompt: imagePrompt || '',
+      tldr: tldr || '',
       content,
       published: published ?? false,
       createdAt: Timestamp.now(),
