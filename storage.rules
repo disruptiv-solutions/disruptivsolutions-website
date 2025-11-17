@@ -14,6 +14,16 @@ service firebase.storage {
       allow delete: if false;
     }
     
+    // Resource images folder - allow public reads (uploads via Admin SDK bypass rules)
+    match /resource-images/{imageId} {
+      // Allow anyone to read/download images
+      allow read: if true;
+      
+      // Write access handled by Admin SDK (bypasses rules)
+      // Delete access can be restricted if needed
+      allow delete: if false;
+    }
+    
     // Default: deny all other access
     match /{allPaths=**} {
       allow read, write: if false;

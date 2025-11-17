@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
+import { initFirebaseAdmin } from '@/lib/firebase-admin';
 
 export const dynamic = 'force-dynamic';
 
@@ -126,13 +127,60 @@ ${sectionsSummary}`,
         );
       }
 
-      const imageUrl = `data:image/png;base64,${base64Image}`;
+      // Initialize Firebase Admin for Storage upload
+      const { adminStorage, error: firebaseError } = initFirebaseAdmin();
+      
+      if (!adminStorage || firebaseError) {
+        console.error('[AI:image-generation] Firebase Admin initialization error:', firebaseError);
+        return NextResponse.json(
+          { error: 'Firebase Storage not configured. Please configure FIREBASE_SERVICE_ACCOUNT_KEY.' },
+          { status: 500 }
+        );
+      }
 
-      return NextResponse.json({
-        success: true,
-        imagePrompt,
-        imageUrl,
-      });
+      try {
+        // Convert base64 to Buffer
+        const imageBuffer = Buffer.from(base64Image, 'base64');
+        
+        // Generate unique filename
+        const timestamp = Date.now();
+        const sanitizedTitle = title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '')
+          .substring(0, 50); // Limit length
+        const fileName = `resource-images/${timestamp}-${sanitizedTitle}.png`;
+        
+        // Upload to Firebase Storage
+        const file = adminStorage.file(fileName);
+        await file.save(imageBuffer, {
+          metadata: {
+            contentType: 'image/png',
+            cacheControl: 'public, max-age=31536000', // Cache for 1 year
+          },
+        });
+        
+        // Make the file publicly accessible
+        await file.makePublic();
+        
+        // Get the public URL
+        const imageUrl = `https://storage.googleapis.com/${adminStorage.name}/${fileName}`;
+
+        return NextResponse.json({
+          success: true,
+          imagePrompt,
+          imageUrl,
+        });
+      } catch (storageError: unknown) {
+        console.error('[AI:image-generation] Firebase Storage upload error:', storageError);
+        const storageErrorMessage = storageError instanceof Error 
+          ? storageError.message 
+          : 'Failed to upload image to Firebase Storage';
+        return NextResponse.json(
+          { error: `Image generated but failed to save: ${storageErrorMessage}` },
+          { status: 500 }
+        );
+      }
     } catch (imageError: unknown) {
       console.error('[AI:image-generation] OpenAI SDK error:', imageError);
       let errorMessage = 'Failed to generate image with OpenAI';
