@@ -22,18 +22,18 @@ export async function GET(
     }
 
     const data = resourceSnap.data();
-    const resource: Record<string, unknown> = {
+    const resource = {
       id: resourceSnap.id,
       ...data,
-    };
+    } as Record<string, unknown>;
     
     // Convert Firestore Timestamps to serializable format
-    if (data.createdAt && typeof data.createdAt.toDate === 'function') {
-      resource.createdAt = data.createdAt.toDate().toISOString();
+    if (data?.createdAt && typeof (data.createdAt as { toDate?: () => Date }).toDate === 'function') {
+      resource.createdAt = (data.createdAt as { toDate: () => Date }).toDate().toISOString();
     }
     
-    if (data.lastUpdated && typeof data.lastUpdated.toDate === 'function') {
-      resource.lastUpdated = data.lastUpdated.toDate().toISOString();
+    if (data?.lastUpdated && typeof (data.lastUpdated as { toDate?: () => Date }).toDate === 'function') {
+      resource.lastUpdated = (data.lastUpdated as { toDate: () => Date }).toDate().toISOString();
     }
     
     return NextResponse.json({
