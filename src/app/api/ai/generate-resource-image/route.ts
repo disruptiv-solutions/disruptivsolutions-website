@@ -111,10 +111,10 @@ ${sectionsSummary}`,
         Authorization: `Bearer ${openAiApiKey}`,
       },
       body: JSON.stringify({
-        model: 'gpt-image-1-mini',
+        model: 'dall-e-3', // Using dall-e-3 as gpt-image-1-mini is not available via images API
         prompt: imagePrompt,
         size: '1024x1024',
-        response_format: 'b64_json',
+        response_format: 'b64_json', // dall-e-3 supports response_format for base64
       }),
     });
 
