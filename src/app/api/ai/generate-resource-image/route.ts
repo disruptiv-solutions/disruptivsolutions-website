@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import OpenAI from 'openai';
 
 export const dynamic = 'force-dynamic';
 
@@ -104,54 +105,45 @@ ${sectionsSummary}`,
       );
     }
 
-    const imageResponse = await fetch('https://api.openai.com/v1/images/generations', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${openAiApiKey}`,
-      },
-      body: JSON.stringify({
-        model: 'dall-e-3', // Using dall-e-3 as gpt-image-1-mini is not available via images API
+    // Use OpenAI SDK for image generation
+    const openai = new OpenAI({ apiKey: openAiApiKey });
+
+    try {
+      const imageResponse = await openai.images.generate({
+        model: 'gpt-image-1',
         prompt: imagePrompt,
         size: '1024x1024',
-        response_format: 'b64_json', // dall-e-3 supports response_format for base64
-      }),
-    });
+      });
 
-    if (!imageResponse.ok) {
-      const errorText = await imageResponse.text();
-      console.error('[AI:image-generation] OpenAI error:', errorText);
+      // The response contains data array with b64_json field
+      const base64Image = imageResponse.data?.[0]?.b64_json;
+
+      if (!base64Image) {
+        console.error('[AI:image-generation] No image data received:', JSON.stringify(imageResponse, null, 2));
+        return NextResponse.json(
+          { error: 'Image generation did not return any image data. The model might not support the requested format.' },
+          { status: 500 }
+        );
+      }
+
+      const imageUrl = `data:image/png;base64,${base64Image}`;
+
+      return NextResponse.json({
+        success: true,
+        imagePrompt,
+        imageUrl,
+      });
+    } catch (imageError: unknown) {
+      console.error('[AI:image-generation] OpenAI SDK error:', imageError);
       let errorMessage = 'Failed to generate image with OpenAI';
-      try {
-        const errorJson = JSON.parse(errorText);
-        errorMessage = errorJson.error?.message || errorJson.error || errorMessage;
-      } catch {
-        // If parsing fails, use default message
+      if (imageError instanceof Error) {
+        errorMessage = imageError.message || errorMessage;
       }
       return NextResponse.json(
         { error: errorMessage },
         { status: 500 }
       );
     }
-
-    const imageJson = await imageResponse.json();
-    const base64Image = imageJson.data?.[0]?.b64_json;
-
-    if (!base64Image) {
-      console.error('[AI:image-generation] No image data received:', JSON.stringify(imageJson, null, 2));
-      return NextResponse.json(
-        { error: 'Image generation did not return any image data. The model might not support the requested format.' },
-        { status: 500 }
-      );
-    }
-
-    const imageUrl = `data:image/png;base64,${base64Image}`;
-
-    return NextResponse.json({
-      success: true,
-      imagePrompt,
-      imageUrl,
-    });
   } catch (error) {
     console.error('[AI:generate-resource-image] Error:', error);
     return NextResponse.json(
