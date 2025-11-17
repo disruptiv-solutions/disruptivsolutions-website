@@ -8,6 +8,9 @@ import {
   orderBy,
   Timestamp
 } from 'firebase/firestore';
+import { getUserTier } from '@/lib/userTier';
+import { hasResourceAccess } from '@/lib/resourceAccess';
+import { isAdmin } from '@/lib/adminConfig';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,6 +35,7 @@ interface Resource {
   lastUpdated?: string;
   createdAt?: string;
   published: boolean;
+  accessLevel?: 'public' | 'free' | 'premium';
 }
 
 // GET - Fetch all resources
@@ -39,6 +43,11 @@ export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
     const publishedOnly = searchParams.get('published') === 'true';
+    const userId = searchParams.get('userId') || null;
+
+    // Get user tier and admin status to filter resources by access level
+    const userTier = userId ? await getUserTier(userId) : null;
+    const userIsAdmin = userId ? isAdmin(userId) : false;
 
     const resourcesRef = collection(db, 'resources');
     const q = query(resourcesRef, orderBy('createdAt', 'desc'));
@@ -50,11 +59,20 @@ export async function GET(request: NextRequest) {
       const data = doc.data();
       // Filter by published status if requested
       if (!publishedOnly || data.published === true) {
+        const resourceAccessLevel = data.accessLevel || 'public';
+        
+        // Check if user has access to this resource (admins have access to all)
+        // For free resources, any authenticated user (userId !== null) has access
+        const userHasAccess = hasResourceAccess(resourceAccessLevel, userTier, userIsAdmin, userId);
+        
         // Convert Firestore Timestamps to serializable format
         const resource: Resource = {
           id: doc.id,
           ...data,
-        } as Resource;
+          // Include access information for frontend to show locked indicators
+          userHasAccess,
+          requiredTier: resourceAccessLevel === 'public' ? null : (resourceAccessLevel === 'free' ? 'free' : 'premium'),
+        } as Resource & { userHasAccess: boolean; requiredTier: 'free' | 'premium' | null };
         
         // Convert createdAt Timestamp to ISO string if it exists
         if (data.createdAt && typeof data.createdAt.toDate === 'function') {
@@ -90,7 +108,7 @@ export async function POST(request: NextRequest) {
     // Note: In production, verify using Firebase Admin SDK with auth token
     
     const body = await request.json();
-    const { title, description, type, icon, content, published, imageUrl, imagePrompt, tldr, userId } = body;
+    const { title, description, type, icon, content, published, imageUrl, imagePrompt, tldr, userId, accessLevel } = body;
     
     // Verify admin if userId is provided
     if (userId) {
@@ -133,6 +151,7 @@ export async function POST(request: NextRequest) {
       tldr: tldr || '',
       content,
       published: published ?? false,
+      accessLevel: accessLevel || 'public',
       createdAt: Timestamp.now(),
       lastUpdated: Timestamp.now(),
     };

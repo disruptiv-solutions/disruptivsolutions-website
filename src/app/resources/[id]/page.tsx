@@ -581,19 +581,32 @@ const fallbackResources: Record<string, ResourceContent> = {
 export default function ResourcePage() {
   const params = useParams();
   const id = params.id as string;
-  const { isAdmin, loading: authLoading } = useAuth();
+  const { user, isAdmin, loading: authLoading } = useAuth();
   const [resource, setResource] = useState<ResourceContent | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [requiredTier, setRequiredTier] = useState<'free' | 'premium' | null>(null);
 
   const fetchResource = useCallback(async (resourceId: string) => {
     try {
       setLoading(true);
       setError(null);
       
-      // Try API first
-      const response = await fetch(`/api/resources/${resourceId}`);
+      // Include userId in query params if user is logged in
+      const url = user?.uid 
+        ? `/api/resources/${resourceId}?userId=${user.uid}`
+        : `/api/resources/${resourceId}`;
+      
+      const response = await fetch(url);
       const data = await response.json();
+      
+      if (!response.ok && data.error === 'Access denied') {
+        // Handle access denied
+        setError('ACCESS_DENIED');
+        setRequiredTier(data.requiredTier || 'free');
+        setResource(null);
+        return;
+      }
       
       if (data.success && data.resource) {
         // Format the resource data
@@ -625,7 +638,7 @@ export default function ResourcePage() {
     } finally {
       setLoading(false);
     }
-  }, [id]);
+  }, [id, user]);
 
   useEffect(() => {
     if (id) {
@@ -648,6 +661,72 @@ export default function ResourcePage() {
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center">
           <p className="text-gray-400 text-lg">Loading resource...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error === 'ACCESS_DENIED') {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center px-6">
+        <div className="max-w-2xl text-center space-y-6">
+          <div className="space-y-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-white">Access Restricted</h1>
+            <p className="text-gray-400 text-lg">
+              This resource requires a {requiredTier === 'premium' ? 'premium' : 'free'} account to view.
+            </p>
+          </div>
+          <div className="bg-gradient-to-br from-red-600/20 via-red-500/10 to-transparent border border-red-500/30 rounded-2xl p-8 space-y-6">
+            {!user ? (
+              <>
+                <p className="text-gray-300">
+                  Sign in with a free account to access this resource.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link
+                    href="/resources"
+                    className="px-6 py-3 bg-zinc-900 border border-gray-800 text-white font-semibold rounded-xl hover:bg-zinc-800 transition-all"
+                  >
+                    ← Back to Resources
+                  </Link>
+                  <button
+                    onClick={() => {
+                      // Trigger sign in - you may need to import and use signInWithGoogle from AuthContext
+                      window.location.href = '/';
+                    }}
+                    className="px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-all"
+                  >
+                    Sign In to Access
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <p className="text-gray-300">
+                  Upgrade to premium to unlock this exclusive resource and get access to all premium content.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link
+                    href="/resources"
+                    className="px-6 py-3 bg-zinc-900 border border-gray-800 text-white font-semibold rounded-xl hover:bg-zinc-800 transition-all"
+                  >
+                    ← Back to Resources
+                  </Link>
+                  <a
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      // TODO: Link to upgrade/subscription page
+                      alert('Upgrade to premium coming soon!');
+                    }}
+                    className="px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-all"
+                  >
+                    Upgrade to Premium
+                  </a>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
     );

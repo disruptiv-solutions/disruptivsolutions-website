@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/firebase';
 import { doc, getDoc, updateDoc, deleteDoc, Timestamp } from 'firebase/firestore';
+import { getUserTier } from '@/lib/userTier';
+import { hasResourceAccess } from '@/lib/resourceAccess';
+import { isAdmin } from '@/lib/adminConfig';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,6 +14,9 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
+    const searchParams = request.nextUrl.searchParams;
+    const userId = searchParams.get('userId') || null;
+
     const resourceRef = doc(db, 'resources', id);
     const resourceSnap = await getDoc(resourceRef);
 
@@ -22,6 +28,25 @@ export async function GET(
     }
 
     const data = resourceSnap.data();
+    const resourceAccessLevel = data.accessLevel || 'public';
+    
+    // Check if user has access to this resource (admins have access to all)
+    // For free resources, any authenticated user (userId !== null) has access
+    const userTier = userId ? await getUserTier(userId) : null;
+    const userIsAdmin = userId ? isAdmin(userId) : false;
+    const hasAccess = hasResourceAccess(resourceAccessLevel, userTier, userIsAdmin, userId);
+    
+    if (!hasAccess) {
+      return NextResponse.json(
+        { 
+          error: 'Access denied',
+          requiredTier: resourceAccessLevel === 'premium' ? 'premium' : 'free',
+          hasAccess: false
+        },
+        { status: 403 }
+      );
+    }
+
     const resource: Record<string, unknown> = {
       id: resourceSnap.id,
       ...(data || {}),
@@ -57,7 +82,7 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
-    const { title, description, type, icon, content, published, imageUrl, imagePrompt, tldr, userId } = body;
+    const { title, description, type, icon, content, published, imageUrl, imagePrompt, tldr, userId, accessLevel } = body;
     
     // Verify admin if userId is provided
     if (userId) {
@@ -96,6 +121,7 @@ export async function PUT(
     if (imagePrompt !== undefined) updateData.imagePrompt = imagePrompt;
     if (tldr !== undefined) updateData.tldr = tldr || '';
     if (published !== undefined) updateData.published = published;
+    if (accessLevel !== undefined) updateData.accessLevel = accessLevel || 'public';
 
     await updateDoc(resourceRef, updateData);
 
