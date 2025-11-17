@@ -11,6 +11,10 @@ interface Resource {
   icon: string;
   imageUrl?: string;
   published: boolean;
+  createdAt?: {
+    seconds?: number;
+    nanoseconds?: number;
+  } | string;
 }
 
 const typeLabels = {
@@ -157,9 +161,26 @@ export default function ResourcesPage() {
                         <p className="text-gray-400 leading-relaxed mb-3">
                           {resource.description}
                         </p>
-                        <div className="flex items-center gap-2 text-red-400 font-semibold text-sm group-hover:gap-3 transition-all">
-                          <span>View Resource</span>
-                          <span>→</span>
+                        <div className="flex items-center justify-between">
+                          {resource.createdAt && (
+                            <span className="text-xs text-gray-500">
+                              {(() => {
+                                let date: Date;
+                                if (typeof resource.createdAt === 'object' && resource.createdAt.seconds) {
+                                  date = new Date(resource.createdAt.seconds * 1000);
+                                } else if (typeof resource.createdAt === 'string') {
+                                  date = new Date(resource.createdAt);
+                                } else {
+                                  return null;
+                                }
+                                return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+                              })()}
+                            </span>
+                          )}
+                          <div className="flex items-center gap-2 text-red-400 font-semibold text-sm group-hover:gap-3 transition-all">
+                            <span>View Resource</span>
+                            <span>→</span>
+                          </div>
                         </div>
                       </div>
                     </div>
