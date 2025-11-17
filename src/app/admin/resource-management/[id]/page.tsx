@@ -5,6 +5,8 @@ import { AdminRoute } from '@/components/AdminRoute';
 import { useAuth } from '@/contexts/AuthContext';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface ResourceSection {
   heading?: string;

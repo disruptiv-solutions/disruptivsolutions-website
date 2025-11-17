@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
@@ -581,18 +581,12 @@ const fallbackResources: Record<string, ResourceContent> = {
 export default function ResourcePage() {
   const params = useParams();
   const id = params.id as string;
-  const { user, isAdmin, loading: authLoading } = useAuth();
+  const { isAdmin, loading: authLoading } = useAuth();
   const [resource, setResource] = useState<ResourceContent | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (id) {
-      fetchResource(id);
-    }
-  }, [id]);
-
-  const fetchResource = async (resourceId: string) => {
+  const fetchResource = useCallback(async (resourceId: string) => {
     try {
       setLoading(true);
       setError(null);
@@ -631,7 +625,13 @@ export default function ResourcePage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    if (id) {
+      fetchResource(id);
+    }
+  }, [id, fetchResource]);
 
   const typeLabels = {
     article: 'Article',
@@ -790,7 +790,7 @@ export default function ResourcePage() {
               
               {section.text && (() => {
                 // Clean up citation markers and other artifacts from AI-generated content
-                let cleanText = section.text
+                const cleanText = section.text
                   // Remove Unicode private use area characters first (weird boxes like E000-EFFF)
                   .replace(/[\uE000-\uF8FF]/g, '')
                   // Remove citation markers in various formats (be careful not to break markdown)
@@ -816,7 +816,7 @@ export default function ResourcePage() {
                       components={{
                       p: ({ children }) => <p className="mb-4 last:mb-0">{children}</p>,
                       strong: ({ children }) => <strong className="font-bold text-white">{children}</strong>,
-                      code: ({ inline, children, className }) => {
+                      code: ({ inline, children }) => {
                         if (inline) {
                           return (
                             <code className="text-red-400 bg-zinc-900 px-1.5 py-0.5 rounded text-sm font-mono">
