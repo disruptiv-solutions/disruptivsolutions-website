@@ -72,9 +72,16 @@ export async function POST(request: NextRequest) {
     // We need to increase max_tokens significantly to account for reasoning tokens
     const isReasoningModel = model.includes('gpt-5.1') || model.includes('o1') || model.includes('reasoning');
     if (isReasoningModel) {
-      // For reasoning models, multiply max_tokens by 2-3x to ensure content generation
-      // Reasoning typically uses 20-50% of tokens, so we need extra headroom
-      maxTokens = Math.max(maxTokens * 2.5, 2000); // Minimum 2000 tokens for reasoning models
+      // For reasoning models, multiply max_tokens by 4-5x to ensure content generation
+      // Reasoning can use 50-80% of tokens, especially for complex tasks, so we need significant headroom
+      // For very short content, reasoning might take proportionally more tokens
+      if (length <= 10) {
+        // Very short content needs more headroom since reasoning takes proportionally more
+        maxTokens = Math.max(maxTokens * 5, 4000); // Minimum 4000 tokens for very short reasoning content
+      } else {
+        maxTokens = Math.max(maxTokens * 4, 3000); // Minimum 3000 tokens for other reasoning content
+      }
+      console.log(`[AI:generate-resource] Reasoning model detected (${model}), adjusted max_tokens to ${maxTokens} (original: ${Math.round(500 + (length / 100) * 15500)})`);
     }
     
     // Also calculate approximate sections based on length
