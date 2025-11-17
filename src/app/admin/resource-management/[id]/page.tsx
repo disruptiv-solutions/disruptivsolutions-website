@@ -147,7 +147,7 @@ export default function ResourceEditPage() {
     description: string;
     type: Resource['type'];
     content: Resource['content'];
-  }) => {
+  }): Promise<boolean> => {
     try {
       setGeneratingImage(true);
       const response = await fetch('/api/ai/generate-resource-image', {
@@ -155,6 +155,11 @@ export default function ResourceEditPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(summary),
       });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+        throw new Error(errorData.error || 'Failed to generate image');
+      }
 
       const data = await response.json();
 
@@ -167,10 +172,12 @@ export default function ResourceEditPage() {
         imageUrl: data.imageUrl,
         imagePrompt: data.imagePrompt || '',
       }));
+      return true;
     } catch (error: unknown) {
       console.error('Error generating image:', error);
       const errorMessage = error instanceof Error ? error.message : 'Failed to generate image';
       setError(errorMessage);
+      return false;
     } finally {
       setGeneratingImage(false);
     }
@@ -238,12 +245,21 @@ export default function ResourceEditPage() {
       setContentGenerated(true);
 
       if (initialForm.createImage) {
-        await generateImageFromContent({
+        const imageSuccess = await generateImageFromContent({
           title: data.title,
           description: data.description,
           type: initialForm.resourceType,
           content: data.content,
         });
+        
+        if (!imageSuccess) {
+          // Image generation failed, but content was successfully generated
+          // Update error message to clarify that content is ready
+          setError((prevError) => {
+            const baseMessage = prevError || 'Image generation failed';
+            return `Content generated successfully! However, ${baseMessage.toLowerCase()}. You can generate the image manually using the "Generate Image" button.`;
+          });
+        }
       }
     } catch (error: unknown) {
       console.error('Error generating content:', error);
