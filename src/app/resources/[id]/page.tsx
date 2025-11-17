@@ -880,7 +880,8 @@ export default function ResourcePage() {
                           components={{
                             p: ({ children }) => <>{children}</>,
                             strong: ({ children }) => <strong className="font-bold text-white">{children}</strong>,
-                            code: ({ inline, children }) => {
+                            code: ({ children, ...props }: { children?: React.ReactNode; inline?: boolean }) => {
+                              const inline = props.inline;
                               if (inline) {
                                 return (
                                   <code className="text-red-400 bg-zinc-900 px-1.5 py-0.5 rounded text-sm font-mono">
