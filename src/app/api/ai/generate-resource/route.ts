@@ -266,7 +266,18 @@ Generate comprehensive, well-structured content following the JSON schema provid
       );
     }
 
-    const data = await response.json() as { choices: Array<{ message: { content: string | AIContent } }> };
+    const data = await response.json() as {
+      choices: Array<{
+        message: { content: string | AIContent };
+        finish_reason?: string;
+      }>;
+      usage?: {
+        total_tokens?: number;
+        completion_tokens_details?: {
+          reasoning_tokens?: number;
+        };
+      };
+    };
     
     // Validate response structure
     if (!data.choices || !Array.isArray(data.choices) || data.choices.length === 0) {
