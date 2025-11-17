@@ -22,10 +22,10 @@ export async function GET(
     }
 
     const data = resourceSnap.data();
-    const resource = {
+    const resource: Record<string, unknown> = {
       id: resourceSnap.id,
-      ...data,
-    } as Record<string, unknown>;
+      ...(data || {}),
+    };
     
     // Convert Firestore Timestamps to serializable format
     if (data?.createdAt && typeof (data.createdAt as { toDate?: () => Date }).toDate === 'function') {
