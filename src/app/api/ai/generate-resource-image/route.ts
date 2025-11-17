@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
         'X-Title': 'Disruptiv Solutions Resource Image Generator',
       },
       body: JSON.stringify({
-        model: 'openai/gpt-5.1',
+        model: 'openai/gpt-4o-mini', // Use non-reasoning model for prompt generation
         messages: [
           {
             role: 'system',
@@ -73,14 +73,22 @@ Key sections:
 ${sectionsSummary}`,
           },
         ],
+        max_tokens: 200, // Short prompt generation doesn't need many tokens
       }),
     });
 
     if (!promptResponse.ok) {
       const errorText = await promptResponse.text();
       console.error('[AI:image-prompt] OpenRouter error:', errorText);
+      let errorMessage = 'Failed to generate image prompt';
+      try {
+        const errorJson = JSON.parse(errorText);
+        errorMessage = errorJson.error?.message || errorJson.error || errorMessage;
+      } catch {
+        // If parsing fails, use default message
+      }
       return NextResponse.json(
-        { error: 'Failed to generate image prompt' },
+        { error: errorMessage },
         { status: 500 }
       );
     }
@@ -89,8 +97,9 @@ ${sectionsSummary}`,
     const imagePrompt = promptData.choices?.[0]?.message?.content?.trim();
 
     if (!imagePrompt) {
+      console.error('[AI:image-prompt] Empty prompt received:', JSON.stringify(promptData, null, 2));
       return NextResponse.json(
-        { error: 'Image prompt generation returned empty content' },
+        { error: 'Image prompt generation returned empty content. Please try again.' },
         { status: 500 }
       );
     }
@@ -112,8 +121,15 @@ ${sectionsSummary}`,
     if (!imageResponse.ok) {
       const errorText = await imageResponse.text();
       console.error('[AI:image-generation] OpenAI error:', errorText);
+      let errorMessage = 'Failed to generate image with OpenAI';
+      try {
+        const errorJson = JSON.parse(errorText);
+        errorMessage = errorJson.error?.message || errorJson.error || errorMessage;
+      } catch {
+        // If parsing fails, use default message
+      }
       return NextResponse.json(
-        { error: 'Failed to generate image with OpenAI' },
+        { error: errorMessage },
         { status: 500 }
       );
     }
@@ -122,8 +138,9 @@ ${sectionsSummary}`,
     const base64Image = imageJson.data?.[0]?.b64_json;
 
     if (!base64Image) {
+      console.error('[AI:image-generation] No image data received:', JSON.stringify(imageJson, null, 2));
       return NextResponse.json(
-        { error: 'Image generation did not return any data' },
+        { error: 'Image generation did not return any image data. The model might not support the requested format.' },
         { status: 500 }
       );
     }
