@@ -22,6 +22,7 @@ interface Resource {
   icon: string;
   imageUrl?: string;
   imagePrompt?: string;
+  tldr?: string;
   content: {
     sections: ResourceSection[];
   };
@@ -72,6 +73,7 @@ export default function ResourceEditPage() {
     icon: '📄',
     imageUrl: '',
     imagePrompt: '',
+    tldr: '',
     published: false,
     content: {
       sections: [] as ResourceSection[],
@@ -99,6 +101,7 @@ export default function ResourceEditPage() {
           icon: data.resource.icon,
           imageUrl: data.resource.imageUrl || '',
           imagePrompt: data.resource.imagePrompt || '',
+          tldr: data.resource.tldr || '',
           published: data.resource.published,
           content: data.resource.content,
         });
@@ -238,6 +241,7 @@ export default function ResourceEditPage() {
         icon: data.icon || '📄',
         imageUrl: '',
         imagePrompt: '',
+        tldr: data.tldr || '',
         published: false,
         content: data.content,
       });
@@ -278,16 +282,35 @@ export default function ResourceEditPage() {
     try {
       if (isNew) {
         // Create new resource
+        const payload = {
+          ...formData,
+          userId: user?.uid,
+        };
+        
+        // Debug: Log what we're sending
+        console.log('[Resource Save] Sending payload:', {
+          title: payload.title,
+          description: payload.description,
+          type: payload.type,
+          icon: payload.icon,
+          contentSectionsCount: payload.content?.sections?.length || 0,
+          published: payload.published,
+        });
+        
         const response = await fetch('/api/resources', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            ...formData,
-            userId: user?.uid,
-          }),
+          body: JSON.stringify(payload),
         });
 
         const data = await response.json();
+        
+        if (!response.ok) {
+          const errorMsg = data.error || `Failed to create resource (${response.status})`;
+          const missingFields = data.missingFields ? ` Missing: ${data.missingFields.join(', ')}` : '';
+          throw new Error(errorMsg + missingFields);
+        }
+        
         if (!data.success) {
           throw new Error(data.error || 'Failed to create resource');
         }
@@ -296,16 +319,25 @@ export default function ResourceEditPage() {
         router.push(`/admin/resource-management/${data.resource.id}`);
       } else {
         // Update existing resource
+        const payload = {
+          ...formData,
+          userId: user?.uid,
+        };
+        
         const response = await fetch(`/api/resources/${id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            ...formData,
-            userId: user?.uid,
-          }),
+          body: JSON.stringify(payload),
         });
 
         const data = await response.json();
+        
+        if (!response.ok) {
+          const errorMsg = data.error || `Failed to update resource (${response.status})`;
+          const missingFields = data.missingFields ? ` Missing: ${data.missingFields.join(', ')}` : '';
+          throw new Error(errorMsg + missingFields);
+        }
+        
         if (!data.success) {
           throw new Error(data.error || 'Failed to update resource');
         }
@@ -625,6 +657,22 @@ export default function ResourceEditPage() {
                   />
                 </div>
 
+                <div>
+                  <label className="block text-sm font-semibold text-white mb-2">
+                    TL;DR (Too Long; Didn't Read)
+                  </label>
+                  <textarea
+                    value={formData.tldr || ''}
+                    onChange={(e) => setFormData({ ...formData, tldr: e.target.value })}
+                    placeholder="A concise 2-3 sentence summary of the key takeaways..."
+                    rows={3}
+                    className="w-full px-4 py-2 bg-zinc-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-red-600 focus:border-red-600"
+                  />
+                  <p className="text-gray-400 text-xs mt-1">
+                    Optional: A quick summary that appears beneath the hero image on the resource page.
+                  </p>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-semibold text-white mb-2">
@@ -924,18 +972,104 @@ export default function ResourceEditPage() {
                               </h2>
                             )}
                             
-                            {section.text && (
-                              <p className="text-gray-400 leading-relaxed">
-                                {section.text}
-                              </p>
-                            )}
+                            {section.text && (() => {
+                              // Clean up citation markers and other artifacts from AI-generated content
+                              const cleanText = section.text
+                                // Remove Unicode private use area characters first (weird boxes like E000-EFFF)
+                                .replace(/[\uE000-\uF8FF]/g, '')
+                                // Remove citation markers in various formats
+                                .replace(/cite turn\d+[a-z]+\d+/gi, '')
+                                .replace(/cite turn\d+search\d+/gi, '')
+                                .replace(/\[cite[^\]]*\]/gi, '')
+                                .replace(/\(cite[^)]*\)/gi, '')
+                                .replace(/\bcite\s+turn\d+[a-z]+\d+\b/gi, '')
+                                // Clean up any double spaces that might have been left
+                                .replace(/  +/g, ' ')
+                                // Normalize line breaks (preserve markdown structure)
+                                .replace(/\n{3,}/g, '\n\n')
+                                // Remove spaces before punctuation that citation markers might have left
+                                .replace(/\s+([.,;:!?])/g, '$1')
+                                .trim();
+                              
+                              return (
+                                <div className="text-gray-400 leading-relaxed prose prose-invert prose-headings:text-white prose-p:text-gray-400 prose-strong:text-white prose-code:text-red-400 prose-code:bg-zinc-900 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm max-w-none">
+                                  <ReactMarkdown
+                                    remarkPlugins={[remarkGfm]}
+                                    components={{
+                                      p: ({ children }) => <p className="mb-4 last:mb-0">{children}</p>,
+                                      strong: ({ children }) => <strong className="font-bold text-white">{children}</strong>,
+                                      code: ({ inline, children }) => {
+                                        if (inline) {
+                                          return (
+                                            <code className="text-red-400 bg-zinc-900 px-1.5 py-0.5 rounded text-sm font-mono">
+                                              {children}
+                                            </code>
+                                          );
+                                        }
+                                        return (
+                                          <code className="text-gray-300 font-mono text-sm">
+                                            {children}
+                                          </code>
+                                        );
+                                      },
+                                      pre: ({ children }) => (
+                                        <pre className="bg-zinc-900 border border-gray-800 rounded-xl p-4 overflow-x-auto text-sm text-gray-300 font-mono whitespace-pre-wrap my-4">
+                                          {children}
+                                        </pre>
+                                      ),
+                                      ul: ({ children }) => (
+                                        <ul className="list-none space-y-2 my-4">
+                                          {children}
+                                        </ul>
+                                      ),
+                                      li: ({ children }) => (
+                                        <li className="flex items-start gap-2">
+                                          <span className="text-red-500 font-bold flex-shrink-0 mt-1">→</span>
+                                          <span className="flex-1">{children}</span>
+                                        </li>
+                                      ),
+                                      ol: ({ children }) => (
+                                        <ol className="list-decimal list-inside space-y-2 my-4 ml-4">
+                                          {children}
+                                        </ol>
+                                      ),
+                                      h1: ({ children }) => <h1 className="text-2xl font-bold text-white mb-3 mt-6">{children}</h1>,
+                                      h2: ({ children }) => <h2 className="text-xl font-bold text-white mb-3 mt-4">{children}</h2>,
+                                      h3: ({ children }) => <h3 className="text-lg font-bold text-white mb-2 mt-3">{children}</h3>,
+                                      blockquote: ({ children }) => (
+                                        <blockquote className="border-l-4 border-red-500/50 pl-4 italic text-gray-300 my-4">
+                                          {children}
+                                        </blockquote>
+                                      ),
+                                    }}
+                                  >
+                                    {cleanText}
+                                  </ReactMarkdown>
+                                </div>
+                              );
+                            })()}
                             
                             {section.items && section.items.length > 0 && (
                               <ul className="space-y-2">
                                 {section.items.map((item, itemIndex) => (
                                   <li key={itemIndex} className="flex items-start gap-2 text-gray-400">
                                     <span className="text-red-500 font-bold flex-shrink-0 mt-1">→</span>
-                                    <span>{item}</span>
+                                    <span className="leading-relaxed">
+                                      <ReactMarkdown
+                                        remarkPlugins={[remarkGfm]}
+                                        components={{
+                                          p: ({ children }) => <span>{children}</span>,
+                                          strong: ({ children }) => <strong className="font-bold text-white">{children}</strong>,
+                                          code: ({ children }) => (
+                                            <code className="text-red-400 bg-zinc-900 px-1.5 py-0.5 rounded text-sm font-mono">
+                                              {children}
+                                            </code>
+                                          ),
+                                        }}
+                                      >
+                                        {item}
+                                      </ReactMarkdown>
+                                    </span>
                                   </li>
                                 ))}
                               </ul>
@@ -952,7 +1086,21 @@ export default function ResourceEditPage() {
                             {section.note && (
                               <div className="bg-gradient-to-br from-red-600/20 via-red-500/10 to-transparent border border-red-500/30 rounded-xl p-4">
                                 <p className="text-gray-300 text-sm">
-                                  <span className="font-bold text-red-400">Note:</span> {section.note}
+                                  <span className="font-bold text-red-400">Note:</span>{' '}
+                                  <ReactMarkdown
+                                    remarkPlugins={[remarkGfm]}
+                                    components={{
+                                      p: ({ children }) => <span>{children}</span>,
+                                      strong: ({ children }) => <strong className="font-bold text-white">{children}</strong>,
+                                      code: ({ children }) => (
+                                        <code className="text-red-400 bg-zinc-900 px-1.5 py-0.5 rounded text-sm font-mono">
+                                          {children}
+                                        </code>
+                                      ),
+                                    }}
+                                  >
+                                    {section.note}
+                                  </ReactMarkdown>
                                 </p>
                               </div>
                             )}
