@@ -173,7 +173,7 @@ export default function ResourcesPage() {
                                 } else {
                                   return null;
                                 }
-                                return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+                                return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
                               })()}
                             </span>
                           )}
