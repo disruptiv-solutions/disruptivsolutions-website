@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { FeedbackModal } from '@/components/class-registration/steps/FeedbackModal';
 import { useAuth } from '@/contexts/AuthContext';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
@@ -331,29 +332,46 @@ export default function ClassVideosPage() {
           </div>
 
           {/* Waitlist Banner */}
-          <div className="mb-8 bg-gradient-to-r from-orange-600/20 via-orange-500/10 to-transparent border border-orange-600/30 rounded-2xl p-6">
+          <div className="mb-8 bg-white border border-gray-200 rounded-2xl p-6">
             <div className="flex items-center justify-between gap-4 flex-wrap">
               <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 border border-white/20">
-                  <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M12 5v2M12 17v2M6.343 6.343l1.414 1.414M16.243 16.243l1.414 1.414M5 12h2M17 12h2M6.343 17.657l1.414-1.414M16.243 7.757l1.414-1.414" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                <div className="flex items-center justify-center w-12 h-12">
+                  <Image
+                    src="/launchbox-no-text.png"
+                    alt="Launchbox"
+                    width={48}
+                    height={48}
+                    className="object-contain"
+                  />
                 </div>
                 <div>
-                  <p className="text-white font-semibold text-lg mb-1">
+                  <p className="text-black font-semibold text-lg mb-1">
                     You're on the Launchbox waitlist
                   </p>
-                  <p className="text-gray-300 text-sm">
+                  <p className="text-gray-600 text-sm">
                     Thanks for joining! You'll be first to know when Launchbox goes live.
                   </p>
                 </div>
               </div>
-              <button
-                onClick={() => setIsFeedbackModalOpen(true)}
-                className="px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-all shadow-lg shadow-red-600/40 whitespace-nowrap"
+              <Link
+                href="/waitlist"
+                className="px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-all shadow-lg shadow-red-600/40 whitespace-nowrap inline-flex items-center gap-2"
               >
-                Share Feedback →
-              </button>
+                Learn More
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </Link>
             </div>
           </div>
 
@@ -416,8 +434,31 @@ export default function ClassVideosPage() {
           </Link>
           </div>
 
-          {/* Back to resources link */}
+          {/* Share Feedback Button */}
           <div className="mt-12 text-center">
+            <button
+              onClick={() => setIsFeedbackModalOpen(true)}
+              className="px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-all shadow-lg shadow-red-600/40 inline-flex items-center gap-2"
+            >
+              Share Feedback
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* Back to resources link */}
+          <div className="mt-6 text-center">
             <Link
               href="/resources"
               className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
