@@ -209,7 +209,7 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
                     <div className="flex items-center gap-3">
                       <button
                         type="button"
-                        onClick={openSignUpModal}
+                        onClick={() => openSignUpModal()}
                         className="px-4 py-2 bg-transparent border border-red-600 text-red-100 text-sm font-semibold rounded-lg hover:bg-red-600 hover:text-white transition-colors"
                       >
                         Sign Up
