@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { trackButtonClick } from '@/lib/analytics';
+import SignUpModal, { openSignUpModal } from '@/components/SignUpModal';
 import { useAuth } from '@/contexts/AuthContext';
 
 interface NavigationProps {
@@ -205,12 +206,21 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
                       )}
                     </div>
                   ) : (
-                    <button
-                      onClick={handleSignIn}
-                      className="px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition-all shadow-lg shadow-red-600/40"
-                    >
-                      Log In
-                    </button>
+                    <div className="flex items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={openSignUpModal}
+                        className="px-4 py-2 bg-transparent border border-red-600 text-red-100 text-sm font-semibold rounded-lg hover:bg-red-600 hover:text-white transition-colors"
+                      >
+                        Sign Up
+                      </button>
+                      <button
+                        onClick={handleSignIn}
+                        className="px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition-all shadow-lg shadow-red-600/40"
+                      >
+                        Log In
+                      </button>
+                    </div>
                   )}
                 </>
               )}
@@ -386,6 +396,7 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
           </div>
         </div>
       )}
+      <SignUpModal />
     </>
   );
 };
