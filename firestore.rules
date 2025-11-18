@@ -90,6 +90,24 @@ service cloud.firestore {
     }
     
     // ============================================
+    // Waitlist Collection
+    // ============================================
+    // Stores waitlist entries for Launchbox founding members
+    match /waitlist/{email} {
+      // Read: Only admins can read waitlist entries
+      allow read: if isAdmin();
+      
+      // Create: Anyone can join the waitlist
+      allow create: if true;
+      
+      // Update: Only admins can update waitlist entries
+      allow update: if isAdmin();
+      
+      // Delete: Only admins can delete waitlist entries
+      allow delete: if isAdmin();
+    }
+    
+    // ============================================
     // Default Rule
     // ============================================
     // Deny all access to any other collections/documents
