@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
+import { openSignUpModal } from '@/components/SignUpModal';
 
 interface Resource {
   id: string;
@@ -102,6 +103,11 @@ export default function ResourcesPage() {
     ? resources 
     : resources.filter(resource => resource.type === activeFilter);
 
+  const handleLockedClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    openSignUpModal({ force: true });
+  };
+
   return (
     <div className="bg-black min-h-screen">
       {/* Hero Section */}
@@ -173,21 +179,71 @@ export default function ResourcesPage() {
               {/* Resource Count */}
               <div className="mb-6">
                 <p className="text-sm text-gray-400">
-                  Showing {filteredResources.length} {filteredResources.length === 1 ? 'resource' : 'resources'}
+                  Showing {filteredResources.length + (activeFilter === 'all' || activeFilter === 'video' ? 1 : 0)} {filteredResources.length + (activeFilter === 'all' || activeFilter === 'video' ? 1 : 0) === 1 ? 'resource' : 'resources'}
                   {activeFilter !== 'all' && ` in ${typeLabels[activeFilter]}`}
                 </p>
               </div>
+              
+              {/* Class Videos Card - Always show when filter is 'all' or 'video' */}
+              {(activeFilter === 'all' || activeFilter === 'video') && (
+                <Link
+                  href="/class-videos"
+                  className="group block"
+                >
+                  <div className="bg-zinc-900 border border-gray-800 rounded-xl p-6 transition-all duration-300 hover:border-red-600/50 hover:bg-zinc-800/80 hover:shadow-lg hover:shadow-red-600/10">
+                    <div className="flex items-start gap-6">
+                      {/* Icon */}
+                        <div className="text-4xl flex-shrink-0 relative text-red-400">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            className="w-10 h-10"
+                          >
+                            <path
+                              fill="currentColor"
+                              d="M3 6.5A2.5 2.5 0 0 1 5.5 4h11A2.5 2.5 0 0 1 19 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 3 17.5v-11ZM8 9.97V14l4-2.02L8 9.97Z"
+                            />
+                          </svg>
+                        </div>
+
+                      {/* Content */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between gap-4 mb-2">
+                          <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-red-400 transition-colors">
+                            Free AI App Building Classes
+                          </h3>
+                          <div className="flex flex-col items-end gap-1 flex-shrink-0">
+                            <span className="px-3 py-1 bg-zinc-800 border border-gray-700 rounded-full text-xs font-semibold text-gray-400 whitespace-nowrap">
+                              {typeLabels.video}
+                            </span>
+                          </div>
+                        </div>
+                        <p className="text-gray-400 leading-relaxed mb-3">
+                          Watch recorded sessions from our AI app building workshops. Learn how to build your first AI-powered website with step-by-step guidance.
+                        </p>
+                        <div className="flex items-center gap-2 text-red-400 font-semibold text-sm group-hover:gap-3 transition-all">
+                          <span>Watch Class Recordings</span>
+                          <span>→</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              )}
+
               {filteredResources.map((resource) => {
                 // Check if resource is locked (user doesn't have access and is not admin)
                 const isLocked = !isAdmin && resource.userHasAccess === false;
                 const lockType = isLocked ? (resource.requiredTier === 'premium' ? 'premium' : 'free') : null;
 
                 return (
-                  <Link
-                    key={resource.id}
-                    href={`/resources/${resource.id}`}
-                    className="group block"
-                  >
+                <Link
+                  key={resource.id}
+                  href={`/resources/${resource.id}`}
+                  className="group block"
+                  onClick={isLocked ? handleLockedClick : undefined}
+                  aria-disabled={isLocked}
+                >
                     <div className={`bg-zinc-900 border rounded-xl p-6 transition-all duration-300 ${
                       isLocked 
                         ? 'border-yellow-600/50 bg-zinc-900/60 opacity-75 hover:border-yellow-600/70 hover:bg-zinc-800/60' 

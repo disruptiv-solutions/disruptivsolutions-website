@@ -29,6 +29,17 @@ service cloud.firestore {
       allow update: if true;
       allow delete: if true;
     }
+
+    // ============================================
+    // Users Collection
+    // ============================================
+    // Stores user profile data
+    match /users/{userId} {
+      allow read: if request.auth != null && (request.auth.uid == userId || isAdmin());
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null && (request.auth.uid == userId || isAdmin());
+      allow delete: if isAdmin();
+    }
     
     // ============================================
     // Workshop Participants Collection
