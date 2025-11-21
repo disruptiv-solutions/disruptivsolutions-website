@@ -19,10 +19,11 @@ const LaunchboxWaitlist: React.FC = () => {
   const [hasWaitlistAccess, setHasWaitlistAccess] = useState<boolean | null>(null);
   const [isLoadingAccess, setIsLoadingAccess] = useState(true);
 
-  // Check if user is already on the waitlist
+  // Check if user is already on the waitlist (only for authenticated users)
   useEffect(() => {
     const checkWaitlistAccess = async () => {
       if (!user) {
+        // No user signed in - show the form
         setHasWaitlistAccess(false);
         setIsLoadingAccess(false);
         return;
@@ -34,6 +35,7 @@ const LaunchboxWaitlist: React.FC = () => {
 
         if (userSnap.exists()) {
           const userData = userSnap.data();
+          // Only show "You're In" page if user is signed in AND has waitlist access
           setHasWaitlistAccess(userData.launchboxWaitlist === true);
 
           // Pre-fill form if user doesn't have waitlist access yet

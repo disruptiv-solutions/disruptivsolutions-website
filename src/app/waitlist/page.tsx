@@ -118,10 +118,11 @@ const LaunchboxWaitlist: React.FC = () => {
   // Adjust the year/time here if needed. Assuming 2025 based on context or current year.
   const countdown = useCountdown(TARGET_DATE);
 
-  // Check if user is already on the waitlist
+  // Check if user is already on the waitlist (only for authenticated users)
   useEffect(() => {
     const checkWaitlistAccess = async () => {
       if (!user) {
+        // No user signed in - show the form
         setHasWaitlistAccess(false);
         setIsLoadingAccess(false);
         return;
@@ -133,6 +134,7 @@ const LaunchboxWaitlist: React.FC = () => {
 
         if (userSnap.exists()) {
           const userData = userSnap.data();
+          // Only show "You're In" page if user is signed in AND has waitlist access
           setHasWaitlistAccess(userData.launchboxWaitlist === true);
 
           if (userData.launchboxWaitlist !== true) {
@@ -166,22 +168,116 @@ const LaunchboxWaitlist: React.FC = () => {
     setIsSubmitting(true);
     setSubmitError(null);
 
-    // ... (Existing submission logic remains the same) ...
-    // For brevity, I'm assuming the logic from previous steps is here.
-    // Just simulating success for display:
-    setTimeout(() => {
-        setSubmitSuccess(true);
-        setIsSubmitting(false);
-    }, 1000);
+    const webhookData = {
+      name,
+      email,
+      phone: phone || 'N/A',
+      subscribeNewsletter,
+      listType: 'launchbox_founding_member_waitlist',
+      timestamp: new Date().toISOString(),
+    };
+
+    try {
+      console.log('[Waitlist] Form submission started');
+      console.log('[Waitlist] Sending webhook data:', webhookData);
+
+      const response = await fetch('/api/waitlist-signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(webhookData),
+      });
+
+      console.log('[Waitlist] API response status:', response.status);
+
+      if (!response.ok) {
+        const errorData = await response
+          .json()
+          .catch(() => ({ error: 'Failed to join waitlist. Please try again.' }));
+        throw new Error(errorData.error || 'Failed to join waitlist. Please try again.');
+      }
+
+      console.log('[Waitlist] Webhook success');
+
+      // Track waitlist signup
+      trackFormSubmission('waitlist_signup', {
+        with_newsletter: subscribeNewsletter,
+        page_location: '/waitlist',
+        list_type: 'launchbox_founding_member_waitlist',
+      });
+
+      // If newsletter checkbox is checked, also submit to newsletter webhook
+      if (subscribeNewsletter) {
+        console.log('[Waitlist] Also sending to newsletter webhook');
+        try {
+          const newsletterResponse = await fetch('/api/newsletter-signup', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(webhookData),
+          });
+          console.log('[Waitlist] Newsletter webhook response:', newsletterResponse.status);
+        } catch (newsletterError) {
+          console.error('[Waitlist] Newsletter signup error:', newsletterError);
+        }
+      }
+
+      // If user is signed in, update their Firestore profile
+      if (user) {
+        try {
+          await setDoc(
+            doc(db, 'users', user.uid),
+            {
+              name: name || user.displayName,
+              email: email || user.email,
+              phone: phone || null,
+              newsletter: subscribeNewsletter,
+              launchboxWaitlist: true,
+              updatedAt: serverTimestamp(),
+            },
+            { merge: true },
+          );
+          
+          if (email || user.email) {
+            const waitlistRef = doc(db, 'waitlist', email || user.email || 'unknown');
+            await setDoc(
+              waitlistRef,
+              {
+                name: name || user.displayName,
+                email: email || user.email,
+                phone: phone || null,
+                newsletter: subscribeNewsletter,
+                userId: user.uid,
+                createdAt: serverTimestamp(),
+              },
+              { merge: true },
+            );
+          }
+          setHasWaitlistAccess(true);
+        } catch (error) {
+          console.error('Error updating user profile:', error);
+        }
+      }
+
+      setSubmitSuccess(true);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : 'An error occurred. Please try again.',
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isLoadingAccess) {
-    return (
+  return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
         <div className="text-slate-400 animate-pulse">Loading...</div>
-      </div>
-    );
-  }
+    </div>
+  );
+}
 
   return (
     <div style={investorsTheme} className="relative min-h-screen overflow-hidden text-slate-900 font-sans">
