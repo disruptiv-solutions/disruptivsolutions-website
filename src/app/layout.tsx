@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Rosario } from "next/font/google";
+import { Montserrat, Rosario } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import NavigationWrapper from "@/components/NavigationWrapper";
@@ -7,9 +7,10 @@ import Footer from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/next";
 import { AuthProvider } from "@/contexts/AuthContext";
 
-const inter = Inter({
-  variable: "--font-inter",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -40,7 +41,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth snap-y overscroll-y-contain" style={{ scrollPaddingTop: '65px' }}>
       <body
-        className={`${inter.variable} ${rosario.variable} antialiased bg-black text-white`}
+        className={`${montserrat.variable} ${rosario.variable} antialiased bg-black text-white`}
       >
         {/* Google tag (gtag.js) */}
         <Script

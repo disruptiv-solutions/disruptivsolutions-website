@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
+import Link from 'next/link';
 import { trackButtonClick, trackVideoPlay } from '@/lib/analytics';
 
 const Hero: React.FC = () => {
@@ -90,47 +91,33 @@ const Hero: React.FC = () => {
 
             {/* CTAs */}
             <div className="hidden lg:flex flex-col sm:flex-row gap-4">
-              <button
+              <Link
+                href="/waitlist"
                 onClick={() => {
                   trackButtonClick('join_waitlist', 'hero_section');
-                  window.location.href = '/waitlist';
                 }}
-                className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50"
+                className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50 inline-flex items-center justify-center"
               >
                 Join Launchbox Waitlist
-              </button>
-              <button
+              </Link>
+              <Link
+                href="/free-class"
                 onClick={() => {
                   trackButtonClick('free_class_button', 'hero_section');
-                  const launchbox = document.getElementById('launchbox');
-                  if (launchbox) {
-                    const rect = launchbox.getBoundingClientRect();
-                    const sectionHeight = window.innerHeight * 3;
-                    const scrollPosition = window.scrollY + rect.top + (sectionHeight / 3);
-                    // Scroll to 1/3 through Launchbox section (card 1 - Free Class)
-                    window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
-                  }
                 }}
-                className="px-8 py-4 border-2 border-gray-300 text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-300"
+                className="px-8 py-4 border-2 border-gray-300 text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-300 inline-flex items-center justify-center"
               >
                 Free Class
-              </button>
-              <button
+              </Link>
+              <Link
+                href="/newsletter"
                 onClick={() => {
                   trackButtonClick('subscribe_newsletter', 'hero_section');
-                  const launchbox = document.getElementById('launchbox');
-                  if (launchbox) {
-                    const rect = launchbox.getBoundingClientRect();
-                    const sectionHeight = window.innerHeight * 3;
-                    const scrollPosition = window.scrollY + rect.top + (sectionHeight * 2 / 3);
-                    // Scroll to 2/3 through Launchbox section (card 2 - Newsletter)
-                    window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
-                  }
                 }}
-                className="px-8 py-4 border-2 border-gray-300 text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-300"
+                className="px-8 py-4 border-2 border-gray-300 text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-300 inline-flex items-center justify-center"
               >
                 Join My Newsletter
-              </button>
+              </Link>
             </div>
 
         </div>

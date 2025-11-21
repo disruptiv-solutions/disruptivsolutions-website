@@ -14,7 +14,7 @@
   --color-primary-red: var(--primary-red);
   --color-primary-yellow: var(--primary-yellow);
   --color-accent-red: var(--accent-red);
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
   --font-heading: 'Rosario', system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-geist-mono);
 }

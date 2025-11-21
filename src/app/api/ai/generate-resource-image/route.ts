@@ -47,6 +47,19 @@ export async function POST(request: NextRequest) {
     }
 
     const sectionsSummary = summarizeSections(content.sections);
+    
+    // Brand visual style guidelines
+    const brandStyleGuidelines = `
+BRAND VISUAL STYLE GUIDELINES (MUST FOLLOW):
+- Color Palette: Primary red (#FF3B3B), Primary yellow (#FFD94A), Dark backgrounds (#020308, #050509), Light foregrounds (#F5F5F5, #E0E0E0)
+- Lighting: Cinematic lighting, strong contrast between light and shadow, spotlight or backlight on main subject, soft glow around key elements, subtle vignette at edges
+- Mood: Intense but encouraging, action-oriented, builder/arena energy
+- Composition: Central or slightly off-center subject, lots of dark negative space, minimal clutter, hint of depth with perspective or shallow depth of field
+- Motifs: Geometric shapes (especially hexagons), 3D cubes or fractured cubes, thin red outlines or borders around elements, soft glowing red or yellow accents
+- Texture: Subtle gradients rather than flat color, light digital grain or bloom for tech feel
+- AVOID: White backgrounds, pastel colors, flat lighting, low contrast, cluttered layouts, childish cartoon style, washed-out colors
+`;
+
     const promptResponse = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -61,21 +74,25 @@ export async function POST(request: NextRequest) {
           {
             role: 'system',
             content:
-              'You write concise, descriptive prompts for AI image generation. Your prompts are less than 120 words, specify setting, lighting, color palette, subject, and style, and avoid mentioning text or UI elements.',
+              'You write concise, descriptive prompts for AI image generation. Your prompts are less than 120 words, specify setting, lighting, color palette, subject, and style, and avoid mentioning text or UI elements. Always incorporate the provided brand visual style guidelines into your prompts.',
           },
           {
             role: 'user',
-            content: `Create an image prompt for a featured image for the following resource.
+            content: `Create an image prompt for a featured image for the following resource. The prompt MUST follow the brand visual style guidelines below.
+
+${brandStyleGuidelines}
 
 Title: ${title}
 Type: ${type}
 Description: ${description}
 
 Key sections:
-${sectionsSummary}`,
+${sectionsSummary}
+
+Generate a prompt that incorporates the brand style: dark-mode, cinematic lighting, deep shadows, strong contrast, red (#FF3B3B) and yellow (#FFD94A) accents, geometric shapes (especially hexagons), minimal composition with dark negative space, energetic and action-oriented mood.`,
           },
         ],
-        max_tokens: 200, // Short prompt generation doesn't need many tokens
+        max_tokens: 250, // Slightly more tokens to accommodate brand style details
       }),
     });
 
@@ -96,7 +113,7 @@ ${sectionsSummary}`,
     }
 
     const promptData = await promptResponse.json();
-    const imagePrompt = promptData.choices?.[0]?.message?.content?.trim();
+    let imagePrompt = promptData.choices?.[0]?.message?.content?.trim();
 
     if (!imagePrompt) {
       console.error('[AI:image-prompt] Empty prompt received:', JSON.stringify(promptData, null, 2));
@@ -106,14 +123,22 @@ ${sectionsSummary}`,
       );
     }
 
+    // Enhance the prompt with brand style template to ensure consistency
+    const brandStyleSuffix = ', ultra high quality, dark-mode, cinematic lighting, deep shadows, strong contrast. Red (#FF3B3B) and yellow (#FFD94A) accents in a modern tech environment, with geometric shapes and subtle fractured-cube or hexagon motifs. Minimal composition with lots of dark negative space, energetic and action-oriented, gritty but still approachable';
+
+    // Combine the generated prompt with brand style guidelines
+    const finalImagePrompt = `${imagePrompt}${brandStyleSuffix}`;
+
     // Use OpenAI SDK for image generation
     const openai = new OpenAI({ apiKey: openAiApiKey });
 
     try {
       const imageResponse = await openai.images.generate({
         model: 'gpt-image-1',
-        prompt: imagePrompt,
+        prompt: finalImagePrompt,
         size: '1024x1024',
+        // Note: OpenAI DALL-E doesn't support negative prompts in the same way, 
+        // but the positive prompt with brand guidelines should guide it correctly
       });
 
       // The response contains data array with b64_json field
@@ -168,7 +193,7 @@ ${sectionsSummary}`,
 
         return NextResponse.json({
           success: true,
-          imagePrompt,
+          imagePrompt: finalImagePrompt, // Return the final prompt with brand style included
           imageUrl,
         });
       } catch (storageError: unknown) {

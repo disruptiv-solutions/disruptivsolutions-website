@@ -31,11 +31,11 @@ const LaunchboxWaitlist: React.FC = () => {
       try {
         const userRef = doc(db, 'users', user.uid);
         const userSnap = await getDoc(userRef);
-        
+
         if (userSnap.exists()) {
           const userData = userSnap.data();
           setHasWaitlistAccess(userData.launchboxWaitlist === true);
-          
+
           // Pre-fill form if user doesn't have waitlist access yet
           if (userData.launchboxWaitlist !== true) {
             setName(userData.name || user.displayName || '');
@@ -62,7 +62,7 @@ const LaunchboxWaitlist: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!name || !email) {
       setSubmitError('Please fill in your name and email.');
       return;
@@ -83,7 +83,7 @@ const LaunchboxWaitlist: React.FC = () => {
     try {
       console.log('[LaunchboxWaitlist] Form submission started');
       console.log('[LaunchboxWaitlist] Sending webhook data:', webhookData);
-      
+
       const response = await fetch('/api/waitlist-signup', {
         method: 'POST',
         headers: {
@@ -91,7 +91,7 @@ const LaunchboxWaitlist: React.FC = () => {
         },
         body: JSON.stringify(webhookData),
       });
-      
+
       console.log('[LaunchboxWaitlist] API response status:', response.status);
 
       const contentType = response.headers.get('content-type');
@@ -100,12 +100,14 @@ const LaunchboxWaitlist: React.FC = () => {
       }
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ error: 'Failed to join waitlist. Please try again.' }));
+        const errorData = await response
+          .json()
+          .catch(() => ({ error: 'Failed to join waitlist. Please try again.' }));
         throw new Error(errorData.error || 'Failed to join waitlist. Please try again.');
       }
 
       console.log('[LaunchboxWaitlist] Webhook success');
-      
+
       // Track waitlist signup
       console.log('[LaunchboxWaitlist] Tracking analytics event');
       trackFormSubmission('waitlist_signup', {
@@ -125,8 +127,11 @@ const LaunchboxWaitlist: React.FC = () => {
             },
             body: JSON.stringify(webhookData),
           });
-          console.log('[LaunchboxWaitlist] Newsletter webhook response:', newsletterResponse.status);
-          // Note: We don't fail the whole submission if newsletter signup fails
+          console.log(
+            '[LaunchboxWaitlist] Newsletter webhook response:',
+            newsletterResponse.status,
+          );
+          // We don't fail the whole submission if newsletter signup fails
         } catch (newsletterError) {
           console.error('[LaunchboxWaitlist] Newsletter signup error:', newsletterError);
         }
@@ -145,43 +150,35 @@ const LaunchboxWaitlist: React.FC = () => {
               launchboxWaitlist: true,
               updatedAt: serverTimestamp(),
             },
-            { merge: true }
+            { merge: true },
           );
           // Also add to waitlist collection for admin tracking
           if (email || user.email) {
             const waitlistRef = doc(db, 'waitlist', email || user.email || 'unknown');
-            await setDoc(waitlistRef, {
-              name: name || user.displayName,
-              email: email || user.email,
-              phone: phone || null,
-              newsletter: subscribeNewsletter,
-              userId: user.uid,
-              createdAt: serverTimestamp(),
-            }, { merge: true });
+            await setDoc(
+              waitlistRef,
+              {
+                name: name || user.displayName,
+                email: email || user.email,
+                phone: phone || null,
+                newsletter: subscribeNewsletter,
+                userId: user.uid,
+                createdAt: serverTimestamp(),
+              },
+              { merge: true },
+            );
           }
           setHasWaitlistAccess(true);
         } catch (error) {
           console.error('Error updating user profile:', error);
         }
-      } else {
-        // If user is not signed in, create a document in waitlist collection
-        try {
-          const waitlistRef = doc(db, 'waitlist', email);
-          await setDoc(waitlistRef, {
-            name: name,
-            email: email,
-            phone: phone || null,
-            newsletter: subscribeNewsletter,
-            createdAt: serverTimestamp(),
-          }, { merge: true });
-        } catch (error) {
-          console.error('Error creating waitlist entry:', error);
-        }
       }
 
       setSubmitSuccess(true);
     } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : 'An error occurred. Please try again.');
+      setSubmitError(
+        error instanceof Error ? error.message : 'An error occurred. Please try again.',
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -210,13 +207,14 @@ const LaunchboxWaitlist: React.FC = () => {
             <div className="text-center mb-16">
               <div className="text-6xl mb-6">✅</div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-6">
-                You're In. Welcome to the Launchbox Founding Member List.
+                You&apos;re In. Welcome to the Launchbox Founding Member List.
               </h1>
               <p className="text-lg md:text-xl text-gray-700 mb-4">
                 Thanks for raising your hand.
               </p>
               <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
-                You're now officially on the list for early access, founding member pricing, and behind-the-scenes updates as I build Launchbox.
+                You&apos;re now officially on the list for early access, founding-member
+                pricing, and behind-the-scenes updates as I build Launchbox.
               </p>
             </div>
 
@@ -226,12 +224,16 @@ const LaunchboxWaitlist: React.FC = () => {
                 What happens next:
               </h2>
               <ul className="space-y-4 text-base text-gray-700">
-                <li>• I'll send you updates as I ship new pieces of the platform</li>
-                <li>• You'll be among the first invited into the private beta</li>
-                <li>• When I launch paid plans, you'll get access to the lowest pricing I'll ever offer</li>
+                <li>• I&apos;ll send you updates as I ship new pieces of the platform.</li>
+                <li>• You&apos;ll be among the first invited into the private beta.</li>
+                <li>
+                  • When I launch paid plans, you&apos;ll get access to the lowest pricing
+                  I&apos;ll ever offer.
+                </li>
               </ul>
               <p className="text-base text-gray-600 mt-6">
-                For now, keep this page handy — it's your quick overview of what Launchbox is and what you'll be able to do with it.
+                For now, keep this page handy — it&apos;s your quick overview of what
+                Launchbox is and what you&apos;ll be able to do with it.
               </p>
             </div>
 
@@ -241,16 +243,18 @@ const LaunchboxWaitlist: React.FC = () => {
                 What Is Launchbox?
               </h2>
               <p className="text-lg text-gray-700 mb-6">
-                Launchbox is an all-in-one platform for creators, coaches, and founders to teach, build, and sell AI-powered products — without hiring a dev team.
+                Launchbox is an all-in-one hub for creators, coaches, and founders to teach,
+                build, and sell AI-powered products — without hiring a dev team or duct-taping
+                a bunch of tools together.
               </p>
               <p className="text-base text-gray-600 mb-4">
-                Instead of duct-taping 6 different tools together, Launchbox is meant to be your:
+                Instead of bouncing between platforms, Launchbox is meant to be your:
               </p>
               <p className="text-lg font-semibold text-gray-800 mb-6 italic">
-                "AI command center" for your audience and your offers.
+                &quot;AI command center&quot; for your audience and your offers.
               </p>
               <p className="text-base text-gray-600 mb-4">
-                With Launchbox, you'll be able to:
+                Inside Launchbox, you&apos;ll be able to:
               </p>
               <ul className="space-y-3 text-base text-gray-600 mb-6">
                 <li className="flex items-start gap-2">
@@ -259,7 +263,10 @@ const LaunchboxWaitlist: React.FC = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span>🧰</span>
-                  <span>Offer AI tools (chatbots, generators, utilities, etc.) to your students/clients</span>
+                  <span>
+                    Offer AI tools (chatbots, generators, utilities, workflows) to your
+                    students and clients
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span>💬</span>
@@ -267,11 +274,16 @@ const LaunchboxWaitlist: React.FC = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span>💸</span>
-                  <span>Sell access via subscriptions, one-time purchases, and bundles</span>
+                  <span>
+                    Sell access via subscriptions, one-time purchases, and bundles
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span>🎨</span>
-                  <span>Brand it as your own, so it feels like your platform, not "yet another tool"</span>
+                  <span>
+                    Make it feel like your world — your branding, your language, your way of
+                    teaching
+                  </span>
                 </li>
               </ul>
             </div>
@@ -285,31 +297,34 @@ const LaunchboxWaitlist: React.FC = () => {
                 Launchbox is especially built for people who think:
               </p>
               <p className="text-lg font-semibold text-gray-800 mb-6 italic">
-                "I have expertise and ideas… I just don't want to fight with tech all day."
+                &quot;I have expertise and ideas… I just don&apos;t want to fight with tech
+                all day.&quot;
               </p>
-              <p className="text-base text-gray-600 mb-4">
-                It's a fit if you're:
-              </p>
+              <p className="text-base text-gray-600 mb-4">It&apos;s a fit if you&apos;re:</p>
               <ul className="space-y-4 text-base text-gray-600 mb-6">
                 <li>
                   <strong className="text-black">A coach or consultant</strong>
                   <br />
-                  You want a home for your programs, plus AI tools (templates, agents, workflows) that your clients can actually use between calls.
+                  You want a home for your programs and AI tools that your clients can actually
+                  use between calls.
                 </li>
                 <li>
                   <strong className="text-black">A course creator or teacher</strong>
                   <br />
-                  You're tired of static courses and want interactive, AI-powered learning experiences that feel more like a product than a playlist.
+                  You&apos;re tired of static videos and want interactive, AI-powered
+                  experiences that feel like a product — not a playlist.
                 </li>
                 <li>
                   <strong className="text-black">A community builder</strong>
                   <br />
-                  You run a group (FB, Discord, Circle, etc.) and want one central hub where people can learn, use tools, and stay engaged.
+                  You run a group (FB, Discord, Circle, etc.) and want one central hub where
+                  people can learn, use tools, and stay engaged.
                 </li>
                 <li>
                   <strong className="text-black">A founder / expert / niche pro</strong>
                   <br />
-                  You've got frameworks, processes, or IP that could be turned into AI tools, assistants, or micro-products — but you don't want to code everything from scratch.
+                  You&apos;ve got frameworks and IP that could become AI tools, assistants, or
+                  micro-products — but you don&apos;t want to code everything from scratch.
                 </li>
               </ul>
             </div>
@@ -317,12 +332,13 @@ const LaunchboxWaitlist: React.FC = () => {
             {/* What You'll Be Able To Do Inside Launchbox */}
             <div className="mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
-                What You'll Be Able To Do Inside Launchbox
+                What You&apos;ll Be Able To Do Inside Launchbox
               </h2>
               <p className="text-base text-gray-600 mb-6">
-                Here's the kind of stuff I'm designing Launchbox to handle out of the box:
+                Here&apos;s the kind of stuff I&apos;m designing Launchbox to handle right
+                out of the box:
               </p>
-              
+
               <div className="space-y-8">
                 <div>
                   <h3 className="text-xl font-bold text-black mb-3">
@@ -344,8 +360,10 @@ const LaunchboxWaitlist: React.FC = () => {
                   </h3>
                   <ul className="space-y-2 text-base text-gray-600 ml-4">
                     <li>• Host your lessons, slides, and replays</li>
-                    <li>• Drop in AI components that help students apply what they're learning</li>
-                    <li>• Turn your frameworks into guided prompts and assistants people can reuse</li>
+                    <li>• Drop in AI components that help students apply what they&apos;re learning</li>
+                    <li>
+                      • Turn your frameworks into guided prompts and assistants people can reuse
+                    </li>
                   </ul>
                 </div>
 
@@ -355,7 +373,10 @@ const LaunchboxWaitlist: React.FC = () => {
                   </h3>
                   <ul className="space-y-2 text-base text-gray-600 ml-4">
                     <li>• Custom branding (name, logo, colors, copy)</li>
-                    <li>• Your domain (or subdomain) so it doesn't feel like "Ian's platform", it feels like yours</li>
+                    <li>
+                      • Your subdomain so it feels like your own space, not just &quot;another
+                      tool&quot;
+                    </li>
                   </ul>
                 </div>
 
@@ -365,8 +386,14 @@ const LaunchboxWaitlist: React.FC = () => {
                   </h3>
                   <ul className="space-y-2 text-base text-gray-600 ml-4">
                     <li>• Subscription plans, one-time offers, and bundles</li>
-                    <li>• Usage handled with tokens under the hood so you don't have to sweat every API call</li>
-                    <li>• Clear dashboards so you can see who's active and what they're actually using</li>
+                    <li>
+                      • Usage handled under the hood so you don&apos;t have to sweat every API
+                      call
+                    </li>
+                    <li>
+                      • Clear dashboards so you can see who&apos;s active and what they&apos;re
+                      actually using
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -381,23 +408,30 @@ const LaunchboxWaitlist: React.FC = () => {
                 I want you to know exactly what you raised your hand for.
               </p>
               <p className="text-base text-gray-700 mb-4 font-semibold">
-                Right now I'm actively:
+                Right now I&apos;m actively:
               </p>
               <ul className="space-y-3 text-base text-gray-600">
-                <li>• Finalizing the white-label engine so Launchbox can power other people's platforms, not just mine</li>
-                <li>• Tightening up Stripe billing + token logic so AI usage is fair, simple, and profitable for founders</li>
-                <li>• Running live workshops (like the one you came from) to test the "teaching + tools" experience in real time</li>
-                <li>• Collecting feedback from early testers to decide what ships in v1 vs later</li>
+                <li>• Polishing the member experience for lessons, spaces, and tools</li>
+                <li>• Tightening up billing so paid plans are simple and predictable</li>
+                <li>
+                  • Running live workshops (like the one you came from) to pressure-test the
+                  &quot;teaching + tools&quot; flow in real time
+                </li>
+                <li>
+                  • Collecting feedback from early testers to decide what ships in v1 versus
+                  later
+                </li>
               </ul>
               <p className="text-base text-gray-700 mt-6">
-                As a founding member, you're not just on a list — you're part of shaping how this thing works.
+                As a founding member, you&apos;re not just on a list — you&apos;re helping
+                shape how this thing works.
               </p>
             </div>
 
             {/* What "Founding Member" Actually Means */}
             <div className="mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
-                What "Founding Member" Actually Means
+                What &quot;Founding Member&quot; Actually Means
               </h2>
               <p className="text-base text-gray-600 mb-4">
                 Being on this list gets you:
@@ -409,11 +443,14 @@ const LaunchboxWaitlist: React.FC = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span>🏷️</span>
-                  <span>Founding member pricing (lowest it will ever be)</span>
+                  <span>Founding-member pricing (lowest it will ever be)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span>🧭</span>
-                  <span>Input on features & direction — your use cases matter a lot at this stage</span>
+                  <span>
+                    Input on features &amp; direction — your use cases matter a lot at this
+                    stage
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span>🎁</span>
@@ -421,15 +458,17 @@ const LaunchboxWaitlist: React.FC = () => {
                 </li>
                 <li className="ml-8 space-y-2">
                   <div className="text-base text-gray-600">- Done-with-you setup</div>
-                  <div className="text-base text-gray-600">- Migration from your current tools</div>
-                  <div className="text-base text-gray-600">- Potential revenue-share / white-label conversations if that's where you're headed</div>
+                  <div className="text-base text-gray-600">
+                    - Migration help from your current tools
+                  </div>
+                  <div className="text-base text-gray-600">
+                    - Early access to new programs, tools, and experiments
+                  </div>
                 </li>
               </ul>
-              <p className="text-base text-gray-600">
-                Again: you haven't been charged for anything today.
-              </p>
+              <p className="text-base text-gray-600">Again: you haven&apos;t paid anything.</p>
               <p className="text-base text-gray-700 font-semibold mt-2">
-                This just tells me, "Yes, Ian, I want to be early."
+                This just tells me, &quot;Yes, Ian, I want to be early.&quot;
               </p>
             </div>
 
@@ -441,14 +480,15 @@ const LaunchboxWaitlist: React.FC = () => {
               <p className="text-base text-gray-600 mb-6">
                 A few ways to get the most out of this in the meantime:
               </p>
-              
+
               <div className="space-y-6">
                 <div>
                   <h3 className="text-lg font-semibold text-black mb-2">
                     Check your email
                   </h3>
                   <p className="text-base text-gray-600">
-                    I'll send updates, timelines, and early beta details to the address you used here.
+                    I&apos;ll send updates, timelines, and early beta details to the address
+                    you used here.
                   </p>
                 </div>
 
@@ -460,7 +500,7 @@ const LaunchboxWaitlist: React.FC = () => {
                   <ul className="space-y-1 text-base text-gray-600 ml-4">
                     <li>• The offers you already have</li>
                     <li>• The AI tools or experiences you wish existed for your people</li>
-                    <li>• Any current platforms you'd love to get out of</li>
+                    <li>• Any current platforms you&apos;d love to get out of</li>
                   </ul>
                 </div>
 
@@ -469,11 +509,22 @@ const LaunchboxWaitlist: React.FC = () => {
                     Stay plugged in
                   </h3>
                   <ul className="space-y-1 text-base text-gray-600 ml-4">
-                    <li>• Join my free Facebook group: <a href="https://www.facebook.com/groups/2000295250823114" target="_blank" rel="noopener noreferrer" className="text-red-600 hover:text-red-700 underline">here</a></li>
+                    <li>
+                      • Join my free Facebook group:{' '}
+                      <a
+                        href="https://www.facebook.com/groups/2000295250823114"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-red-600 hover:text-red-700 underline"
+                      >
+                        here
+                      </a>
+                    </li>
                     <li>• Watch for new free workshops and demos</li>
                   </ul>
                   <p className="text-base text-gray-600 mt-2">
-                    The clearer you are on what you want Launchbox to do for you, the more I can tailor it to real use cases like yours.
+                    The clearer you are on what you want Launchbox to do for you, the more I
+                    can tailor it to real use cases like yours.
                   </p>
                 </div>
               </div>
@@ -486,13 +537,17 @@ const LaunchboxWaitlist: React.FC = () => {
               </p>
               <p className="mb-2">
                 Hit reply to any email I send you, or message me directly at{' '}
-                <a href="mailto:ian@ianmcdonald.ai" className="text-red-600 hover:text-red-700 underline">
+                <a
+                  href="mailto:ian@ianmcdonald.ai"
+                  className="text-red-600 hover:text-red-700 underline"
+                >
                   ian@ianmcdonald.ai
                 </a>
                 .
               </p>
               <p className="text-base text-gray-700 font-medium">
-                I'm building Launchbox for people like you — so your questions and crazy ideas are welcome.
+                I&apos;m building Launchbox for people like you — your questions and wild
+                ideas are welcome.
               </p>
             </div>
           </div>
@@ -513,13 +568,16 @@ const LaunchboxWaitlist: React.FC = () => {
               Join the Launchbox Founding Member List
             </h1>
             <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto mb-4">
-              An all-in-one platform for creators, coaches, and founders to teach, build, and sell AI-powered products — without needing to code.
+              An all-in-one hub for creators, coaches, and founders to teach, build, and sell
+              AI-powered products — without needing to code.
             </p>
             <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto mb-4">
-              Raise your hand early, lock in founding member pricing, and get first access when Launchbox goes live.
+              Raise your hand early, lock in founding-member pricing, and get first access when
+              Launchbox goes live.
             </p>
             <p className="text-sm text-gray-500">
-              No payment today. This just tells me you want to be first in line when I open the doors.
+              No payment today. This just tells me you want to be first in line when I open the
+              doors.
             </p>
           </div>
 
@@ -529,7 +587,7 @@ const LaunchboxWaitlist: React.FC = () => {
               What Is Launchbox?
             </h2>
             <p className="text-lg text-gray-700 mb-6">
-              Launchbox is your "AI command center" for your business.
+              Launchbox is your &quot;AI command center&quot; for your business.
             </p>
             <p className="text-base text-gray-600 mb-4">
               Instead of juggling 10 different tools, Launchbox is where you can:
@@ -557,7 +615,8 @@ const LaunchboxWaitlist: React.FC = () => {
               </li>
             </ul>
             <p className="text-base text-gray-600">
-              It's built for non-technical founders who want the power of AI apps without hiring a dev team or duct-taping a bunch of platforms together.
+              It&apos;s built for non-technical founders who want the power of AI apps without
+              hiring a dev team or duct-taping a bunch of platforms together.
             </p>
           </div>
 
@@ -567,16 +626,24 @@ const LaunchboxWaitlist: React.FC = () => {
               Who Launchbox Is For
             </h2>
             <p className="text-base text-gray-600 mb-4">
-              Launchbox is especially for you if you're:
+              Launchbox is especially for you if you&apos;re:
             </p>
             <ul className="space-y-3 text-base text-gray-600 mb-6">
               <li>• A coach / consultant who wants to bundle AI tools with your programs</li>
-              <li>• A course creator who wants interactive, AI-powered learning instead of static videos</li>
-              <li>• A community builder who wants one home base for content, tools, and people</li>
-              <li>• A founder / expert with frameworks or IP that could become AI-powered products</li>
+              <li>
+                • A course creator who wants interactive, AI-powered learning instead of static
+                videos
+              </li>
+              <li>
+                • A community builder who wants one home base for content, tools, and people
+              </li>
+              <li>
+                • A founder / expert with frameworks or IP that could become AI-powered products
+              </li>
             </ul>
             <p className="text-base text-gray-600">
-              If you've ever thought, "I wish I had my own AI platform for my people," that's Launchbox.
+              If you&apos;ve ever thought, &quot;I wish I had my own AI platform for my
+              people,&quot; that&apos;s Launchbox.
             </p>
           </div>
 
@@ -586,7 +653,7 @@ const LaunchboxWaitlist: React.FC = () => {
               What You Get As a Founding Member
             </h2>
             <p className="text-base text-gray-600 mb-4">
-              By joining the founding member list:
+              By joining the founding-member list:
             </p>
             <ul className="space-y-3 text-base text-gray-600 mb-6">
               <li className="flex items-start gap-2">
@@ -599,7 +666,7 @@ const LaunchboxWaitlist: React.FC = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span>🏷️</span>
-                <span>Lowest founding member pricing I'll ever offer</span>
+                <span>Lowest founding-member pricing I&apos;ll ever offer</span>
               </li>
               <li className="flex items-start gap-2">
                 <span>💬</span>
@@ -620,7 +687,10 @@ const LaunchboxWaitlist: React.FC = () => {
               <h3 className="text-xl font-semibold text-black mb-6">Your Information</h3>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Name *
                   </label>
                   <input
@@ -635,7 +705,10 @@ const LaunchboxWaitlist: React.FC = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Email *
                   </label>
                   <input
@@ -650,7 +723,10 @@ const LaunchboxWaitlist: React.FC = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Phone (optional)
                   </label>
                   <input
@@ -672,15 +748,14 @@ const LaunchboxWaitlist: React.FC = () => {
                     className="mt-1 h-4 w-4 accent-red-600"
                   />
                   <label htmlFor="newsletter" className="text-sm text-gray-700">
-                    I'd also like to get Ian's newsletter with AI app building tips & workshop invites
+                    I&apos;d also like to get Ian&apos;s newsletter with AI app-building tips &
+                    workshop invites
                   </label>
                 </div>
 
                 {submitError && (
                   <div className="p-4 rounded-lg bg-red-50 border border-red-200">
-                    <p className="text-red-700 font-medium">
-                      {submitError}
-                    </p>
+                    <p className="text-red-700 font-medium">{submitError}</p>
                   </div>
                 )}
 
@@ -698,14 +773,20 @@ const LaunchboxWaitlist: React.FC = () => {
                 </button>
 
                 <p className="text-xs text-gray-500 mt-6">
-                  Short version: by joining, you'll be notified about Launchbox's private beta, launch timeline, and founding member pricing.
+                  Short version: by joining, you&apos;ll be notified about Launchbox&apos;s
+                  private beta, launch timeline, and founding-member pricing.
                 </p>
                 <p className="text-xs text-gray-500 mt-2">
                   By submitting this form, you agree to our{' '}
-                  <a href="/privacy" className="text-red-600 hover:text-red-700 underline" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="/privacy"
+                    className="text-red-600 hover:text-red-700 underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Privacy Policy
-                  </a>
-                  {' '}and consent to being contacted about Launchbox and related offerings.
+                  </a>{' '}
+                  and consent to being contacted about Launchbox and related offerings.
                 </p>
               </form>
             </div>
@@ -715,7 +796,10 @@ const LaunchboxWaitlist: React.FC = () => {
           <div className="text-center text-gray-600">
             <p>
               Questions? Email me at{' '}
-              <a href="mailto:ian@ianmcdonald.ai" className="text-red-600 hover:text-red-700 underline">
+              <a
+                href="mailto:ian@ianmcdonald.ai"
+                className="text-red-600 hover:text-red-700 underline"
+              >
                 ian@ianmcdonald.ai
               </a>
             </p>
