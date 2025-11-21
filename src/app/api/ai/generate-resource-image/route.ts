@@ -113,7 +113,7 @@ Generate a prompt that incorporates the brand style: dark-mode, cinematic lighti
     }
 
     const promptData = await promptResponse.json();
-    let imagePrompt = promptData.choices?.[0]?.message?.content?.trim();
+    const imagePrompt = promptData.choices?.[0]?.message?.content?.trim();
 
     if (!imagePrompt) {
       console.error('[AI:image-prompt] Empty prompt received:', JSON.stringify(promptData, null, 2));
