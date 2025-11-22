@@ -381,7 +381,7 @@ export default function ResourcesPage() {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-4 mb-2">
                           <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-red-400 transition-colors">
-                            Free AI App Building Classes
+                            Nov 13th and Nov 15th Free app building classes
                           </h3>
                           <div className="flex flex-col items-end gap-1 flex-shrink-0">
                             <span className="px-3 py-1 bg-zinc-800 border border-gray-700 rounded-full text-xs font-semibold text-gray-400 whitespace-nowrap">
