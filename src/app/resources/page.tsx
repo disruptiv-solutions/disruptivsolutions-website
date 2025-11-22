@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { openSignUpModal } from '@/components/SignUpModal';
+import { trackFormSubmission } from '@/lib/analytics';
 
 interface Resource {
   id: string;
@@ -56,6 +57,231 @@ const formatDate = (date: string | { seconds: number; nanoseconds: number } | un
     month: 'long',
     day: 'numeric',
   });
+};
+
+// Free Class Signup Form Component
+const FreeClassSignupForm: React.FC = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [selectedSession, setSelectedSession] = useState<string>('dec4');
+  const [subscribeNewsletter, setSubscribeNewsletter] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const sessions = [
+    {
+      id: 'dec4',
+      date: 'Dec 4th',
+      time: '12:00 PM EST',
+    },
+    {
+      id: 'dec6',
+      date: 'Dec 6th',
+      time: '12:00 PM EST',
+    }
+  ];
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!name || !email || !selectedSession) {
+      setSubmitError('Please fill in all required fields.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    const selectedSessionData = sessions.find(s => s.id === selectedSession);
+    const sessionInfo = selectedSessionData 
+      ? `${selectedSessionData.date} · ${selectedSessionData.time}`
+      : '';
+
+    const webhookData = {
+      name,
+      email,
+      phone: phone || 'N/A',
+      selectedSession: sessionInfo,
+      subscribeNewsletter,
+      timestamp: new Date().toISOString()
+    };
+
+    try {
+      console.log('[FreeClassSignup] Sending webhook data:', webhookData);
+      
+      const response = await fetch('/api/class-signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(webhookData),
+      });
+
+      console.log('[FreeClassSignup] API response status:', response.status);
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to submit signup. Please try again.');
+      }
+
+      setSubmitSuccess(true);
+      
+      trackFormSubmission('free_class_signup', {
+        session_date: selectedSessionData?.date || '',
+        session_time: selectedSessionData?.time || '',
+        with_newsletter: subscribeNewsletter,
+        page_location: '/resources',
+      });
+      
+      // Reset form
+      setName('');
+      setEmail('');
+      setPhone('');
+      setSelectedSession('dec4');
+      setSubscribeNewsletter(false);
+
+      // Reset success message after 5 seconds
+      setTimeout(() => {
+        setSubmitSuccess(false);
+      }, 5000);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'An error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="bg-zinc-900 border border-gray-800 rounded-2xl p-6 sticky top-[140px]">
+      <div className="mb-6">
+        <div className="flex items-center gap-2 mb-2">
+          <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+          <p className="text-xs uppercase tracking-wider text-red-400 font-bold">Free Class</p>
+        </div>
+        <h3 className="text-2xl font-bold text-white mb-2">Join the Next AI App Building Class</h3>
+        <p className="text-sm text-gray-400">
+          Live session on shipping your first working AI app. Choose your preferred date below.
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label htmlFor="class-name" className="block text-xs text-gray-400 mb-2">
+            Name <span className="text-red-500">*</span>
+          </label>
+          <input
+            id="class-name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            className="w-full bg-black text-white rounded-lg border border-gray-700 h-10 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
+            placeholder="Jane Doe"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="class-email" className="block text-xs text-gray-400 mb-2">
+            Email <span className="text-red-500">*</span>
+          </label>
+          <input
+            id="class-email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full bg-black text-white rounded-lg border border-gray-700 h-10 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
+            placeholder="jane@example.com"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="class-phone" className="block text-xs text-gray-400 mb-2">
+            Phone <span className="text-gray-500 text-xs">(optional)</span>
+          </label>
+          <input
+            id="class-phone"
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            className="w-full bg-black text-white rounded-lg border border-gray-700 h-10 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
+            placeholder="(555) 555-5555"
+          />
+        </div>
+
+        <div>
+          <label className="block text-xs text-gray-400 mb-3">
+            Select Session <span className="text-red-500">*</span>
+          </label>
+          <div className="space-y-2">
+            {sessions.map((session) => (
+              <label
+                key={session.id}
+                className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all ${
+                  selectedSession === session.id
+                    ? 'bg-red-900/20 border-red-600'
+                    : 'bg-black/50 border-gray-700 hover:bg-black hover:border-gray-600'
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="class-session"
+                  value={session.id}
+                  checked={selectedSession === session.id}
+                  onChange={(e) => setSelectedSession(e.target.value)}
+                  required
+                  className="w-4 h-4 text-red-600"
+                />
+                <div className="flex-1">
+                  <p className="text-white font-medium text-sm">{session.date}</p>
+                  <p className="text-xs text-gray-400">{session.time}</p>
+                </div>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex items-start gap-2 p-3 rounded-lg border border-gray-700 bg-black/50">
+          <input
+            type="checkbox"
+            id="class-newsletter"
+            checked={subscribeNewsletter}
+            onChange={(e) => setSubscribeNewsletter(e.target.checked)}
+            className="mt-0.5 w-4 h-4 text-red-600 bg-black border-gray-700 rounded"
+          />
+          <label htmlFor="class-newsletter" className="text-xs text-gray-300 cursor-pointer">
+            I&apos;d like to receive newsletter updates
+          </label>
+        </div>
+
+        {submitSuccess && (
+          <div className="p-3 rounded-lg bg-green-900/30 border border-green-600/50">
+            <p className="text-green-400 text-xs font-medium">
+              ✓ Successfully signed up! Check your email for details.
+            </p>
+          </div>
+        )}
+
+        {submitError && (
+          <div className="p-3 rounded-lg bg-red-900/30 border border-red-600/50">
+            <p className="text-red-400 text-xs font-medium">
+              {submitError}
+            </p>
+          </div>
+        )}
+
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full px-4 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold rounded-lg hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+        >
+          {isSubmitting ? 'Submitting...' : 'Sign Up for Free'}
+        </button>
+      </form>
+    </div>
+  );
 };
 
 export default function ResourcesPage() {
@@ -147,7 +373,15 @@ export default function ResourcesPage() {
 
       {/* Resources List */}
       <section className="bg-black py-16">
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-8">
+            {/* Left Sidebar - Free Class Signup */}
+            <aside className="lg:sticky lg:top-[140px] h-fit">
+              <FreeClassSignupForm />
+            </aside>
+
+            {/* Right Content - Resources */}
+            <div>
           {loading ? (
             <div className="text-center py-20">
               <p className="text-xl text-gray-400">Loading resources...</p>
@@ -317,6 +551,8 @@ export default function ResourcesPage() {
               })}
             </div>
           )}
+            </div>
+          </div>
         </div>
       </section>
 
