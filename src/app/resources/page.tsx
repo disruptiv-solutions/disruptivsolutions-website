@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
 import { openSignUpModal } from '@/components/SignUpModal';
 import { trackFormSubmission } from '@/lib/analytics';
@@ -272,6 +273,50 @@ export default function ResourcesPage() {
         <div className="max-w-5xl mx-auto px-6">
           {/* Free Class Signup Banner */}
           <FreeClassSignupBanner />
+
+          {/* Launchbox Waitlist Banner */}
+          <div className="mb-8 bg-white border border-gray-200 rounded-2xl p-6">
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center justify-center w-12 h-12">
+                  <Image
+                    src="/launchbox-no-text.png"
+                    alt="Launchbox"
+                    width={48}
+                    height={48}
+                    className="object-contain"
+                  />
+                </div>
+                <div>
+                  <p className="text-black font-semibold text-lg mb-1">
+                    Join the Launchbox waitlist
+                  </p>
+                  <p className="text-gray-600 text-sm">
+                    Be first to know when Launchbox goes live.
+                  </p>
+                </div>
+              </div>
+              <Link
+                href="/waitlist"
+                className="px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-all shadow-lg shadow-red-600/40 whitespace-nowrap inline-flex items-center gap-2"
+              >
+                Learn More
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
+                </svg>
+              </Link>
+            </div>
+          </div>
           
           <div>
           {loading ? (
