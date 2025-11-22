@@ -158,16 +158,21 @@ const FreeClassSignupBanner: React.FC = () => {
       setSelectedSession('dec4');
 
       setTimeout(() => setSubmitSuccess(false), 5000);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Signup error:', error);
-      if (error.code === 'auth/email-already-in-use') {
-        setSubmitError('This email is already registered. Please sign in instead.');
-      } else if (error.code === 'auth/weak-password') {
-        setSubmitError('Password is too weak. Please choose a stronger password.');
-      } else if (error.code === 'auth/invalid-email') {
-        setSubmitError('Invalid email address. Please check and try again.');
+      if (error && typeof error === 'object' && 'code' in error) {
+        const firebaseError = error as { code: string; message?: string };
+        if (firebaseError.code === 'auth/email-already-in-use') {
+          setSubmitError('This email is already registered. Please sign in instead.');
+        } else if (firebaseError.code === 'auth/weak-password') {
+          setSubmitError('Password is too weak. Please choose a stronger password.');
+        } else if (firebaseError.code === 'auth/invalid-email') {
+          setSubmitError('Invalid email address. Please check and try again.');
+        } else {
+          setSubmitError(firebaseError.message || 'An error occurred. Please try again.');
+        }
       } else {
-        setSubmitError(error.message || 'An error occurred. Please try again.');
+        setSubmitError('An error occurred. Please try again.');
       }
     } finally {
       setIsSubmitting(false);
