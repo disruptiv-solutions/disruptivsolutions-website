@@ -6,6 +6,9 @@ import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
 import { openSignUpModal } from '@/components/SignUpModal';
 import { trackFormSubmission } from '@/lib/analytics';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { auth, db } from '@/lib/firebase';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 interface Resource {
   id: string;
@@ -64,10 +67,14 @@ const formatDate = (date: string | { seconds: number; nanoseconds: number } | un
 const FreeClassSignupBanner: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [selectedSession, setSelectedSession] = useState<string>('dec4');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const sessions = [
     { id: 'dec4', label: 'Dec 4th · 12:00 PM EST' },
@@ -77,8 +84,18 @@ const FreeClassSignupBanner: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!name || !email || !selectedSession) {
+    if (!name || !email || !password || !confirmPassword || !selectedSession) {
       setSubmitError('Please fill in all required fields.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setSubmitError('Passwords must match.');
+      return;
+    }
+
+    if (password.length < 6) {
+      setSubmitError('Password must be at least 6 characters.');
       return;
     }
 
@@ -87,16 +104,34 @@ const FreeClassSignupBanner: React.FC = () => {
 
     const selectedSessionData = sessions.find(s => s.id === selectedSession);
 
-    const webhookData = {
-      name,
-      email,
-      phone: 'N/A',
-      selectedSession: selectedSessionData?.label || '',
-      subscribeNewsletter: false,
-      timestamp: new Date().toISOString()
-    };
-
     try {
+      // Create Firebase Auth account
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      
+      // Update user profile with display name
+      await updateProfile(userCredential.user, {
+        displayName: name.trim(),
+      });
+
+      // Create Firestore user document
+      await setDoc(doc(db, 'users', userCredential.user.uid), {
+        name: name.trim(),
+        email: email,
+        newsletter: false,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+
+      // Send to webhook
+      const webhookData = {
+        name,
+        email,
+        phone: 'N/A',
+        selectedSession: selectedSessionData?.label || '',
+        subscribeNewsletter: false,
+        timestamp: new Date().toISOString()
+      };
+
       const response = await fetch('/api/class-signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -115,13 +150,25 @@ const FreeClassSignupBanner: React.FC = () => {
         page_location: '/resources',
       });
       
+      // Reset form
       setName('');
       setEmail('');
+      setPassword('');
+      setConfirmPassword('');
       setSelectedSession('dec4');
 
       setTimeout(() => setSubmitSuccess(false), 5000);
-    } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : 'An error occurred. Please try again.');
+    } catch (error: any) {
+      console.error('Signup error:', error);
+      if (error.code === 'auth/email-already-in-use') {
+        setSubmitError('This email is already registered. Please sign in instead.');
+      } else if (error.code === 'auth/weak-password') {
+        setSubmitError('Password is too weak. Please choose a stronger password.');
+      } else if (error.code === 'auth/invalid-email') {
+        setSubmitError('Invalid email address. Please check and try again.');
+      } else {
+        setSubmitError(error.message || 'An error occurred. Please try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -130,8 +177,8 @@ const FreeClassSignupBanner: React.FC = () => {
   return (
     <div className="bg-gradient-to-r from-red-600/10 via-red-500/5 to-transparent border border-red-600/30 rounded-2xl p-6 mb-8">
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 items-end">
-          {/* Left: Info + Form Fields */}
+        <div className="space-y-4">
+          {/* Info + Form Fields */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-2">
               <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
@@ -139,7 +186,7 @@ const FreeClassSignupBanner: React.FC = () => {
             </div>
             <h3 className="text-2xl font-bold text-white">Join the Next AI App Building Class</h3>
             <p className="text-sm text-gray-400 max-w-2xl">
-              Live session on shipping your first working AI app. Choose your preferred date and get started.
+              Live session on shipping your first working AI app. Create an account with a password to access the class and unlock additional resources.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
@@ -173,10 +220,77 @@ const FreeClassSignupBanner: React.FC = () => {
               </select>
             </div>
 
+            {/* Password Fields */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  placeholder="Create a password"
+                  className="bg-black/50 text-white rounded-lg border border-gray-700 h-11 px-4 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all w-full"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-2 flex items-center px-2 text-gray-400 hover:text-gray-300"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? (
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M17.94 17.94A10 10 0 0 1 6.06 6.06" />
+                      <path d="M1 1l22 22" />
+                      <path d="M9.53 9.53a3 3 0 1 0 4.24 4.24" />
+                      <path d="M12 5c4.42 0 8.24 2.65 9.84 6a10 10 0 0 1-2.35 3.86" />
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+              <div className="relative">
+                <input
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  placeholder="Confirm password"
+                  className="bg-black/50 text-white rounded-lg border border-gray-700 h-11 px-4 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all w-full"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute inset-y-0 right-2 flex items-center px-2 text-gray-400 hover:text-gray-300"
+                  aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showConfirmPassword ? (
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M17.94 17.94A10 10 0 0 1 6.06 6.06" />
+                      <path d="M1 1l22 22" />
+                      <path d="M9.53 9.53a3 3 0 1 0 4.24 4.24" />
+                      <path d="M12 5c4.42 0 8.24 2.65 9.84 6a10 10 0 0 1-2.35 3.86" />
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+            </div>
+            <p className="text-xs text-gray-500 pt-1">
+              Your password will allow you to log in to access the class and additional content on the website.
+            </p>
+
             {submitSuccess && (
               <div className="p-3 rounded-lg bg-green-900/30 border border-green-600/50">
                 <p className="text-green-400 text-sm font-medium">
-                  ✓ Successfully signed up! Check your email for details.
+                  ✓ Account created successfully! Check your email for class details. You can now log in to access additional content.
                 </p>
               </div>
             )}
@@ -186,16 +300,16 @@ const FreeClassSignupBanner: React.FC = () => {
                 <p className="text-red-400 text-sm font-medium">{submitError}</p>
               </div>
             )}
-          </div>
 
-          {/* Right: CTA Button */}
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="lg:self-end px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold rounded-lg hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
-          >
-            {isSubmitting ? 'Signing Up...' : 'Sign Up Free →'}
-          </button>
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold rounded-lg hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? 'Creating Account...' : 'Sign Up Free →'}
+            </button>
+          </div>
         </div>
       </form>
     </div>
