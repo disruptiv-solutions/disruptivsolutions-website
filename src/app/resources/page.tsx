@@ -337,14 +337,14 @@ export default function ResourcesPage() {
   return (
     <div className="bg-black min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[40vh] flex items-center justify-center bg-black pt-24 pb-16">
+      <section className="relative flex items-center justify-center bg-black pt-24 pb-8">
         <div className="absolute inset-0 bg-gradient-to-b from-red-950/20 via-black to-black"></div>
         
-        <div className="relative max-w-5xl mx-auto px-6 text-center space-y-6">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
+        <div className="relative max-w-5xl mx-auto px-6 text-center space-y-3">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
             Free Resources
           </h1>
-          <p className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto">
             Everything you need to start building AI-powered applications. Prompts, guides, tutorials, and tools.
           </p>
         </div>
