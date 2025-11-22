@@ -37,10 +37,10 @@ export default function ClassVideosPage() {
                 </div>
                 <div>
                   <p className="text-black font-semibold text-lg mb-1">
-                    You're on the Launchbox waitlist
+                    Join the Launchbox waitlist
                   </p>
                   <p className="text-gray-600 text-sm">
-                    Thanks for joining! You'll be first to know when Launchbox goes live.
+                    Be first to know when Launchbox goes live.
                   </p>
                 </div>
               </div>
