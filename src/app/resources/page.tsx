@@ -154,7 +154,7 @@ const FreeClassSignupForm: React.FC = () => {
   };
 
   return (
-    <div className="bg-zinc-900 border border-gray-800 rounded-2xl p-6 sticky top-[140px]">
+    <div className="bg-zinc-900 border border-gray-800 rounded-2xl p-6">
       <div className="mb-6">
         <div className="flex items-center gap-2 mb-2">
           <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
@@ -350,33 +350,12 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-      {/* Filter Buttons */}
-      <section className="bg-black border-b border-gray-800 sticky top-[65px] z-40 backdrop-blur-sm bg-black/80">
-        <div className="max-w-5xl mx-auto px-6 py-6">
-          <div className="flex flex-wrap gap-3 justify-center">
-            {(Object.keys(typeLabels) as Array<keyof typeof typeLabels>).map((type) => (
-              <button
-                key={type}
-                onClick={() => setActiveFilter(type)}
-                className={`px-6 py-2.5 rounded-full font-medium transition-all ${
-                  activeFilter === type
-                    ? 'bg-red-600 text-white shadow-lg shadow-red-600/40'
-                    : 'bg-zinc-900 text-gray-300 border border-gray-800 hover:border-gray-700 hover:bg-zinc-800'
-                }`}
-              >
-                {typeLabels[type]}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Resources List */}
       <section className="bg-black py-16">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-8">
             {/* Left Sidebar - Free Class Signup */}
-            <aside className="lg:sticky lg:top-[140px] h-fit">
+            <aside className="lg:sticky lg:top-[85px] h-fit">
               <FreeClassSignupForm />
             </aside>
 
