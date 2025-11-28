@@ -393,7 +393,7 @@ export default function ResourcesPage() {
           {/* Free Class Signup Banner */}
           <FreeClassSignupBanner />
 
-          {/* Launchbox Waitlist Banner */}
+          {/* Launchbox Founders Banner */}
           <div className="mb-8 bg-white border border-gray-200 rounded-2xl p-6">
             <div className="flex items-center justify-between gap-4 flex-wrap">
               <div className="flex items-center gap-3">
@@ -408,18 +408,20 @@ export default function ResourcesPage() {
                 </div>
                 <div>
                   <p className="text-black font-semibold text-lg mb-1">
-                    Join the Launchbox waitlist
+                    Launchbox Founders Access
                   </p>
                   <p className="text-gray-600 text-sm">
-                    Be first to know when Launchbox goes live.
+                    Join as a Founding Member and lock in exclusive pricing forever.
                   </p>
                 </div>
               </div>
-              <Link
-                href="/waitlist"
+              <a
+                href="https://launchbox.space/founders"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-all shadow-lg shadow-red-600/40 whitespace-nowrap inline-flex items-center gap-2"
               >
-                Learn More
+                Join Now
                 <svg
                   className="w-5 h-5"
                   fill="none"
@@ -433,7 +435,7 @@ export default function ResourcesPage() {
                     d="M13 7l5 5m0 0l-5 5m5-5H6"
                   />
                 </svg>
-              </Link>
+              </a>
             </div>
           </div>
           
