@@ -39,12 +39,20 @@ export const AdminRoute: React.FC<AdminRouteProps> = ({
         <div className="text-center space-y-4">
           <h1 className="text-3xl font-bold text-white">Access Denied</h1>
           <p className="text-gray-400">Please log in to continue.</p>
-          <button
-            onClick={() => router.push('/')}
-            className="px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-all"
-          >
-            Go Home
-          </button>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <button
+              onClick={() => router.push('/admin-login')}
+              className="px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-all"
+            >
+              Log in
+            </button>
+            <button
+              onClick={() => router.push('/')}
+              className="px-6 py-3 bg-zinc-800 text-white font-semibold rounded-xl hover:bg-zinc-700 transition-all"
+            >
+              Go Home
+            </button>
+          </div>
         </div>
       </div>
     );

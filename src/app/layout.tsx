@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat, Rosario } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import NavigationWrapper from "@/components/NavigationWrapper";
 import Footer from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/next";
@@ -43,19 +43,7 @@ export default function RootLayout({
       <body
         className={`${montserrat.variable} ${rosario.variable} antialiased bg-black text-white`}
       >
-        {/* Google tag (gtag.js) */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-F7F28TQPBP"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-F7F28TQPBP');
-          `}
-        </Script>
+        <GoogleAnalytics />
         <AuthProvider>
           <NavigationWrapper />
           <main className="relative">

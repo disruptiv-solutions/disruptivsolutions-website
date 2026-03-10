@@ -18,6 +18,27 @@ interface OpenRouterRequest {
   };
 }
 
+// Perplexity API request - uses OpenAI-compatible format with web_search_options
+// https://docs.perplexity.ai/api-reference/chat-completions-post
+interface PerplexityRequest {
+  model: string;
+  messages: Array<{ role: string; content: string }>;
+  temperature: number;
+  max_tokens: number;
+  response_format: {
+    type: 'json_schema';
+    json_schema: {
+      schema: Record<string, unknown>;
+      name: string;
+      strict: boolean;
+    };
+  };
+  web_search_options?: {
+    search_context_size: 'low' | 'medium' | 'high';
+    search_type?: 'fast' | 'pro' | 'auto';
+  };
+}
+
 interface AIContent {
   title: string;
   description: string;
@@ -38,6 +59,60 @@ interface FormattedSection {
   items?: string[];
   code?: string;
   note?: string;
+}
+
+const X_CURATED_ACCOUNTS = ['AndrewYNg', 'sama', 'lexfridman', 'kaifulee', 'NVIDIAAI'] as const;
+
+async function fetchXPostsFromCuratedAccounts(): Promise<string> {
+  const bearerToken = process.env.X_API_BEARER_TOKEN;
+  if (!bearerToken || !bearerToken.trim()) {
+    return '';
+  }
+
+  const startTime = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString();
+  const parts: string[] = [];
+
+  for (const username of X_CURATED_ACCOUNTS) {
+    try {
+      const userRes = await fetch(`https://api.x.com/2/users/by/username/${username}`, {
+        headers: { Authorization: `Bearer ${bearerToken}` },
+      });
+
+      if (!userRes.ok) {
+        console.warn(`[AI:generate-resource] X API user lookup failed for @${username}:`, userRes.status);
+        continue;
+      }
+
+      const userData = (await userRes.json()) as { data?: { id: string } };
+      const userId = userData?.data?.id;
+      if (!userId) continue;
+
+      const tweetsRes = await fetch(
+        `https://api.x.com/2/users/${userId}/tweets?max_results=10&tweet.fields=text,created_at&start_time=${encodeURIComponent(startTime)}`,
+        { headers: { Authorization: `Bearer ${bearerToken}` } }
+      );
+
+      if (!tweetsRes.ok) {
+        console.warn(`[AI:generate-resource] X API tweets fetch failed for @${username}:`, tweetsRes.status);
+        continue;
+      }
+
+      const tweetsData = (await tweetsRes.json()) as { data?: Array<{ text: string; created_at?: string }> };
+      const tweets = tweetsData?.data ?? [];
+
+      for (const tweet of tweets.slice(0, 5)) {
+        if (tweet?.text) {
+          const dateStr = tweet.created_at ? new Date(tweet.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
+          const cleanText = tweet.text.replace(/\n/g, ' ').trim();
+          parts.push(`[@${username}] (${dateStr}): ${cleanText}`);
+        }
+      }
+    } catch (err) {
+      console.warn(`[AI:generate-resource] X API error for @${username}:`, err);
+    }
+  }
+
+  return parts.length > 0 ? parts.join('\n') : '';
 }
 
 // Clean citation markers and artifacts from AI-generated content
@@ -70,7 +145,7 @@ const cleanCitationMarkers = (text: string): string => {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { resourceType, topic, includeWebResearch, deepResearch, length = 50 } = body;
+    const { resourceType, topic, includeWebResearch, deepResearch, length = 50, includeXFeeds = false } = body;
 
     if (!resourceType || !topic) {
       return NextResponse.json(
@@ -79,37 +154,48 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Use OpenRouter API
+    const usePerplexity = includeWebResearch;
+    const perplexityApiKey = process.env.PERPLEXITY_API_KEY;
     const openRouterApiKey = process.env.OPENROUTER_API_KEY;
-    
-    if (!openRouterApiKey) {
+
+    if (usePerplexity) {
+      if (!perplexityApiKey) {
+        return NextResponse.json(
+          { error: 'Perplexity API key not configured. Please add PERPLEXITY_API_KEY to your .env.local file.' },
+          { status: 500 }
+        );
+      }
+    } else if (!openRouterApiKey) {
       return NextResponse.json(
         { error: 'OpenRouter API key not configured. Please add OPENROUTER_API_KEY to your .env.local file.' },
         { status: 500 }
       );
     }
 
-    // Determine model - use :online variant for web research
-    const model = includeWebResearch ? 'openai/gpt-5.1:online' : 'openai/gpt-5.1';
-    
-    // Map length percentage (0-100) to max_tokens (500-16000)
-    // 0% = 500 tokens (very short), 10% = 1000 tokens (short), 50% = 4000 tokens (medium), 100% = 16000 tokens (very long)
-    let maxTokens = Math.round(500 + (length / 100) * 15500);
-    
-    // Reasoning models (like gpt-5.1, o1) use tokens for reasoning before generating content
-    // We need to increase max_tokens significantly to account for reasoning tokens
-    const isReasoningModel = model.includes('gpt-5.1') || model.includes('o1') || model.includes('reasoning');
-    if (isReasoningModel) {
-      // For reasoning models, multiply max_tokens by 4-5x to ensure content generation
-      // Reasoning can use 50-80% of tokens, especially for complex tasks, so we need significant headroom
-      // For very short content, reasoning might take proportionally more tokens
-      if (length <= 10) {
-        // Very short content needs more headroom since reasoning takes proportionally more
-        maxTokens = Math.max(maxTokens * 5, 4000); // Minimum 4000 tokens for very short reasoning content
-      } else {
-        maxTokens = Math.max(maxTokens * 4, 3000); // Minimum 3000 tokens for other reasoning content
+    // Determine model and max_tokens based on provider
+    let model: string;
+    let maxTokens: number;
+
+    if (usePerplexity) {
+      // Perplexity Sonar models: sonar-deep-research for thorough research, sonar-pro for standard
+      // https://docs.perplexity.ai/guides/chat-completions-guide
+      model = deepResearch ? 'sonar-deep-research' : 'sonar-pro';
+      // Perplexity supports up to 128k tokens; use reasonable range for content generation
+      maxTokens = Math.round(500 + (length / 100) * 15500);
+      maxTokens = Math.min(Math.max(maxTokens, 2000), 128000);
+    } else {
+      model = 'openai/gpt-5.1';
+      maxTokens = Math.round(500 + (length / 100) * 15500);
+      // Reasoning models need extra headroom for reasoning tokens
+      const isReasoningModel = true;
+      if (isReasoningModel) {
+        if (length <= 10) {
+          maxTokens = Math.max(maxTokens * 5, 4000);
+        } else {
+          maxTokens = Math.max(maxTokens * 4, 3000);
+        }
+        console.log(`[AI:generate-resource] Reasoning model detected (${model}), adjusted max_tokens to ${maxTokens}`);
       }
-      console.log(`[AI:generate-resource] Reasoning model detected (${model}), adjusted max_tokens to ${maxTokens} (original: ${Math.round(500 + (length / 100) * 15500)})`);
     }
     
     // Also calculate approximate sections based on length
@@ -171,7 +257,7 @@ export async function POST(request: NextRequest) {
               },
               code: {
                 type: 'string',
-                description: 'Code examples if relevant',
+                description: 'Only for actual runnable code (API calls, commands, config). Leave empty for conceptual examples, pseudocode, or data structures—use text instead.',
               },
               note: {
                 type: 'string',
@@ -204,14 +290,22 @@ Guidelines:
 - ALWAYS include a TLDR field: A concise 2-3 sentence summary that captures the key takeaways. Make it punchy and highlight what readers will learn or gain from this resource.
 - Use clear, engaging headings that draw readers in
 - Include practical examples and actionable advice
-- Add code blocks where relevant (for technical content)
+- Use 'code' ONLY for actual executable code (API examples, shell commands, config) that readers can copy and run. Do NOT use 'code' for conceptual pseudocode, data structures, architecture illustrations, or Python dicts as examples—put those in 'text' as readable prose instead.
 - Include helpful notes and tips throughout
 - Make content beginner-friendly but thorough
-- Format code properly with syntax
 - Use bullet points for lists of features, steps, or tips
 - Write in a conversational, engaging tone
 - ${includeWebResearch ? 'When using web research, incorporate information naturally into the content. DO NOT include citation markers like "cite turn0search12" or similar references. If you need to reference sources, do so naturally in the text (e.g., "According to recent research..." or "As reported by...") without using citation codes.' : ''}
 - ${length <= 25 ? 'Keep sections concise and focused. Avoid unnecessary elaboration.' : length >= 75 ? 'Provide comprehensive coverage with detailed explanations and examples.' : ''}`;
+
+    let xPostsString = '';
+    if (includeWebResearch && includeXFeeds) {
+      try {
+        xPostsString = await fetchXPostsFromCuratedAccounts();
+      } catch (err) {
+        console.warn('[AI:generate-resource] X feeds fetch failed, continuing without:', err);
+      }
+    }
 
     const userPrompt = `Create content for a ${resourceType} resource about:
 
@@ -224,42 +318,85 @@ ${includeWebResearch
     ? 'Conduct thorough research on this topic using web search. Gather information from multiple authoritative sources and synthesize it into comprehensive content.'
     : 'Use web search to find current, relevant information about this topic and incorporate it into the content.'
   : 'Generate content based on your knowledge of this topic.'}
+${xPostsString ? `
+
+Additional context from key AI thought leaders on X (recent posts):
+
+${xPostsString}
+
+Synthesize insights from these perspectives along with your web search. Reference sources naturally (e.g., "Andrew Ng noted..." or "As Sam Altman shared..."). Do not include raw citation markers.` : ''}
 
 Generate comprehensive, well-structured content following the JSON schema provided.`;
 
-    // Build request body with structured outputs
-    const requestBody: OpenRouterRequest = {
-      model,
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt },
-      ],
-      temperature: 0.7,
-      max_tokens: maxTokens, // Set max output tokens based on length preference
-      response_format: {
-        type: 'json_schema',
-        json_schema: {
-          name: 'resource_content',
-          strict: true, // Enforce strict schema compliance
-          schema: jsonSchema as Record<string, unknown>,
-        },
-      },
-    };
+    let response: Response;
 
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${openRouterApiKey}`,
-        'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
-        'X-Title': 'Disruptiv Solutions Resource Generator',
-      },
-      body: JSON.stringify(requestBody),
-    });
+    if (usePerplexity) {
+      // Perplexity API - https://docs.perplexity.ai/api-reference/chat-completions-post
+      const perplexityBody: PerplexityRequest = {
+        model,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt },
+        ],
+        temperature: 0.7,
+        max_tokens: maxTokens,
+        response_format: {
+          type: 'json_schema',
+          json_schema: {
+            schema: jsonSchema as Record<string, unknown>,
+            name: 'resource_content',
+            strict: true,
+          },
+        },
+        web_search_options: {
+          search_context_size: deepResearch ? 'high' : 'medium',
+          search_type: deepResearch ? 'pro' : 'auto',
+        },
+      };
+
+      response = await fetch('https://api.perplexity.ai/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${perplexityApiKey}`,
+        },
+        body: JSON.stringify(perplexityBody),
+      });
+    } else {
+      // OpenRouter API
+      const openRouterBody: OpenRouterRequest = {
+        model,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt },
+        ],
+        temperature: 0.7,
+        max_tokens: maxTokens,
+        response_format: {
+          type: 'json_schema',
+          json_schema: {
+            name: 'resource_content',
+            strict: true,
+            schema: jsonSchema as Record<string, unknown>,
+          },
+        },
+      };
+
+      response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${openRouterApiKey}`,
+          'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+          'X-Title': 'Disruptiv Solutions Resource Generator',
+        },
+        body: JSON.stringify(openRouterBody),
+      });
+    }
 
     if (!response.ok) {
       const errorData = await response.text();
-      console.error('[AI:generate-resource] OpenRouter API error:', errorData);
+      console.error(`[AI:generate-resource] ${usePerplexity ? 'Perplexity' : 'OpenRouter'} API error:`, errorData);
       return NextResponse.json(
         { error: 'Failed to generate content with AI' },
         { status: 500 }

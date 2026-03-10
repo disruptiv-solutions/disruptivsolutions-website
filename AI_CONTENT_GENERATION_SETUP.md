@@ -18,6 +18,7 @@ The resource management system now includes AI-powered content generation with w
 3. **Choose Research** (optional):
    - ☑️ Include Web Research - AI searches the web for current information
    - ☑️ Deep Research - More thorough research with multiple sources
+   - ☑️ Include X feeds from AI thought leaders - Fetches recent posts from Andrew Ng, Sam Altman, Lex Fridman, Kai-Fu Lee, NVIDIA AI (requires `X_API_BEARER_TOKEN`)
 4. **Enter Topic**: Describe what you want AI to write about
 5. **Click "Generate Content with AI"**: 
    - If research enabled: AI searches web → generates content with research
@@ -27,20 +28,45 @@ The resource management system now includes AI-powered content generation with w
 
 ## 🔧 Setup Instructions
 
-### Step 1: Get OpenRouter API Key
+### Step 1: API Keys
+
+**For web research (when "Include Web Research" is checked):** Perplexity API
+
+1. Go to [Perplexity API Portal](https://www.perplexity.ai/settings/api)
+2. Sign up or log in
+3. Create an API key (starts with `pplx-`)
+4. Add to `.env.local`: `PERPLEXITY_API_KEY=pplx-your-key-here`
+
+**For content without web research:** OpenRouter API
 
 1. Go to [OpenRouter.ai](https://openrouter.ai/)
 2. Sign up or log in
 3. Navigate to **Keys** section
 4. Click **Create Key**
 5. Copy the API key (starts with `sk-or-`)
+6. Add to `.env.local`: `OPENROUTER_API_KEY=sk-or-your-api-key-here`
 
-### Step 2: Add to Environment Variables
+**For X feeds (when "Include X feeds from AI thought leaders" is checked):** X (Twitter) API
 
-Add the API key to your `.env.local` file:
+1. Go to [X Developer Portal](https://developer.x.com/)
+2. Sign up or log in and create a project/app
+3. In your app's **Keys and tokens** section, generate a Bearer Token
+4. Add to `.env.local`: `X_API_BEARER_TOKEN=your_bearer_token_here`
+5. **Security:** Do not commit credentials. Rotate the token if it was ever exposed.
+
+### Step 2: Environment Variables
+
+Your `.env.local` should include:
 
 ```bash
+# Required for web research (Include Web Research / Deep Research)
+PERPLEXITY_API_KEY=pplx-your-key-here
+
+# Required for content generation without web research
 OPENROUTER_API_KEY=sk-or-your-api-key-here
+
+# Optional: for X feeds from AI thought leaders (Andrew Ng, Sam Altman, Lex Fridman, Kai-Fu Lee, NVIDIA AI)
+X_API_BEARER_TOKEN=your_bearer_token_here
 ```
 
 ### Step 3: Restart Development Server
@@ -93,10 +119,10 @@ The AI creates complete resources with:
 ## ⚙️ Configuration
 
 The AI uses:
-- **Model**: `openai/gpt-5.1` (via OpenRouter)
-- **Web Search**: Native OpenAI search (when enabled)
-- **Deep Research**: High search context size (10 results)
-- **Regular Research**: Standard search context (5 results)
+- **With Web Research**: Perplexity Sonar API (`sonar-deep-research` for deep research, `sonar-pro` for standard)
+- **Without Web Research**: OpenRouter with `openai/gpt-5.1`
+- **Deep Research**: Perplexity Sonar Deep Research model with high search context
+- **Regular Research**: Perplexity Sonar Pro with medium search context
 - **Temperature**: 0.7 (balanced creativity/consistency)
 - **Format**: JSON (structured output)
 

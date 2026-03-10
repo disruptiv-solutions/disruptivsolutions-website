@@ -67,6 +67,7 @@ export default function ResourceEditPage() {
     topic: '',
     length: 50, // Default to medium length (50% = ~4000 tokens)
     createImage: false,
+    includeXFeeds: false,
   });
   
   const [formData, setFormData] = useState<Omit<Resource, 'id'>>({
@@ -205,9 +206,20 @@ export default function ResourceEditPage() {
     });
   };
 
-  const handleGenerateWithAI = async () => {
-    // Validate required fields
-    if (!initialForm.topic.trim()) {
+  type GenerateParams = {
+    resourceType: ResourceType;
+    topic: string;
+    includeWebResearch: boolean;
+    deepResearch: boolean;
+    length: number;
+    createImage: boolean;
+    includeXFeeds: boolean;
+  };
+
+  const handleGenerateWithAI = async (overrideParams?: GenerateParams) => {
+    const params = overrideParams ?? initialForm;
+
+    if (!params.topic.trim()) {
       setError('Please enter what you want the AI to write about');
       return;
     }
@@ -220,11 +232,12 @@ export default function ResourceEditPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          resourceType: initialForm.resourceType,
-          topic: initialForm.topic,
-          includeWebResearch: initialForm.includeWebResearch,
-          deepResearch: initialForm.deepResearch,
-          length: initialForm.length,
+          resourceType: params.resourceType,
+          topic: params.topic,
+          includeWebResearch: params.includeWebResearch,
+          deepResearch: params.deepResearch,
+          length: params.length,
+          includeXFeeds: params.includeXFeeds ?? false,
         }),
       });
 
@@ -238,11 +251,10 @@ export default function ResourceEditPage() {
         throw new Error(errorMsg);
       }
 
-      // Populate form with AI-generated content
       setFormData({
         title: data.title,
         description: data.description,
-        type: initialForm.resourceType,
+        type: params.resourceType,
         icon: data.icon || '📄',
         imageUrl: '',
         imagePrompt: '',
@@ -254,17 +266,15 @@ export default function ResourceEditPage() {
 
       setContentGenerated(true);
 
-      if (initialForm.createImage) {
+      if (params.createImage) {
         const imageSuccess = await generateImageFromContent({
           title: data.title,
           description: data.description,
-          type: initialForm.resourceType,
+          type: params.resourceType,
           content: data.content,
         });
-        
+
         if (!imageSuccess) {
-          // Image generation failed, but content was successfully generated
-          // Update error message to clarify that content is ready
           setError((prevError) => {
             const baseMessage = prevError || 'Image generation failed';
             return `Content generated successfully! However, ${baseMessage.toLowerCase()}. You can generate the image manually using the "Generate Image" button.`;
@@ -278,6 +288,21 @@ export default function ResourceEditPage() {
     } finally {
       setGeneratingAI(false);
     }
+  };
+
+  const DAILY_AI_NEWS_PRESET: GenerateParams = {
+    resourceType: 'article',
+    includeWebResearch: true,
+    deepResearch: true,
+    topic: `Today's latest AI news and key developments - ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`,
+    length: 60,
+    createImage: true,
+    includeXFeeds: true,
+  };
+
+  const handleDailyAiNewsPreset = () => {
+    setInitialForm(DAILY_AI_NEWS_PRESET);
+    handleGenerateWithAI(DAILY_AI_NEWS_PRESET);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -422,6 +447,31 @@ export default function ResourceEditPage() {
                   </p>
                 </div>
 
+                <div className="mb-6 p-4 bg-zinc-800/50 border border-gray-700 rounded-xl">
+                  <p className="text-sm text-gray-400 mb-3">Quick preset — one click to generate</p>
+                  <button
+                    type="button"
+                    onClick={handleDailyAiNewsPreset}
+                    disabled={generatingAI}
+                    className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  >
+                    {generatingAI ? (
+                      <>
+                        <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        </svg>
+                        <span>Generating...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>📰</span>
+                        <span>Daily AI News</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+
                 <form onSubmit={(e) => { e.preventDefault(); handleGenerateWithAI(); }} className="space-y-6">
                   {/* Resource Type Selection */}
                   <div>
@@ -485,6 +535,20 @@ export default function ResourceEditPage() {
                           <div>
                             <span className="text-white font-semibold">Deep Research</span>
                             <p className="text-gray-400 text-sm">Conduct more thorough research with multiple sources</p>
+                          </div>
+                        </label>
+                      )}
+                      {initialForm.includeWebResearch && (
+                        <label className="flex items-center gap-3 cursor-pointer ml-8">
+                          <input
+                            type="checkbox"
+                            checked={initialForm.includeXFeeds}
+                            onChange={(e) => setInitialForm({ ...initialForm, includeXFeeds: e.target.checked })}
+                            className="w-5 h-5 text-red-600 bg-zinc-900 border-gray-700 rounded focus:ring-red-600"
+                          />
+                          <div>
+                            <span className="text-white font-semibold">Include X feeds from AI thought leaders</span>
+                            <p className="text-gray-400 text-sm">Fetch recent posts from Andrew Ng, Sam Altman, Lex Fridman, Kai-Fu Lee, NVIDIA AI</p>
                           </div>
                         </label>
                       )}
@@ -792,7 +856,7 @@ export default function ResourceEditPage() {
                         </p>
                         <button
                           type="button"
-                          onClick={handleGenerateWithAI}
+                          onClick={() => handleGenerateWithAI()}
                           disabled={generatingAI || !formData.title || !formData.description}
                           className="px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                         >
@@ -831,7 +895,7 @@ export default function ResourceEditPage() {
                       {formData.content.sections.length > 0 && (
                         <button
                           type="button"
-                          onClick={handleGenerateWithAI}
+                          onClick={() => handleGenerateWithAI()}
                           disabled={generatingAI || !formData.title || !formData.description}
                           className="px-4 py-2 bg-purple-600 text-white text-sm font-semibold rounded-lg hover:bg-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                           title="Regenerate content with AI"
@@ -956,7 +1020,32 @@ export default function ResourceEditPage() {
             {/* Right: Preview */}
             <div className="bg-zinc-900 border border-gray-800 rounded-xl p-6">
               <div className="sticky top-24">
-                <h2 className="text-xl font-bold text-white mb-4">Live Preview</h2>
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-bold text-white">Live Preview</h2>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      localStorage.setItem(
+                        'admin-resource-preview-draft',
+                        JSON.stringify({
+                          title: formData.title,
+                          description: formData.description,
+                          type: formData.type,
+                          icon: formData.icon,
+                          imageUrl: formData.imageUrl,
+                          imagePrompt: formData.imagePrompt,
+                          tldr: formData.tldr,
+                          published: formData.published,
+                          content: formData.content,
+                        })
+                      );
+                      window.open('/admin/resource-management/preview', '_blank', 'noopener,noreferrer');
+                    }}
+                    className="px-4 py-2 bg-red-600/80 hover:bg-red-600 text-white text-sm font-semibold rounded-lg transition-colors"
+                  >
+                    View Full Preview
+                  </button>
+                </div>
                 <div className="bg-black border border-gray-700 rounded-lg p-6 max-h-[calc(100vh-200px)] overflow-y-auto">
                   {/* Preview Content */}
                   <div className="space-y-6">

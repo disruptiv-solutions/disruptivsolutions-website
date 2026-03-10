@@ -34,10 +34,16 @@ const ClassSignup: React.FC = () => {
 
   const sessions: Session[] = [
     {
-      id: 'nov15',
-      date: 'Saturday, Nov 15',
+      id: 'dec4',
+      date: 'Thursday, Dec 4',
       time: '12:00 PM EST',
-      timestamp: '2024-11-15T12:00:00-05:00'
+      timestamp: '2024-12-04T12:00:00-05:00'
+    },
+    {
+      id: 'dec6',
+      date: 'Saturday, Dec 6',
+      time: '12:00 PM EST',
+      timestamp: '2024-12-06T12:00:00-05:00'
     }
   ];
 

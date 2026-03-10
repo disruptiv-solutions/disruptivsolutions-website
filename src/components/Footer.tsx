@@ -1,7 +1,16 @@
+'use client';
+
 import React from 'react';
+import { usePathname } from 'next/navigation';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
+
+  // Hide footer on class-2 slide pages
+  if (pathname?.startsWith('/resources/classes/class-2/slide-')) {
+    return null;
+  }
 
   return (
     <footer className="bg-black border-t border-gray-800 py-8">

@@ -11,14 +11,8 @@ const Launchbox: React.FC = () => {
   const handleWaitlist = () => {
     // Track button click
     trackButtonClick('join_waitlist', 'launchbox_card');
-    // Navigate to waitlist signup page
-    window.location.href = '/waitlist';
-  };
-
-  const handleClass = () => {
-    // Track button click
-    trackButtonClick('join_free_class', 'launchbox_card');
-    window.location.href = '/free-class/1';
+    // Navigate to founders page
+    window.location.href = 'https://launchbox.space/founders';
   };
 
   React.useEffect(() => {
@@ -44,47 +38,18 @@ const Launchbox: React.FC = () => {
       // Check if mobile for slower scrolling
       const isMobile = window.innerWidth < 1024;
       
+      // 2 cards: LaunchBox (0) and Newsletter (1)
       if (scrollingDown) {
-        // Scrolling down: higher thresholds to prevent premature switching
         if (isMobile) {
-          // Mobile: much slower progression
-          if (progress < 0.6) {
-            newCard = 0;  // First 60% = card 0 (hold longer)
-          } else if (progress < 0.9) {
-            newCard = 1;  // Next 30% = card 1 (hold longer)
-          } else {
-            newCard = 2; // Final 10% = card 2 (hold longer)
-          }
+          newCard = progress < 0.7 ? 0 : 1;
         } else {
-          // Desktop: original thresholds
-          if (progress < 0.5) {
-            newCard = 0;  // First 50% = card 0 (hold)
-          } else if (progress < 0.85) {
-            newCard = 1;  // Next 35% = card 1 (hold)
-          } else {
-            newCard = 2; // Final 15% = card 2 (hold)
-          }
+          newCard = progress < 0.55 ? 0 : 1;
         }
       } else {
-        // Scrolling up: lower thresholds for easier back navigation
         if (isMobile) {
-          // Mobile: slower back navigation too
-          if (progress < 0.4) {
-            newCard = 0;
-          } else if (progress < 0.8) {
-            newCard = 1;
-          } else {
-            newCard = 2;
-          }
+          newCard = progress < 0.5 ? 0 : 1;
         } else {
-          // Desktop: original thresholds
-          if (progress < 0.35) {
-            newCard = 0;
-          } else if (progress < 0.75) {
-            newCard = 1;
-          } else {
-            newCard = 2;
-          }
+          newCard = progress < 0.45 ? 0 : 1;
         }
       }
 
@@ -108,14 +73,14 @@ const Launchbox: React.FC = () => {
       ref={sectionRef}
       id="launchbox"
       className="bg-black snap-start"
-      style={{ height: 'calc(100vh * 3)' }}
+      style={{ height: 'calc(100vh * 2)' }}
       data-snap-section
     >
       {/* Sticky Container - Stays in place while cards expand/collapse */}
       <div className="sticky w-full flex items-center px-6" style={{ height: 'calc(100vh - 65px)', top: '65px' }}>
         <div className="max-w-7xl mx-auto w-full h-full flex items-center">
           <div className="w-full h-full rounded-2xl overflow-hidden border-2 border-red-700/60 shadow-[0_0_50px_rgba(220,38,38,0.4)] flex flex-col">
-            <ScrollableHighlights onWaitlist={handleWaitlist} onClassInvite={handleClass} activeCard={getActiveCard()} />
+            <ScrollableHighlights onWaitlist={handleWaitlist} activeCard={getActiveCard()} />
           </div>
         </div>
       </div>
@@ -126,11 +91,10 @@ const Launchbox: React.FC = () => {
 // Internal component with 3 equal subsections
 interface ScrollableHighlightsProps {
   onWaitlist: () => void;
-  onClassInvite: () => void;
   activeCard?: number;
 }
 
-const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist, onClassInvite, activeCard = 0 }) => {
+const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist, activeCard = 0 }) => {
   const [nlName, setNlName] = React.useState('');
   const [nlEmail, setNlEmail] = React.useState('');
   const [nlPhone, setNlPhone] = React.useState('');
@@ -155,15 +119,21 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
             {activeCard === 0 ? (
               <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8">
                 <div>
-                  <h3 className="text-3xl md:text-4xl font-bold text-black mb-3">Join the Launchbox Waitlist</h3>
-                  <p className="text-gray-700 mb-5">Be first to get invites, resources, and early builds.</p>
-                  <button
-                    onClick={(e) => { e.stopPropagation(); onWaitlist(); }}
+                  <h3 className="text-3xl md:text-4xl font-bold text-black mb-3">Learn more about LaunchBox</h3>
+                  <p className="text-gray-700 mb-2">Build your community</p>
+                  <p className="text-gray-700 mb-2">Deliver courses</p>
+                  <p className="text-gray-700 mb-2">AI included</p>
+                  <p className="text-gray-700 mb-5">Your brand. Your community. Your courses. Your members paying you.</p>
+                  <a
+                    href="https://launchbox.space/white-label"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
                     className="inline-flex items-center gap-2 px-7 py-3.5 text-white font-semibold rounded-xl shadow-lg hover:opacity-90 transition-opacity"
                     style={{ backgroundColor: '#ea580c' }}
                   >
-                    Join the Waitlist
-                  </button>
+                    Learn more about LaunchBox
+                  </a>
                 </div>
                 <div className="hidden lg:flex items-center justify-center">
                   <div className="relative w-44 h-44 md:w-56 md:h-56">
@@ -181,59 +151,27 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                 </div>
               </div>
             ) : (
-              <div className="flex items-center gap-4">
-                <h3 className="text-2xl md:text-3xl font-bold text-black">Join the Launchbox Waitlist</h3>
+              <a
+                href="https://launchbox.space/white-label"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="flex items-center gap-4 hover:opacity-90 transition-opacity"
+              >
+                <h3 className="text-2xl md:text-3xl font-bold text-black">Learn more about LaunchBox</h3>
                 <span className="text-gray-600">→</span>
-              </div>
+              </a>
             )}
           </div>
         </div>
       </div>
 
-      {/* Section 2: Free AI App Building Class */}
+      {/* Section 2: Ian's AI Newsletter */}
       <div
-        className={`${activeCard === 1 ? 'flex-1' : 'h-28'} bg-zinc-900/60 overflow-hidden transition-all duration-700 ease-in-out cursor-pointer p-6 lg:p-10 flex items-center`}
+        className={`${activeCard === 1 ? 'flex-1 overflow-y-auto' : 'h-28'} bg-zinc-900/40 overflow-hidden transition-all duration-700 ease-in-out cursor-pointer p-4 sm:p-6 lg:p-10 flex ${activeCard === 1 ? 'items-start lg:items-center' : 'items-center'} ${activeCard === 1 ? 'min-h-0' : ''}`}
       >
         <div className="w-full max-w-7xl mx-auto">
           {activeCard === 1 ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-              {/* Left: Title + Description */}
-              <div>
-                <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">Free AI App Building Class</h3>
-                <p className="text-gray-100/90 text-lg leading-relaxed">Live session on shipping your first working AI app. Free • 1 hour.</p>
-              </div>
-
-              {/* Right: Dates */}
-              <div className="w-full">
-                <p className="text-lg text-gray-300 mb-4 font-semibold">Upcoming sessions</p>
-                <div className="space-y-2">
-                <div onClick={(e) => { e.stopPropagation(); onClassInvite(); }} className="flex items-center gap-3 p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer">
-                  <div className="w-10 h-10 rounded-lg bg-red-600/20 flex items-center justify-center flex-shrink-0">
-                    <svg className="w-5 h-5 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                  </div>
-                  <div>
-                    <p className="text-white font-medium">Saturday, Nov 15</p>
-                    <p className="text-sm text-gray-400">12:00 PM EST</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-            ) : (
-              <div className="flex items-center justify-between">
-                <h3 className="text-2xl md:text-3xl font-bold text-white">Free AI App Building Class</h3>
-                <span className="text-gray-400">→</span>
-              </div>
-            )}
-        </div>
-      </div>
-
-      {/* Section 3: Ian's AI Newsletter */}
-      <div
-        className={`${activeCard === 2 ? 'flex-1 overflow-y-auto' : 'h-28'} bg-zinc-900/40 overflow-hidden transition-all duration-700 ease-in-out cursor-pointer p-4 sm:p-6 lg:p-10 flex ${activeCard === 2 ? 'items-start lg:items-center' : 'items-center'} ${activeCard === 2 ? 'min-h-0' : ''}`}
-      >
-        <div className="w-full max-w-7xl mx-auto">
-          {activeCard === 2 ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-start lg:items-center w-full h-full min-h-0">
               {/* Left: Title + Content */}
               <div className="min-w-0">

@@ -70,7 +70,7 @@ const Hero: React.FC = () => {
       {/* Content wrapper positioned correctly */}
       <div className="w-full relative px-6 pt-[85px] pb-6 lg:pt-72 flex items-center justify-end h-full" style={{ zIndex: 10 }}>
         {/* Content aligned to the right */}
-        <div className="space-y-4 lg:space-y-8 lg:text-right max-w-2xl lg:mr-12 w-full">
+        <div className="space-y-4 lg:space-y-8 lg:text-right max-w-3xl lg:mr-12 w-full">
             {/* Main Headline */}
             <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-3 lg:mb-6">
               Ian McDonald
@@ -81,7 +81,7 @@ const Hero: React.FC = () => {
             </h1>
 
             {/* Subheadline */}
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-2xl leading-relaxed mb-3 lg:mb-8">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl leading-relaxed mb-3 lg:mb-8">
               I teach non-technical people to build AI apps that actually work.
               <br /><br />
               From side hustles to enterprise platforms with 1,500+ users—I build in public and show others how to do the same.
@@ -90,31 +90,33 @@ const Hero: React.FC = () => {
             </p>
 
             {/* CTAs */}
-            <div className="hidden lg:flex flex-col sm:flex-row gap-4">
+            <div className="hidden lg:flex flex-row flex-nowrap gap-4 justify-start items-center lg:text-left">
               <Link
-                href="/waitlist"
+                href="https://launchbox.space/white-label"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => {
-                  trackButtonClick('join_waitlist', 'hero_section');
+                  trackButtonClick('learn_launchbox', 'hero_section');
                 }}
-                className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50 inline-flex items-center justify-center"
+                className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50 inline-flex items-center justify-center whitespace-nowrap"
               >
-                Join Launchbox Waitlist
+                Learn about LaunchBox
               </Link>
               <Link
-                href="/free-class"
+                href="#consulting"
                 onClick={() => {
-                  trackButtonClick('free_class_button', 'hero_section');
+                  trackButtonClick('free_consult_button', 'hero_section');
                 }}
-                className="px-8 py-4 border-2 border-gray-300 text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-300 inline-flex items-center justify-center"
+                className="px-8 py-4 border-2 border-gray-300 text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-300 inline-flex items-center justify-center whitespace-nowrap"
               >
-                Free Class
+                Free Consult
               </Link>
               <Link
                 href="/newsletter"
                 onClick={() => {
                   trackButtonClick('subscribe_newsletter', 'hero_section');
                 }}
-                className="px-8 py-4 border-2 border-gray-300 text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-300 inline-flex items-center justify-center"
+                className="px-8 py-4 border-2 border-gray-300 text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-300 inline-flex items-center justify-center whitespace-nowrap"
               >
                 Join My Newsletter
               </Link>
