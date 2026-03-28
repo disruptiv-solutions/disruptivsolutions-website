@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import {
   LAUNCHBOX_SITE_URL,
-  LAUNCHBOX_GITHUB_REPO_URL,
   LAUNCHBOX_PROMO_SHORT,
   LAUNCHBOX_PROMO_LONG,
   LAUNCHBOX_CTA_LABEL,
@@ -13,13 +12,13 @@ import {
 } from '@/lib/launchbox-marketing';
 import { getExternalLinkProps } from '@/lib/external-link';
 import { IAN_PROFILE_IMAGE_SRC } from '@/lib/ian-profile';
-import type { LaunchboxWeeklyDoc } from '@/lib/launchbox-weekly-types';
+import type { LaunchboxWeeklyPublic } from '@/lib/launchbox-weekly-types';
 
 export default function LaunchboxWeeklyPage() {
   const params = useParams();
   const dateSlug = params.date as string;
 
-  const [weekly, setWeekly] = useState<LaunchboxWeeklyDoc | null>(null);
+  const [weekly, setWeekly] = useState<LaunchboxWeeklyPublic | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,7 +28,7 @@ export default function LaunchboxWeeklyPage() {
       setLoading(true);
       try {
         const res = await fetch(`/api/launchbox-weekly?date=${encodeURIComponent(dateSlug)}`);
-        const data = (await res.json()) as { success?: boolean; weekly?: LaunchboxWeeklyDoc | null };
+        const data = (await res.json()) as { success?: boolean; weekly?: LaunchboxWeeklyPublic | null };
         if (data.success && data.weekly) {
           setWeekly(data.weekly);
           return;
@@ -108,25 +107,14 @@ export default function LaunchboxWeeklyPage() {
 
           <div className="flex flex-wrap gap-4 mt-8">
             <a
-              href={LAUNCHBOX_GITHUB_REPO_URL}
-              {...getExternalLinkProps(LAUNCHBOX_GITHUB_REPO_URL)}
+              href={LAUNCHBOX_SITE_URL}
+              {...getExternalLinkProps(LAUNCHBOX_SITE_URL)}
               className="text-sm font-bold uppercase tracking-widest text-zinc-400 hover:text-white border-b border-zinc-600 hover:border-white transition-colors pb-0.5"
               tabIndex={0}
-              aria-label="View LaunchBox repository on GitHub"
+              aria-label="Open LaunchBox at launchbox.space"
             >
-              Repository →
+              Visit LaunchBox →
             </a>
-            {weekly.compareUrl && (
-              <a
-                href={weekly.compareUrl}
-                {...getExternalLinkProps(weekly.compareUrl)}
-                className="text-sm font-bold uppercase tracking-widest text-zinc-400 hover:text-white border-b border-zinc-600 hover:border-white transition-colors pb-0.5"
-                tabIndex={0}
-                aria-label="View commit range on GitHub"
-              >
-                Compare on GitHub →
-              </a>
-            )}
           </div>
         </div>
       </header>
@@ -141,33 +129,10 @@ export default function LaunchboxWeeklyPage() {
                   <li key={`${h.headline}-${i}`} className="border-l-2 border-amber-600/80 pl-6">
                     <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight">{h.headline}</h3>
                     <p className="text-zinc-400 mt-3 leading-relaxed text-base md:text-lg">{h.blurb}</p>
-                    {h.commitUrl && (
-                      <a
-                        href={h.commitUrl}
-                        {...getExternalLinkProps(h.commitUrl)}
-                        className="inline-block mt-4 text-xs font-bold uppercase tracking-widest text-amber-500 hover:text-amber-400 transition-colors"
-                        tabIndex={0}
-                        aria-label={`View commit for ${h.headline}`}
-                      >
-                        Commit link →
-                      </a>
-                    )}
                   </li>
                 ))}
               </ul>
             </section>
-
-            {weekly.forBuilders?.trim() && (
-              <section
-                className="border border-zinc-800 bg-zinc-950/80 p-6 md:p-8"
-                aria-label="For builders"
-              >
-                <h2 className="text-zinc-500 font-mono text-xs uppercase tracking-[0.2em] mb-4">
-                  For builders
-                </h2>
-                <p className="text-zinc-400 leading-relaxed">{weekly.forBuilders}</p>
-              </section>
-            )}
 
             <div className="flex items-center gap-4 pt-4 lg:hidden">
               <div className="w-12 h-12 rounded-full overflow-hidden border border-zinc-700 bg-zinc-900">
@@ -223,8 +188,8 @@ export default function LaunchboxWeeklyPage() {
                 </div>
               </div>
 
-              <p className="text-zinc-600 text-xs font-mono uppercase tracking-widest">
-                {weekly.commitCount} commit{weekly.commitCount === 1 ? '' : 's'} · {weekly.repoFullName}
+              <p className="text-zinc-600 text-xs leading-relaxed max-w-[14rem]">
+                Weekly highlights for people running communities on LaunchBox.
               </p>
 
               <div className="border border-zinc-800 bg-zinc-950 p-7 relative group hover:border-zinc-700 transition-colors font-satoshi">

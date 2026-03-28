@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { initFirebaseAdmin } from '@/lib/firebase-admin';
+import { sanitizeLaunchboxWeeklyForPublic } from '@/lib/launchbox-weekly-public';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,7 +21,8 @@ export async function GET(request: NextRequest) {
       if (!doc.exists) {
         return NextResponse.json({ success: false, weekly: null });
       }
-      return NextResponse.json({ success: true, weekly: doc.data() });
+      const weekly = sanitizeLaunchboxWeeklyForPublic(doc.data());
+      return NextResponse.json({ success: true, weekly });
     }
 
     const snapshot = await adminDb
@@ -29,7 +31,9 @@ export async function GET(request: NextRequest) {
       .limit(20)
       .get();
 
-    const items = snapshot.docs.map((d) => d.data());
+    const items = snapshot.docs
+      .map((d) => sanitizeLaunchboxWeeklyForPublic(d.data()))
+      .filter((w): w is NonNullable<typeof w> => w != null);
     return NextResponse.json({ success: true, items });
   } catch (error) {
     console.error('[LaunchboxWeekly API] Error:', error);

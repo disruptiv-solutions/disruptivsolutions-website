@@ -2,10 +2,8 @@ import { NextResponse } from 'next/server';
 import { jsonrepair } from 'jsonrepair';
 import { initFirebaseAdmin } from '@/lib/firebase-admin';
 import { utcDateToBriefSlug } from '@/lib/daily-brief-date-slug';
-import {
-  LAUNCHBOX_GITHUB_REPO_FULL_NAME,
-  LAUNCHBOX_GITHUB_REPO_URL,
-} from '@/lib/launchbox-marketing';
+import { LAUNCHBOX_GITHUB_REPO_FULL_NAME } from '@/lib/launchbox-marketing';
+import { sanitizeLaunchboxWeeklyForPublic } from '@/lib/launchbox-weekly-public';
 import type { LaunchboxWeeklyDoc, LaunchboxWeeklyGenerated } from '@/lib/launchbox-weekly-types';
 
 const COLLECTION = 'launchbox-weekly';
@@ -17,11 +15,17 @@ const IAN_LAUNCHBOX_WEEKLY_VOICE = `You are writing in the voice of Ian McDonald
 Readers are creators, coaches, and community owners using LaunchBox — not engineers. Translate repository activity into what changed for them in plain language: new capabilities, fixes, improvements, and anything that affects their experience.
 
 RULES:
-- Friendly, direct, no jargon unless "forBuilders" (optional) holds a short technical add-on
+- Friendly, direct, minimal jargon (no stack traces, file paths, or library names unless a customer would recognize them)
 - Do not invent features not supported by the commit list
 - Group related commits into single highlights when they are the same theme
 - Ignore pure chore commits (lockfile-only, typo in comments) unless user-visible
 - If the list is mostly internal refactors, say so honestly and focus on any user-facing impact
+
+PRIVACY (required for public release):
+- Never mention GitHub, commit SHAs/hashes, branch names, or URLs
+- Do not describe internal admin/superadmin tools, auth tokens, sessions, security internals, or infrastructure
+- Frame internal-only work in customer terms only when there is a clear end-user benefit; otherwise skip or generalize ("stability and performance")
+- Do not name employees or GitHub usernames from commit metadata
 
 TONE: helpful product update, not a sales pitch.`;
 
@@ -125,8 +129,7 @@ const formatCommitsForPrompt = (commits: GitHubCommit[]): string => {
   return commits
     .map((c) => {
       const firstLine = (c.commit?.message ?? '').split('\n')[0]?.trim() ?? '';
-      const who = c.author?.login ?? c.commit?.author?.name ?? 'unknown';
-      return `- [${c.sha.slice(0, 7)}] ${who}: ${firstLine}\n  URL: ${c.html_url}`;
+      return `- ${firstLine}`;
     })
     .join('\n');
 };
@@ -145,18 +148,19 @@ const generateWeeklyFromCommits = async (
 
   const systemPrompt = `${IAN_LAUNCHBOX_WEEKLY_VOICE}
 
-You are summarizing LaunchBox platform work from Git commits in the last 7 days for a weekly update email/page.
+You are summarizing LaunchBox platform work from internal change notes (derived from commits) for a public weekly update page.
 
 OUTPUT: One JSON object only, no markdown fences. Required keys:
 - "title": string (short headline for the week)
 - "weekLabel": string (human-readable week, e.g. "Week of March 22, 2026")
 - "intro": string (2-4 sentences setting context in Ian's voice)
-- "highlights": array of 3-10 objects, each with "headline" (string), "blurb" (2-3 sentences, user-facing), optional "commitUrl" (full https URL to one representative commit from the list below — must match a URL you were given)
-- "forBuilders": optional string (one short paragraph of technical detail for power users; omit or "" if nothing useful)`;
+- "highlights": array of 3-10 objects, each with only "headline" (string) and "blurb" (2-3 sentences, customer-safe, no links)
+
+Do not include "commitUrl", "forBuilders", or any other keys.`;
 
   const userPrompt = `${weekContext}
 
-Here are the commits (newest first in this list may vary; use URLs exactly as given):
+Change notes (one line per change; order may vary):
 
 ${block}
 
@@ -210,18 +214,6 @@ Produce the JSON summary.`;
   }
 
   return parseWeeklyJson(content);
-};
-
-const buildCompareUrl = (
-  owner: string,
-  repo: string,
-  commits: GitHubCommit[]
-): string | undefined => {
-  if (commits.length === 0) return undefined;
-  const newest = commits[0].sha;
-  const oldest = commits[commits.length - 1].sha;
-  if (!newest || !oldest || newest === oldest) return undefined;
-  return `https://github.com/${owner}/${repo}/compare/${oldest}...${newest}`;
 };
 
 export const runLaunchboxWeeklyGeneration = async (): Promise<NextResponse> => {
@@ -280,10 +272,9 @@ export const runLaunchboxWeeklyGeneration = async (): Promise<NextResponse> => {
       });
     }
 
-    const weekContext = `Repository: ${repoFull} (${LAUNCHBOX_GITHUB_REPO_URL})
-Default branch: ${branch}
-Window: commits since ${sinceIso} (last 7 days)
-Commit count: ${commits.length}`;
+    const weekContext = `Product: LaunchBox
+Window: changes from the last 7 days (since ${sinceIso} UTC)
+Items to summarize: ${commits.length}`;
 
     const generated = await generateWeeklyFromCommits(commits, openRouterKey, weekContext);
 
@@ -302,13 +293,18 @@ Commit count: ${commits.length}`;
       day: 'numeric',
     });
 
-    const compareUrl = buildCompareUrl(owner, repo, commits);
+    const highlights = generated.data.highlights.map(({ headline, blurb }) => ({
+      headline,
+      blurb,
+    }));
 
     const doc: LaunchboxWeeklyDoc = {
-      ...generated.data,
+      title: generated.data.title,
+      weekLabel: generated.data.weekLabel,
+      intro: generated.data.intro,
+      highlights,
       date: dateSlug,
       displayDate,
-      compareUrl,
       commitCount: commits.length,
       repoFullName: repoFull,
       generatedAt: now.toISOString(),
@@ -323,11 +319,12 @@ Commit count: ${commits.length}`;
     await adminDb.collection(COLLECTION).doc(dateSlug).set(doc);
     console.log(`[LaunchboxWeekly] Stored weekly issue ${dateSlug}`);
 
+    const weeklyPublic = sanitizeLaunchboxWeeklyForPublic(doc);
+
     return NextResponse.json({
       success: true,
       dateSlug,
-      compareUrl,
-      weekly: doc,
+      weekly: weeklyPublic,
     });
   } catch (error) {
     console.error('[LaunchboxWeekly] Generation error:', error);

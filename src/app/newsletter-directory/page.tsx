@@ -57,7 +57,7 @@ interface FirestoreWeekly {
   title: string;
   intro?: string;
   weekLabel?: string;
-  generatedAt: string;
+  generatedAt?: string;
 }
 
 type ArchiveRowVariant = 'brief' | 'issue' | 'platform';
