@@ -120,12 +120,36 @@ export default function NewsletterDirectoryPage() {
   const userIsAdmin = isAdmin(user?.uid);
 
   const handleGenerateBrief = async () => {
+    if (!user) {
+      setGenerateStatus({ type: 'error', message: 'You must be signed in to generate a brief.' });
+      return;
+    }
+
     setGenerating(true);
     setGenerateStatus(null);
 
     try {
-      const res = await fetch('/api/cron/generate-daily-brief');
-      const data = await res.json();
+      const idToken = await user.getIdToken();
+      const res = await fetch('/api/admin/generate-daily-brief', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
+      });
+      const data = (await res.json()) as {
+        success?: boolean;
+        error?: string;
+        message?: string;
+        dateSlug?: string;
+      };
+
+      if (!res.ok) {
+        setGenerateStatus({
+          type: 'error',
+          message: data.error || `Request failed (${res.status})`,
+        });
+        return;
+      }
 
       if (data.success) {
         setGenerateStatus({ type: 'success', message: `Brief generated for ${data.dateSlug}` });
