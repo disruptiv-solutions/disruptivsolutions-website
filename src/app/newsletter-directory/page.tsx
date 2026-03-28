@@ -337,15 +337,18 @@ export default function NewsletterDirectoryPage() {
             Past issues of Ian&apos;s newsletter — practical AI insights, what he&apos;s building, and lessons from the trenches.
           </p>
 
-          {/* Admin: Generate Daily Brief */}
+          {/* Admin: generate brief + LaunchBox platform update (same row when space allows) */}
           {userIsAdmin && (
-            <div className="mt-6 flex flex-col gap-4">
-              <div className="flex flex-wrap items-center gap-4">
+            <div className="mt-6 rounded-lg border border-zinc-800 bg-zinc-950/60 p-4 md:p-5">
+              <p className="text-[0.65rem] font-mono font-bold uppercase tracking-[0.2em] text-zinc-500 mb-4">
+                Admin tools
+              </p>
+              <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
                 <button
                   type="button"
                   onClick={handleGenerateBrief}
                   disabled={generating}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-red-600 text-white text-sm font-bold uppercase tracking-widest hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="inline-flex w-full justify-center items-center gap-2 px-5 py-2.5 bg-red-600 text-white text-sm font-bold uppercase tracking-widest hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors sm:w-auto"
                   aria-label="Generate today's daily brief"
                   tabIndex={0}
                 >
@@ -369,30 +372,18 @@ export default function NewsletterDirectoryPage() {
                   )}
                 </button>
 
-                {generateStatus && (
-                  <span
-                    className={`text-sm font-medium ${
-                      generateStatus.type === 'success' ? 'text-emerald-400' : 'text-red-400'
-                    }`}
-                  >
-                    {generateStatus.message}
-                  </span>
-                )}
-              </div>
-
-              <div className="flex flex-wrap items-center gap-4">
                 <button
                   type="button"
                   onClick={handleGenerateLaunchboxWeekly}
                   disabled={generatingWeekly}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-700 text-white text-sm font-bold uppercase tracking-widest hover:bg-amber-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                  aria-label="Generate LaunchBox weekly platform update"
+                  className="inline-flex w-full justify-center items-center gap-2 px-5 py-2.5 bg-amber-600 text-black text-sm font-bold uppercase tracking-widest hover:bg-amber-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors sm:w-auto ring-1 ring-amber-500/40"
+                  aria-label="Generate LaunchBox platform update from the last 7 days of commits"
                   tabIndex={0}
                 >
                   {generatingWeekly ? (
                     <>
-                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Generating weekly...
+                      <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                      Generating update...
                     </>
                   ) : (
                     <>
@@ -404,21 +395,38 @@ export default function NewsletterDirectoryPage() {
                           d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
                         />
                       </svg>
-                      Generate LaunchBox weekly
+                      Generate LaunchBox update
                     </>
                   )}
                 </button>
-
-                {weeklyStatus && (
-                  <span
-                    className={`text-sm font-medium ${
-                      weeklyStatus.type === 'success' ? 'text-emerald-400' : 'text-red-400'
-                    }`}
-                  >
-                    {weeklyStatus.message}
-                  </span>
-                )}
               </div>
+
+              {(generateStatus || weeklyStatus) && (
+                <div className="mt-4 flex flex-col gap-2 border-t border-zinc-800 pt-4">
+                  {generateStatus && (
+                    <p
+                      className={`text-sm font-medium ${
+                        generateStatus.type === 'success' ? 'text-emerald-400' : 'text-red-400'
+                      }`}
+                    >
+                      <span className="text-zinc-500 font-mono text-xs uppercase tracking-wider mr-2">Brief</span>
+                      {generateStatus.message}
+                    </p>
+                  )}
+                  {weeklyStatus && (
+                    <p
+                      className={`text-sm font-medium ${
+                        weeklyStatus.type === 'success' ? 'text-emerald-400' : 'text-red-400'
+                      }`}
+                    >
+                      <span className="text-zinc-500 font-mono text-xs uppercase tracking-wider mr-2">
+                        LaunchBox
+                      </span>
+                      {weeklyStatus.message}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           )}
         </div>
