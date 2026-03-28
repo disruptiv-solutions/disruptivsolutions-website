@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { jsonrepair } from 'jsonrepair';
 import { initFirebaseAdmin } from '@/lib/firebase-admin';
 import { renderDailyBriefEmailHtml } from '@/lib/daily-brief-email-template';
 
@@ -217,6 +218,52 @@ type GenerateBriefResult =
   | { ok: true; brief: GeneratedBrief }
   | { ok: false; reason: string };
 
+/** OpenRouter often rejects strict json_schema for some models; json_object is widely supported. */
+const stripJsonFence = (raw: string): string => {
+  let s = raw.trim();
+  if (s.startsWith('```')) {
+    s = s.replace(/^```(?:json)?\s*\n?/i, '');
+    s = s.replace(/\n?```\s*$/i, '');
+  }
+  return s.trim();
+};
+
+const parseBriefContent = (content: string): GenerateBriefResult => {
+  const cleaned = stripJsonFence(content);
+  const tryParse = (text: string): unknown => JSON.parse(text);
+
+  try {
+    const parsed = tryParse(cleaned) as GeneratedBrief;
+    if (!parsed || typeof parsed !== 'object' || !Array.isArray((parsed as GeneratedBrief).stories)) {
+      return { ok: false, reason: 'AI JSON missing required fields (e.g. stories array).' };
+    }
+    return { ok: true, brief: parsed };
+  } catch (firstErr) {
+    try {
+      const repaired = jsonrepair(cleaned);
+      const parsed = JSON.parse(repaired) as GeneratedBrief;
+      if (!parsed?.stories || !Array.isArray(parsed.stories)) {
+        return { ok: false, reason: `Repaired JSON still invalid: ${String(firstErr)}` };
+      }
+      return { ok: true, brief: parsed };
+    } catch (e2) {
+      return {
+        ok: false,
+        reason: `Failed to parse AI JSON: ${String(firstErr)}; repair: ${String(e2)}`,
+      };
+    }
+  }
+};
+
+const JSON_SHAPE_RULES = `
+OUTPUT: Respond with ONE JSON object only (no markdown outside the object). Required shape:
+- "title": string (short punchy title for the brief)
+- "editorNote": string (2-3 sentence opener in Ian's voice)
+- "stories": array of 5-7 objects, each with: "headline", "source" (@handles), "summary", "link" (string, "" if none), "tag" (one of: breaking | tool | research | funding | launch | opinion)
+- "toolOfTheDay": null OR { "name", "description", "link", "verdict" }
+- "quickLinks": array of 3-5 objects with "label" and "url" ("" if no url)
+`;
+
 const generateBriefFromTweets = async (
   tweets: CollectedTweet[],
   openRouterKey: string,
@@ -226,69 +273,8 @@ const generateBriefFromTweets = async (
     .map((t) => `[@${t.username}] (${t.date}, engagement: ${t.engagement}): ${t.text}`)
     .join('\n');
 
-  const jsonSchema = {
-    type: 'object',
-    properties: {
-      title: {
-        type: 'string',
-        description: 'Short punchy title for the daily brief, e.g. "Monday AI Brief" or "The Open-Source Week"',
-      },
-      editorNote: {
-        type: 'string',
-        description: "Ian's 2-3 sentence opener setting the tone for the day. Conversational, direct, slightly opinionated.",
-      },
-      stories: {
-        type: 'array',
-        description: '5-7 of the most newsworthy/interesting stories distilled from the tweets',
-        items: {
-          type: 'object',
-          properties: {
-            headline: { type: 'string', description: 'Punchy news-style headline' },
-            source: { type: 'string', description: 'The @username(s) who posted about this' },
-            summary: {
-              type: 'string',
-              description: '2-3 sentences explaining why this matters. Written in Ian\'s voice — practical, grounded, no hype.',
-            },
-            link: { type: 'string', description: 'URL if mentioned in tweet, otherwise empty string' },
-            tag: {
-              type: 'string',
-              enum: ['breaking', 'tool', 'research', 'funding', 'launch', 'opinion'],
-              description: 'Category tag for the story',
-            },
-          },
-          required: ['headline', 'source', 'summary', 'link', 'tag'],
-          additionalProperties: false,
-        },
-      },
-      toolOfTheDay: {
-        type: ['object', 'null'],
-        description: 'If any tweet mentions a specific AI tool worth highlighting, feature it here. Otherwise null.',
-        properties: {
-          name: { type: 'string' },
-          description: { type: 'string', description: '2-3 sentences about what the tool does and why it matters.' },
-          link: { type: 'string', description: 'URL if available, otherwise empty string' },
-          verdict: { type: 'string', description: "One-line Ian-voice verdict, e.g. \"Essential for anyone building RAG apps.\"" },
-        },
-        required: ['name', 'description', 'link', 'verdict'],
-        additionalProperties: false,
-      },
-      quickLinks: {
-        type: 'array',
-        description: '3-5 additional interesting tweets/topics that didn\'t make the main stories but are worth a click',
-        items: {
-          type: 'object',
-          properties: {
-            label: { type: 'string', description: 'Short descriptive label' },
-            url: { type: 'string', description: 'URL if available, otherwise empty string' },
-          },
-          required: ['label', 'url'],
-          additionalProperties: false,
-        },
-      },
-    },
-    required: ['title', 'editorNote', 'stories', 'toolOfTheDay', 'quickLinks'],
-    additionalProperties: false,
-  };
+  const model =
+    process.env.OPENROUTER_DAILY_BRIEF_MODEL?.trim() || 'openai/gpt-4o';
 
   const systemPrompt = `${IAN_BRIEF_VOICE}
 
@@ -309,13 +295,14 @@ RULES:
 - Use the engagement numbers as a signal for what's resonating
 - The source field should list @username(s) who posted about the story; put the primary account first (used for profile photo)
 - Write summaries that explain WHY something matters to someone building with AI, not just WHAT happened
-- If it's a slow news day, fewer stories is better than padding with filler`;
+- If it's a slow news day, fewer stories is better than padding with filler
+${JSON_SHAPE_RULES}`;
 
   const userPrompt = `Today is ${dateLabel}. Here are the latest posts from AI thought leaders on X from the last 24 hours:
 
 ${tweetBlock}
 
-Generate the Daily AI Brief from these posts.`;
+Generate the Daily AI Brief from these posts as a single JSON object.`;
 
   const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
     method: 'POST',
@@ -326,21 +313,14 @@ Generate the Daily AI Brief from these posts.`;
       'X-Title': 'Disruptiv Solutions Daily Brief Generator',
     },
     body: JSON.stringify({
-      model: 'openai/gpt-4o',
+      model,
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt },
       ],
       temperature: 0.7,
       max_tokens: 4000,
-      response_format: {
-        type: 'json_schema',
-        json_schema: {
-          name: 'daily_brief',
-          strict: true,
-          schema: jsonSchema,
-        },
-      },
+      response_format: { type: 'json_object' },
     }),
   });
 
@@ -369,12 +349,7 @@ Generate the Daily AI Brief from these posts.`;
     return { ok: false, reason: 'OpenRouter returned no message content (empty choices).' };
   }
 
-  try {
-    return { ok: true, brief: JSON.parse(content) as GeneratedBrief };
-  } catch (err) {
-    console.error('[DailyBrief] Failed to parse AI JSON:', err);
-    return { ok: false, reason: `Failed to parse AI JSON: ${String(err)}` };
-  }
+  return parseBriefContent(content);
 };
 
 /* ─── Step 3: Store in Firestore ─── */

@@ -136,14 +136,26 @@ export default function NewsletterDirectoryPage() {
           Authorization: `Bearer ${idToken}`,
         },
       });
-      const data = (await res.json()) as {
+
+      const raw = await res.text();
+      let data: {
         success?: boolean;
         error?: string;
         details?: string;
         message?: string;
         dateSlug?: string;
         step?: string;
-      };
+      } = {};
+
+      try {
+        data = raw ? (JSON.parse(raw) as typeof data) : {};
+      } catch {
+        setGenerateStatus({
+          type: 'error',
+          message: `Server error (${res.status}): ${raw.replace(/\s+/g, ' ').slice(0, 500)}`,
+        });
+        return;
+      }
 
       if (!res.ok) {
         const detail = data.details ? ` ${data.details}` : '';
