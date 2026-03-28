@@ -139,14 +139,17 @@ export default function NewsletterDirectoryPage() {
       const data = (await res.json()) as {
         success?: boolean;
         error?: string;
+        details?: string;
         message?: string;
         dateSlug?: string;
+        step?: string;
       };
 
       if (!res.ok) {
+        const detail = data.details ? ` ${data.details}` : '';
         setGenerateStatus({
           type: 'error',
-          message: data.error || `Request failed (${res.status})`,
+          message: `${data.error || `Request failed (${res.status})`}${detail}`.trim(),
         });
         return;
       }

@@ -213,11 +213,15 @@ const fetchAllTweets = async (bearerToken: string): Promise<CollectedTweet[]> =>
 
 /* ─── Step 2: AI Generation ─── */
 
+type GenerateBriefResult =
+  | { ok: true; brief: GeneratedBrief }
+  | { ok: false; reason: string };
+
 const generateBriefFromTweets = async (
   tweets: CollectedTweet[],
   openRouterKey: string,
   dateLabel: string
-): Promise<GeneratedBrief | null> => {
+): Promise<GenerateBriefResult> => {
   const tweetBlock = tweets
     .map((t) => `[@${t.username}] (${t.date}, engagement: ${t.engagement}): ${t.text}`)
     .join('\n');
@@ -343,24 +347,33 @@ Generate the Daily AI Brief from these posts.`;
   if (!response.ok) {
     const errText = await response.text();
     console.error('[DailyBrief] OpenRouter error:', response.status, errText);
-    return null;
+    const snippet = errText.length > 500 ? `${errText.slice(0, 500)}…` : errText;
+    return {
+      ok: false,
+      reason: `OpenRouter HTTP ${response.status}${snippet ? `: ${snippet}` : ''}`,
+    };
   }
 
   const data = (await response.json()) as {
-    choices: Array<{ message: { content: string } }>;
+    choices?: Array<{ message?: { content?: string } }>;
+    error?: { message?: string };
   };
+
+  if (data.error?.message) {
+    return { ok: false, reason: `OpenRouter: ${data.error.message}` };
+  }
 
   const content = data.choices?.[0]?.message?.content;
   if (!content) {
-    console.error('[DailyBrief] Empty AI response');
-    return null;
+    console.error('[DailyBrief] Empty AI response', JSON.stringify(data).slice(0, 800));
+    return { ok: false, reason: 'OpenRouter returned no message content (empty choices).' };
   }
 
   try {
-    return JSON.parse(content) as GeneratedBrief;
+    return { ok: true, brief: JSON.parse(content) as GeneratedBrief };
   } catch (err) {
     console.error('[DailyBrief] Failed to parse AI JSON:', err);
-    return null;
+    return { ok: false, reason: `Failed to parse AI JSON: ${String(err)}` };
   }
 };
 
@@ -376,9 +389,9 @@ const storeBrief = async (
   displayDate: string,
   tweetCount: number
 ) => {
-  const { adminDb } = initFirebaseAdmin();
+  const { adminDb, error: adminInitError } = initFirebaseAdmin();
   if (!adminDb) {
-    throw new Error('Firebase Admin not initialized');
+    throw new Error(adminInitError || 'Firebase Admin not initialized');
   }
 
   const baseDoc = {
@@ -435,10 +448,24 @@ export const runDailyBriefGeneration = async (): Promise<NextResponse> => {
   const openRouterKey = process.env.OPENROUTER_API_KEY;
 
   if (!bearerToken) {
-    return NextResponse.json({ error: 'X_API_BEARER_TOKEN not configured' }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: 'X_API_BEARER_TOKEN not configured',
+        details: 'Add X_API_BEARER_TOKEN to Vercel Environment Variables (Production).',
+        step: 'config',
+      },
+      { status: 500 }
+    );
   }
   if (!openRouterKey) {
-    return NextResponse.json({ error: 'OPENROUTER_API_KEY not configured' }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: 'OPENROUTER_API_KEY not configured',
+        details: 'Add OPENROUTER_API_KEY to Vercel Environment Variables (Production).',
+        step: 'config',
+      },
+      { status: 500 }
+    );
   }
 
   try {
@@ -469,15 +496,18 @@ export const runDailyBriefGeneration = async (): Promise<NextResponse> => {
       });
     }
 
-    const generatedBrief = await generateBriefFromTweets(tweets, openRouterKey, dateLabel);
+    const generated = await generateBriefFromTweets(tweets, openRouterKey, dateLabel);
 
-    if (!generatedBrief) {
-      return NextResponse.json({ error: 'AI generation failed' }, { status: 500 });
+    if (!generated.ok) {
+      return NextResponse.json(
+        { error: 'AI generation failed', details: generated.reason, step: 'openrouter' as const },
+        { status: 500 }
+      );
     }
 
     const briefWithAvatars: BriefForStorage = {
-      ...generatedBrief,
-      stories: enrichStoriesWithSourceAvatars(generatedBrief.stories, tweets),
+      ...generated.brief,
+      stories: enrichStoriesWithSourceAvatars(generated.brief.stories, tweets),
     };
 
     const storedDoc = await storeBrief(briefWithAvatars, dateSlug, displayDate, tweets.length);
@@ -494,8 +524,13 @@ export const runDailyBriefGeneration = async (): Promise<NextResponse> => {
     });
   } catch (error) {
     console.error('[DailyBrief] Generation error:', error);
+    const message = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: 'Daily brief generation failed', details: String(error) },
+      {
+        error: 'Daily brief generation failed',
+        details: message,
+        step: 'unknown' as const,
+      },
       { status: 500 }
     );
   }
