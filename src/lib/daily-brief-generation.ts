@@ -328,9 +328,13 @@ Generate the Daily AI Brief from these posts as a single JSON object.`;
     const errText = await response.text();
     console.error('[DailyBrief] OpenRouter error:', response.status, errText);
     const snippet = errText.length > 500 ? `${errText.slice(0, 500)}…` : errText;
+    const keyHint =
+      response.status === 401
+        ? ' OpenRouter rejected this API key (401). Create or rotate a key at https://openrouter.ai/settings/keys and set OPENROUTER_API_KEY for Production in Vercel — no spaces or quotes around the value.'
+        : '';
     return {
       ok: false,
-      reason: `OpenRouter HTTP ${response.status}${snippet ? `: ${snippet}` : ''}`,
+      reason: `OpenRouter HTTP ${response.status}${snippet ? `: ${snippet}` : ''}${keyHint}`,
     };
   }
 
@@ -419,8 +423,8 @@ const storeBrief = async (
  * Shared pipeline for cron and admin-triggered daily brief generation.
  */
 export const runDailyBriefGeneration = async (): Promise<NextResponse> => {
-  const bearerToken = process.env.X_API_BEARER_TOKEN;
-  const openRouterKey = process.env.OPENROUTER_API_KEY;
+  const bearerToken = process.env.X_API_BEARER_TOKEN?.trim();
+  const openRouterKey = process.env.OPENROUTER_API_KEY?.trim();
 
   if (!bearerToken) {
     return NextResponse.json(
