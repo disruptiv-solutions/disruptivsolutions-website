@@ -16,3 +16,9 @@ export const LAUNCHBOX_PROMO_LONG =
   'LaunchBox is a white-label AI workspace for creators, coaches, and communities. Your brand, your courses, your subscribers — one seamless home. Launch Kit: $39.99 first month, then $49.99/mo.';
 
 export const LAUNCHBOX_CTA_LABEL = 'Start with Launch Kit';
+
+/** Source repo for platform updates (e.g. weekly changelog newsletter via GitHub API) */
+export const LAUNCHBOX_GITHUB_REPO_FULL_NAME = 'disruptiv-solutions/launchbox-unified1' as const;
+
+export const LAUNCHBOX_GITHUB_REPO_URL =
+  'https://github.com/disruptiv-solutions/launchbox-unified1' as const;

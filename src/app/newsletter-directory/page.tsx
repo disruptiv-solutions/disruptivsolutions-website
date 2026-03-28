@@ -51,7 +51,16 @@ interface FirestoreBrief {
   generatedAt: string;
 }
 
-type ArchiveRowVariant = 'brief' | 'issue';
+interface FirestoreWeekly {
+  date: string;
+  displayDate: string;
+  title: string;
+  intro?: string;
+  weekLabel?: string;
+  generatedAt: string;
+}
+
+type ArchiveRowVariant = 'brief' | 'issue' | 'platform';
 
 interface ArchiveListRowProps {
   href: string;
@@ -80,11 +89,11 @@ const ArchiveListRow = ({
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
         <div className="min-w-0 flex-1 flex gap-4 sm:gap-5">
           <span
-            className={`shrink-0 w-14 sm:w-16 text-xs font-mono font-bold uppercase tracking-[0.18em] pt-1 ${
-              variant === 'brief' ? 'text-red-400' : 'text-zinc-400'
+            className={`shrink-0 w-14 sm:w-20 text-xs font-mono font-bold uppercase tracking-[0.18em] pt-1 ${
+              variant === 'brief' ? 'text-red-400' : variant === 'platform' ? 'text-amber-400' : 'text-zinc-400'
             }`}
           >
-            {variant === 'brief' ? 'Brief' : 'Issue'}
+            {variant === 'brief' ? 'Brief' : variant === 'platform' ? 'Platform' : 'Issue'}
           </span>
           <div className="min-w-0 flex-1">
             <h2 className="text-lg md:text-xl font-semibold text-white leading-snug tracking-tight group-hover:text-red-400 transition-colors">
@@ -112,10 +121,13 @@ export default function NewsletterDirectoryPage() {
   const { user } = useAuth();
   const [newsletters, setNewsletters] = useState<NewsletterResource[]>([]);
   const [firestoreBriefs, setFirestoreBriefs] = useState<FirestoreBrief[]>([]);
+  const [firestoreWeeklies, setFirestoreWeeklies] = useState<FirestoreWeekly[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [generating, setGenerating] = useState(false);
   const [generateStatus, setGenerateStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [generatingWeekly, setGeneratingWeekly] = useState(false);
+  const [weeklyStatus, setWeeklyStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
   const userIsAdmin = isAdmin(user?.uid);
 
@@ -184,19 +196,89 @@ export default function NewsletterDirectoryPage() {
     }
   };
 
+  const handleGenerateLaunchboxWeekly = async () => {
+    if (!user) {
+      setWeeklyStatus({ type: 'error', message: 'You must be signed in to generate a weekly update.' });
+      return;
+    }
+
+    setGeneratingWeekly(true);
+    setWeeklyStatus(null);
+
+    try {
+      const idToken = await user.getIdToken();
+      const res = await fetch('/api/admin/generate-launchbox-weekly', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
+      });
+
+      const raw = await res.text();
+      let data: {
+        success?: boolean;
+        error?: string;
+        details?: string;
+        message?: string;
+        dateSlug?: string;
+        step?: string;
+      } = {};
+
+      try {
+        data = raw ? (JSON.parse(raw) as typeof data) : {};
+      } catch {
+        setWeeklyStatus({
+          type: 'error',
+          message: `Server error (${res.status}): ${raw.replace(/\s+/g, ' ').slice(0, 500)}`,
+        });
+        return;
+      }
+
+      if (!res.ok) {
+        const detail = data.details ? ` ${data.details}` : '';
+        setWeeklyStatus({
+          type: 'error',
+          message: `${data.error || `Request failed (${res.status})`}${detail}`.trim(),
+        });
+        return;
+      }
+
+      if (data.success) {
+        setWeeklyStatus({
+          type: 'success',
+          message: `LaunchBox weekly saved for ${data.dateSlug}`,
+        });
+        const weeklyRes = await fetch('/api/launchbox-weekly');
+        const weeklyData = await weeklyRes.json();
+        if (weeklyData.success && weeklyData.items) {
+          setFirestoreWeeklies(weeklyData.items as FirestoreWeekly[]);
+        }
+      } else {
+        setWeeklyStatus({
+          type: 'error',
+          message: data.message || data.error || 'Generation skipped or failed',
+        });
+      }
+    } catch {
+      setWeeklyStatus({ type: 'error', message: 'Network error — could not reach the server.' });
+    } finally {
+      setGeneratingWeekly(false);
+    }
+  };
+
   useEffect(() => {
     const fetchAll = async () => {
       try {
         setLoading(true);
 
-        // Fetch newsletter resources and Firestore briefs in parallel
-        const [resourcesRes, briefsRes] = await Promise.all([
+        const [resourcesRes, briefsRes, weeklyRes] = await Promise.all([
           fetch(
             user?.uid
               ? `/api/resources?published=true&userId=${user.uid}`
               : '/api/resources?published=true'
           ),
           fetch('/api/daily-briefs'),
+          fetch('/api/launchbox-weekly'),
         ]);
 
         const resourcesData = await resourcesRes.json();
@@ -208,6 +290,11 @@ export default function NewsletterDirectoryPage() {
         const briefsData = await briefsRes.json();
         if (briefsData.success && briefsData.briefs) {
           setFirestoreBriefs(briefsData.briefs as FirestoreBrief[]);
+        }
+
+        const weeklyData = await weeklyRes.json();
+        if (weeklyData.success && weeklyData.items) {
+          setFirestoreWeeklies(weeklyData.items as FirestoreWeekly[]);
         }
       } catch {
         setError('Failed to load newsletters');
@@ -252,43 +339,86 @@ export default function NewsletterDirectoryPage() {
 
           {/* Admin: Generate Daily Brief */}
           {userIsAdmin && (
-            <div className="mt-6 flex flex-wrap items-center gap-4">
-              <button
-                onClick={handleGenerateBrief}
-                disabled={generating}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-red-600 text-white text-sm font-bold uppercase tracking-widest hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                aria-label="Generate today's daily brief"
-                tabIndex={0}
-              >
-                {generating ? (
-                  <>
-                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    Generating...
-                  </>
-                ) : (
-                  <>
-                    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M13 10V3L4 14h7v7l9-11h-7z"
-                      />
-                    </svg>
-                    Generate Today&apos;s Brief
-                  </>
-                )}
-              </button>
-
-              {generateStatus && (
-                <span
-                  className={`text-sm font-medium ${
-                    generateStatus.type === 'success' ? 'text-emerald-400' : 'text-red-400'
-                  }`}
+            <div className="mt-6 flex flex-col gap-4">
+              <div className="flex flex-wrap items-center gap-4">
+                <button
+                  type="button"
+                  onClick={handleGenerateBrief}
+                  disabled={generating}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-red-600 text-white text-sm font-bold uppercase tracking-widest hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  aria-label="Generate today's daily brief"
+                  tabIndex={0}
                 >
-                  {generateStatus.message}
-                </span>
-              )}
+                  {generating ? (
+                    <>
+                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M13 10V3L4 14h7v7l9-11h-7z"
+                        />
+                      </svg>
+                      Generate Today&apos;s Brief
+                    </>
+                  )}
+                </button>
+
+                {generateStatus && (
+                  <span
+                    className={`text-sm font-medium ${
+                      generateStatus.type === 'success' ? 'text-emerald-400' : 'text-red-400'
+                    }`}
+                  >
+                    {generateStatus.message}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex flex-wrap items-center gap-4">
+                <button
+                  type="button"
+                  onClick={handleGenerateLaunchboxWeekly}
+                  disabled={generatingWeekly}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-700 text-white text-sm font-bold uppercase tracking-widest hover:bg-amber-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  aria-label="Generate LaunchBox weekly platform update"
+                  tabIndex={0}
+                >
+                  {generatingWeekly ? (
+                    <>
+                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Generating weekly...
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                        />
+                      </svg>
+                      Generate LaunchBox weekly
+                    </>
+                  )}
+                </button>
+
+                {weeklyStatus && (
+                  <span
+                    className={`text-sm font-medium ${
+                      weeklyStatus.type === 'success' ? 'text-emerald-400' : 'text-red-400'
+                    }`}
+                  >
+                    {weeklyStatus.message}
+                  </span>
+                )}
+              </div>
             </div>
           )}
         </div>
@@ -308,7 +438,11 @@ export default function NewsletterDirectoryPage() {
                 ← Back to Resources
               </Link>
             </div>
-          ) : newsletterIssues.length === 0 && newsletters.length === 0 && staticBriefsFallbackOnly.length === 0 && firestoreBriefs.length === 0 ? (
+          ) : newsletterIssues.length === 0 &&
+            newsletters.length === 0 &&
+            staticBriefsFallbackOnly.length === 0 &&
+            firestoreBriefs.length === 0 &&
+            firestoreWeeklies.length === 0 ? (
             <div className="text-center py-20 space-y-6">
               <p className="text-gray-400 text-lg">
                 No newsletter issues published yet. Check back soon.
@@ -322,6 +456,28 @@ export default function NewsletterDirectoryPage() {
             </div>
           ) : (
             <div className="space-y-10 md:space-y-12">
+              {/* LaunchBox platform updates (Firestore) */}
+              {firestoreWeeklies.length > 0 && (
+                <div>
+                  <h3 className="text-zinc-400 font-mono text-xs uppercase tracking-[0.2em] mb-4">
+                    LaunchBox platform updates
+                  </h3>
+                  <div className="border-t-2 border-zinc-600">
+                    {firestoreWeeklies.map((w) => (
+                      <ArchiveListRow
+                        key={w.date}
+                        href={`/launchbox-weekly/${w.date}`}
+                        variant="platform"
+                        title={w.title}
+                        dateLabel={w.weekLabel || w.displayDate}
+                        description={w.intro?.trim() || 'Weekly digest of what shipped in LaunchBox.'}
+                        readLabel="Read update"
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Daily Briefs (static + Firestore) */}
               {(staticBriefsFallbackOnly.length > 0 || firestoreBriefs.length > 0) && (
                 <div>
