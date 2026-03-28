@@ -78,6 +78,23 @@ export default function AdminDashboard() {
                   </p>
                 </Link>
 
+                <Link
+                  href="/admin/content-calendar"
+                  className="bg-gradient-to-br from-violet-600/20 via-violet-500/10 to-transparent border border-violet-500/30 rounded-xl p-6 hover:border-violet-500/50 transition-all group"
+                >
+                  <div className="flex items-center gap-4 mb-3">
+                    <div className="text-3xl" aria-hidden>
+                      📅
+                    </div>
+                    <h3 className="text-xl font-bold text-white group-hover:text-violet-300 transition-colors">
+                      Content calendar
+                    </h3>
+                  </div>
+                  <p className="text-gray-400 text-sm">
+                    Daily brief schedule, push status, and extra planned content by day.
+                  </p>
+                </Link>
+
                 <div className="bg-gradient-to-br from-blue-600/20 via-blue-500/10 to-transparent border border-blue-500/30 rounded-xl p-6">
                   <div className="flex items-center gap-4 mb-3">
                     <div className="text-3xl">👥</div>

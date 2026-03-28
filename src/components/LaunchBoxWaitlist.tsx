@@ -198,7 +198,7 @@ const LaunchboxWaitlist: React.FC = () => {
     return (
       <>
         <Navigation />
-        <section className="min-h-screen pt-[65px] px-6 py-12 lg:py-20 bg-white">
+        <section className="min-h-screen pt-[65px] px-6 py-12 lg:py-20 bg-white font-satoshi">
           <div className="max-w-4xl mx-auto">
             {/* Hero Section */}
             <div className="text-center mb-16">
@@ -557,7 +557,7 @@ const LaunchboxWaitlist: React.FC = () => {
   return (
     <>
       <Navigation />
-      <section className="min-h-screen pt-[65px] px-6 py-12 lg:py-20 bg-white">
+      <section className="min-h-screen pt-[65px] px-6 py-12 lg:py-20 bg-white font-satoshi">
         <div className="max-w-4xl mx-auto">
           {/* Hero Section */}
           <div className="text-center mb-16">

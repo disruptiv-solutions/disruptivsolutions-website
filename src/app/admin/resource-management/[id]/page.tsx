@@ -7,6 +7,7 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { ResourcePreviewContent } from '@/components/admin/ResourcePreviewContent';
 
 interface ResourceSection {
   heading?: string;
@@ -20,7 +21,7 @@ interface Resource {
   id: string;
   title: string;
   description: string;
-  type: 'article' | 'ad-landing' | 'blog' | 'prompts' | 'tool' | 'guide' | 'video';
+  type: 'article' | 'ad-landing' | 'blog' | 'newsletter' | 'prompts' | 'tool' | 'guide' | 'video';
   icon: string;
   imageUrl?: string;
   imagePrompt?: string;
@@ -36,13 +37,14 @@ const typeLabels = {
   article: 'Article',
   'ad-landing': 'Ad / Landing Page',
   blog: 'Blog Post',
+  newsletter: "Ian's Newsletter",
   prompts: 'Prompts',
   tool: 'Tool',
   guide: 'Guide',
   video: 'Video',
 };
 
-type ResourceType = 'article' | 'ad-landing' | 'blog' | 'prompts' | 'tool' | 'guide' | 'video';
+type ResourceType = 'article' | 'ad-landing' | 'blog' | 'newsletter' | 'prompts' | 'tool' | 'guide' | 'video';
 
 export default function ResourceEditPage() {
   const params = useParams();
@@ -58,6 +60,7 @@ export default function ResourceEditPage() {
   const [generatingAI, setGeneratingAI] = useState(false);
   const [generatingImage, setGeneratingImage] = useState(false);
   const [contentGenerated, setContentGenerated] = useState(false);
+  const [showFullPreviewOverlay, setShowFullPreviewOverlay] = useState(false);
   
   // Initial form state for new resources
   const [initialForm, setInitialForm] = useState({
@@ -68,6 +71,7 @@ export default function ResourceEditPage() {
     length: 50, // Default to medium length (50% = ~4000 tokens)
     createImage: false,
     includeXFeeds: false,
+    useNewsletterVoice: false,
   });
   
   const [formData, setFormData] = useState<Omit<Resource, 'id'>>({
@@ -214,6 +218,7 @@ export default function ResourceEditPage() {
     length: number;
     createImage: boolean;
     includeXFeeds: boolean;
+    useNewsletterVoice: boolean;
   };
 
   const handleGenerateWithAI = async (overrideParams?: GenerateParams) => {
@@ -238,6 +243,7 @@ export default function ResourceEditPage() {
           deepResearch: params.deepResearch,
           length: params.length,
           includeXFeeds: params.includeXFeeds ?? false,
+          useNewsletterVoice: params.useNewsletterVoice ?? false,
         }),
       });
 
@@ -298,11 +304,28 @@ export default function ResourceEditPage() {
     length: 60,
     createImage: true,
     includeXFeeds: true,
+    useNewsletterVoice: true,
+  };
+
+  const NEWSLETTER_PRESET: GenerateParams = {
+    resourceType: 'newsletter',
+    includeWebResearch: false,
+    deepResearch: false,
+    topic: `What I'm building and learning from AI this week - ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`,
+    length: 30,
+    createImage: false,
+    includeXFeeds: false,
+    useNewsletterVoice: true,
   };
 
   const handleDailyAiNewsPreset = () => {
     setInitialForm(DAILY_AI_NEWS_PRESET);
     handleGenerateWithAI(DAILY_AI_NEWS_PRESET);
+  };
+
+  const handleNewsletterPreset = () => {
+    setInitialForm(NEWSLETTER_PRESET);
+    handleGenerateWithAI(NEWSLETTER_PRESET);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -449,27 +472,39 @@ export default function ResourceEditPage() {
 
                 <div className="mb-6 p-4 bg-zinc-800/50 border border-gray-700 rounded-xl">
                   <p className="text-sm text-gray-400 mb-3">Quick preset — one click to generate</p>
-                  <button
-                    type="button"
-                    onClick={handleDailyAiNewsPreset}
-                    disabled={generatingAI}
-                    className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                  >
-                    {generatingAI ? (
-                      <>
-                        <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                        </svg>
-                        <span>Generating...</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>📰</span>
-                        <span>Daily AI News</span>
-                      </>
-                    )}
-                  </button>
+                  <div className="flex flex-wrap gap-3">
+                    <button
+                      type="button"
+                      onClick={handleDailyAiNewsPreset}
+                      disabled={generatingAI}
+                      className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                    >
+                      {generatingAI ? (
+                        <>
+                          <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                          </svg>
+                          <span>Generating...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>📰</span>
+                          <span>Daily AI News</span>
+                        </>
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleNewsletterPreset}
+                      disabled={generatingAI}
+                      className="px-6 py-3 bg-gradient-to-r from-amber-600 to-orange-600 text-white font-semibold rounded-xl hover:from-amber-700 hover:to-orange-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                    >
+                      <span>✉️</span>
+                      <span>Newsletter</span>
+                    </button>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">Daily AI News uses Ian&apos;s brand voice. Newsletter drafts in Ian&apos;s voice.</p>
                 </div>
 
                 <form onSubmit={(e) => { e.preventDefault(); handleGenerateWithAI(); }} className="space-y-6">
@@ -479,7 +514,7 @@ export default function ResourceEditPage() {
                       What type of resource do you want to create? *
                     </label>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                      {(['article', 'ad-landing', 'blog', 'prompts', 'tool', 'guide', 'video'] as ResourceType[]).map((type) => (
+                      {(['article', 'ad-landing', 'blog', 'newsletter', 'prompts', 'tool', 'guide', 'video'] as ResourceType[]).map((type) => (
                         <button
                           key={type}
                           type="button"
@@ -490,7 +525,7 @@ export default function ResourceEditPage() {
                               : 'border-gray-700 bg-zinc-800 hover:border-gray-600'
                           }`}
                         >
-                          <div className="text-2xl mb-2">{type === 'article' ? '📄' : type === 'ad-landing' ? '📢' : type === 'blog' ? '✍️' : type === 'prompts' ? '✨' : type === 'tool' ? '🛠️' : type === 'guide' ? '📚' : '🎥'}</div>
+                          <div className="text-2xl mb-2">{type === 'article' ? '📄' : type === 'ad-landing' ? '📢' : type === 'blog' ? '✍️' : type === 'newsletter' ? '✉️' : type === 'prompts' ? '✨' : type === 'tool' ? '🛠️' : type === 'guide' ? '📚' : '🎥'}</div>
                           <div className="text-white font-semibold text-sm">
                             {typeLabels[type]}
                           </div>
@@ -552,6 +587,18 @@ export default function ResourceEditPage() {
                           </div>
                         </label>
                       )}
+                      <label className="flex items-center gap-3 cursor-pointer ml-8">
+                        <input
+                          type="checkbox"
+                          checked={initialForm.useNewsletterVoice}
+                          onChange={(e) => setInitialForm({ ...initialForm, useNewsletterVoice: e.target.checked })}
+                          className="w-5 h-5 text-red-600 bg-zinc-900 border-gray-700 rounded focus:ring-red-600"
+                        />
+                        <div>
+                          <span className="text-white font-semibold">Use Ian&apos;s newsletter brand voice</span>
+                          <p className="text-gray-400 text-sm">Builder tone, conversational, honest, practical. No corporate jargon or hype.</p>
+                        </div>
+                      </label>
                     </div>
                   </div>
 
@@ -1024,23 +1071,7 @@ export default function ResourceEditPage() {
                   <h2 className="text-xl font-bold text-white">Live Preview</h2>
                   <button
                     type="button"
-                    onClick={() => {
-                      localStorage.setItem(
-                        'admin-resource-preview-draft',
-                        JSON.stringify({
-                          title: formData.title,
-                          description: formData.description,
-                          type: formData.type,
-                          icon: formData.icon,
-                          imageUrl: formData.imageUrl,
-                          imagePrompt: formData.imagePrompt,
-                          tldr: formData.tldr,
-                          published: formData.published,
-                          content: formData.content,
-                        })
-                      );
-                      window.open('/admin/resource-management/preview', '_blank', 'noopener,noreferrer');
-                    }}
+                    onClick={() => setShowFullPreviewOverlay(true)}
                     className="px-4 py-2 bg-red-600/80 hover:bg-red-600 text-white text-sm font-semibold rounded-lg transition-colors"
                   >
                     View Full Preview
@@ -1232,6 +1263,47 @@ export default function ResourceEditPage() {
           )}
         </div>
       </div>
+
+      {/* Full Preview Overlay — uses formData directly, no reload or remount */}
+      {showFullPreviewOverlay && (
+        <div
+          className="fixed inset-0 z-50 bg-black overflow-y-auto"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Full page preview"
+        >
+          <div className="bg-yellow-600/20 border-b border-yellow-500/50 py-3 px-6 sticky top-0 z-10">
+            <div className="max-w-4xl mx-auto flex items-center justify-between">
+              <p className="text-yellow-400 text-sm font-semibold">
+                Full Page Preview — Shows how the resource will look when published
+              </p>
+              <button
+                type="button"
+                onClick={() => setShowFullPreviewOverlay(false)}
+                className="text-yellow-400 hover:text-yellow-300 text-sm font-semibold underline"
+                aria-label="Close preview"
+              >
+                ← Back to Editor
+              </button>
+            </div>
+          </div>
+          <main className="max-w-4xl mx-auto px-6 pt-12 pb-20">
+            <ResourcePreviewContent
+              data={{
+                title: formData.title,
+                description: formData.description,
+                type: formData.type,
+                icon: formData.icon,
+                imageUrl: formData.imageUrl,
+                imagePrompt: formData.imagePrompt,
+                tldr: formData.tldr,
+                published: formData.published,
+                content: formData.content,
+              }}
+            />
+          </main>
+        </div>
+      )}
     </AdminRoute>
   );
 }

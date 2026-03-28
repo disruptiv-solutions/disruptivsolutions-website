@@ -185,15 +185,28 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
                               </p>
                             </div>
                             {isAdmin && (
-                              <button
-                                onClick={() => {
-                                  router.push('/admin');
-                                  setIsUserMenuOpen(false);
-                                }}
-                                className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-gray-800 transition-colors border-b border-gray-800 font-semibold"
-                              >
-                                Admin Dashboard →
-                              </button>
+                              <>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    router.push('/admin');
+                                    setIsUserMenuOpen(false);
+                                  }}
+                                  className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-gray-800 transition-colors border-b border-gray-800 font-semibold"
+                                >
+                                  Admin Dashboard →
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    router.push('/admin/content-calendar');
+                                    setIsUserMenuOpen(false);
+                                  }}
+                                  className="w-full text-left px-4 py-3 text-sm text-violet-300 hover:bg-gray-800 transition-colors border-b border-gray-800"
+                                >
+                                  Content calendar
+                                </button>
+                              </>
                             )}
                             <button
                               onClick={handleSignOut}
@@ -358,15 +371,28 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
                         </div>
                       </div>
                       {isAdmin && (
-                        <button
-                          onClick={() => {
-                            router.push('/admin');
-                            setIsMobileMenuOpen(false);
-                          }}
-                          className="w-full px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition-all shadow-lg shadow-red-600/40"
-                        >
-                          Admin Dashboard →
-                        </button>
+                        <div className="flex flex-col gap-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              router.push('/admin');
+                              setIsMobileMenuOpen(false);
+                            }}
+                            className="w-full px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition-all shadow-lg shadow-red-600/40"
+                          >
+                            Admin Dashboard →
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              router.push('/admin/content-calendar');
+                              setIsMobileMenuOpen(false);
+                            }}
+                            className="w-full px-4 py-2 bg-violet-700 text-white text-sm font-semibold rounded-lg hover:bg-violet-600 transition-colors"
+                          >
+                            Content calendar
+                          </button>
+                        </div>
                       )}
                       <button
                         onClick={handleSignOut}

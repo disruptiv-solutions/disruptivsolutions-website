@@ -1,41 +1,41 @@
-import { db } from '@/lib/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { initFirebaseAdmin } from '@/lib/firebase-admin';
 
 export type UserTier = 'free' | 'premium' | null;
 
 /**
- * Get user tier from Firestore
- * Checks the 'users' collection for the user's tier
- * Returns 'free' if user exists but no tier specified
- * Returns null if user doesn't exist or not authenticated
+ * Get user tier from Firestore (server-side / API routes only).
+ * Uses Firebase Admin SDK so reads succeed without a client auth session.
  */
-export async function getUserTier(userId: string | null | undefined): Promise<UserTier> {
+export const getUserTier = async (userId: string | null | undefined): Promise<UserTier> => {
   if (!userId) {
     return null;
   }
 
   try {
-    const userRef = doc(db, 'users', userId);
-    const userSnap = await getDoc(userRef);
-    
-    if (!userSnap.exists()) {
+    const { adminDb, error: adminError } = initFirebaseAdmin();
+    if (!adminDb) {
+      if (adminError) {
+        console.warn('[getUserTier] Firebase Admin unavailable:', adminError);
+      }
+      return null;
+    }
+
+    const userSnap = await adminDb.collection('users').doc(userId).get();
+
+    if (!userSnap.exists) {
       return null;
     }
 
     const userData = userSnap.data();
-    const tier = userData.tier;
-    
-    // If tier is 'free' or 'premium', return it
-    // If user exists but no tier, default to 'free'
+    const tier = userData?.tier;
+
     if (tier === 'free' || tier === 'premium') {
       return tier;
     }
-    
-    // User exists but no tier set - default to free
+
     return 'free';
   } catch (error) {
     console.error('[getUserTier] Error fetching user tier:', error);
     return null;
   }
-}
-
+};

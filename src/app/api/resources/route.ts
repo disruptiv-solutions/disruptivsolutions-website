@@ -18,7 +18,7 @@ interface Resource {
   id?: string;
   title: string;
   description: string;
-  type: 'article' | 'ad-landing' | 'blog' | 'prompts' | 'tool' | 'guide' | 'video';
+  type: 'article' | 'ad-landing' | 'blog' | 'newsletter' | 'prompts' | 'tool' | 'guide' | 'video';
   icon: string;
   imageUrl?: string;
   imagePrompt?: string;

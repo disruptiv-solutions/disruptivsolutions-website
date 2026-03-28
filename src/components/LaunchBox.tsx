@@ -9,10 +9,8 @@ const Launchbox: React.FC = () => {
   const lastProgressRef = React.useRef(0);
 
   const handleWaitlist = () => {
-    // Track button click
     trackButtonClick('join_waitlist', 'launchbox_card');
-    // Navigate to founders page
-    window.location.href = 'https://launchbox.space/founders';
+    window.open('https://launchbox.space/founders', '_blank', 'noopener,noreferrer');
   };
 
   React.useEffect(() => {
@@ -72,7 +70,7 @@ const Launchbox: React.FC = () => {
     <section 
       ref={sectionRef}
       id="launchbox"
-      className="bg-black snap-start"
+      className="bg-black snap-start font-satoshi"
       style={{ height: 'calc(100vh * 2)' }}
       data-snap-section
     >

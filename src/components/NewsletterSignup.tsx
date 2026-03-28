@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import Navigation from './Navigation';
 import { trackFormSubmission, trackButtonClick } from '@/lib/analytics';
 
@@ -92,6 +93,12 @@ const NewsletterSignup: React.FC = () => {
             <p className="text-xl md:text-2xl text-gray-300 leading-relaxed">
               Weekly builds, lessons, and behind-the-scenes of building AI products. Get practical insights delivered to your inbox.
             </p>
+            <Link
+              href="/newsletter-directory"
+              className="inline-block mt-4 text-red-400 hover:text-red-300 text-sm font-medium"
+            >
+              Browse past issues →
+            </Link>
           </div>
 
           {/* Form Container */}

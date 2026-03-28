@@ -280,7 +280,7 @@ const LaunchboxWaitlist: React.FC = () => {
 }
 
   return (
-    <div style={investorsTheme} className="relative min-h-screen overflow-hidden text-slate-900 font-sans">
+    <div style={investorsTheme} className="relative min-h-screen overflow-hidden text-slate-900 font-satoshi">
       {/* Background Gradients */}
       <div className="fixed inset-0 bg-gradient-to-br from-slate-50 via-white to-gray-100 z-0" />
       <div className="fixed inset-0 pointer-events-none z-0">

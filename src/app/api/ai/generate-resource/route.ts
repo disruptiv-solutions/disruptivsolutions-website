@@ -63,6 +63,33 @@ interface FormattedSection {
 
 const X_CURATED_ACCOUNTS = ['AndrewYNg', 'sama', 'lexfridman', 'kaifulee', 'NVIDIAAI'] as const;
 
+/** Ian McDonald Newsletter Brand Voice — use when generating newsletter content */
+const IAN_NEWSLETTER_VOICE = `You are writing in the voice of Ian McDonald, founder of LaunchBox.
+
+Ian is a real builder, not a guru. He is "the guide who's still on the journey" — someone a few steps ahead, sharing what he is learning as he builds with AI in public. The content should feel like a smart, honest note from a builder in the trenches.
+
+VOICE RULES:
+- Write conversationally and directly
+- Use short paragraphs and lots of white space
+- Sound human, clear, grounded, and useful
+- Be confident, but never arrogant
+- Be vulnerable, but never self-pitying
+- Focus on practical insight, not hype
+- Explain AI simply for non-technical readers
+- Share lessons from real experience
+- Include one main idea per piece
+- Make content useful, not performative
+- Use active voice and contractions
+- Fragments are okay. Em dashes are okay.
+- Regularly admit mistakes, failed experiments, wrong assumptions, or changed opinions when relevant
+- Formatting should feel personal, light, and slightly raw — not polished or corporate
+
+NEVER USE: corporate jargon, fake guru language, hypey marketing, buzzwords (synergy, leverage, paradigm, stakeholders, value proposition, optimize), passive voice, thought-leadership filler, grand predictions with no substance, victim language, aggressive sales language.
+
+TONE: Readers should feel "this guy is legit," "this is useful," "he's actually building," "I can do this too."
+
+GOLDEN RULE: If it doesn't sound like Ian saying it out loud to a smart friend over coffee, rewrite it.`;
+
 async function fetchXPostsFromCuratedAccounts(): Promise<string> {
   const bearerToken = process.env.X_API_BEARER_TOKEN;
   if (!bearerToken || !bearerToken.trim()) {
@@ -145,7 +172,7 @@ const cleanCitationMarkers = (text: string): string => {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { resourceType, topic, includeWebResearch, deepResearch, length = 50, includeXFeeds = false } = body;
+    const { resourceType, topic, includeWebResearch, deepResearch, length = 50, includeXFeeds = false, useNewsletterVoice = false } = body;
 
     if (!resourceType || !topic) {
       return NextResponse.json(
@@ -206,6 +233,7 @@ export async function POST(request: NextRequest) {
       article: 'Write a comprehensive, well-researched article with multiple sections covering the topic in detail. Include introduction, main content sections, and conclusion.',
       'ad-landing': 'Create a compelling landing page/ad copy with hero section, features, benefits, social proof, and strong call-to-action. Focus on conversion and persuasion.',
       blog: 'Write an engaging blog post with a hook, clear structure, personal insights, and actionable takeaways. Make it conversational and relatable.',
+      newsletter: 'Write a newsletter issue in Ian\'s voice. Structure: 1) Open with something real (a test, observation, mistake, or shift in thinking). 2) Land one core insight. 3) Make it useful with a practical takeaway. 4) End with a soft invitation (reply, share what they\'re building). Fast to read, easy to trust, built from real experience. No hype, no corporate jargon.',
       prompts: 'Create a collection of useful, practical prompts organized by category. Include examples and use cases for each prompt.',
       tool: 'Write a comprehensive guide explaining how to use a tool, including setup instructions, features overview, best practices, and troubleshooting tips.',
       guide: 'Create a detailed step-by-step guide with clear instructions, examples, and helpful tips. Make it easy to follow for beginners.',
@@ -275,8 +303,10 @@ export async function POST(request: NextRequest) {
       additionalProperties: false,
     };
 
-    const systemPrompt = `You are an expert content writer specializing in creating high-quality ${resourceType} content. 
-Generate well-structured, engaging content based on the user's topic.
+    const useIanVoice = useNewsletterVoice || resourceType === 'newsletter';
+    const baseVoice = useIanVoice ? IAN_NEWSLETTER_VOICE : `You are an expert content writer specializing in creating high-quality ${resourceType} content. Generate well-structured, engaging content based on the user's topic.`;
+
+    const systemPrompt = `${baseVoice}
 
 IMPORTANT: All section fields are required in the JSON schema. For fields you don't use:
 - Set 'text' to empty string "" if not needed

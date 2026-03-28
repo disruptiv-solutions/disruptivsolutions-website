@@ -11,7 +11,7 @@ interface ResourceContent {
   id: string;
   title: string;
   description: string;
-  type: 'article' | 'ad-landing' | 'blog' | 'prompts' | 'tool' | 'guide' | 'video';
+  type: 'article' | 'ad-landing' | 'blog' | 'newsletter' | 'prompts' | 'tool' | 'guide' | 'video';
   icon: string;
   imageUrl?: string;
   imagePrompt?: string;
@@ -650,6 +650,7 @@ export default function ResourcePage() {
     article: 'Article',
     'ad-landing': 'Ad / Landing Page',
     blog: 'Blog Post',
+    newsletter: "Ian's Newsletter",
     prompts: 'Prompts',
     tool: 'Tool',
     guide: 'Guide',

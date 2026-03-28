@@ -14,7 +14,7 @@ interface Resource {
   id: string;
   title: string;
   description: string;
-  type: 'article' | 'ad-landing' | 'blog' | 'prompts' | 'tool' | 'guide' | 'video' | 'all';
+  type: 'article' | 'ad-landing' | 'blog' | 'newsletter' | 'prompts' | 'tool' | 'guide' | 'video' | 'all';
   icon: string;
   imageUrl?: string;
   published: boolean;
@@ -30,6 +30,7 @@ const typeLabels = {
   article: 'Articles',
   'ad-landing': 'Ads / Landing Pages',
   blog: 'Blog Posts',
+  newsletter: "Ian's Newsletter",
   prompts: 'Prompts',
   tool: 'Tools',
   guide: 'Guides',
@@ -323,7 +324,7 @@ const FreeClassSignupBanner: React.FC = () => {
 
 export default function ResourcesPage() {
   const { user, isAdmin } = useAuth();
-  const [activeFilter, setActiveFilter] = useState<'all' | 'article' | 'ad-landing' | 'blog' | 'prompts' | 'tool' | 'guide' | 'video'>('all');
+  const [activeFilter, setActiveFilter] = useState<'all' | 'article' | 'ad-landing' | 'blog' | 'newsletter' | 'prompts' | 'tool' | 'guide' | 'video'>('all');
   const [resources, setResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -394,7 +395,7 @@ export default function ResourcesPage() {
           <FreeClassSignupBanner />
 
           {/* Launchbox Founders Banner */}
-          <div className="mb-8 bg-white border border-gray-200 rounded-2xl p-6">
+          <div className="mb-8 bg-white border border-gray-200 rounded-2xl p-6 font-satoshi">
             <div className="flex items-center justify-between gap-4 flex-wrap">
               <div className="flex items-center gap-3">
                 <div className="flex items-center justify-center w-12 h-12">
@@ -623,14 +624,20 @@ export default function ResourcesPage() {
             <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
               Join my newsletter to get new resources, tutorials, and AI building tips delivered to your inbox every week.
             </p>
-            <a
-              href="https://newsletter.example.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block px-8 py-4 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-all shadow-lg shadow-red-600/40"
-            >
-              Subscribe to Newsletter →
-            </a>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link
+                href="/newsletter-directory"
+                className="inline-block px-6 py-3 bg-zinc-800 border border-gray-700 text-white font-semibold rounded-xl hover:bg-zinc-700 transition-all"
+              >
+                Browse Newsletter Archive
+              </Link>
+              <Link
+                href="/newsletter"
+                className="inline-block px-8 py-4 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-all shadow-lg shadow-red-600/40"
+              >
+                Subscribe to Newsletter →
+              </Link>
+            </div>
           </div>
         </div>
       </section>

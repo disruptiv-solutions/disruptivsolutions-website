@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap');
 
 :root {
   --background: #0a0a0a;
@@ -17,6 +18,25 @@
   --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
   --font-heading: 'Rosario', system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-geist-mono);
+  --font-satoshi: 'Satoshi', system-ui, sans-serif;
+}
+
+/* LaunchBox brand uses Satoshi — !important to override Tailwind/body font cascade */
+.font-satoshi {
+  font-family: 'Satoshi', var(--font-satoshi) !important;
+}
+
+/* Override global heading font inside LaunchBox so headings use Satoshi */
+.font-satoshi h1,
+.font-satoshi h2,
+.font-satoshi h3,
+.font-satoshi h4,
+.font-satoshi h5,
+.font-satoshi h6,
+.font-satoshi p,
+.font-satoshi span,
+.font-satoshi a {
+  font-family: inherit !important;
 }
 
 body {

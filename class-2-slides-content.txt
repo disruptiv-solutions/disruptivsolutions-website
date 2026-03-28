@@ -1,0 +1,596 @@
+CLASS 2 - SLIDE CONTENTS
+========================
+
+SLIDE 1: Welcome
+----------------
+Title: Welcome! 👋
+
+Subtitle: Let's build your AI-powered website together
+
+URL Display: ianmcdonald.ai/resources/classes/class-2
+
+
+SLIDE 2: What We Did in Class 1
+--------------------------------
+Title: What We Did in Class 1
+
+Six Activity Cards:
+
+1. Learned AI Basics
+   - Understood how AI app development works and how it changed from complex code to simple conversation
+
+2. Shared Our Stories
+   - Recorded or typed professional bios and details about who we are and what we do
+
+3. AI Enhancement
+   - Used AI to enhance our bios and generate custom prompts tailored to our information
+
+4. Built Our Sites
+   - Copied our prompts into Lovable's platform and watched AI build our websites
+
+5. Made Quick Edits
+   - Personalized our sites with quick edits to make them uniquely ours
+
+6. Deployed Live
+   - Published our sites to the web instantly and got live URLs to share
+
+Summary Banner:
+Result: We proved that building with AI isn't just for "tech people"
+In ~30 minutes, everyone built a live website. The barrier isn't technical—it's belief.
+
+
+SLIDE 3: Celebration Counter
+-----------------------------
+Title: You all did that! 🎉
+
+Main Content:
+In Class 1, we had
+
+[Animated counter counting up to] 76 people
+
+joined and began or launched their first AI-built sites
+
+Summary Banner:
+76 people took their first steps into AI app building
+Some launched live sites. Others got started on their journey. All by people who thought they couldn't build.
+
+
+SLIDE 4: The Goal Was Simple
+----------------------------
+Title: The Goal Was Simple
+
+Subtitle: Get your wheels turning about what you can build and create
+
+Main Content:
+In Class 1, you built a website in minutes. Think about what that means for you.
+
+Three Action Points:
+
+→ Get the wheels turning
+   You've proven to yourself that building with AI is possible. Use this momentum to keep learning and building.
+
+→ Build sites for others
+   Local businesses need websites. You now have the skills to help them. Start with friends, family, or small businesses in your area.
+
+→ Dive deeper into AI app development
+   This is just the beginning. There's so much more to learn about building AI-powered applications, automation, and tools that solve real problems.
+
+
+SLIDE 5: Today's Mission
+-------------------------
+Title: Today's Mission: Level Up Your Prompting
+
+Subtitle: Move from "it works" to "it works exactly how I want"
+
+Main Content:
+What we're covering today:
+
+Four Columns:
+
+1. Why Prompts Matter 💡
+   - The difference between vague results and precise builds
+   - How AI actually interprets what you say
+
+2. The Framework 📋
+   - The 4-part structure pros use
+   - How to break complex ideas into phases
+
+3. Platform-Specific Tips 🛠️
+   - What works best in Lovable, Bolt, Cursor, Replit
+   - When to use which tool
+
+4. Live Practice 🎯
+   - You'll write prompts together
+   - Build something new with better results
+
+Bottom Banner:
+By the end: You'll know how to get AI to build what's in your head—not just something close.
+
+
+SLIDE 6: The Problem Most Beginners Face
+------------------------------------------
+Title: The Problem Most Beginners Face
+
+Visual Setup: Split screen comparison
+
+LEFT SIDE - Vague Prompt:
+"Make me a website for my business"
+
+What AI Delivers:
+✗ Generic template
+✗ Random colors
+✗ Missing key sections
+✗ Doesn't match your vision
+
+RIGHT SIDE - Specific Prompt:
+"Build a professional website for a wedding photography business. Include: hero section with booking CTA, portfolio gallery (grid layout), about me section, pricing packages table, contact form. Use soft pink (#FFC0CB) and white color scheme. Elegant, romantic feel."
+
+What AI Delivers:
+✓ Exactly what you asked for
+✓ Right colors, right sections
+✓ Professional result
+✓ Matches your vision
+
+Bottom Text (Large):
+Same tool. Different results.
+The prompt is everything.
+
+
+SLIDE 7: How AI Actually Reads Your Prompts
+--------------------------------------------
+Title: How AI Actually Reads Your Prompts
+
+Subtitle: Think of AI like a really smart intern—helpful, but needs clear direction
+
+Main Content:
+
+What AI is good at:
+✓ Following specific instructions
+✓ Using examples you provide
+✓ Filling in reasonable defaults
+✓ Working in phases/steps
+
+What AI struggles with:
+✗ Reading your mind
+✗ Knowing your unstated preferences
+✗ Understanding vague requests like "make it better"
+✗ Handling massive requests all at once
+
+Key Insight Box:
+"AI doesn't know what 'professional' means to YOU. It needs specifics: colors, layout type, sections, tone, who it's for."
+
+Bottom Text:
+The clearer you are, the less back-and-forth fixing you'll do.
+
+
+SLIDE 8: The 4-Part Prompting Framework
+----------------------------------------
+Title: The 4-Part Prompting Framework
+
+Subtitle: This is what pros use (and what we'll practice today)
+
+Four columns with clear examples:
+
+1. CONTEXT
+   Set the stage - who/what/why
+   Example: "You're building a website for a fitness coach who works with busy parents. The goal is to get people to book discovery calls."
+
+2. INSTRUCTIONS
+   What you want built
+   Example: "Create a landing page with: hero section, 3 program options, before/after testimonials, booking calendar, FAQ section."
+
+3. CONTENT
+   The actual information
+   Example: 
+   Coach name: Sarah Mitchell
+   Tagline: 'Get fit in 20 minutes a day—no gym required'
+   Programs: Home Workout Plan ($99/mo), Nutrition Coaching ($149/mo), Full Package ($199/mo)
+
+4. FORMAT
+   How it should look/behave
+   Example: "Modern, energetic design. Primary color: bright orange (#FF6B35). Mobile-first layout. Big, clear CTA buttons."
+
+Bottom Banner:
+Use all 4 parts = Better results in fewer tries
+
+
+SLIDE 9: Breaking Big Ideas Into Phases
+----------------------------------------
+Title: Don't Build Everything at Once
+
+Subtitle: The #1 tip from Reddit, Twitter, and every platform: Break it into phases
+
+Why This Matters:
+
+When you ask for everything at once, AI can:
+✗ Get confused and mix up sections
+✗ Time out or hit token limits
+✗ Create inconsistent code
+✗ Be harder to debug
+
+The Better Way - Phase-by-Phase:
+
+Phase 1: Core Structure
+"Build the homepage with header, hero section, and footer. Use placeholder text."
+✓ Quick to build
+✓ Easy to review
+✓ Solid foundation
+
+Phase 2: Add Content
+"Now add the About section with my bio and the Services section with 3 service cards."
+
+Phase 3: Features
+"Add a contact form that sends to my email and a testimonials carousel."
+
+Phase 4: Polish
+"Update colors to match my brand: primary #DC2626, secondary #991B1B. Add smooth scroll animations."
+
+Bottom Text (Large):
+Each phase takes 2-5 minutes. Total time? Same. Quality? Way better.
+
+
+SLIDE 10: Common Prompting Mistakes (And How to Fix Them)
+-----------------------------------------------------------
+Title: Common Mistakes Beginners Make
+
+Format: Table with 3 columns: ❌ Mistake | Why It Fails | ✅ Better Approach
+
+Row 1:
+❌ "Make it look professional"
+→ Too vague—AI guesses
+✅ "Use clean layout, sans-serif fonts, white space, business blue (#1E40AF)"
+
+Row 2:
+❌ "Add a contact form"
+→ Missing specs
+✅ "Add contact form with Name, Email, Message fields. Send to hello@example.com. Show success message after submit."
+
+Row 3:
+❌ One giant paragraph of every detail
+→ AI loses track
+✅ Break into Context, Instructions, Content, Format
+
+Row 4:
+❌ "Fix it" or "Make it better"
+→ AI doesn't know what's wrong
+✅ "The header overlaps the hero image on mobile. Fix the spacing and make header sticky."
+
+Row 5:
+❌ Building everything in one prompt
+→ Errors multiply, hard to debug
+✅ Phase 1: Structure. Phase 2: Content. Phase 3: Features. Phase 4: Polish.
+
+Bottom Banner:
+Being specific isn't being picky—it's being effective.
+
+
+SLIDE 11: Platform Differences (What Works Where)
+---------------------------------------------------
+Title: Not All Platforms Work the Same Way
+
+Subtitle: Here's when to use each tool and how to prompt them
+
+Four platform cards:
+
+🎨 LOVABLE (What we used in Class 1)
+Best for: Beginners, visual apps, quick websites
+Prompting Tips:
+• Very descriptive about UI/design
+• Mention color codes, layout types
+• Ask for Supabase if you need a database
+• Start simple, iterate with chat
+Example prompt: "Build a recipe sharing app. Grid of recipe cards, each shows image, title, cooking time. Click card to see full recipe. Use warm orange theme (#FF6B35)."
+
+⚡ BOLT.NEW
+Best for: Full-stack apps, prototypes with backend
+Prompting Tips:
+• Specify both frontend AND backend needs
+• Use "prompt enhance" feature
+• Break into discussion mode phases
+• Mention frameworks if you have preferences
+Example prompt: "Build a simple task manager. Frontend: list of tasks with checkboxes, add new task form. Backend: save tasks to database, mark complete/incomplete. Clean, minimal design."
+
+💻 CURSOR
+Best for: Developers, editing existing code, complex projects
+Prompting Tips:
+• Use @file and @folder to give context
+• Ask questions before generating code
+• Request it to act as code reviewer
+• Keep context windows small
+Example prompt: "@src/components/Header.tsx - Review this header component. Check for accessibility issues, performance problems, and suggest improvements. Then refactor with your recommendations."
+
+🚀 REPLIT
+Best for: Learning, collaborating, full dev environment
+Prompting Tips:
+• Ask for initial structure, then iterate
+• Use for open-ended projects
+• Great for debugging with AI
+• Generous free tier for practice
+Example prompt: "Create a Python Flask app that displays a random motivational quote on the homepage. Include a 'Get New Quote' button. Use simple Bootstrap styling."
+
+Bottom Text:
+For today's practice: We'll stick with Lovable (you already have accounts). But now you know when to try others.
+
+
+SLIDE 12: Let's See It In Action
+----------------------------------
+Title: Let's See the Difference
+
+Subtitle: Same idea, two different prompts, two different results
+
+Setup: Side-by-side comparison
+
+LEFT - Beginner Prompt:
+"Make me a website for my coffee shop"
+
+What gets built:
+✗ Generic "business" template
+✗ Random stock photos
+✗ No menu, no location, no hours
+✗ Takes 3-4 more prompts to fix
+
+RIGHT - Better Prompt (Using Framework):
+
+CONTEXT: Building a website for "Sunrise Coffee" - a local specialty coffee shop in Austin, TX focusing on ethically sourced beans and cozy atmosphere.
+
+INSTRUCTIONS: Create a homepage with:
+- Hero section with shop photo and tagline
+- Menu section (coffee, pastries, specialty drinks)
+- Location/hours section with embedded map
+- Instagram feed preview (3x3 grid)
+- Contact form
+
+CONTENT:
+- Name: Sunrise Coffee
+- Tagline: "Ethically sourced. Locally loved."
+- Location: 123 Main St, Austin, TX
+- Hours: Mon-Fri 6am-6pm, Sat-Sun 7am-7pm
+- Email: hello@sunrise.coffee
+
+FORMAT:
+- Warm, welcoming design
+- Colors: Coffee brown (#6F4E37), cream (#F5F5DC)
+- Mobile-responsive
+- Large, appetizing photos
+
+What gets built:
+✓ Exactly what you described
+✓ Professional, on-brand
+✓ Maybe 1 small tweak needed
+✓ Ready to show clients
+
+Bottom Banner:
+5 minutes of prompt planning = Hours saved in revisions
+
+
+SLIDE 13: Your Turn - Prompting Practice
+-----------------------------------------
+Title: Practice Time: Write Your First Structured Prompt
+
+Subtitle: Let's build something together using the 4-part framework
+
+The Challenge:
+You're building an app for a local business or service. Could be:
+• A yoga studio
+• A dog walking service
+• A personal trainer
+• A bakery
+• A freelance designer
+• ...or any idea you have
+
+Your Task (5 minutes):
+Fill out the framework below. Be as specific as possible.
+
+1. CONTEXT (Who is this for? What's the goal?)
+Example: "Local yoga studio targeting busy professionals. Goal: Get people to sign up for trial classes."
+
+2. INSTRUCTIONS (What should it include?)
+Example: "Homepage with: hero image, class schedule, instructor bios, pricing packages, trial signup form."
+
+3. CONTENT (The actual details)
+Example: "Studio: Inner Peace Yoga | Location: Downtown Seattle | Classes: Morning Flow, Power Yoga, Meditation..."
+
+4. FORMAT (How should it look?)
+Example: "Calm, zen aesthetic. Colors: Sage green (#87A96B), soft white. Clean, minimal design."
+
+[Generate My Prompt] button
+
+Output (after clicking Generate):
+Your Complete Prompt: [Combined formatted prompt ready to copy]
+[Copy Prompt] button
+
+Next Steps:
+1. Copy this prompt
+2. We'll paste it into Lovable together
+3. See what gets built
+4. Make one quick edit to practice iteration
+
+
+SLIDE 14: Demo Time - Let's Build Together
+-------------------------------------------
+Title: Watch It Build
+
+Subtitle: Now let's see your prompts in action
+
+What We're Doing:
+1. I'll demo with one person's prompt (volunteer?)
+2. We paste into Lovable
+3. Watch it build in real-time
+4. Make one iterative edit together
+5. Then you try yours
+
+What to Watch For:
+✓ How AI interprets your prompt
+✓ What it gets right immediately
+✓ What might need one follow-up prompt
+✓ How to make quick edits in chat
+
+Live Demo Section:
+[Screen share / live coding area]
+
+Bottom Banner:
+Remember: Version 1 doesn't have to be perfect. Ship it, then improve it.
+
+
+SLIDE 15: Common Problems & Quick Fixes
+----------------------------------------
+Title: When Things Go Wrong (And They Will)
+
+Subtitle: Here's how to debug like a pro
+
+Problem-Solution Grid:
+
+Problem 1: AI picks wrong colors
+Quick Fix: "Change primary color to #DC2626 and secondary to #991B1B throughout the site."
+
+Problem 2: Layout broken on mobile
+Quick Fix: "The header overlaps content on mobile screens. Fix spacing and make it responsive."
+
+Problem 3: Missing a section you mentioned
+Quick Fix: "Add the testimonials section below the services section. Include 3 testimonial cards with name, photo, and quote."
+
+Problem 4: Text is placeholder/lorem ipsum
+Quick Fix: "Replace all placeholder text with: [paste your actual content]"
+
+Problem 5: AI times out or fails
+Quick Fix: Start a new chat, use a shorter prompt, build in smaller phases.
+
+Pro Tip Box:
+"Keep a doc of your working prompts. When something works well, save it as a template for next time."
+
+Bottom Banner:
+Debugging is part of the process. Every error teaches you how to prompt better next time.
+
+
+SLIDE 16: Advanced Tips (For When You're Ready)
+-------------------------------------------------
+Title: Level Up: Advanced Prompting Techniques
+
+Subtitle: Try these once you've got the basics down
+
+Four Advanced Techniques:
+
+1. Role-Playing
+"Act as a senior UX designer. Review this layout and suggest 3 improvements for better user flow."
+Why it works: AI adjusts its perspective and gives more specialized feedback.
+
+2. Examples-First
+"Here's a screenshot of a design I like [attach]. Build something similar but for a fitness app instead of a restaurant."
+Why it works: Visual references reduce ambiguity.
+
+3. Version Control
+Use Git or version history. Before making big changes, commit/save your current version.
+Why it works: You can always roll back if AI changes too much at once.
+
+4. The Question-First Approach
+"Before building, ask me 5 questions about this project to make sure you understand what I need."
+Why it works: Catches misunderstandings before code is written.
+
+Bottom Text:
+You don't need these today—but they're here when you're ready to level up.
+
+
+SLIDE 18: Resources & Cheat Sheet
+----------------------------------
+Title: Your Prompting Cheat Sheet
+
+Subtitle: Bookmark this for your next build
+
+Download Box:
+📥 Download the Prompting Framework Template
+[Download PDF] button
+
+PDF Contents:
+✓ The 4-part framework template
+✓ Platform-specific tip sheets
+✓ 20 example prompts for common projects
+✓ Common fixes reference guide
+✓ Links to communities and resources
+
+Quick Reference:
+
+✓ Before You Prompt:
+• What's the goal?
+• Who's it for?
+• What sections/features do I need?
+• What should it look like?
+
+✓ While Building:
+• Start simple, add complexity in phases
+• Test on mobile and desktop
+• Make one change at a time
+• Save working versions
+
+✓ When Stuck:
+• Is my prompt specific enough?
+• Am I trying to do too much at once?
+• Did I provide color codes, not just "blue"?
+• Should I start a new chat and try again?
+
+
+SLIDE 19: What's Next?
+----------------------
+Title: What's Next?
+
+Subtitle: Join the community, stay connected, and keep building.
+
+Launchbox Waitlist
+Newsletter signup
+Facebook Group
+Social media links
+
+
+SLIDE 20: Go Deeper?
+--------------------
+Title: Ready to Go Deeper?
+
+Subtitle: Take your AI app development skills to the next level.
+
+1-on-1 Consulting
+Group Cohort (with 48-hour countdown timer)
+Feedback modal
+
+
+SLIDE 21: Thank You! 🙏
+----------------------
+Title: Thank You! 🙏
+
+Subtitle: You now know how to prompt AI like a pro.
+
+Closing Message:
+Remember: The barrier isn't technical. It's belief.
+You've proven you can build. Now go build something amazing.
+
+Bottom Text:
+See you in Class 3: Building Apps with Databases & User Accounts
+
+
+SLIDE 17: Your Action Items
+-----------------------------
+Title: What to Do After Today
+
+Subtitle: Turn today's knowledge into real builds
+
+Three Action Paths:
+
+🎯 PATH 1: Practice
+• Take today's prompt framework
+• Build 3 more simple projects this week
+• Try different platforms (Bolt, Replit)
+• Share in the Facebook group
+
+💼 PATH 2: Build for Someone Else
+• Find one local business without a site
+• Use today's framework to build them one
+• Charge $200-500 (or do it free to practice)
+• Get a testimonial
+
+🚀 PATH 3: Go Deeper
+• Join the 4-week Group Cohort
+• Learn databases, user auth, advanced features
+• Build production-ready apps
+• Get direct feedback
+
+Bottom Banner:
+The best way to get better at prompting? Build more things.
+
