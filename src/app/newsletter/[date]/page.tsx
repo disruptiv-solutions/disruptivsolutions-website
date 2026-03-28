@@ -12,6 +12,7 @@ import {
   LAUNCHBOX_LINK_NEW_TAB,
 } from '@/lib/launchbox-marketing';
 import { getExternalLinkProps } from '@/lib/external-link';
+import { IAN_PROFILE_IMAGE_SRC } from '@/lib/ian-profile';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -81,12 +82,15 @@ export default function NewsletterDatePage() {
           {/* Left Sticky Sidebar (Desktop) */}
           <div className="hidden lg:block lg:col-span-2">
             <div className="sticky top-32">
-              <div className="w-16 h-16 rounded-full overflow-hidden mb-6 grayscale opacity-80 border border-zinc-800">
-                <img 
-                  src="/default-avatar.svg" 
-                  alt="Ian McDonald" 
-                  className="w-full h-full object-cover" 
-                  onError={(e) => { e.currentTarget.src = 'https://ui-avatars.com/api/?name=Ian+McDonald&background=000000&color=ffffff'; }} 
+              <div className="w-16 h-16 rounded-full overflow-hidden mb-6 border border-zinc-700 bg-zinc-900">
+                <img
+                  src={IAN_PROFILE_IMAGE_SRC}
+                  alt="Ian McDonald"
+                  width={64}
+                  height={64}
+                  className="w-full h-full object-cover object-center"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               <p className="text-white font-bold text-lg">Ian McDonald</p>
@@ -178,12 +182,15 @@ export default function NewsletterDatePage() {
 
             {/* Mobile Author Block */}
             <div className="mt-24 pt-12 border-t border-zinc-900 lg:hidden flex items-center gap-6">
-              <div className="w-16 h-16 rounded-full overflow-hidden grayscale opacity-80 border border-zinc-800 flex-shrink-0">
-                <img 
-                  src="/default-avatar.svg" 
-                  alt="Ian McDonald" 
-                  className="w-full h-full object-cover" 
-                  onError={(e) => { e.currentTarget.src = 'https://ui-avatars.com/api/?name=Ian+McDonald&background=000000&color=ffffff'; }} 
+              <div className="w-16 h-16 rounded-full overflow-hidden border border-zinc-700 bg-zinc-900 flex-shrink-0">
+                <img
+                  src={IAN_PROFILE_IMAGE_SRC}
+                  alt="Ian McDonald"
+                  width={64}
+                  height={64}
+                  className="w-full h-full object-cover object-center"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               <div>

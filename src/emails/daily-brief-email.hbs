@@ -141,7 +141,16 @@
               </table>
               {{/if}}
 
-              <p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#1A2535;line-height:1.7;margin:0 0 6px 0;">&mdash; {{author_name}}</p>
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:0 0 12px 0;">
+                <tr>
+                  <td style="padding:0 12px 0 0;vertical-align:middle;">
+                    <img src="{{author_image_url}}" width="56" height="56" alt="{{author_name}}" style="display:block;width:56px;height:56px;border-radius:50%;border:1px solid #E8D8C9;object-fit:cover;">
+                  </td>
+                  <td style="vertical-align:middle;">
+                    <p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#1A2535;line-height:1.7;margin:0 0 6px 0;">&mdash; {{author_name}}</p>
+                  </td>
+                </tr>
+              </table>
               {{#if ps_text}}
               <p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#7A8A9A;line-height:1.6;margin:0;">{{ps_text}}</p>
               {{/if}}

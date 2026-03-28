@@ -1,6 +1,7 @@
 import Handlebars from 'handlebars';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { getIanProfileImageUrl } from '@/lib/ian-profile';
 
 /** Shape stored in Firestore `daily-briefs` (email fields optional). */
 export type DailyBriefForEmail = {
@@ -119,6 +120,8 @@ export type DailyBriefEmailTemplateContext = {
   } | null;
   promo: unknown;
   author_name: string;
+  /** Absolute URL to 1:1 profile image for email clients */
+  author_image_url: string;
   ps_text: string;
 };
 
@@ -175,6 +178,7 @@ export const buildDailyBriefEmailContext = (
     tool_of_the_day,
     promo: false,
     author_name,
+    author_image_url: getIanProfileImageUrl(website_url),
     ps_text,
   };
 };

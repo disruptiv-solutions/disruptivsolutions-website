@@ -13,6 +13,7 @@ import {
   LAUNCHBOX_LINK_NEW_TAB,
 } from '@/lib/launchbox-marketing';
 import { getExternalLinkProps } from '@/lib/external-link';
+import { IAN_PROFILE_IMAGE_SRC } from '@/lib/ian-profile';
 
 const StoryTag = ({ tag }: { tag: DailyBriefStory['tag'] }) => {
   const config = TAG_CONFIG[tag];
@@ -238,15 +239,15 @@ export default function DailyBriefPage() {
 
             {/* Mobile Author Block */}
             <div className="mt-16 pt-10 border-t border-zinc-800 lg:hidden flex items-center gap-6">
-              <div className="w-14 h-14 rounded-full overflow-hidden grayscale opacity-80 border border-zinc-800 flex-shrink-0">
+              <div className="w-14 h-14 rounded-full overflow-hidden border border-zinc-700 flex-shrink-0 bg-zinc-900">
                 <img
-                  src="/default-avatar.svg"
+                  src={IAN_PROFILE_IMAGE_SRC}
                   alt="Ian McDonald"
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.currentTarget.src =
-                      'https://ui-avatars.com/api/?name=Ian+McDonald&background=000000&color=ffffff';
-                  }}
+                  width={56}
+                  height={56}
+                  className="w-full h-full object-cover object-center"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               <div>
@@ -279,15 +280,15 @@ export default function DailyBriefPage() {
             <div className="sticky top-32 space-y-8">
               {/* Author */}
               <div className="flex items-center gap-4 mb-2">
-                <div className="w-12 h-12 rounded-full overflow-hidden grayscale opacity-80 border border-zinc-800">
+                <div className="w-12 h-12 rounded-full overflow-hidden border border-zinc-700 bg-zinc-900">
                   <img
-                    src="/default-avatar.svg"
+                    src={IAN_PROFILE_IMAGE_SRC}
                     alt="Ian McDonald"
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src =
-                        'https://ui-avatars.com/api/?name=Ian+McDonald&background=000000&color=ffffff';
-                    }}
+                    width={48}
+                    height={48}
+                    className="w-full h-full object-cover object-center"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <div>
