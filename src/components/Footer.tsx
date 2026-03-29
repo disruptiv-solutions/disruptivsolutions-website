@@ -12,6 +12,10 @@ const Footer: React.FC = () => {
     return null;
   }
 
+  if (pathname?.startsWith('/launchbox-weekly')) {
+    return null;
+  }
+
   return (
     <footer className="bg-black border-t border-gray-800 py-8">
       <div className="max-w-7xl mx-auto px-6">

@@ -1,14 +1,20 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import Navigation from './Navigation';
 import { trackSectionView } from '@/lib/analytics';
 
 const NavigationWrapper = () => {
+  const pathname = usePathname();
   const [activeSection, setActiveSection] = useState('hero');
   const lastTrackedSection = useRef<string | null>(null);
 
   useEffect(() => {
+    if (pathname?.startsWith('/launchbox-weekly')) {
+      return;
+    }
+
     const handleScroll = () => {
       // Sections in order they appear on the page
       const sections = [
@@ -76,7 +82,11 @@ const NavigationWrapper = () => {
     return () => {
       window.removeEventListener('scroll', scrollHandler);
     };
-  }, []);
+  }, [pathname]);
+
+  if (pathname?.startsWith('/launchbox-weekly')) {
+    return null;
+  }
 
   return <Navigation activeSection={activeSection} />;
 };

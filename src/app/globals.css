@@ -39,6 +39,39 @@
   font-family: inherit !important;
 }
 
+/* LaunchBox platform update reader — brand kit (scoped; only routes under .launchbox-weekly-theme) */
+.launchbox-weekly-theme {
+  --lb-signal-orange: #f3701e;
+  --lb-cloud-white: #f7f2ec;
+  --lb-launch-blue: #4b607f;
+  --lb-tan-relay: #e8d8c9;
+  --lb-ink: #2a3442;
+  background-color: var(--lb-cloud-white);
+  color: var(--lb-launch-blue);
+}
+
+.launchbox-weekly-theme h1,
+.launchbox-weekly-theme h2,
+.launchbox-weekly-theme h3,
+.launchbox-weekly-theme h4,
+.launchbox-weekly-theme h5,
+.launchbox-weekly-theme h6 {
+  font-family: 'Satoshi', system-ui, sans-serif !important;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.launchbox-weekly-theme p,
+.launchbox-weekly-theme li {
+  font-family: 'Satoshi', system-ui, sans-serif;
+}
+
+/* Secondary typeface: falls back when Avenir Next Arabic / Avenir Next are not installed */
+.font-lb-secondary {
+  font-family: 'Avenir Next Arabic', 'Avenir Next', 'Helvetica Neue', -apple-system, BlinkMacSystemFont,
+    sans-serif;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
