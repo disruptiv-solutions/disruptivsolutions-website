@@ -65,7 +65,7 @@ BRAND VISUAL STYLE GUIDELINES (MUST FOLLOW):
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${openRouterApiKey}`,
-        'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+        'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002',
         'X-Title': 'Disruptiv Solutions Resource Image Generator',
       },
       body: JSON.stringify({

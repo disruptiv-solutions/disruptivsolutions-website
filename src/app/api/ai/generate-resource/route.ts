@@ -417,7 +417,7 @@ Generate comprehensive, well-structured content following the JSON schema provid
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${openRouterApiKey}`,
-          'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+          'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002',
           'X-Title': 'Disruptiv Solutions Resource Generator',
         },
         body: JSON.stringify(openRouterBody),

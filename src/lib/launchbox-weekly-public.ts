@@ -10,9 +10,12 @@ export const sanitizeLaunchboxWeeklyForPublic = (raw: unknown): LaunchboxWeeklyP
 
   const highlights = highlightsRaw.map((h) => {
     const x = h as Record<string, unknown>;
+    const whatItMeansForYou =
+      typeof x.whatItMeansForYou === 'string' ? x.whatItMeansForYou.trim() : '';
     return {
       headline: typeof x.headline === 'string' ? x.headline : '',
       blurb: typeof x.blurb === 'string' ? x.blurb : '',
+      ...(whatItMeansForYou ? { whatItMeansForYou } : {}),
     };
   });
 

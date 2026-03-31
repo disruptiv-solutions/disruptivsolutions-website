@@ -48,6 +48,7 @@
   --lb-ink: #2a3442;
   background-color: var(--lb-cloud-white);
   color: var(--lb-launch-blue);
+  text-align: left;
 }
 
 .launchbox-weekly-theme h1,

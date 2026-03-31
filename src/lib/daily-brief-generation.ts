@@ -309,7 +309,7 @@ Generate the Daily AI Brief from these posts as a single JSON object.`;
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${openRouterKey}`,
-      'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+      'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002',
       'X-Title': 'Disruptiv Solutions Daily Brief Generator',
     },
     body: JSON.stringify({

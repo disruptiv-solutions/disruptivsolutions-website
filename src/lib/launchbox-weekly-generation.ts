@@ -154,9 +154,12 @@ OUTPUT: One JSON object only, no markdown fences. Required keys:
 - "title": string (short headline for the week)
 - "weekLabel": string (human-readable week, e.g. "Week of March 22, 2026")
 - "intro": string (2-4 sentences setting context in Ian's voice)
-- "highlights": array of 3-10 objects, each with only "headline" (string) and "blurb" (2-3 sentences, customer-safe, no links)
+- "highlights": array of 3-10 objects. Each object MUST include:
+  - "headline": string (short, scannable)
+  - "blurb": string (2-4 sentences: what shipped / changed, still plain language, customer-safe, no links)
+  - "whatItMeansForYou": string (1-3 short sentences answering "What does this mean for me?" for a busy creator or coach — use "you", zero jargon, concrete day-to-day outcomes only; no repeat of the blurb — translate impact)
 
-Do not include "commitUrl", "forBuilders", or any other keys.`;
+Every highlight MUST have a non-empty "whatItMeansForYou". Do not include "commitUrl", "forBuilders", or any other keys.`;
 
   const userPrompt = `${weekContext}
 
@@ -171,7 +174,7 @@ Produce the JSON summary.`;
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${openRouterKey}`,
-      'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+      'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002',
       'X-Title': 'Disruptiv Solutions LaunchBox Weekly',
     },
     body: JSON.stringify({
@@ -181,7 +184,7 @@ Produce the JSON summary.`;
         { role: 'user', content: userPrompt },
       ],
       temperature: 0.65,
-      max_tokens: 4000,
+      max_tokens: 5500,
       response_format: { type: 'json_object' },
     }),
   });
@@ -293,10 +296,12 @@ Items to summarize: ${commits.length}`;
       day: 'numeric',
     });
 
-    const highlights = generated.data.highlights.map(({ headline, blurb }) => ({
-      headline,
-      blurb,
-    }));
+    const highlights = generated.data.highlights.map((h) => {
+      const headline = String(h.headline ?? '').trim();
+      const blurb = String(h.blurb ?? '').trim();
+      const whatItMeansForYou = String(h.whatItMeansForYou ?? '').trim();
+      return { headline, blurb, whatItMeansForYou };
+    });
 
     const doc: LaunchboxWeeklyDoc = {
       title: generated.data.title,

@@ -50,7 +50,7 @@ Please return ONLY the enhanced bio text (2-3 paragraphs), without any additiona
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${openRouterApiKey}`,
-        'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3001',
+        'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002',
         'X-Title': 'Digital Business Card Bio Enhancer',
       },
       body: JSON.stringify({

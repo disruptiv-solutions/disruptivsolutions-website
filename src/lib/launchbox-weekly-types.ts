@@ -2,6 +2,8 @@
 export type LaunchboxWeeklyHighlight = {
   headline: string;
   blurb: string;
+  /** Plain "so what?" for the reader — layman's outcomes in "you" voice. */
+  whatItMeansForYou: string;
   commitUrl?: string;
 };
 
@@ -9,6 +11,8 @@ export type LaunchboxWeeklyHighlight = {
 export type LaunchboxWeeklyHighlightPublic = {
   headline: string;
   blurb: string;
+  /** Omitted on older Firestore docs until regenerated. */
+  whatItMeansForYou?: string;
 };
 
 export type LaunchboxWeeklyPublic = {

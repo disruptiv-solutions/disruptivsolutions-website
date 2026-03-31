@@ -8,7 +8,7 @@ type Props = { children: ReactNode };
  */
 export default function LaunchboxWeeklyLayout({ children }: Props) {
   return (
-    <div className="launchbox-weekly-theme min-h-screen selection:bg-[#F3701E]/25 selection:text-[#2A3442]">
+    <div className="launchbox-weekly-theme min-h-screen text-left selection:bg-[#F3701E]/25 selection:text-[#2A3442]">
       {children}
     </div>
   );

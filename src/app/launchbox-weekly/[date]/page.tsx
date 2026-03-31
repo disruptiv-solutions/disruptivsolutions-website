@@ -56,15 +56,19 @@ export default function LaunchboxWeeklyPage() {
   if (loading) {
     return (
       <div
-        className="min-h-screen flex flex-col items-center justify-center gap-5 px-6"
+        className="flex min-h-screen flex-col justify-center gap-5 px-5 md:px-6"
         style={{ backgroundColor: lb.cloud, color: lb.blue }}
       >
-        <div
-          className="h-10 w-10 rounded-full border-[3px] animate-spin"
-          style={{ borderColor: `${lb.tan} transparent ${lb.tan} ${lb.orange}` }}
-          aria-hidden
-        />
-        <p className="font-lb-secondary text-xs font-semibold uppercase tracking-[0.28em]">Loading update</p>
+        <div className="mx-auto w-full max-w-6xl">
+          <div
+            className="h-10 w-10 rounded-full border-[3px] animate-spin"
+            style={{ borderColor: `${lb.tan} transparent ${lb.tan} ${lb.orange}` }}
+            aria-hidden
+          />
+          <p className="font-lb-secondary mt-4 text-xs font-semibold uppercase tracking-[0.28em]">
+            Loading update
+          </p>
+        </div>
       </div>
     );
   }
@@ -91,7 +95,8 @@ export default function LaunchboxWeeklyPage() {
             </Link>
           </div>
         </header>
-        <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
+        <div className="flex flex-1 flex-col justify-center px-5 text-left md:px-6">
+          <div className="mx-auto w-full max-w-6xl">
           <p className="text-lg font-medium md:text-xl" style={{ color: lb.blue }}>
             This platform update could not be found.
           </p>
@@ -104,6 +109,7 @@ export default function LaunchboxWeeklyPage() {
           >
             Back to archive
           </Link>
+          </div>
         </div>
       </div>
     );
@@ -143,17 +149,17 @@ export default function LaunchboxWeeklyPage() {
       <article>
         {/* Hero — Cloud White led, orange + blue hierarchy */}
         <section
-          className="border-b px-5 pb-14 pt-10 md:px-6 md:pb-16 md:pt-14"
+          className="border-b px-5 pb-14 pt-10 text-left md:px-6 md:pb-16 md:pt-14"
           style={{ borderColor: lb.tan }}
         >
-          <div className="mx-auto max-w-3xl">
+          <div className="mx-auto w-full max-w-6xl">
             <p
-              className="font-lb-secondary mb-6 inline-block border-b pb-2 text-[0.7rem] font-semibold uppercase tracking-[0.22em]"
+              className="font-lb-secondary mb-6 block w-fit border-b pb-2 text-left text-[0.7rem] font-semibold uppercase tracking-[0.22em]"
               style={{ color: lb.blue, borderColor: lb.tan }}
             >
               {weekly.weekLabel || weekly.displayDate}
             </p>
-            <div className="mb-5 flex flex-wrap items-center gap-3">
+            <div className="mb-5 flex flex-wrap items-center justify-start gap-3">
               <span
                 className="rounded-full border px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.18em]"
                 style={{
@@ -191,11 +197,11 @@ export default function LaunchboxWeeklyPage() {
           </div>
         </section>
 
-        <div className="mx-auto max-w-6xl px-5 py-14 md:px-6 md:py-16">
+        <div className="mx-auto w-full max-w-6xl px-5 py-14 text-left md:px-6 md:py-16">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-14">
-            <div className="lg:col-span-8">
+            <div className="lg:col-span-8 text-left">
               <h2
-                className="font-lb-secondary mb-8 text-[0.7rem] font-semibold uppercase tracking-[0.28em]"
+                className="font-lb-secondary mb-8 text-left text-[0.7rem] font-semibold uppercase tracking-[0.28em]"
                 style={{ color: lb.blue }}
               >
                 This week
@@ -214,6 +220,29 @@ export default function LaunchboxWeeklyPage() {
                           <p className="mt-3 text-base leading-relaxed md:text-[1.05rem]" style={{ color: lb.blue }}>
                             {h.blurb}
                           </p>
+                          {h.whatItMeansForYou?.trim() && (
+                            <div
+                              className="mt-5 rounded-xl border border-dashed px-4 py-3.5 md:px-5 md:py-4"
+                              style={{
+                                borderColor: lb.tan,
+                                backgroundColor: 'rgba(75, 96, 127, 0.05)',
+                              }}
+                              aria-label="What this means for you"
+                            >
+                              <p
+                                className="font-lb-secondary text-[0.65rem] font-bold uppercase tracking-[0.2em]"
+                                style={{ color: lb.orange }}
+                              >
+                                What this means for you
+                              </p>
+                              <p
+                                className="mt-2 text-sm leading-relaxed md:text-[0.95rem] md:leading-relaxed"
+                                style={{ color: lb.ink }}
+                              >
+                                {h.whatItMeansForYou.trim()}
+                              </p>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </article>
@@ -228,9 +257,9 @@ export default function LaunchboxWeeklyPage() {
               </div>
             </div>
 
-            <aside className="hidden lg:col-span-4 lg:block">
+            <aside className="hidden text-left lg:col-span-4 lg:block">
               <div
-                className="sticky top-24 space-y-6 rounded-2xl border p-6"
+                className="sticky top-24 space-y-6 rounded-2xl border p-6 text-left"
                 style={{ borderColor: lb.tan, backgroundColor: 'rgba(75, 96, 127, 0.06)' }}
               >
                 <AuthorBlock />
@@ -269,7 +298,7 @@ export default function LaunchboxWeeklyPage() {
               </Link>
             </div>
             <div
-              className="rounded-2xl border-2 p-8 md:p-9"
+              className="rounded-2xl border-2 p-8 text-left md:p-9"
               style={{ borderColor: lb.tan, backgroundColor: 'rgba(247, 242, 236, 0.08)' }}
             >
               <p

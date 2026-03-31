@@ -211,7 +211,7 @@ Return the fully optimized prompt that an AI developer can use to build a high-q
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${openRouterApiKey}`,
-        'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3001',
+        'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002',
         'X-Title': 'Digital Business Card Prompt Optimizer',
       },
       body: JSON.stringify({

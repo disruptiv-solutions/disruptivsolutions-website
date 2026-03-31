@@ -106,7 +106,7 @@ ${guidance}`;
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${openRouterApiKey}`,
-        'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3001',
+        'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002',
         'X-Title': 'Class 2 Prompt Improver',
       },
       body: JSON.stringify({
