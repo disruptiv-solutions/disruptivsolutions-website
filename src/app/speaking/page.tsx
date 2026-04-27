@@ -13,14 +13,14 @@ export const metadata: Metadata = {
     description:
       "Self-taught AI builder. Speaking for operator audiences — employers, founders, community hosts.",
     type: "website",
-    images: ["/speaking/ian-speaker-aixp.jpg"],
+    images: ["/ian-stage.jpg"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Speaking — Ian McDonald",
     description:
       "Self-taught AI builder. Speaking for operator audiences.",
-    images: ["/speaking/ian-speaker-aixp.jpg"],
+    images: ["/ian-stage.jpg"],
   },
 };
 
@@ -34,7 +34,7 @@ const personSchema = {
   jobTitle: "Founder, LaunchBox",
   url: "https://disruptiv.solutions/speaking",
   email: `mailto:${EMAIL}`,
-  image: "https://disruptiv.solutions/speaking/ian-speaker-aixp.jpg",
+  image: "https://disruptiv.solutions/ian-stage.jpg",
   description:
     "Self-taught AI product builder. Speaks for operator audiences — employer networks, founder groups, community hosts.",
   performerIn: [
@@ -56,7 +56,7 @@ const STAGE_ITEMS = [
   {
     title: "AIXP Houston 2026",
     when: "April 2026",
-    body: "4 speaking slots including the Founder Stories panel. Shared the LaunchBox build story with an operator audience. Mentioned during Maria Elena Duron's keynote.",
+    body: "4 speaking slots including the Founder Stories panel. Shared the LaunchBox build story with an operator audience and was referenced during the event's keynote.",
   },
   {
     title: "Launch & Learn",
@@ -70,7 +70,7 @@ const STAGE_ITEMS = [
   },
   {
     title: "Chase pitch event",
-    when: "2025",
+    when: "2026",
     body: "Pitched LaunchBox to a room of bankers and operators. Measurable follow-through into partner conversations.",
   },
   {
@@ -135,22 +135,10 @@ const QUOTES: readonly {
   },
   {
     quote:
-      "Just watched the Orlando replay. Wow star struck! Can't believe you built the AI4B app.",
-    who: "Shanshan Sateren",
-    role: "Audience member · Orlando keynote replay",
-  },
-  {
-    quote:
       "Ian is doing something that I have yet to accomplish with NextShiftIQ. He is doing this with a fraction of the experience I have as a developer.",
     who: "Joseph Bankole",
     role: "Senior Data Engineer · via LinkedIn, public post",
   },
-  {
-    quote: "Loved the way you broke it down — super clean, super intuitive.",
-    who: "Mosiah Barlow",
-    role: "Orlando keynote attendee",
-  },
-  { quote: "Simplicity is priceless.", who: "Jules B", role: "LaunchBox partner" },
   {
     quote: "I'm going to put you in as our expert AI.",
     who: "Nancy Smith",
@@ -252,11 +240,11 @@ export default function SpeakingPage() {
               </span>
             </h1>
             <p className="speaking-hero-entrance speaking-hero-delay-2 text-lg sm:text-xl text-zinc-400 leading-relaxed max-w-2xl [text-wrap:pretty]">
-              Self-taught builder. In 2025 I built the{" "}
+              Self-taught builder. In 2025, I built the{" "}
               <span className="text-zinc-100 font-semibold">AI for Business</span>{" "}
               platform solo, supporting{" "}
-              <span className="text-zinc-100 font-semibold">1,600+ users</span> — the
-              platform powered{" "}
+              <span className="text-zinc-100 font-semibold">1,600+ users</span>{" "}
+              and powering a business that reached{" "}
               <span className="text-zinc-100 font-semibold">$1.2M ARR</span> in 9
               months. Now building LaunchBox and speaking for rooms that want
               practical AI on Monday morning, not decks full of hype.
@@ -276,28 +264,28 @@ export default function SpeakingPage() {
               </a>
             </div>
             <p className="speaking-hero-entrance speaking-hero-delay-4 text-sm text-zinc-500 max-w-md leading-relaxed">
-              Keynotes, panels, and live builds. Travel from Pensacola — planning
-              ahead helps.
+              Available for keynotes, panels, live builds, and practical AI
+              workshops. Based in Pensacola, available to travel.
             </p>
           </div>
 
           <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
-            <div className="speaking-hero-entrance speaking-hero-delay-2 relative w-full max-w-[600px] lg:max-w-[640px]">
+            <div className="speaking-hero-entrance speaking-hero-delay-2 relative w-full max-w-[320px] sm:max-w-[380px] lg:max-w-[440px]">
               <div
                 aria-hidden
                 className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-red-500/45 via-zinc-900/40 to-amber-500/5 blur-2xl"
               />
-              <div className="relative aspect-video rounded-2xl overflow-hidden shadow-[0_32px_80px_-20px_rgba(0,0,0,0.85),0_0_0_1px_rgba(255,255,255,0.06),inset_0_0_0_1px_rgba(255,255,255,0.04)]">
+              <div className="relative aspect-[9/16] rounded-2xl overflow-hidden shadow-[0_32px_80px_-20px_rgba(0,0,0,0.85),0_0_0_1px_rgba(255,255,255,0.06),inset_0_0_0_1px_rgba(255,255,255,0.04)]">
                 <div
                   aria-hidden
                   className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-t from-black/30 via-transparent to-white/[0.04]"
                 />
                 <Image
-                  src="/speaking/ian-speaker-aixp.jpg"
-                  alt="Ian McDonald speaking at AIXP Houston 2026"
+                  src="/ian-stage.jpg"
+                  alt="Ian McDonald speaking on stage"
                   fill
                   priority
-                  sizes="(max-width: 1024px) 100vw, 640px"
+                  sizes="(max-width: 640px) 320px, (max-width: 1024px) 380px, 440px"
                   className="object-cover"
                 />
               </div>
@@ -491,6 +479,30 @@ export default function SpeakingPage() {
               />
             ))}
           </div>
+
+          <div className="mt-12 lg:mt-16 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
+            <p className="text-red-500/95 text-xs font-semibold tracking-[0.3em] uppercase mb-4">
+              Available formats
+            </p>
+            <ul className="grid gap-x-8 gap-y-2 sm:grid-cols-2 lg:grid-cols-3 text-zinc-300">
+              {[
+                "20–30 minute keynote",
+                "45–60 minute workshop",
+                "Live build session",
+                "Panel guest",
+                "Founder / operator fireside chat",
+                "Custom — ask",
+              ].map((fmt) => (
+                <li key={fmt} className="flex items-start gap-2.5">
+                  <span
+                    aria-hidden
+                    className="mt-2 inline-block w-1 h-1 rounded-full bg-red-500 shrink-0"
+                  />
+                  <span className="text-sm sm:text-base">{fmt}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -624,10 +636,10 @@ export default function SpeakingPage() {
               addiction and recovery treatment.
             </p>
             <p className="text-lg text-zinc-300 leading-relaxed mt-4">
-              When his dad got sick with cancer, Ian split four years between
-              Colorado and Pensacola, watching his biggest supporter decline.
-              His dad passed in December 2024. With $5,000 and no plan, Ian
-              moved back to Pensacola and went all-in on building.
+              After years of moving between Colorado and Pensacola while his
+              dad battled cancer, Ian moved home in late 2024 after his dad
+              passed and went all-in on building with $5,000 and no safety
+              net.
             </p>
             <p className="text-lg text-zinc-300 leading-relaxed mt-4">
               No CS degree. No bootcamp. No co-founder. He&apos;d been teaching

@@ -124,15 +124,17 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
             {/* Navigation Links - Desktop */}
             <nav className="hidden md:flex items-center space-x-8">
               {navigationItems.map((item) => {
-                const isActive = activeSection === item.href.substring(1);
-                
+                const isActive = item.href.startsWith('/')
+                  ? pathname === item.href || pathname.startsWith(`${item.href}/`)
+                  : pathname === '/' && activeSection === item.href.substring(1);
+
                 return (
                   <button
                     key={item.name}
                     onClick={() => handleNavClick(item.href)}
                     className={`text-sm font-medium transition-colors duration-200 ${
-                      isActive 
-                        ? 'text-red-600' 
+                      isActive
+                        ? 'text-red-600'
                         : 'text-gray-300 hover:text-white'
                     }`}
                   >
@@ -320,8 +322,10 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
               <nav className="flex-1 px-6 py-8">
                 <div className="space-y-2">
                   {navigationItems.map((item) => {
-                    const isActive = activeSection === item.href.substring(1);
-                    
+                    const isActive = item.href.startsWith('/')
+                      ? pathname === item.href || pathname.startsWith(`${item.href}/`)
+                      : pathname === '/' && activeSection === item.href.substring(1);
+
                     return (
                       <button
                         key={item.name}
