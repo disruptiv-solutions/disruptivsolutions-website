@@ -6,6 +6,7 @@ const INTEREST_OPTIONS = [
   { value: '', label: 'Select one…' },
   { value: 'speaking-event', label: 'Speaking at my event' },
   { value: 'corporate-workshop', label: 'Bringing me to my company / team' },
+  { value: 'community-partnership', label: 'Community activation partnership' },
   { value: 'podcast-interview', label: 'Podcast or interview' },
   { value: 'general-chat', label: 'Just want to chat' },
   { value: 'other', label: 'Other' },

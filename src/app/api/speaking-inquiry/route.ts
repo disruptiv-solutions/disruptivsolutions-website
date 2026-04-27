@@ -12,6 +12,7 @@ const MAKE_WEBHOOK_URL =
 const ALLOWED_INTERESTS = [
   'speaking-event',
   'corporate-workshop',
+  'community-partnership',
   'podcast-interview',
   'general-chat',
   'other',

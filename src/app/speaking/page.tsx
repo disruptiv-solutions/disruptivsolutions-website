@@ -87,11 +87,12 @@ const STAGE_ITEMS = [
 
 const TALK_ITEMS = [
   {
-    title: "Live Build: If I Can, You Can",
-    bestFor: "Founder events, AI conferences, operator audiences",
+    title: "If I Can Build This, You Can Build Yours",
+    bestFor:
+      "Founder events, AI conferences, small business communities, workforce groups, operator audiences",
     outcome:
-      "Belief, practical examples, and a clear sense of what's actually possible with AI-assisted building today.",
-    body: "My signature keynote. The presentation itself is a Next.js app I built — the talk is the demo. Audiences hear the real story (Pensacola → Colorado → recovery work → loss → built solo to $1.2M ARR) and leave knowing they can do this too. No CS degree required.",
+      "Audiences leave believing AI can help them build real business assets now, even without a technical background.",
+    body: "Ian's signature keynote blends founder story, practical AI lessons, and live show-and-tell. He shares how he went from healthcare with no coding background to building AI products as a solo founder — including the AI for Business platform and now LaunchBox. Then he shows the audience how LaunchBox and LaunchKit turn an idea, audience, and offer into a platform brief, waitlist page, sales page, lead magnets, and launch plan. The message is simple: you don't need to become a software company to start building like one.",
   },
   {
     title: "AI for Employers",
@@ -101,18 +102,20 @@ const TALK_ITEMS = [
     body: "What AI adoption actually looks like inside a 5–50 person business right now. Tools, workflows, what fails, what sticks. Zero hype.",
   },
   {
-    title: "From Idea to Funnel in 30 Minutes — Live",
-    bestFor: "Workshops, founder meetups, business communities",
+    title: "From Idea to Platform in 30 Minutes — Live",
+    bestFor:
+      "Workshops, founder meetups, business communities, coach and consultant groups",
     outcome:
-      "A live example of turning a real idea from the room into a working funnel using modern AI tools.",
-    body: "A working build session. I take a business idea from the audience and ship a live funnel during the talk. Audiences see what modern AI tooling can actually do when a builder is driving.",
+      "A live example of turning a real idea from the room into a platform concept, launch page, lead magnet, and first invite path.",
+    body: "A working build session. Ian takes a business or community idea from the audience and uses LaunchBox to show how quickly AI can turn it into a real launch plan. The point isn't to watch another demo — it's to see the path from vague idea to something people can actually join.",
   },
   {
-    title: "How Communities Monetize Without Becoming Course Creators",
-    bestFor: "Coaches, consultants, membership and community groups",
+    title: "Turn Your Expertise Into a Platform",
+    bestFor:
+      "Coaches, consultants, creators, membership groups, community-led businesses",
     outcome:
-      "A new model for recurring revenue through branded AI-powered communities — without becoming a content factory.",
-    body: "The white-label AI workspace model. How community hosts turn an existing audience into reliable monthly revenue.",
+      "A practical model for turning knowledge, audience, and lived experience into a branded AI-powered platform people can join.",
+    body: "Most experts don't need more content — they need a clearer way to package what they already know. This session shows how coaches, consultants, and community hosts can use AI to create a launchable offer, build a branded experience, and start with their first 10 members instead of getting stuck building a giant course.",
   },
 ] as const;
 
@@ -247,7 +250,8 @@ export default function SpeakingPage() {
               and powering a business that reached{" "}
               <span className="text-zinc-100 font-semibold">$1.2M ARR</span> in 9
               months. Now building LaunchBox and speaking for rooms that want
-              practical AI on Monday morning, not decks full of hype.
+              to see how real people can use AI to build platforms, funnels,
+              communities, and businesses — without waiting for permission.
             </p>
             <div className="speaking-hero-entrance speaking-hero-delay-3 flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
               <a
@@ -502,6 +506,11 @@ export default function SpeakingPage() {
                 </li>
               ))}
             </ul>
+            <p className="mt-6 text-sm text-zinc-400 leading-relaxed border-t border-white/[0.08] pt-5">
+              Every session can include a soft next step into Launch &amp;
+              Learn, a private workshop, or LaunchBox for audiences who want
+              to keep building after the event.
+            </p>
           </div>
         </div>
       </section>
@@ -588,6 +597,11 @@ export default function SpeakingPage() {
               <Stat number="14" label="partners on platform" />
               <Stat number="80%+" label="margin per partner" />
             </div>
+            <p className="mt-6 text-sm text-zinc-400 leading-relaxed max-w-3xl">
+              LaunchBox is the live example in Ian&apos;s talks: a working
+              platform that helps people turn an idea into a branded AI-powered
+              community, launch pages, content, and first invites.
+            </p>
           </div>
         </div>
       </section>
@@ -604,10 +618,11 @@ export default function SpeakingPage() {
             className="!max-w-full"
           />
           <p className="text-lg text-zinc-300 leading-relaxed [text-wrap:pretty]">
-            I speak for rooms where the audience has to go build something
-            Monday morning. Founder groups, employer networks, chambers,
-            workforce boards, community hosts, coach and consultant
-            communities, operator conferences.
+            I speak for rooms where the audience doesn&apos;t just want to
+            hear about AI — they want to leave believing they can build
+            something with it Monday morning. Founder groups, employer
+            networks, chambers, workforce boards, community hosts, coach and
+            consultant communities, operator conferences.
           </p>
           <p className="text-lg text-zinc-300 leading-relaxed mt-5 [text-wrap:pretty]">
             If your audience wants a polished futurist, I&apos;m probably not
@@ -658,6 +673,46 @@ export default function SpeakingPage() {
               He talks from the builder&apos;s seat, not from theory.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section
+        className="bg-black px-5 sm:px-6 py-20 lg:py-28 border-t border-white/[0.08]"
+        aria-labelledby="partnership-heading"
+      >
+        <div className="max-w-5xl mx-auto">
+          <SectionHeader
+            kicker="Partnership"
+            id="partnership-heading"
+            title="Ways to structure a session"
+            copy="Every event is different. Pick the format that fits your room — or just tell me what you have in mind in the inquiry below."
+          />
+
+          <div className="grid gap-4 sm:gap-5 md:grid-cols-2">
+            <PartnershipOption
+              title="Standard speaking fee"
+              body="Keynotes, panels, and practical AI sessions. The default for most events."
+            />
+            <PartnershipOption
+              title="Workshop / training fee"
+              body="Deeper hands-on sessions where the audience builds during the event. Right for cohort kickoffs, founder meetups, and small-group trainings."
+            />
+            <PartnershipOption
+              title="Community activation partnership"
+              body="For groups that want attendees to keep building after the session — through LaunchBox, Launch & Learn, or a private First 10 Challenge tailored to the audience."
+            />
+            <PartnershipOption
+              title="Revenue-share option"
+              body="For select communities, I'm open to partnership structures where the host shares in revenue from LaunchBox activations that come from the event. That can include a custom landing page, event-specific code, or a follow-up workshop so the audience has a clear path to keep building."
+            />
+          </div>
+
+          <p className="mt-8 text-sm text-zinc-400 leading-relaxed max-w-3xl">
+            The goal is simple: your audience leaves with a practical path to
+            keep building, and the host has upside if the session turns into
+            real implementation. If that's the kind of partnership
+            you&apos;re exploring, mention it in the inquiry.
+          </p>
         </div>
       </section>
 
@@ -916,6 +971,23 @@ const Stat = ({ number, label }: { number: string; label: string }) => {
       <div className="text-xs text-zinc-500 uppercase tracking-widest mt-2">
         {label}
       </div>
+    </div>
+  );
+};
+
+const PartnershipOption = ({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}) => {
+  return (
+    <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-7 transition duration-300 hover:border-red-500/30 hover:bg-white/[0.03]">
+      <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
+        {title}
+      </h3>
+      <p className="text-sm text-zinc-400 leading-relaxed">{body}</p>
     </div>
   );
 };
