@@ -26,6 +26,13 @@ export const metadata: Metadata = {
   description: "From barely making rent to building an AI platform with 1,500+ active users. I teach others to build their dreams the same way I built mine. No jargon, no fluff—just real apps.",
   keywords: ["Ian McDonald", "Launchbox", "Launch Box", "AI for Business", "AI product builder", "build without CS degree", "practical AI", "AI training", "no-code AI", "ChatterCard", "Disruptiv Solutions"],
   authors: [{ name: "Ian McDonald" }],
+  icons: {
+    icon: [
+      { url: "/DS-Logo.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/DS-Logo.svg",
+    apple: "/DS-Logo.svg",
+  },
   openGraph: {
     title: "Ian McDonald — Build Real Apps Without a CS Degree",
     description: "From barely making rent to building an AI platform with 1,500+ active users. Join Launchbox and build your first app in 30 days.",
