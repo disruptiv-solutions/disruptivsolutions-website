@@ -79,6 +79,23 @@ export default function AdminDashboard() {
                 </Link>
 
                 <Link
+                  href="/emails"
+                  className="bg-gradient-to-br from-amber-600/20 via-amber-500/10 to-transparent border border-amber-500/30 rounded-xl p-6 hover:border-amber-500/50 transition-all group"
+                >
+                  <div className="flex items-center gap-4 mb-3">
+                    <div className="text-3xl" aria-hidden>
+                      ✉️
+                    </div>
+                    <h3 className="text-xl font-bold text-white group-hover:text-amber-300 transition-colors">
+                      Emails
+                    </h3>
+                  </div>
+                  <p className="text-gray-400 text-sm">
+                    View email list and create new messages.
+                  </p>
+                </Link>
+
+                <Link
                   href="/admin/content-calendar"
                   className="bg-gradient-to-br from-violet-600/20 via-violet-500/10 to-transparent border border-violet-500/30 rounded-xl p-6 hover:border-violet-500/50 transition-all group"
                 >

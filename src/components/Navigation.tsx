@@ -23,6 +23,7 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
     { name: 'Consulting', href: '#consulting' },
     { name: 'Highlights', href: '#launchbox' },
     { name: 'Work', href: '#work' },
+    { name: 'Speaking', href: '/speaking' },
     { name: 'Resources', href: '/resources' },
   ];
 
