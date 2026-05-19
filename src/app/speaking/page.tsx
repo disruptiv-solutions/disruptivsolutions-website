@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import SpeakingInquiryForm from "@/components/SpeakingInquiryForm";
+import SpeakingStickyCta from "@/components/speaking/SpeakingStickyCta";
+import SpeakingPageSubnav from "@/components/speaking/SpeakingPageSubnav";
+import VideoTestimonialsFolder from "@/components/speaking/VideoTestimonialsFolder";
+import { loadSpeakingTranscripts } from "@/lib/load-speaking-transcripts";
 import { cn } from "@/lib/cn";
 
 export const metadata: Metadata = {
@@ -26,6 +30,7 @@ export const metadata: Metadata = {
 
 const CALENDAR_URL = "https://calendar.app.google/J6uMiKkf3AM4zS9MA";
 const EMAIL = "ian@ianmcdonald.ai";
+const LAUNCH_AND_LEARN_URL = "https://meet.google.com/cgm-vcdg-hvh";
 
 const personSchema = {
   "@context": "https://schema.org",
@@ -38,8 +43,13 @@ const personSchema = {
   description:
     "Self-taught AI product builder. Speaks for operator audiences — employer networks, founder groups, community hosts.",
   performerIn: [
+    {
+      "@type": "Event",
+      name: "Houston AI Club AI Lightning Lesson",
+      location: "Virtual",
+      startDate: "2026-05-21T10:30:00-05:00",
+    },
     { "@type": "Event", name: "AIXP Houston 2026", location: "Houston, TX" },
-    { "@type": "Event", name: "AI for Business 2025" },
   ],
 };
 
@@ -54,34 +64,44 @@ const BEST_FIT: readonly string[] = [
 
 const STAGE_ITEMS = [
   {
+    title: "Houston AI Club AI Lightning Lesson",
+    when: "May 21, 2026",
+    body: "Upcoming 30-minute virtual session for Houston AI Club: From AI Consumer to AI Builder. A practical playbook for non-technical operators, with part of the session built live on screen.",
+    logoSrc: "/speaking/houston-ai-club-logo-cropped.png",
+    logoAlt: "Houston AI Club logo",
+    logoFrame: "wide",
+  },
+  {
     title: "AIXP Houston 2026",
     when: "April 2026",
     body: "4 speaking slots including the Founder Stories panel. Shared the LaunchBox build story with an operator audience and was referenced during the event's keynote.",
-  },
-  {
-    title: "Launch & Learn",
-    when: "Weekly, live",
-    body: "I run a live build session every week: one real product, one real funnel, from idea to shipped in under an hour.",
-  },
-  {
-    title: "AI for Business 2025",
-    when: "2025",
-    body: "Invited speaker on AI adoption for small business operators.",
+    logoSrc: "/speaking/aixp-horizontal-logo-cropped.png",
+    logoAlt: "AIXP logo",
+    logoFrame: "wide",
   },
   {
     title: "Chase pitch event",
     when: "2026",
     body: "Pitched LaunchBox to a room of bankers and operators. Measurable follow-through into partner conversations.",
+    logoSrc: "/speaking/chase-logo.svg",
+    logoAlt: "Chase logo",
+    logoFrame: "extraWide",
   },
   {
     title: "Orlando keynote",
     when: "May 2025",
     body: "Spoke to a room of 500+ people on building AI products as a self-taught operator.",
+    logoSrc: "/speaking/orlando-jacksonville-logo-cropped.png",
+    logoAlt: "AI event logo",
+    logoFrame: "wide",
   },
   {
     title: "Jacksonville keynote",
     when: "March 2025",
     body: "Spoke to a room of 250+ people on practical AI for non-technical founders.",
+    logoSrc: "/speaking/orlando-jacksonville-logo-cropped.png",
+    logoAlt: "AI event logo",
+    logoFrame: "wide",
   },
 ] as const;
 
@@ -154,6 +174,21 @@ const QUOTES: readonly {
   },
 ];
 
+const SESSION_FORMATS = [
+  "20–30 minute keynote",
+  "45–60 minute workshop",
+  "Live build session",
+  "Panel guest",
+  "Founder / operator fireside chat",
+  "Custom — ask",
+] as const;
+
+const HERO_PROOF = [
+  { number: "1,600+", label: "platform users" },
+  { number: "$1.2M", label: "ARR in 9 months" },
+  { number: "500+", label: "largest room" },
+] as const;
+
 const SectionHeader = ({
   kicker,
   title,
@@ -192,16 +227,78 @@ const SectionHeader = ({
   </div>
 );
 
-export default function SpeakingPage() {
+const BookCta = ({
+  className,
+  compact = false,
+}: {
+  className?: string;
+  compact?: boolean;
+}) => (
+  <a
+    href="#book"
+    className={cn(
+      "inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-red-600 to-red-700 font-semibold text-white shadow-lg shadow-red-600/30 outline-none transition hover:from-red-500 hover:to-red-600 hover:shadow-red-500/45 focus-visible:ring-2 focus-visible:ring-red-400/80 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950",
+      compact ? "h-11 px-6 text-sm" : "h-14 px-8 text-base",
+      className
+    )}
+  >
+    Bring Ian to your event
+  </a>
+);
+
+const ProofStrip = () => (
+  <div className="grid grid-cols-3 gap-3 border-t border-white/[0.08] pt-8 sm:gap-4">
+    {HERO_PROOF.map((item) => (
+      <div key={item.label} className="text-center sm:text-left">
+        <div className="text-2xl sm:text-3xl font-bold tabular-nums text-white">
+          {item.number}
+        </div>
+        <div className="mt-1 text-[10px] sm:text-xs uppercase tracking-widest text-zinc-500">
+          {item.label}
+        </div>
+      </div>
+    ))}
+  </div>
+);
+
+const LaunchLearnBanner = () => (
+  <div className="mx-auto flex max-w-5xl flex-col gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+    <div>
+      <p className="text-red-500/95 text-xs font-semibold tracking-[0.25em] uppercase mb-1">
+        Not booking a stage?
+      </p>
+      <p className="text-base font-semibold text-white">
+        Launch &amp; Learn — free weekly open call
+      </p>
+      <p className="mt-1 text-sm text-zinc-500">
+        Google Meet · Wednesdays · 1:00–2:00 PM CT
+      </p>
+    </div>
+    <Link
+      href={LAUNCH_AND_LEARN_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex h-11 shrink-0 items-center justify-center rounded-xl border border-red-500/35 bg-red-500/10 px-6 text-sm font-semibold text-red-100 transition hover:border-red-400/50 hover:bg-red-500/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70"
+    >
+      Join the open call
+    </Link>
+  </div>
+);
+
+export default async function SpeakingPage() {
+  const transcripts = loadSpeakingTranscripts();
+
   return (
-    <div className="text-white antialiased">
+    <div className="text-white antialiased pb-20 lg:pb-0">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
+      <SpeakingStickyCta />
+      <SpeakingPageSubnav />
 
       <section
-        className="relative min-h-screen flex items-center justify-center bg-[#040404] px-5 sm:px-6 pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden snap-start"
+        className="relative min-h-[90vh] flex items-center justify-center bg-[#040404] px-5 sm:px-6 pt-32 pb-16 lg:pt-36 lg:pb-20 overflow-hidden snap-start"
         aria-label="Intro"
       >
         <div
@@ -219,10 +316,6 @@ export default function SpeakingPage() {
         />
         <div
           aria-hidden
-          className="absolute -bottom-24 -left-16 w-[480px] h-[480px] rounded-full bg-amber-500/6 blur-[90px] pointer-events-none"
-        />
-        <div
-          aria-hidden
           className="absolute top-1/2 left-1/2 h-[1px] w-[min(100vw,1200px)] -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-transparent via-red-500/15 to-transparent"
         />
 
@@ -233,7 +326,7 @@ export default function SpeakingPage() {
                 className="h-1.5 w-1.5 rounded-full bg-red-500 shadow-[0_0_10px_2px_rgba(239,68,68,0.5)]"
                 aria-hidden
               />
-              <span>Now booking 2026 stages</span>
+              <span>Upcoming: Houston AI Club - May 21</span>
             </div>
             <h1 className="speaking-hero-entrance speaking-hero-delay-1 text-4xl sm:text-5xl lg:text-6xl xl:text-[3.35rem] font-bold leading-[1.05] tracking-[-0.03em] text-white">
               I build AI products.
@@ -254,30 +347,30 @@ export default function SpeakingPage() {
               communities, and businesses — without waiting for permission.
             </p>
             <div className="speaking-hero-entrance speaking-hero-delay-3 flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
-              <a
-                href="#book"
-                className="inline-flex h-14 items-center justify-center rounded-xl bg-gradient-to-r from-red-600 to-red-700 px-8 text-center text-base font-semibold text-white shadow-lg shadow-red-600/30 outline-none transition hover:from-red-500 hover:to-red-600 hover:shadow-red-500/45 focus-visible:ring-2 focus-visible:ring-red-400/80 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
-              >
-                Bring Ian to your event
-              </a>
-              <a
-                href={`mailto:${EMAIL}`}
+              <BookCta />
+              <Link
+                href={CALENDAR_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex h-14 items-center justify-center rounded-xl border border-zinc-600/80 bg-zinc-950/40 px-8 text-center text-base font-semibold text-zinc-100 transition hover:border-zinc-500 hover:bg-zinc-900/50 focus-visible:ring-2 focus-visible:ring-zinc-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
               >
-                {EMAIL}
-              </a>
+                Check my calendar
+              </Link>
             </div>
             <p className="speaking-hero-entrance speaking-hero-delay-4 text-sm text-zinc-500 max-w-md leading-relaxed">
-              Available for keynotes, panels, live builds, and practical AI
-              workshops. Based in Pensacola, available to travel.
+              Keynotes, panels, and live builds. Based in Pensacola, available
+              to travel.
             </p>
+            <div className="speaking-hero-entrance speaking-hero-delay-4">
+              <ProofStrip />
+            </div>
           </div>
 
           <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
             <div className="speaking-hero-entrance speaking-hero-delay-2 relative w-full max-w-[320px] sm:max-w-[380px] lg:max-w-[440px]">
               <div
                 aria-hidden
-                className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-red-500/45 via-zinc-900/40 to-amber-500/5 blur-2xl"
+                className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-red-500/45 via-zinc-900/40 to-red-950/20 blur-2xl"
               />
               <div className="relative aspect-[9/16] rounded-2xl overflow-hidden shadow-[0_32px_80px_-20px_rgba(0,0,0,0.85),0_0_0_1px_rgba(255,255,255,0.06),inset_0_0_0_1px_rgba(255,255,255,0.04)]">
                 <div
@@ -293,17 +386,14 @@ export default function SpeakingPage() {
                   className="object-cover"
                 />
               </div>
-              <div
-                aria-hidden
-                className="absolute -bottom-3 -right-2 hidden sm:block w-32 h-10 rounded-md border border-white/10 bg-zinc-900/80 backdrop-blur-sm shadow-lg rotate-2"
-              />
             </div>
           </div>
         </div>
       </section>
 
       <section
-        className="relative bg-[#030303] px-5 sm:px-6 py-20 lg:py-24 border-t border-white/[0.07] snap-start"
+        id="fit"
+        className="scroll-mt-32 relative bg-[#030303] px-5 sm:px-6 py-16 lg:py-20 border-t border-white/[0.07]"
         aria-labelledby="best-fit-heading"
       >
         <div
@@ -315,8 +405,13 @@ export default function SpeakingPage() {
             kicker="For organizers"
             id="best-fit-heading"
             title="Best fit for"
-            copy="Rooms where the audience has to go build something Monday morning."
+            copy="Rooms where the audience doesn't just want to hear about AI — they want to leave believing they can build something Monday morning. Founder groups, employer networks, chambers, workforce boards, and operator conferences."
           />
+          <p className="mb-8 text-base text-zinc-400 leading-relaxed max-w-3xl [text-wrap:pretty]">
+            If your audience wants a polished futurist, I&apos;m probably not
+            your guy. If they want someone who&apos;s shipping AI products and
+            showing the messy middle — that&apos;s where I&apos;m useful.
+          </p>
           <ul className="grid sm:grid-cols-2 gap-3 list-none p-0 m-0">
             {BEST_FIT.map((item) => (
               <li
@@ -339,7 +434,60 @@ export default function SpeakingPage() {
       </section>
 
       <section
-        className="relative bg-gradient-to-b from-[#030303] via-zinc-950/40 to-[#030303] px-5 sm:px-6 py-20 lg:py-28 border-t border-white/[0.07] snap-start overflow-hidden"
+        className="relative bg-[#040404] px-5 sm:px-6 py-20 lg:py-24 border-t border-white/[0.07] snap-start overflow-hidden"
+        aria-labelledby="launch-learn-heading"
+      >
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_70%_55%_at_50%_0%,rgba(249,115,22,0.12),transparent_62%)]"
+        />
+        <div className="max-w-5xl mx-auto relative">
+          <div className="grid gap-8 lg:grid-cols-[280px_1fr] lg:items-center rounded-3xl border border-white/[0.1] bg-gradient-to-br from-white/[0.075] via-zinc-950/85 to-orange-950/[0.1] p-6 sm:p-8 lg:p-10 shadow-[0_28px_90px_-55px_rgba(249,115,22,0.75)]">
+            <div className="mx-auto w-full max-w-[240px] overflow-hidden rounded-2xl border border-white/15 bg-white shadow-[0_22px_60px_-28px_rgba(255,255,255,0.8)]">
+              <Image
+                src="/speaking/launch-and-learn.png"
+                alt="Launch and Learn with Ian"
+                width={240}
+                height={240}
+                className="h-auto w-full"
+              />
+            </div>
+            <div>
+              <p className="text-orange-300/95 text-xs font-semibold tracking-[0.3em] uppercase mb-4">
+                Free weekly open call
+              </p>
+              <h2
+                id="launch-learn-heading"
+                className="text-3xl sm:text-4xl lg:text-[2.4rem] font-bold text-white tracking-tight leading-[1.12]"
+              >
+                Launch and Learn with Ian
+              </h2>
+              <p className="mt-4 text-base sm:text-lg text-zinc-300 leading-relaxed max-w-2xl [text-wrap:pretty]">
+                A recurring Google Meet for practical AI building, founder Q&A,
+                and real-time walkthroughs. Drop in live on Wednesdays at 1 PM
+                CT.
+              </p>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <Link
+                  href={LAUNCH_AND_LEARN_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-12 w-fit items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-red-600 px-6 text-sm font-semibold text-white shadow-lg shadow-orange-600/25 transition hover:from-orange-400 hover:to-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
+                >
+                  Join the open call
+                </Link>
+                <p className="text-sm text-zinc-500">
+                  Google Meet · Wednesdays · 1:00-2:00 PM CT
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="stage"
+        className="scroll-mt-32 relative bg-gradient-to-b from-[#030303] via-zinc-950/40 to-[#030303] px-5 sm:px-6 py-20 lg:py-28 border-t border-white/[0.07] snap-start overflow-hidden"
         aria-labelledby="recent-stage-heading"
       >
         <div
@@ -351,8 +499,8 @@ export default function SpeakingPage() {
           <SectionHeader
             kicker="Track record"
             id="recent-stage-heading"
-            title="Recent stage"
-            copy="From live builds to 500+ person keynotes — a mix of room sizes, same through-line: shipping beats slides."
+            title="Upcoming and recent stage"
+            copy="From Houston AI Club to 500+ person keynotes - a mix of room sizes, same through-line: shipping beats slides."
           />
           <div className="relative pl-0 sm:pl-10">
             <div
@@ -366,6 +514,11 @@ export default function SpeakingPage() {
                     title={s.title}
                     when={s.when}
                     body={s.body}
+                    logoSrc={"logoSrc" in s ? s.logoSrc : undefined}
+                    logoAlt={"logoAlt" in s ? s.logoAlt : undefined}
+                    logoFrame={"logoFrame" in s ? s.logoFrame : undefined}
+                    href={"href" in s ? (s.href as string) : undefined}
+                    cta={"cta" in s ? (s.cta as string) : undefined}
                     index={i + 1}
                   />
                 </li>
@@ -461,7 +614,8 @@ export default function SpeakingPage() {
       </section>
 
       <section
-        className="bg-[#030303] px-5 sm:px-6 py-20 lg:py-28 border-t border-white/[0.07] snap-start"
+        id="talks"
+        className="scroll-mt-32 bg-[#030303] px-5 sm:px-6 py-20 lg:py-28 border-t border-white/[0.07] snap-start"
         aria-labelledby="talks-heading"
       >
         <div className="max-w-6xl mx-auto">
@@ -516,9 +670,14 @@ export default function SpeakingPage() {
       </section>
 
       <section
-        className="relative bg-gradient-to-b from-[#040404] via-zinc-950/40 to-[#040404] px-5 sm:px-6 py-20 lg:py-28 border-t border-white/[0.07] overflow-hidden snap-start"
+        id="proof"
+        className="scroll-mt-32 relative bg-gradient-to-b from-[#040404] via-zinc-950/40 to-[#040404] px-5 sm:px-6 py-20 lg:py-28 border-t border-white/[0.07] overflow-hidden snap-start"
         aria-labelledby="testimonials-heading"
       >
+        <div
+          aria-hidden
+          className="absolute top-0 left-1/2 h-px w-full max-w-4xl -translate-x-1/2 bg-gradient-to-r from-transparent via-red-500/30 to-transparent"
+        />
         <div className="max-w-5xl mx-auto relative">
           <SectionHeader
             kicker="Operators"
@@ -526,6 +685,7 @@ export default function SpeakingPage() {
             title="What people have said"
             copy="Pull quotes from stages, inboxes, and the messy middle of real work."
           />
+          <VideoTestimonialsFolder items={transcripts} className="mb-12 lg:mb-16" />
           <div className="space-y-0">
             <div className="mb-10 lg:mb-12 rounded-2xl border border-red-500/20 bg-gradient-to-br from-red-500/[0.08] to-transparent p-6 sm:p-8 lg:p-10">
               <Quote
@@ -718,7 +878,7 @@ export default function SpeakingPage() {
 
       <section
         id="book"
-        className="relative bg-[#020202] px-5 sm:px-6 py-20 lg:py-32 border-t border-white/[0.08] overflow-hidden scroll-mt-20 snap-start"
+        className="scroll-mt-32 relative bg-[#020202] px-5 sm:px-6 py-20 lg:py-32 border-t border-white/[0.08] overflow-hidden snap-start"
         aria-labelledby="book-heading"
       >
         <div
@@ -831,31 +991,90 @@ const Stage = ({
   title,
   when,
   body,
+  logoSrc,
+  logoAlt,
+  logoFrame = "square",
+  href,
+  cta,
   index,
 }: {
   title: string;
   when: string;
   body: string;
+  logoSrc?: string;
+  logoAlt?: string;
+  logoFrame?: "wide" | "extraWide" | "square" | "poster";
+  href?: string;
+  cta?: string;
   index: number;
 }) => {
   return (
-    <div className="relative pl-0 sm:pl-2">
+    <div className="relative">
       <div
         aria-hidden
-        className="absolute -left-1.5 sm:left-0 top-2 flex h-9 w-9 max-sm:static max-sm:mb-2 items-center justify-center rounded-full border border-red-500/30 bg-zinc-950 text-[10px] font-bold text-red-400 shadow-[0_0_20px_-4px_rgba(239,68,68,0.5)]"
+        className="absolute -left-1.5 sm:left-0 top-5 flex h-9 w-9 max-sm:static max-sm:mb-3 items-center justify-center rounded-full border border-red-500/40 bg-zinc-950 text-[10px] font-bold text-red-300 shadow-[0_0_24px_-4px_rgba(239,68,68,0.7)]"
       >
         {String(index).padStart(2, "0")}
       </div>
-      <div className="max-sm:pl-0 sm:pl-12">
-        <div className="mb-2 flex flex-wrap items-center gap-3">
-          <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-            {title}
-          </h3>
-          <span className="inline-flex items-center rounded-full border border-red-500/30 bg-red-500/5 px-3 py-1 text-red-300/95 text-xs font-semibold tracking-wide">
-            {when}
-          </span>
+      <div className="max-sm:pl-0 sm:ml-12 overflow-hidden rounded-2xl border border-white/[0.1] bg-gradient-to-br from-white/[0.07] via-zinc-950/85 to-red-950/[0.08] shadow-[0_22px_55px_-42px_rgba(255,255,255,0.45)] transition duration-300 hover:border-red-500/35 hover:bg-white/[0.09]">
+        <div className={cn("flex flex-col", logoSrc ? "sm:flex-row" : "")}>
+          {logoSrc && (
+            <div className="flex shrink-0 items-center justify-center border-b border-white/[0.08] bg-white/[0.035] p-5 sm:w-56 sm:border-b-0 sm:border-r">
+              <div
+                className={cn(
+                  "flex shrink-0 items-center justify-center overflow-hidden rounded-xl shadow-[0_18px_40px_-22px_rgba(255,255,255,0.9)]",
+                  logoFrame === "wide" &&
+                    "h-16 w-40 border border-white/15 bg-white px-4 py-2.5",
+                  logoFrame === "extraWide" &&
+                    "h-16 w-44 border border-white/15 bg-white px-2 py-2",
+                  logoFrame === "square" &&
+                    "h-16 w-16 border border-white/20 bg-zinc-950 p-1.5",
+                  logoFrame === "poster" &&
+                    "h-32 w-32 border border-white/15 bg-white"
+                )}
+              >
+                <Image
+                  src={logoSrc}
+                  alt={logoAlt ?? ""}
+                  width={
+                    logoFrame === "poster"
+                      ? 128
+                      : logoFrame === "extraWide"
+                        ? 176
+                        : logoFrame === "wide"
+                          ? 144
+                          : 64
+                  }
+                  height={logoFrame === "poster" ? 128 : 64}
+                  className="h-full w-full object-contain"
+                />
+              </div>
+            </div>
+          )}
+          <div className="min-w-0 flex-1 p-5 sm:p-6 lg:p-7">
+            <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
+              <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                {title}
+              </h3>
+              <span className="inline-flex w-fit items-center rounded-full border border-red-500/35 bg-red-500/10 px-3 py-1 text-red-200 text-xs font-semibold tracking-wide">
+                {when}
+              </span>
+            </div>
+            <p className="text-zinc-300/90 leading-relaxed [text-wrap:pretty]">
+              {body}
+            </p>
+            {href && cta && (
+              <Link
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex w-fit items-center rounded-lg border border-red-500/35 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-100 transition hover:border-red-400/60 hover:bg-red-500/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70"
+              >
+                {cta}
+              </Link>
+            )}
+          </div>
         </div>
-        <p className="text-zinc-400 leading-relaxed [text-wrap:pretty]">{body}</p>
       </div>
     </div>
   );
