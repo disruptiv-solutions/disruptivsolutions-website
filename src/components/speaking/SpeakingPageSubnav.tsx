@@ -24,10 +24,10 @@ const SpeakingPageSubnav = () => {
   return (
     <nav
       aria-label="On this page"
-      className="sticky top-[65px] z-30 border-b border-white/[0.06] bg-[#040404]/95 backdrop-blur-md"
+      className="pointer-events-none sticky top-[65px] z-30 -mb-2 px-4 pt-2 sm:px-6"
     >
-      <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
-        <ul className="flex list-none flex-wrap items-center justify-center gap-2 p-0 m-0">
+      <div className="mx-auto flex max-w-7xl justify-center">
+        <ul className="pointer-events-auto flex list-none flex-wrap items-center justify-center gap-2 p-0 m-0">
           {NAV_ITEMS.map((item) => {
             const isActive = activeHash === item.href;
             return (
@@ -35,10 +35,10 @@ const SpeakingPageSubnav = () => {
                 <a
                   href={item.href}
                   className={cn(
-                    'inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70',
+                    'inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium shadow-lg shadow-black/40 backdrop-blur-md transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70',
                     isActive
-                      ? 'border-red-500/50 bg-red-500/15 text-white'
-                      : 'border-white/10 bg-white/[0.03] text-zinc-400 hover:border-white/20 hover:bg-white/[0.06] hover:text-zinc-100'
+                      ? 'border-red-500/50 bg-zinc-950/90 text-white shadow-red-950/50'
+                      : 'border-white/10 bg-zinc-950/75 text-zinc-300 hover:border-white/25 hover:bg-zinc-900/90 hover:text-white'
                   )}
                 >
                   {item.label}
