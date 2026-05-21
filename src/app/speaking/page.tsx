@@ -332,12 +332,20 @@ export default async function SpeakingPage() {
 
         <div className="max-w-7xl w-full grid lg:grid-cols-2 gap-14 lg:gap-16 items-center relative z-10">
           <div className="space-y-8 order-2 lg:order-1">
-            <div className="speaking-hero-entrance inline-flex items-center gap-2.5 rounded-full border border-red-500/35 bg-gradient-to-b from-red-500/12 to-red-600/5 px-4 py-1.5 text-red-300/95 text-xs font-semibold tracking-wide uppercase shadow-[0_0_0_1px_rgba(0,0,0,0.4)]">
-              <span
-                className="h-1.5 w-1.5 rounded-full bg-red-500 shadow-[0_0_10px_2px_rgba(239,68,68,0.5)]"
-                aria-hidden
-              />
-              <span>Wednesdays @ 1 PM CT — Launch &amp; Learn</span>
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="speaking-hero-entrance inline-flex items-center gap-2.5 rounded-full border border-red-500/35 bg-gradient-to-b from-red-500/12 to-red-600/5 px-4 py-1.5 text-red-300/95 text-xs font-semibold tracking-wide uppercase shadow-[0_0_0_1px_rgba(0,0,0,0.4)]">
+                <span
+                  className="h-1.5 w-1.5 rounded-full bg-red-500 shadow-[0_0_10px_2px_rgba(239,68,68,0.5)]"
+                  aria-hidden
+                />
+                <span>Wednesdays @ 1 PM CT — Launch &amp; Learn</span>
+              </div>
+              <Link
+                href="/start"
+                className="speaking-hero-entrance inline-flex items-center gap-2 rounded-full border border-zinc-700/60 bg-zinc-900/60 px-4 py-1.5 text-xs font-semibold text-zinc-300 transition hover:border-zinc-500/80 hover:text-white"
+              >
+                Saw me speak? Start here →
+              </Link>
             </div>
             <h1 className="speaking-hero-entrance speaking-hero-delay-1 text-4xl sm:text-5xl lg:text-6xl xl:text-[3.35rem] font-bold leading-[1.05] tracking-[-0.03em] text-white">
               I build AI products.

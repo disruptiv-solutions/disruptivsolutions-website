@@ -18,63 +18,16 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
   const { user, loading, isAdmin, signInWithGoogle, signOut } = useAuth();
 
   const navigationItems = [
-    { name: 'Home', href: '#hero' },
-    { name: 'About', href: '#who-this-is-for' },
-    { name: 'Consulting', href: '#consulting' },
-    { name: 'Highlights', href: '#launchbox' },
-    { name: 'Work', href: '#work' },
+    { name: 'Home', href: '/' },
+    { name: 'Start Here', href: '/start' },
     { name: 'Speaking', href: '/speaking' },
     { name: 'Resources', href: '/resources' },
   ];
 
   const handleNavClick = (href: string) => {
-    if (href.startsWith('#')) {
-      const targetId = href.substring(1);
-      
-      // Track navigation button click
-      const navItem = navigationItems.find(item => item.href === href);
-      trackButtonClick('nav_click', navItem?.name || targetId);
-      
-      // If not on root page, navigate to root with hash, then scroll
-      if (pathname !== '/') {
-        // Navigate to root page with hash
-        router.push(`/#${targetId}`);
-        
-        // Wait for navigation, then scroll to section
-        setTimeout(() => {
-          const targetElement = document.getElementById(targetId);
-          if (targetElement) {
-            const headerOffset = 80; // Height of fixed header
-            const elementPosition = targetElement.offsetTop;
-            const offsetPosition = targetId === 'hero' ? 0 : elementPosition - headerOffset;
-
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
-          }
-        }, 100);
-      } else {
-        // Already on root page, just scroll to section
-        const targetElement = document.getElementById(targetId);
-        if (targetElement) {
-          const headerOffset = 80; // Height of fixed header
-          const elementPosition = targetElement.offsetTop;
-          const offsetPosition = targetId === 'hero' ? 0 : elementPosition - headerOffset;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
-        }
-      }
-    } else if (href.startsWith('/')) {
-      const navItem = navigationItems.find(item => item.href === href);
-      trackButtonClick('nav_click', navItem?.name || href);
-      router.push(href);
-    }
-    
-    // Close mobile menu after navigation
+    const navItem = navigationItems.find(item => item.href === href);
+    trackButtonClick('nav_click', navItem?.name || href);
+    router.push(href);
     setIsMobileMenuOpen(false);
   };
 

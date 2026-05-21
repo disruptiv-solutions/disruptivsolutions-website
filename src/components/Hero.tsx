@@ -76,49 +76,49 @@ const Hero: React.FC = () => {
               Ian McDonald
               <br />
               <span className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-normal text-gray-300">
-                AI App Entrepreneur & Builder
+                AI Builder. Founder. Speaker.
               </span>
             </h1>
 
             {/* Subheadline */}
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl leading-relaxed mb-3 lg:mb-8">
-              I teach non-technical people to build AI apps that actually work.
+              I build AI products and help operators turn ideas, workflows,
+              and communities into real platforms.
               <br /><br />
-              From side hustles to enterprise platforms with 1,500+ users—I build in public and show others how to do the same.
-              <br /><br />
-              <span className="text-white font-semibold">Currently building: Launchbox</span>
+              Self-taught. No CS degree. 1,600+ users. $1.2M ARR in 9 months.
+              Now building LaunchBox — and showing others how to do the same.
             </p>
 
             {/* CTAs */}
             <div className="hidden lg:flex flex-row flex-nowrap gap-4 justify-start items-center lg:text-left">
               <Link
-                href="https://launchbox.space/white-label"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/start"
                 onClick={() => {
-                  trackButtonClick('learn_launchbox', 'hero_section');
+                  trackButtonClick('start_here', 'hero_section');
                 }}
                 className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50 inline-flex items-center justify-center whitespace-nowrap"
               >
-                Learn about LaunchBox
+                Start Here →
               </Link>
               <Link
-                href="#consulting"
+                href="/speaking"
                 onClick={() => {
-                  trackButtonClick('free_consult_button', 'hero_section');
+                  trackButtonClick('speaking_page', 'hero_section');
                 }}
                 className="px-8 py-4 border-2 border-gray-300 text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-300 inline-flex items-center justify-center whitespace-nowrap"
               >
-                Free Consult
+                Book Ian to Speak
               </Link>
               <Link
-                href="/newsletter"
+                href="https://launchbox.space"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => {
-                  trackButtonClick('subscribe_newsletter', 'hero_section');
+                  trackButtonClick('launchbox_site', 'hero_section');
                 }}
                 className="px-8 py-4 border-2 border-gray-300 text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-300 inline-flex items-center justify-center whitespace-nowrap"
               >
-                Join My Newsletter
+                See LaunchBox
               </Link>
             </div>
 
