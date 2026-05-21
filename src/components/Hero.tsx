@@ -90,7 +90,7 @@ const Hero: React.FC = () => {
             </p>
 
             {/* CTAs */}
-            <div className="hidden lg:flex flex-row flex-nowrap gap-4 justify-start items-center lg:text-left">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-start items-stretch sm:items-center lg:text-left">
               <Link
                 href="/start"
                 onClick={() => {

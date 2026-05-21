@@ -60,7 +60,7 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
           <div className="flex items-center justify-between h-full">
             {/* Logo with Image */}
             <button
-              onClick={() => handleNavClick('#hero')}
+              onClick={() => handleNavClick('/')}
               className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer"
             >
               <img 
@@ -238,7 +238,7 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
               <div className="flex items-center justify-between p-6 border-b border-gray-800">
                 <button
                   onClick={() => {
-                    handleNavClick('#hero');
+                    handleNavClick('/');
                   }}
                   className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer"
                 >
@@ -359,12 +359,21 @@ const Navigation = ({ activeSection = 'hero' }: NavigationProps) => {
                       </button>
                     </div>
                   ) : (
-                    <button
-                      onClick={handleSignIn}
-                      className="w-full px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition-all shadow-lg shadow-red-600/40"
-                    >
-                      Log In with Google
-                    </button>
+                    <div className="flex flex-col gap-2">
+                      <button
+                        type="button"
+                        onClick={() => { openSignUpModal(); setIsMobileMenuOpen(false); }}
+                        className="w-full px-4 py-2 bg-transparent border border-red-600 text-red-100 text-sm font-semibold rounded-lg hover:bg-red-600 hover:text-white transition-colors"
+                      >
+                        Sign Up
+                      </button>
+                      <button
+                        onClick={handleSignIn}
+                        className="w-full px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition-all shadow-lg shadow-red-600/40"
+                      >
+                        Log In with Google
+                      </button>
+                    </div>
                   )}
                 </div>
               )}
