@@ -10,23 +10,23 @@ const Portfolio: React.FC = () => {
 
   const projects = [
     {
-      title: "Launchbox",
-      tag: "Building in Public - Launching Q1 2026",
-      description: "A platform where non-technical people learn to build AI-powered apps.",
+      title: "LaunchBox",
+      tag: "Live · White-Label Community Platform",
+      description: "A platform for coaches, creators, consultants, and founders who want to launch a branded community, course, or membership — without stitching five tools together.",
       details: [
-        "Tools + Training + Community",
-        "Working AI tools from day one (not just tutorials)",
-        "Step-by-step builds you can actually finish",
-        "Community of builders who support each other"
+        "White-label branding — your name, your domain",
+        "Built-in community, courses, and AI tools",
+        "Launch a platform in days, not months",
+        "Members pay you directly"
       ],
-      traction: "50+ early members building together",
+      traction: "14+ communities live · 35+ members building",
       tech: "Multi-model AI • Firebase/Firestore • Custom tooling",
-      cta: "Join the Waitlist"
+      link: "launchbox.space"
     },
     {
       title: "Real AI",
       tag: "Enterprise AI Workspace - Lead Architect",
-      description: "Multi-model AI workspace serving 1,500+ active users.",
+      description: "Multi-model AI workspace serving 1,600+ active users.",
       features: [
         "Built: Multi-model chat, image/video generation, knowledge bases, super-prompt builder, brand voice tools",
         "Multi-model AI (OpenAI, Anthropic, and more)",

@@ -14,7 +14,7 @@ const WhoThisIsFor: React.FC = () => {
             {/* Left: Who This Is For - Static */}
             <div className="lg:pr-8 flex flex-col justify-center space-y-6">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-10">
-                You're Exactly Where I Was 12 Months Ago
+                I Know Exactly Where You Are Right Now
               </h2>
               
               <div className="space-y-6 text-gray-300 text-lg leading-relaxed">
@@ -39,7 +39,7 @@ const WhoThisIsFor: React.FC = () => {
                 
                 <p className="mt-8">
                   I spent years thinking I wasn't "technical enough."<br />
-                  Then I built something 1,500+ people use daily.
+                  Then I built something 1,600+ people use daily.
                 </p>
                 
                 <p className="text-white text-xl font-semibold">
@@ -64,7 +64,7 @@ const WhoThisIsFor: React.FC = () => {
                 <div className="sticky top-[80px] left-0 right-0 h-20 bg-gradient-to-b from-black via-black/70 to-transparent pointer-events-none z-10 -mt-20"></div>
                 
                 <p>
-                  A year ago I was barely making money, questioning if this entrepreneur thing was realistic.
+                  Not long ago I was barely making money, questioning if this entrepreneur thing was realistic.
                 </p>
                 
                 <p>
@@ -80,7 +80,7 @@ const WhoThisIsFor: React.FC = () => {
                 </p>
                 
                 <p>
-                  I went from client work (Disruptiv Solutions) to building proof-of-concept tools (ChatterCard) to becoming lead architect for an AI platform serving 1,500+ active users. From knowing nothing about speaking to leading workshops.
+                  I went from client work (Disruptiv Solutions) to building proof-of-concept tools (ChatterCard) to becoming lead architect for an AI platform serving 1,600+ active users. From knowing nothing about speaking to keynoting rooms of 500+ people.
                 </p>
                 
                 <p>
@@ -88,7 +88,7 @@ const WhoThisIsFor: React.FC = () => {
                 </p>
                 
                 <p>
-                  Now I'm 31, living in Pensacola, FL, building in public and teaching others to do the same.
+                  Now I'm based in Houston, building in public and teaching others to do the same.
                 </p>
                 
                 <p>
@@ -96,7 +96,7 @@ const WhoThisIsFor: React.FC = () => {
                 </p>
                 
                 <div className="rounded-xl border border-gray-800 bg-zinc-900/30 pl-6 pr-6 py-6 mt-8 space-y-3">
-                  <p className="text-white font-semibold text-xl mb-4">If you're where I was 12 months ago:</p>
+                  <p className="text-white font-semibold text-xl mb-4">If you're where I once was:</p>
                   <p className="flex items-start gap-3">
                     <span className="text-red-600 font-bold">→</span>
                     <span>You're more capable than you think</span>

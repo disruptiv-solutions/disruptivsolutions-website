@@ -10,7 +10,7 @@ export default function Home() {
     <>
       <Hero />
       <WhoThisIsFor />
-      <ImageSection imagePath="/ian-stage.jpg" alt="Description" />
+      <ImageSection imagePath="/ian-stage.jpg" alt="Ian McDonald speaking on stage" />
       <Consulting />
       <Launchbox />
       <Portfolio />
