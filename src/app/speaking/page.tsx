@@ -64,9 +64,9 @@ const BEST_FIT: readonly string[] = [
 
 const STAGE_ITEMS = [
   {
-    title: "Houston AI Club AI Lightning Lesson",
+    title: "Houston AI Club — AI Lightning Lesson",
     when: "May 21, 2026",
-    body: "Upcoming 30-minute virtual session for Houston AI Club: From AI Consumer to AI Builder. A practical playbook for non-technical operators, with part of the session built live on screen.",
+    body: "30-minute virtual session for Houston AI Club: From AI Consumer to AI Builder. Live demo of LaunchBox building a community from scratch. 50+ attendees, active Q&A throughout — covered practical AI, the consumer-to-builder gap, and a live build on screen.",
     logoSrc: "/speaking/houston-ai-club-logo-cropped.png",
     logoAlt: "Houston AI Club logo",
     logoFrame: "wide",
@@ -155,6 +155,17 @@ const QUOTES: readonly {
       "I enjoyed your speech, the hands-on coding presentation, your honesty and humble attitude, and your drive.",
     who: "Monika Mielnik",
     role: "Director, UX/UI Design & Development · AIXP Houston",
+  },
+  {
+    quote:
+      "Great story buddy! I wish my son joined this call. Your story is inspiring.",
+    who: "Frank Huang",
+    role: "Houston AI Club · May 2026",
+  },
+  {
+    quote: "Amazing story! Thank you for sharing, Ian.",
+    who: "Aya Takase",
+    role: "Houston AI Club · May 2026",
   },
   {
     quote:
@@ -326,7 +337,7 @@ export default async function SpeakingPage() {
                 className="h-1.5 w-1.5 rounded-full bg-red-500 shadow-[0_0_10px_2px_rgba(239,68,68,0.5)]"
                 aria-hidden
               />
-              <span>Upcoming: Houston AI Club - May 21</span>
+              <span>Wednesdays @ 1 PM CT — Launch &amp; Learn</span>
             </div>
             <h1 className="speaking-hero-entrance speaking-hero-delay-1 text-4xl sm:text-5xl lg:text-6xl xl:text-[3.35rem] font-bold leading-[1.05] tracking-[-0.03em] text-white">
               I build AI products.
@@ -358,7 +369,7 @@ export default async function SpeakingPage() {
               </Link>
             </div>
             <p className="speaking-hero-entrance speaking-hero-delay-4 text-sm text-zinc-500 max-w-md leading-relaxed">
-              Keynotes, panels, and live builds. Based in Pensacola, available
+              Keynotes, panels, and live builds. Based in Houston, available
               to travel.
             </p>
             <div className="speaking-hero-entrance speaking-hero-delay-4">
@@ -754,7 +765,7 @@ export default async function SpeakingPage() {
             </div>
             <div className="grid sm:grid-cols-3 gap-4 sm:gap-5">
               <Stat number="$1,250" label="MRR, still solo" />
-              <Stat number="14" label="partners on platform" />
+              <Stat number="35" label="subscribers · 14 hosting communities" />
               <Stat number="80%+" label="margin per partner" />
             </div>
             <p className="mt-6 text-sm text-zinc-400 leading-relaxed max-w-3xl">
@@ -812,9 +823,8 @@ export default async function SpeakingPage() {
             </p>
             <p className="text-lg text-zinc-300 leading-relaxed mt-4">
               After years of moving between Colorado and Pensacola while his
-              dad battled cancer, Ian moved home in late 2024 after his dad
-              passed and went all-in on building with $5,000 and no safety
-              net.
+              dad battled cancer, Ian went all-in on building in December 2023
+              with $5,000 and no safety net. He now lives in Houston.
             </p>
             <p className="text-lg text-zinc-300 leading-relaxed mt-4">
               No CS degree. No bootcamp. No co-founder. He&apos;d been teaching
