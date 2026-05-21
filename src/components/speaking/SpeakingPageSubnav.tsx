@@ -24,7 +24,7 @@ const SpeakingPageSubnav = () => {
   return (
     <nav
       aria-label="On this page"
-      className="pointer-events-none sticky top-[65px] z-30 -mb-2 px-4 pt-2 sm:px-6"
+      className="pointer-events-none sticky top-[65px] z-30 -mb-2 hidden sm:block px-4 pt-2 sm:px-6"
     >
       <div className="mx-auto flex max-w-7xl justify-center">
         <ul className="pointer-events-auto flex list-none flex-wrap items-center justify-center gap-2 p-0 m-0">
