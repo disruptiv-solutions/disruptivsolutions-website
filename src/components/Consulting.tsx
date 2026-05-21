@@ -3,7 +3,7 @@
 import React from 'react';
 import { trackButtonClick, trackExternalLink } from '@/lib/analytics';
 
-const AI_OPS_URL = 'https://calendar.app.google/J6uMiKkf3AM4zS9MA';
+const AI_OPS_URL = 'https://calendar.app.google/HCxn9Xec9TmatLEZ6';
 
 const Consulting: React.FC = () => {
   const handleBookCall = () => {
