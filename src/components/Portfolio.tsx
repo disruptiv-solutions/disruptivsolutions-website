@@ -236,14 +236,6 @@ const Portfolio: React.FC = () => {
                     </a>
                   )}
 
-                  {activeProject.cta && (
-                    <button
-                      onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                      className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50"
-                    >
-                      {activeProject.cta}
-                    </button>
-                  )}
                 </div>
               </div>
 
