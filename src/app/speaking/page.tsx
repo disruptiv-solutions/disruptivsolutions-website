@@ -45,6 +45,13 @@ const personSchema = {
   performerIn: [
     {
       "@type": "Event",
+      name: "Small & Diverse Business Inclusion Summit",
+      location: "1010 Lamar Street, Houston, TX 77002",
+      startDate: "2026-06-26T09:30:00-05:00",
+      endDate: "2026-06-26T15:00:00-05:00",
+    },
+    {
+      "@type": "Event",
       name: "Houston AI Club AI Lightning Lesson",
       location: "Virtual",
       startDate: "2026-05-21T10:30:00-05:00",
@@ -63,6 +70,11 @@ const BEST_FIT: readonly string[] = [
 ];
 
 const STAGE_ITEMS = [
+  {
+    title: "Small & Diverse Business Inclusion Summit",
+    when: "June 26, 2026 · Upcoming",
+    body: "Speaking at the Office of Commissioner Rodney Ellis' Small & Diverse Business Inclusion Summit in Houston — a full day of networking and resource sharing for small business owners, entrepreneurs, and industry leaders. Ian's session covers core business fundamentals: leveraging AI and automation to improve marketing and operations. 9:30 a.m.–3 p.m. at 1010 Lamar Street, Houston, TX 77002.",
+  },
   {
     title: "Houston AI Club — AI Lightning Lesson",
     when: "May 21, 2026",
