@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Resend } from 'resend';
 import { initFirebaseAdmin } from '@/lib/firebase-admin';
 import { QUESTIONS } from '@/lib/assessment';
 
@@ -10,6 +11,12 @@ export const maxDuration = 30;
 const MAKE_WEBHOOK_URL = process.env.MAKE_ASSESSMENT_WEBHOOK_URL ?? '';
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY ?? '';
 const OPENROUTER_MODEL = 'deepseek/deepseek-v4-flash';
+
+const RESEND_API_KEY = process.env.RESEND_API_KEY ?? '';
+const RESEND_FROM = process.env.RESEND_FROM ?? 'Ian McDonald <ian@ianmcdonald.ai>';
+const ALERT_TO = process.env.ALERT_EMAIL ?? 'ian@ianmcdonald.ai';
+const BOOKING_URL = 'https://calendar.app.google/TMV3V2nTEiyCWXKB6';
+const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
 
 type Contact = { firstName: string; email: string; business: string };
 
@@ -135,6 +142,101 @@ Write their personalized snapshot now.`;
   }
 }
 
+type EmailReadout = {
+  stage?: { level?: number; name?: string; blurb?: string };
+  opportunities?: { title?: string; detail?: string }[];
+  quickWin?: string;
+};
+
+function esc(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function snapshotParagraphs(text: string | null): string {
+  if (!text) return '';
+  return text
+    .split('\n')
+    .map((p) => p.trim())
+    .filter(Boolean)
+    .map((p) => `<p style="margin:0 0 14px;color:#374151;line-height:1.6">${esc(p)}</p>`)
+    .join('');
+}
+
+function prospectEmail(firstName: string, readout: EmailReadout, aiSnapshot: string | null): string {
+  const stage = readout.stage ?? {};
+  const opps = Array.isArray(readout.opportunities) ? readout.opportunities : [];
+  const oppHtml = opps
+    .map(
+      (o) =>
+        `<tr><td style="padding:0 0 12px"><strong style="color:#111827">${esc(o.title ?? '')}</strong><br><span style="color:#4b5563">${esc(o.detail ?? '')}</span></td></tr>`,
+    )
+    .join('');
+  return `<div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:560px;margin:0 auto;padding:8px">
+    <p style="color:#dc2626;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin:0 0 4px">Your AI Snapshot</p>
+    <h1 style="font-size:24px;color:#111827;margin:0 0 16px">Hi ${esc(firstName)},</h1>
+    <p style="color:#374151;line-height:1.6;margin:0 0 16px">Here is the snapshot from your answers.</p>
+    <p style="color:#111827;font-size:18px;font-weight:700;margin:0 0 4px">Stage ${stage.level ?? ''} of 4: ${esc(stage.name ?? '')}</p>
+    <p style="color:#4b5563;line-height:1.6;margin:0 0 20px">${esc(stage.blurb ?? '')}</p>
+    ${aiSnapshot ? `<div style="border-left:3px solid #dc2626;padding:0 0 0 16px;margin:0 0 20px">${snapshotParagraphs(aiSnapshot)}</div>` : ''}
+    ${oppHtml ? `<p style="color:#111827;font-weight:700;margin:0 0 8px">Where AI pays off fastest for you:</p><table style="width:100%;margin:0 0 16px">${oppHtml}</table>` : ''}
+    ${readout.quickWin ? `<div style="background:#fef2f2;border-radius:10px;padding:14px 16px;margin:0 0 24px"><strong style="color:#dc2626">Your quick win:</strong> <span style="color:#374151">${esc(readout.quickWin)}</span></div>` : ''}
+    <a href="${BOOKING_URL}" style="display:inline-block;background:#dc2626;color:#fff;text-decoration:none;font-weight:600;padding:14px 28px;border-radius:10px">Book your free 12-minute call</a>
+    <p style="color:#6b7280;font-size:14px;line-height:1.6;margin:24px 0 0">If you want a hand putting any of this to work in your business, that is exactly what I do. Grab a time above and I will already have your snapshot.</p>
+    <p style="color:#111827;margin:20px 0 0">Ian McDonald<br><span style="color:#6b7280">Disruptiv Solutions</span></p>
+  </div>`;
+}
+
+function alertEmail(
+  contact: Contact,
+  answers: Record<string, unknown>,
+  readout: EmailReadout,
+  aiSnapshot: string | null,
+): string {
+  const stage = readout.stage ?? {};
+  return `<div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:600px">
+    <h2 style="margin:0 0 8px">New AI Snapshot lead</h2>
+    <p style="margin:0 0 4px"><strong>${esc(contact.firstName)}</strong> &lt;${esc(contact.email)}&gt;</p>
+    ${contact.business ? `<p style="margin:0 0 4px">Business: ${esc(contact.business)}</p>` : ''}
+    <p style="margin:0 0 12px">Stage ${stage.level ?? ''} of 4: ${esc(stage.name ?? '')}</p>
+    <pre style="background:#f3f4f6;padding:14px;border-radius:8px;white-space:pre-wrap;font-family:inherit;color:#111827">${esc(describeAnswers(answers, contact))}</pre>
+    ${aiSnapshot ? `<p style="margin:14px 0 4px"><strong>AI snapshot:</strong></p><div style="color:#374151;line-height:1.6">${snapshotParagraphs(aiSnapshot)}</div>` : ''}
+  </div>`;
+}
+
+async function sendLeadEmails(
+  contact: Contact,
+  answers: Record<string, unknown>,
+  readout: EmailReadout,
+  aiSnapshot: string | null,
+): Promise<void> {
+  if (!resend) {
+    console.error('[assessment] RESEND_API_KEY not configured; skipping emails');
+    return;
+  }
+  const stageName = readout.stage?.name ?? '';
+  try {
+    await resend.emails.send({
+      from: RESEND_FROM,
+      to: contact.email,
+      subject: `Your AI Snapshot, ${contact.firstName}`,
+      html: prospectEmail(contact.firstName, readout, aiSnapshot),
+    });
+  } catch (err) {
+    console.error('[assessment] prospect email failed:', err);
+  }
+  try {
+    await resend.emails.send({
+      from: RESEND_FROM,
+      to: ALERT_TO,
+      replyTo: contact.email,
+      subject: `New AI Snapshot lead: ${contact.firstName}${contact.business ? ` (${contact.business})` : ''}${stageName ? ` — ${stageName}` : ''}`,
+      html: alertEmail(contact, answers, readout, aiSnapshot),
+    });
+  } catch (err) {
+    console.error('[assessment] alert email failed:', err);
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const raw = await request.json();
@@ -193,6 +295,14 @@ export async function POST(request: NextRequest) {
     if (!persisted && !MAKE_WEBHOOK_URL) {
       console.error('[assessment] LEAD NOT CAPTURED (no Firestore, no webhook):', record.contact);
     }
+
+    // Email the prospect their snapshot + alert Ian (best-effort).
+    await sendLeadEmails(
+      data.contact,
+      data.answers,
+      (data.readout ?? {}) as EmailReadout,
+      aiSnapshot,
+    );
 
     return NextResponse.json({ success: true, aiSnapshot, id: leadId }, { status: 200 });
   } catch (error) {
