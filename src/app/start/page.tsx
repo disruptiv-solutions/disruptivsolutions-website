@@ -75,6 +75,29 @@ export default function StartPage() {
             </p>
           </div>
 
+          {/* Recommended first step — the AI Snapshot lead magnet */}
+          <Link
+            href="/assessment"
+            className="group mb-8 block rounded-2xl border border-red-500/30 bg-gradient-to-r from-red-600/15 to-transparent p-5 sm:p-6 transition-all duration-300 hover:border-red-500/60"
+          >
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <p className="text-red-400 text-xs font-semibold tracking-[0.2em] uppercase mb-1">
+                  New here? Start with this
+                </p>
+                <p className="text-white font-semibold text-lg leading-snug">
+                  Take the free 2-minute AI Snapshot
+                </p>
+                <p className="text-zinc-400 text-sm mt-1 [text-wrap:pretty]">
+                  Answer a few quick questions and see exactly where AI fits your business.
+                </p>
+              </div>
+              <span className="shrink-0 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-red-600 to-red-700 px-6 py-3 text-sm font-semibold text-white shadow-lg transition-transform group-hover:scale-[1.03] whitespace-nowrap">
+                Take it →
+              </span>
+            </div>
+          </Link>
+
           {/* Three Doors */}
           <div className="flex flex-col gap-5">
             {doors.map((door) => {
