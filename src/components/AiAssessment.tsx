@@ -9,7 +9,7 @@ import {
 } from '@/lib/assessment';
 import { trackEvent } from '@/lib/analytics';
 
-const CAL_URL = 'https://calendar.app.google/HCxn9Xec9TmatLEZ6';
+const CAL_URL = 'https://calendar.app.google/TMV3V2nTEiyCWXKB6';
 const LAUNCHBOX_URL = 'https://launchbox.space';
 
 const INTAKE_QUESTIONS = [
@@ -115,7 +115,7 @@ export default function AiAssessment() {
           contact: { firstName: firstName.trim(), email: email.trim(), business: business.trim() },
           answers,
           readout: result,
-          source: 'disruptiv.solutions/assessment',
+          source: 'ianmcdonald.ai/assessment',
         }),
       });
       const data = (await res.json().catch(() => ({}))) as {
@@ -329,7 +329,7 @@ export default function AiAssessment() {
                 Want me to map this for your actual business?
               </h3>
               <p className="text-gray-300 leading-relaxed max-w-lg mx-auto">
-                Book a free 15-minute fit call. I&apos;ve already got your snapshot, so we&apos;ll
+                Book a free 12-minute fit call. I&apos;ve already got your snapshot, so we&apos;ll
                 spend the time on you, not the small talk.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center pt-1">
@@ -338,7 +338,7 @@ export default function AiAssessment() {
                   onClick={() => setIntakeOpen(true)}
                   className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg shadow-red-600/30 hover:shadow-red-600/60 inline-flex items-center justify-center whitespace-nowrap"
                 >
-                  Book your free 15-min call →
+                  Book your free 12-min call →
                 </button>
                 {!readout.launchbox.fit && (
                   <a
