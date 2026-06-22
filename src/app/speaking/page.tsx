@@ -46,9 +46,22 @@ const personSchema = {
     {
       "@type": "Event",
       name: "Small & Diverse Business Inclusion Summit",
-      location: "1010 Lamar Street, Houston, TX 77002",
+      location: {
+        "@type": "Place",
+        name: "1010 Lamar Street",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "1010 Lamar Street",
+          addressLocality: "Houston",
+          addressRegion: "TX",
+          postalCode: "77002",
+          addressCountry: "US",
+        },
+      },
       startDate: "2026-06-26T09:30:00-05:00",
       endDate: "2026-06-26T15:00:00-05:00",
+      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+      eventStatus: "https://schema.org/EventScheduled",
     },
     {
       "@type": "Event",
