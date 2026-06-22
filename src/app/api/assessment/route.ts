@@ -180,7 +180,7 @@ function prospectEmail(firstName: string, readout: EmailReadout, aiSnapshot: str
     ${aiSnapshot ? `<div style="border-left:3px solid #dc2626;padding:0 0 0 16px;margin:0 0 20px">${snapshotParagraphs(aiSnapshot)}</div>` : ''}
     ${oppHtml ? `<p style="color:#111827;font-weight:700;margin:0 0 8px">Where AI pays off fastest for you:</p><table style="width:100%;margin:0 0 16px">${oppHtml}</table>` : ''}
     ${readout.quickWin ? `<div style="background:#fef2f2;border-radius:10px;padding:14px 16px;margin:0 0 24px"><strong style="color:#dc2626">Your quick win:</strong> <span style="color:#374151">${esc(readout.quickWin)}</span></div>` : ''}
-    <a href="${BOOKING_URL}" style="display:inline-block;background:#dc2626;color:#fff;text-decoration:none;font-weight:600;padding:14px 28px;border-radius:10px">Book your free 12-minute call</a>
+    <a href="${BOOKING_URL}" style="display:inline-block;background:#dc2626;color:#fff;text-decoration:none;font-weight:600;padding:14px 28px;border-radius:10px">Book your free 15-minute call</a>
     <p style="color:#6b7280;font-size:14px;line-height:1.6;margin:24px 0 0">If you want a hand putting any of this to work in your business, that is exactly what I do. Grab a time above and I will already have your snapshot.</p>
     <p style="color:#111827;margin:20px 0 0">Ian McDonald<br><span style="color:#6b7280">Disruptiv Solutions</span></p>
   </div>`;
