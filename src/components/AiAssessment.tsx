@@ -61,7 +61,8 @@ export default function AiAssessment() {
   const [intake, setIntake] = useState<Record<string, string>>({});
   const [intakeDone, setIntakeDone] = useState(false);
 
-  const total = QUESTIONS.length;
+  const visibleQuestions = QUESTIONS.filter((q) => !q.showIf || q.showIf(answers));
+  const total = visibleQuestions.length;
   const onContact = step === total;
 
   function selectSingle(qid: string, value: string) {
@@ -454,10 +455,12 @@ export default function AiAssessment() {
   }
 
   // ---------- QUESTION STEP ----------
-  const q = QUESTIONS[step];
+  const q = visibleQuestions[step];
   const answer = answers[q.id];
   const multiSelected = Array.isArray(answer) ? answer : [];
   const textValue = typeof answer === 'string' ? answer : '';
+  const otherValue =
+    typeof answers[`${q.id}Other`] === 'string' ? (answers[`${q.id}Other`] as string) : '';
   const canAdvance =
     q.type === 'multi'
       ? multiSelected.length > 0
@@ -481,7 +484,11 @@ export default function AiAssessment() {
             <button
               key={c.value}
               type="button"
-              onClick={() => selectSingle(q.id, c.value)}
+              onClick={() =>
+                q.allowOther && c.value === 'other'
+                  ? setAnswers((a) => ({ ...a, [q.id]: 'other' }))
+                  : selectSingle(q.id, c.value)
+              }
               className={`w-full text-left px-5 py-4 rounded-xl border transition-all duration-200 ${
                 answer === c.value
                   ? 'border-red-600 bg-red-600/10 text-white'
@@ -491,6 +498,25 @@ export default function AiAssessment() {
               {c.label}
             </button>
           ))}
+          {q.allowOther && answer === 'other' && (
+            <>
+              <input
+                type="text"
+                autoFocus
+                maxLength={120}
+                value={otherValue}
+                onChange={(e) => setText(`${q.id}Other`, e.target.value)}
+                className="w-full px-4 py-3 bg-white/5 border border-white/15 rounded-xl text-white placeholder:text-gray-500 focus:border-red-600/60 focus:outline-none focus:ring-2 focus:ring-red-600/30 transition-colors"
+                placeholder="Which one?"
+              />
+              <StepNav
+                onBack={() => setStep((s) => Math.max(s - 1, 0))}
+                onNext={() => setStep((s) => s + 1)}
+                canAdvance={otherValue.trim().length > 0}
+                showBack={step > 0}
+              />
+            </>
+          )}
         </div>
       )}
 
