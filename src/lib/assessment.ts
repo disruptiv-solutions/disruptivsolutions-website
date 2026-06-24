@@ -5,6 +5,8 @@
 
 export type Choice = { value: string; label: string };
 
+export type Answers = Record<string, string | string[]>;
+
 export type Question = {
   id: string;
   prompt: string;
@@ -14,9 +16,11 @@ export type Question = {
   maxSelect?: number;
   placeholder?: string;
   optional?: boolean;
+  // Only show this question when the predicate passes (conditional follow-up).
+  showIf?: (answers: Answers) => boolean;
+  // For single-select: reveal a free-text field when "other" is picked.
+  allowOther?: boolean;
 };
-
-export type Answers = Record<string, string | string[]>;
 
 export type Stage = { level: 1 | 2 | 3 | 4; name: string; blurb: string };
 export type Opportunity = { title: string; detail: string };
@@ -31,6 +35,21 @@ export type Readout = {
 // the free-text (high-intent, gold for the call) comes last and is optional so
 // it never blocks completion.
 export const QUESTIONS: Question[] = [
+  {
+    id: 'bizType',
+    prompt: 'What kind of business do you run?',
+    helper: 'This points your snapshot at your actual world, not generic advice.',
+    type: 'single',
+    choices: [
+      { value: 'coaching', label: 'Coaching or consulting' },
+      { value: 'community', label: 'Course, community, or membership' },
+      { value: 'service', label: 'Local or service business' },
+      { value: 'agency', label: 'Agency, studio, or freelance' },
+      { value: 'ecom', label: 'Ecommerce or retail' },
+      { value: 'pro', label: 'Professional services (legal, finance, real estate)' },
+      { value: 'other', label: 'Something else' },
+    ],
+  },
   {
     id: 'aiStage',
     prompt: 'Where are you with AI right now?',
@@ -87,14 +106,28 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'community',
-    prompt: 'Do you run a community, course, or membership?',
-    helper: 'Or want to. This tells me whether LaunchBox is a fit for you.',
+    prompt: 'Do you have a community, or want to build one?',
+    helper: 'A paid group, course, or membership. This helps me point you the right way.',
     type: 'single',
     choices: [
       { value: 'yes', label: 'Yes, I run one now' },
       { value: 'building', label: "I'm building / planning one" },
-      { value: 'interested', label: "No, but I've thought about it" },
+      { value: 'interested', label: "I'm interested" },
       { value: 'no', label: 'No, just my business' },
+    ],
+  },
+  {
+    id: 'communityPlatform',
+    prompt: 'What platform do you run it on?',
+    helper: 'Just so I know what you are working with.',
+    type: 'single',
+    allowOther: true,
+    showIf: (a) => a.community === 'yes',
+    choices: [
+      { value: 'facebook', label: 'Facebook group' },
+      { value: 'circle', label: 'Circle' },
+      { value: 'skool', label: 'Skool' },
+      { value: 'other', label: 'Other' },
     ],
   },
   {

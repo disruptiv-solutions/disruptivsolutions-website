@@ -24,7 +24,7 @@ const doors = [
     headline: "Simplify my business with AI",
     sub: "For businesses with tool sprawl, workflow chaos, or automation needs. We'll audit what you have, cut what you don't need, and build what actually moves the needle.",
     cta: "Book an AI Ops Call",
-    href: "https://calendar.app.google/HCxn9Xec9TmatLEZ6",
+    href: "https://calendar.app.google/okpHPUV8TA85GBaA6",
     external: true,
     accent: "from-zinc-600 to-zinc-700",
     border: "hover:border-zinc-400/40",

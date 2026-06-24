@@ -15,7 +15,7 @@ const OPENROUTER_MODEL = 'deepseek/deepseek-v4-flash';
 const RESEND_API_KEY = process.env.RESEND_API_KEY ?? '';
 const RESEND_FROM = process.env.RESEND_FROM ?? 'Ian McDonald <ian@ianmcdonald.ai>';
 const ALERT_TO = process.env.ALERT_EMAIL ?? 'ian@ianmcdonald.ai';
-const BOOKING_URL = 'https://calendar.app.google/TMV3V2nTEiyCWXKB6';
+const BOOKING_URL = 'https://calendar.app.google/okpHPUV8TA85GBaA6';
 const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
 
 type Contact = { firstName: string; email: string; business: string };
@@ -53,6 +53,8 @@ function labelFor(questionId: string, value: string): string {
 function describeAnswers(answers: Record<string, unknown>, contact: Contact): string {
   const lines: string[] = [];
   if (contact.business) lines.push(`Business name: ${contact.business}`);
+  if (typeof answers.bizType === 'string')
+    lines.push(`What kind of business they run: ${labelFor('bizType', answers.bizType)}`);
   if (typeof answers.aiStage === 'string')
     lines.push(`Where they are with AI: ${labelFor('aiStage', answers.aiStage)}`);
   if (Array.isArray(answers.tools) && answers.tools.length)
@@ -70,7 +72,14 @@ function describeAnswers(answers: Record<string, unknown>, contact: Contact): st
   if (typeof answers.teamSize === 'string')
     lines.push(`Team size: ${labelFor('teamSize', answers.teamSize)}`);
   if (typeof answers.community === 'string')
-    lines.push(`Runs a community/course/membership: ${labelFor('community', answers.community)}`);
+    lines.push(`Has or wants a community/membership: ${labelFor('community', answers.community)}`);
+  if (answers.community === 'yes' && typeof answers.communityPlatform === 'string') {
+    const platform =
+      answers.communityPlatform === 'other' && typeof answers.communityPlatformOther === 'string'
+        ? answers.communityPlatformOther
+        : labelFor('communityPlatform', answers.communityPlatform);
+    if (platform) lines.push(`Community platform: ${platform}`);
+  }
   if (typeof answers.blocker === 'string')
     lines.push(`Biggest blocker: ${labelFor('blocker', answers.blocker)}`);
   if (typeof answers.dreamTask === 'string' && answers.dreamTask.trim())
@@ -84,6 +93,7 @@ Write a short, sharp, personalized analysis for a business owner based on their 
 
 Rules:
 - Speak directly to them as "you" and "your business".
+- Ground everything in the kind of business they actually run. Do NOT assume they run a community, course, or membership unless their answers say so.
 - Be specific to their actual answers. Reference their situation, not generic advice.
 - Voice: plain, practical, encouraging, confident. No hype, no buzzwords, no jargon.
 - Do not use em dashes. Do not use markdown, headers, or bullet points.
