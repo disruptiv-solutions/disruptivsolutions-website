@@ -9,7 +9,7 @@ import {
 } from '@/lib/assessment';
 import { trackEvent } from '@/lib/analytics';
 
-const CAL_URL = 'https://calendar.app.google/TMV3V2nTEiyCWXKB6';
+const CAL_URL = 'https://calendar.app.google/okpHPUV8TA85GBaA6';
 const LAUNCHBOX_URL = 'https://launchbox.space';
 
 const INTAKE_QUESTIONS = [
@@ -108,6 +108,12 @@ export default function AiAssessment() {
 
     setSubmitting(true);
     setAiLoading(true);
+    // Per-talk attribution: a funnel link like /assessment?source=final-pasadena
+    // tags the lead. Falls back to the default when no tag is present.
+    const source =
+      (typeof window !== 'undefined'
+        ? new URLSearchParams(window.location.search).get('source')?.trim().slice(0, 80)
+        : '') || 'ianmcdonald.ai/assessment';
     try {
       const res = await fetch('/api/assessment', {
         method: 'POST',
@@ -116,7 +122,7 @@ export default function AiAssessment() {
           contact: { firstName: firstName.trim(), email: email.trim(), business: business.trim() },
           answers,
           readout: result,
-          source: 'ianmcdonald.ai/assessment',
+          source,
         }),
       });
       const data = (await res.json().catch(() => ({}))) as {

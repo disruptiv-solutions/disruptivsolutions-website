@@ -15,7 +15,7 @@ const OPENROUTER_MODEL = 'deepseek/deepseek-v4-flash';
 const RESEND_API_KEY = process.env.RESEND_API_KEY ?? '';
 const RESEND_FROM = process.env.RESEND_FROM ?? 'Ian McDonald <ian@ianmcdonald.ai>';
 const ALERT_TO = process.env.ALERT_EMAIL ?? 'ian@ianmcdonald.ai';
-const BOOKING_URL = 'https://calendar.app.google/TMV3V2nTEiyCWXKB6';
+const BOOKING_URL = 'https://calendar.app.google/okpHPUV8TA85GBaA6';
 const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
 
 type Contact = { firstName: string; email: string; business: string };
