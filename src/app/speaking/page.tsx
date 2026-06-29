@@ -85,8 +85,11 @@ const BEST_FIT: readonly string[] = [
 const STAGE_ITEMS = [
   {
     title: "Small & Diverse Business Inclusion Summit",
-    when: "June 26, 2026 · Upcoming",
-    body: "Speaking at the Office of Commissioner Rodney Ellis' Small & Diverse Business Inclusion Summit in Houston — a full day of networking and resource sharing for small business owners, entrepreneurs, and industry leaders. Ian's session covers core business fundamentals: leveraging AI and automation to improve marketing and operations. 9:30 a.m.–3 p.m. at 1010 Lamar Street, Houston, TX 77002.",
+    when: "June 26, 2026",
+    body: "Spoke at the Office of Commissioner Rodney Ellis' Small & Diverse Business Inclusion Summit in Houston, a full day of networking and resource sharing for a room of about 100 small business owners, entrepreneurs, and industry leaders. Ian demonstrated live how a small business can use AI like an employee, not a chatbot: turning scattered information into a workflow that helps you find and follow up on opportunities.",
+    logoSrc: "/speaking/harris-county-precinct-one-logo.png",
+    logoAlt: "Harris County Precinct One — Commissioner Rodney Ellis logo",
+    logoFrame: "poster",
   },
   {
     title: "Houston AI Club — AI Lightning Lesson",
@@ -583,14 +586,22 @@ export default async function SpeakingPage() {
             title="On stage"
             copy="Real rooms. Real audiences. No green screen."
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-4 md:gap-5 md:items-stretch">
-            <div className="md:row-span-2 min-h-[240px] md:min-h-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-3 gap-4 md:gap-5 md:items-stretch">
+            <div className="md:row-span-3 min-h-[240px] md:min-h-0">
               <StagePhoto
                 src="/speaking/ian-speaker-aixp.jpg"
                 alt="Ian McDonald speaking at AIXP Houston 2026"
                 event="AIXP Houston"
                 date="April 2026"
                 featured
+              />
+            </div>
+            <div className="min-h-0">
+              <StagePhoto
+                src="/speaking/ian-speaker-summit-2026.jpg"
+                alt="Ian McDonald speaking at the Small & Diverse Business Inclusion Summit in Houston, June 2026"
+                event="Inclusion Summit"
+                date="June 2026 · ~100 audience"
               />
             </div>
             <div className="min-h-0">
