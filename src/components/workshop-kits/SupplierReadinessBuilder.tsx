@@ -9,6 +9,7 @@ import { trackButtonClick, trackEvent } from '@/lib/analytics';
 const BOOKING_URL = 'https://calendar.app.google/okpHPUV8TA85GBaA6';
 const KIT_SLUG = 'supplier-readiness-builder';
 const STORAGE_KEY = 'ianmcdonald-ai:supplier-readiness-builder:v1';
+const SESSION_KEY = 'ianmcdonald-ai:supplier-readiness-builder:session';
 
 type StepId = 'intro' | 'brain' | 'teammate' | 'score' | 'prompts' | 'manual' | 'automations' | 'next';
 
@@ -177,6 +178,7 @@ export default function SupplierReadinessBuilder() {
   const [painPrompt, setPainPrompt] = useState('');
   const [toast, setToast] = useState('');
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [sessionId, setSessionId] = useState('');
   // Mobile-only sub-slide within the Welcome step. 0 = welcome content,
   // 1 = the "After the workshop" CTA on its own slide. Desktop ignores this
   // and always shows both blocks inline.
@@ -206,6 +208,40 @@ export default function SupplierReadinessBuilder() {
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   }, [state]);
+
+  // Stable anonymous id so autosaved progress updates one record per browser.
+  useEffect(() => {
+    try {
+      let sid = window.localStorage.getItem(SESSION_KEY);
+      if (!sid) {
+        sid =
+          window.crypto?.randomUUID?.() ??
+          `s-${Math.random().toString(36).slice(2)}-${Date.now().toString(36)}`;
+        window.localStorage.setItem(SESSION_KEY, sid);
+      }
+      setSessionId(sid);
+    } catch {
+      /* localStorage unavailable; autosave just stays off */
+    }
+  }, []);
+
+  // Debounced autosave: persist everything they have filled in so far, even if
+  // they never submit the opt-in form. Fires ~1.5s after they stop typing.
+  useEffect(() => {
+    if (!sessionId || !hasCaptureContent(state)) return;
+    const timer = window.setTimeout(() => {
+      fetch('/api/kits/leads', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionId,
+          kitSlug: KIT_SLUG,
+          ...buildCapturePayload(state, computeAverageScore(state.scores)),
+        }),
+      }).catch(() => {});
+    }, 1500);
+    return () => window.clearTimeout(timer);
+  }, [state, sessionId]);
 
   useEffect(() => {
     if (!toast) return;
@@ -253,24 +289,16 @@ export default function SupplierReadinessBuilder() {
         body: JSON.stringify({
           kitSlug: KIT_SLUG,
           source: 'ianmcdonald.ai/kits/supplier-readiness-builder',
-          contact: {
-            firstName: state.firstName.trim(),
-            email: state.email.trim(),
-            company: state.companyName.trim(),
-            businessType: state.businessType.trim(),
-          },
-          wantsAudit: state.wantsAudit,
-          painPoint: state.painPoint.trim(),
-          intent: state.intent,
+          sessionId,
           selectedWorkflow: state.selectedWorkflow,
-          averageScore,
           authUid: user?.uid ?? null,
+          ...buildCapturePayload(state, averageScore),
         }),
       });
       const data = (await response.json().catch(() => ({}))) as { id?: string; error?: string };
       if (!response.ok) throw new Error(data.error || 'Could not save your info.');
       setState((current) => ({ ...current, leadCaptured: true, leadId: data.id || current.leadId }));
-      setToast('Saved. Your worksheet details still stay in this browser.');
+      setToast('Sent. I have your details and worksheet, and I will follow up.');
       trackEvent('workshop_kit_lead_captured', {
         event_category: 'form',
         kit_slug: KIT_SLUG,
@@ -1490,8 +1518,9 @@ export default function SupplierReadinessBuilder() {
                         </h3>
                         <p className="mt-2 text-sm leading-relaxed text-[#F7F1E8]/72">
                           I&rsquo;ll send your readiness plan, the full prompt library, and a
-                          procurement-ready capability statement. As HMSDC&rsquo;s AI expert for the
-                          Academy, I can also help you implement it. Your worksheet stays in this browser.
+                          procurement-ready capability statement. When you submit, I receive the
+                          worksheet you built so I can tailor it to you. As HMSDC&rsquo;s AI expert for
+                          the Academy, I can also help you implement it.
                         </p>
                         {!loading && !user && (
                           <button
@@ -1833,6 +1862,62 @@ function firstNameFromUser(user: User): string {
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+}
+
+// Everything a participant types across the slides, in one payload. Shared by the
+// opt-in submit (emails Ian) and the anonymous autosave (persists progress).
+function buildCapturePayload(state: KitState, averageScore: number) {
+  return {
+    contact: {
+      firstName: state.firstName.trim(),
+      email: state.email.trim(),
+      company: state.companyName.trim(),
+      businessType: state.businessType.trim(),
+    },
+    title: state.title.trim(),
+    painPoint: state.painPoint.trim(),
+    intent: state.intent,
+    wantsAudit: state.wantsAudit,
+    averageScore,
+    worksheet: {
+      overview: state.overview.trim(),
+      services: state.services.trim(),
+      certifications: state.certifications.trim(),
+      pastPerformance: state.pastPerformance.trim(),
+      differentiators: state.differentiators.trim(),
+      targets: state.targets.trim(),
+      swot: state.swot.trim(),
+      goals: state.goals.trim(),
+    },
+    scoresText: scoreItems
+      .map((item, index) => `${item} ${state.scores[index] || 'Not scored'}/5`)
+      .join('\n'),
+    manualChecksText: manualGates
+      .filter((_, index) => state.manualChecks[index])
+      .map((gate) => `- ${gate}`)
+      .join('\n'),
+  };
+}
+
+// True once the participant has typed anything worth saving.
+function hasCaptureContent(state: KitState): boolean {
+  return Boolean(
+    state.firstName.trim() ||
+      state.email.trim() ||
+      state.companyName.trim() ||
+      state.title.trim() ||
+      state.painPoint.trim() ||
+      state.overview.trim() ||
+      state.services.trim() ||
+      state.certifications.trim() ||
+      state.pastPerformance.trim() ||
+      state.differentiators.trim() ||
+      state.targets.trim() ||
+      state.swot.trim() ||
+      state.goals.trim() ||
+      Object.keys(state.scores).length ||
+      Object.values(state.manualChecks).some(Boolean),
+  );
 }
 
 function computeAverageScore(scores: Record<number, number>): number {
