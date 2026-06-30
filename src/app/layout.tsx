@@ -4,6 +4,7 @@ import "./globals.css";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import NavigationWrapper from "@/components/NavigationWrapper";
 import Footer from "@/components/Footer";
+import ConditionalFooter from "@/components/ConditionalFooter";
 import { Analytics } from "@vercel/analytics/next";
 import { AuthProvider } from "@/contexts/AuthContext";
 
@@ -62,7 +63,9 @@ export default function RootLayout({
           <main className="relative">
             {children}
           </main>
-          <Footer />
+          <ConditionalFooter>
+            <Footer />
+          </ConditionalFooter>
         </AuthProvider>
         <Analytics />
       </body>
