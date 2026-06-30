@@ -576,8 +576,8 @@ export default function SupplierReadinessBuilder() {
                           <span className="grid h-9 w-9 place-items-center rounded-full bg-[#FF7A2F] text-sm font-black text-white">
                             {index + 1}
                           </span>
-                          <h4 className="mt-5 text-xl font-black text-[#0B0F14]">{item.label}</h4>
-                          <p className="mt-2 text-base leading-relaxed text-[#667085]">{item.text}</p>
+                          <h4 className="mt-5 text-xl font-black text-[#0B0F14] lg:text-2xl">{item.label}</h4>
+                          <p className="mt-2 text-base leading-relaxed text-[#334155] lg:text-lg">{item.text}</p>
                         </div>
                       ))}
                     </div>
@@ -587,7 +587,7 @@ export default function SupplierReadinessBuilder() {
                   </section>
 
                   <Panel eyebrow="The action" title="Build Your Business Brain">
-                  <p className="text-[#667085]">
+                  <p className="text-lg leading-relaxed text-[#334155] lg:text-xl">
                     Now build yours. Capture safe, buyer-facing information. A few lines each is
                     plenty.
                   </p>
@@ -679,13 +679,24 @@ export default function SupplierReadinessBuilder() {
                   </div>
 
                   <div className="mb-6">
+                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#EF1111]">
+                      The issue
+                    </p>
+                    <p className="mt-3 max-w-4xl text-lg leading-relaxed text-[#1F2937] lg:text-2xl">
+                      Right now you type a question, copy the answer, and start over. Fifty times a
+                      day. The AI has no memory of your business and no access to your real work, so
+                      every task starts from zero. That is busywork with extra steps.
+                    </p>
+                  </div>
+
+                  <div className="mb-6">
                     <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#FF7A2F]">
                       The fix
                     </p>
-                    <h3 className="mt-2 text-3xl font-black tracking-tight text-[#0B0F14] sm:text-4xl">
+                    <h3 className="mt-2 text-3xl font-black tracking-tight text-[#0B0F14] sm:text-4xl lg:text-5xl">
                       AI is a teammate that can go do the work.
                     </h3>
-                    <p className="mt-4 max-w-3xl text-[#667085]">
+                    <p className="mt-4 max-w-4xl text-lg leading-relaxed text-[#1F2937] lg:text-2xl">
                       Most people ask AI for one answer at a time, like a vending machine. The shift
                       is treating it like a teammate. On a team plan you give AI access to the tools
                       you already use, and it goes and does the work &mdash; reading your files,
@@ -695,7 +706,7 @@ export default function SupplierReadinessBuilder() {
                   </div>
 
                   <Panel eyebrow="The platforms" title="Give your team their own team">
-                    <p className="text-[#667085]">
+                    <p className="text-lg leading-relaxed text-[#334155] lg:text-xl">
                       These platforms offer team plans &mdash; shared, private workspaces where AI can
                       plug into the tools you already use.
                     </p>
@@ -706,11 +717,11 @@ export default function SupplierReadinessBuilder() {
                         { name: 'Google', plan: 'Gemini in Workspace', best: 'Built into the Drive, Gmail, and Docs you already use.' },
                       ].map((platform) => (
                         <div key={platform.name} className="rounded-2xl border border-[#E7D8C6] bg-white/70 p-5">
-                          <p className="font-bold text-[#0B0F14]">{platform.name}</p>
+                          <p className="text-lg font-bold text-[#0B0F14] lg:text-xl">{platform.name}</p>
                           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#FF7A2F]">
                             {platform.plan}
                           </p>
-                          <p className="mt-2 text-sm text-[#667085]">{platform.best}</p>
+                          <p className="mt-2 text-sm text-[#334155] lg:text-base">{platform.best}</p>
                         </div>
                       ))}
                     </div>
@@ -733,8 +744,8 @@ export default function SupplierReadinessBuilder() {
                             &#8594;
                           </span>
                           <div>
-                            <p className="font-semibold text-[#0B0F14]">{connector.tool}</p>
-                            <p className="text-sm text-[#667085]">{connector.does}</p>
+                            <p className="font-semibold text-[#0B0F14] lg:text-lg">{connector.tool}</p>
+                            <p className="text-sm text-[#334155] lg:text-base">{connector.does}</p>
                           </div>
                         </div>
                       ))}
@@ -955,7 +966,7 @@ export default function SupplierReadinessBuilder() {
 
               {activeStep === 'score' && (
                 <Panel eyebrow="Step 1" title="Readiness Scorecard">
-                  <p className="text-[#667085]">
+                  <p className="text-lg leading-relaxed text-[#334155] lg:text-xl">
                     Start here. Score each item from 1 to 5 &mdash; it takes about a minute.
                     The point is not perfection. It is finding the first system to improve, and
                     it doubles as the first draft of your Procurement Readiness Framework.
@@ -1041,14 +1052,26 @@ export default function SupplierReadinessBuilder() {
                   </div>
 
                   <div className="mb-6">
+                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#EF1111]">
+                      The issue
+                    </p>
+                    <p className="mt-3 max-w-4xl text-lg leading-relaxed text-[#1F2937] lg:text-2xl">
+                      Ask a vague question and you get a vague answer that could fit any company on
+                      earth. Then you burn ten minutes rewriting it to sound like you. The AI is
+                      rarely the problem. The prompt just never told it who you are or what you
+                      actually need.
+                    </p>
+                  </div>
+
+                  <div className="mb-6">
                     <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#FF7A2F]">
                       The fix
                     </p>
-                    <h3 className="mt-2 text-3xl font-black tracking-tight text-[#0B0F14] sm:text-4xl">
+                    <h3 className="mt-2 text-3xl font-black tracking-tight text-[#0B0F14] sm:text-4xl lg:text-5xl">
                       Every strong prompt has the same five parts &mdash; and you already built the most
                       important one.
                     </h3>
-                    <p className="mt-4 max-w-3xl text-[#667085]">
+                    <p className="mt-4 max-w-4xl text-lg leading-relaxed text-[#1F2937] lg:text-2xl">
                       Context, Assignment, Source, Boundaries, Review. That first part &mdash; Context
                       &mdash; is the Business Brain you just built, so you are already halfway to a great
                       prompt before you type a word. Learn the pattern once and you can write your own
@@ -1060,22 +1083,22 @@ export default function SupplierReadinessBuilder() {
                           <span className="grid h-7 w-7 place-items-center rounded-full bg-[#FF7A2F] text-xs font-bold text-white">
                             {index + 1}
                           </span>
-                          <p className="mt-3 font-bold text-[#0B0F14]">{part.label}</p>
-                          <p className="mt-1 text-sm leading-relaxed text-[#667085]">{part.detail}</p>
+                          <p className="mt-3 font-bold text-[#0B0F14] lg:text-lg">{part.label}</p>
+                          <p className="mt-1 text-sm leading-relaxed text-[#334155] lg:text-base">{part.detail}</p>
                         </div>
                       ))}
                     </div>
                   </div>
 
                   <Panel eyebrow="Step 4" title="Your Prompt Pack">
-                  <p className="text-[#667085]">
+                  <p className="text-lg leading-relaxed text-[#334155] lg:text-xl">
                     Click a Capstone deliverable below. Each one builds a ready-to-paste prompt from
                     the business profile you just created, so you walk out with a draft of your
                     graduation work.
                   </p>
-                  <div className="mt-6 flex flex-col gap-3 lg:grid lg:grid-cols-[250px_1fr] lg:grid-rows-[auto_1fr] lg:gap-4">
+                  <div className="mt-6 flex flex-col gap-3 lg:grid lg:grid-cols-[250px_1fr] lg:grid-rows-[auto_1fr_auto] lg:gap-4">
                     {/* Deliverable tabs */}
-                    <div className="order-1 flex flex-col gap-2 lg:order-none lg:col-start-1 lg:row-start-1">
+                    <div className="order-1 flex flex-col gap-2 lg:order-none lg:col-start-1 lg:row-start-1 lg:row-span-2">
                       {prompts.length ? (
                         prompts.map((entry) => (
                           <button
@@ -1099,7 +1122,7 @@ export default function SupplierReadinessBuilder() {
                     </div>
 
                     {/* Prompt text */}
-                    <div className="relative order-2 lg:order-none lg:col-start-2 lg:row-start-2 lg:min-h-0">
+                    <div className="relative order-2 lg:order-none lg:col-start-2 lg:row-start-2 lg:row-span-2 lg:min-h-0">
                       <textarea
                         readOnly
                         value={activeEntry?.text || ''}
@@ -1123,7 +1146,7 @@ export default function SupplierReadinessBuilder() {
                         href="https://chatgpt.com"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="order-3 rounded-xl bg-[#FF7A2F] px-5 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-[#FF7A2F]/25 transition hover:bg-[#EF1111] lg:order-none lg:col-start-1 lg:row-start-2 lg:self-end"
+                        className="order-3 rounded-xl bg-[#FF7A2F] px-5 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-[#FF7A2F]/25 transition hover:bg-[#EF1111] lg:order-none lg:col-start-1 lg:row-start-3 lg:self-end"
                       >
                         Open ChatGPT &rarr;
                       </a>
@@ -1131,7 +1154,7 @@ export default function SupplierReadinessBuilder() {
 
                     {/* Why this works */}
                     {activeEntry && (
-                      <div className="order-4 rounded-2xl border border-[#FF7A2F]/30 bg-[#FF7A2F]/10 p-4 lg:order-none lg:col-start-2 lg:row-start-1">
+                      <div className="order-4 rounded-2xl border border-[#FF7A2F]/30 bg-[#FF7A2F]/10 p-4 lg:order-none lg:col-start-2 lg:row-start-1 lg:self-start">
                         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#FF7A2F]">
                           Why this works
                         </p>
@@ -1172,13 +1195,24 @@ export default function SupplierReadinessBuilder() {
                   </div>
 
                   <div className="mb-6">
+                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#EF1111]">
+                      The issue
+                    </p>
+                    <p className="mt-3 max-w-4xl text-lg leading-relaxed text-[#1F2937] lg:text-2xl">
+                      AI will state a fake number, invent a contact, or misquote a rule in the exact
+                      same confident tone it uses for the truth. Paste that into a proposal or a buyer
+                      email and the mistake becomes yours. Confident does not mean correct.
+                    </p>
+                  </div>
+
+                  <div className="mb-6">
                     <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#FF7A2F]">
                       The fix
                     </p>
-                    <h3 className="mt-2 text-3xl font-black tracking-tight text-[#0B0F14] sm:text-4xl">
+                    <h3 className="mt-2 text-3xl font-black tracking-tight text-[#0B0F14] sm:text-4xl lg:text-5xl">
                       You stay the editor. AI drafts &mdash; you decide.
                     </h3>
-                    <p className="mt-4 max-w-3xl text-[#667085]">
+                    <p className="mt-4 max-w-4xl text-lg leading-relaxed text-[#1F2937] lg:text-2xl">
                       AI invents facts, numbers, and names without blinking. The drafts you just
                       generated, your growth plan, your target list, your capability statement, are a
                       starting point, not the final word. Before any of it reaches a buyer, you check
@@ -1188,7 +1222,7 @@ export default function SupplierReadinessBuilder() {
                   </div>
 
                   <Panel eyebrow="Step 5" title="Decide what stays manual">
-                  <p className="text-[#667085]">
+                  <p className="text-lg leading-relaxed text-[#334155] lg:text-xl">
                     Mark the checks you will always do yourself before anything AI touches goes out
                     the door.
                   </p>
@@ -1269,13 +1303,24 @@ export default function SupplierReadinessBuilder() {
                   </div>
 
                   <div className="mb-6">
+                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#EF1111]">
+                      The issue
+                    </p>
+                    <p className="mt-3 max-w-4xl text-lg leading-relaxed text-[#1F2937] lg:text-2xl">
+                      Even with a great prompt, nothing happens until you sit down, open the tool, and
+                      start it. The work still waits on you. That is fine once, but the tasks that eat
+                      your week are the ones that repeat, and you are doing them by hand every time.
+                    </p>
+                  </div>
+
+                  <div className="mb-6">
                     <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#FF7A2F]">
                       The fix
                     </p>
-                    <h3 className="mt-2 text-3xl font-black tracking-tight text-[#0B0F14] sm:text-4xl">
+                    <h3 className="mt-2 text-3xl font-black tracking-tight text-[#0B0F14] sm:text-4xl lg:text-5xl">
                       The real unlock is a system that runs without you.
                     </h3>
-                    <p className="mt-4 max-w-3xl text-[#667085]">
+                    <p className="mt-4 max-w-4xl text-lg leading-relaxed text-[#1F2937] lg:text-2xl">
                       A teammate does the task when you ask. A system does it on its own. Imagine
                       Monday morning: your daily brief is already written, new leads are researched,
                       and follow-ups are drafted and waiting for your okay. You stop doing the
@@ -1286,7 +1331,7 @@ export default function SupplierReadinessBuilder() {
                   </div>
 
                   <Panel eyebrow="Step 6" title="What to put on autopilot first">
-                  <p className="text-[#667085]">
+                  <p className="text-lg leading-relaxed text-[#334155] lg:text-xl">
                     The systems that save owners the most time. Once they are set up, they run on
                     their own, and you just approve and steer.
                   </p>
@@ -1300,8 +1345,8 @@ export default function SupplierReadinessBuilder() {
                       { name: 'Opportunity Watch', does: 'Scans for new contracts and solicitations that fit your business, and flags the ones worth pursuing.' },
                     ].map((system) => (
                       <div key={system.name} className="rounded-2xl border border-[#E7D8C6] bg-white/70 p-5">
-                        <p className="font-bold text-[#0B0F14]">{system.name}</p>
-                        <p className="mt-2 text-sm text-[#667085]">{system.does}</p>
+                        <p className="text-lg font-bold text-[#0B0F14] lg:text-xl">{system.name}</p>
+                        <p className="mt-2 text-sm text-[#334155] lg:text-base">{system.does}</p>
                       </div>
                     ))}
                   </div>
@@ -1512,7 +1557,7 @@ export default function SupplierReadinessBuilder() {
                       )}
                     </div>
                   </div>
-                  <p className="mt-6 max-w-3xl text-[#667085]">
+                  <p className="mt-6 max-w-3xl text-lg leading-relaxed text-[#334155] lg:text-xl">
                     You just built the foundation. If you want a hand turning it into the
                     sections corporate buyers actually read, here is the path &mdash; no
                     pressure, start wherever you are comfortable.
@@ -1749,7 +1794,7 @@ function Panel({
   return (
     <section className="rounded-3xl border border-[#E7D8C6] bg-[#F7F1E8]/92 p-5 shadow-[0_28px_90px_-70px_rgba(11,15,20,0.55)] backdrop-blur sm:p-7">
       <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#FF7A2F]">{eyebrow}</p>
-      <h2 className="mt-3 text-3xl font-black tracking-tight text-[#0B0F14] sm:text-4xl">{title}</h2>
+      <h2 className="mt-3 text-3xl font-black tracking-tight text-[#0B0F14] sm:text-4xl lg:text-5xl">{title}</h2>
       <div className="mt-4">{children}</div>
     </section>
   );
