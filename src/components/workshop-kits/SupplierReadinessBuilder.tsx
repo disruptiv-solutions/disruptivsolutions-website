@@ -712,13 +712,16 @@ export default function SupplierReadinessBuilder() {
                     </p>
                     <div className="mt-6 grid gap-3 md:grid-cols-3">
                       {[
-                        { name: 'ChatGPT', plan: 'Team / Business', best: 'Shared workspace, your data stays private, custom GPTs for your team.' },
-                        { name: 'Claude', plan: 'Team / for Work', best: 'Best for long documents and careful analysis. Projects hold shared context.' },
-                        { name: 'Google', plan: 'Gemini in Workspace', best: 'Built into the Drive, Gmail, and Docs you already use.' },
+                        { name: 'ChatGPT', plan: 'Team / Business', best: 'Shared workspace, your data stays private, custom GPTs for your team.', logo: 'openai' },
+                        { name: 'Claude', plan: 'Team / for Work', best: 'Best for long documents and careful analysis. Projects hold shared context.', logo: 'claude' },
+                        { name: 'Google', plan: 'Gemini in Workspace', best: 'Built into the Drive, Gmail, and Docs you already use.', logo: 'gemini' },
                       ].map((platform) => (
                         <div key={platform.name} className="rounded-2xl border border-[#E7D8C6] bg-white/70 p-5">
-                          <p className="text-lg font-bold text-[#0B0F14] lg:text-xl">{platform.name}</p>
-                          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#FF7A2F]">
+                          <div className="flex items-center gap-3">
+                            <LogoIcon slug={platform.logo} label={platform.name} className="h-8 w-8 shrink-0 object-contain" />
+                            <p className="text-lg font-bold text-[#0B0F14] lg:text-xl">{platform.name}</p>
+                          </div>
+                          <p className="mt-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#FF7A2F]">
                             {platform.plan}
                           </p>
                           <p className="mt-2 text-sm text-[#334155] lg:text-base">{platform.best}</p>
@@ -732,24 +735,34 @@ export default function SupplierReadinessBuilder() {
                     <p className="mt-1 text-sm text-[#667085]">
                       Give it access and it works inside your real tools.
                     </p>
-                    <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                    <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
                       {[
-                        { tool: 'Google Drive', does: 'Read and organize your documents.' },
-                        { tool: 'Gmail', does: 'Draft replies and summarize threads.' },
-                        { tool: 'Calendar', does: 'Prep for meetings and schedule follow-ups.' },
-                        { tool: 'Your CRM / Sheets', does: 'Update records and pull reports.' },
+                        { name: 'Slack', logo: 'slack' },
+                        { name: 'Notion', logo: 'notion' },
+                        { name: 'Microsoft 365', logo: 'microsoft365' },
+                        { name: 'Canva', logo: 'canva' },
+                        { name: 'Asana', logo: 'asana' },
+                        { name: 'Gmail', logo: 'gmail' },
+                        { name: 'Google Drive', logo: 'google-drive' },
+                        { name: 'Google Calendar', logo: 'google-calendar' },
+                        { name: 'ClickUp', logo: 'clickup' },
+                        { name: 'HubSpot', logo: 'hubspot' },
+                        { name: 'Zapier', logo: 'zapier' },
+                        { name: 'Adobe', logo: 'adobe' },
+                        { name: 'Stripe', logo: 'stripe' },
+                        { name: 'QuickBooks', logo: 'quickbooks' },
+                        { name: 'Google Sheets', logo: 'google-sheets' },
+                        { name: 'Salesforce', logo: 'salesforce' },
                       ].map((connector) => (
-                        <div key={connector.tool} className="flex items-start gap-3 rounded-2xl border border-[#E7D8C6] bg-white/70 p-4">
-                          <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-md bg-[#FF7A2F] text-xs font-bold text-white">
-                            &#8594;
-                          </span>
-                          <div>
-                            <p className="font-semibold text-[#0B0F14] lg:text-lg">{connector.tool}</p>
-                            <p className="text-sm text-[#334155] lg:text-base">{connector.does}</p>
-                          </div>
+                        <div key={connector.name} className={`flex items-center gap-3 rounded-2xl border border-[#E7D8C6] bg-white/70 p-3 ${connector.name === 'Salesforce' ? 'sm:hidden lg:flex' : ''}`}>
+                          <LogoIcon slug={connector.logo} label={connector.name} className="h-7 w-7 shrink-0 object-contain" />
+                          <span className="text-sm font-semibold text-[#0B0F14] lg:text-base">{connector.name}</span>
                         </div>
                       ))}
                     </div>
+                    <p className="mt-4 text-sm font-semibold text-[#667085] lg:text-base">
+                      ...and so much more.
+                    </p>
 
                   </Panel>
                 </>
@@ -1797,6 +1810,17 @@ function Panel({
       <h2 className="mt-3 text-3xl font-black tracking-tight text-[#0B0F14] sm:text-4xl lg:text-5xl">{title}</h2>
       <div className="mt-4">{children}</div>
     </section>
+  );
+}
+
+function LogoIcon({ slug, label, className }: { slug: string; label: string; className?: string }) {
+  return (
+    <img
+      src={`/logos/${slug}.svg`}
+      alt={`${label} logo`}
+      loading="lazy"
+      className={className ?? 'h-7 w-7 object-contain'}
+    />
   );
 }
 
