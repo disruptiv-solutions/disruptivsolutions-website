@@ -576,6 +576,18 @@ export default function SupplierReadinessBuilder() {
                         className="h-auto w-full max-w-none lg:hidden"
                       />
                     </div>
+                    <div className="mt-6">
+                      <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#EF1111]">
+                        The issue
+                      </p>
+                      <p className="mt-3 max-w-4xl text-lg leading-relaxed text-[#1F2937] lg:text-2xl">
+                        Your capability statement is in one folder. Past performance is in another.
+                        Your differentiators live in your head, and your numbers are in a spreadsheet
+                        you have to hunt for. So every time you open AI you re-explain your business
+                        from scratch, and it hands back generic answers. That scattered information is
+                        the reason AI has not felt useful yet.
+                      </p>
+                    </div>
                   </section>
 
                   <section className="mb-10 flex min-h-[460px] flex-col justify-center rounded-3xl border border-[#E7D8C6] bg-white/60 p-6 shadow-[0_24px_80px_-70px_rgba(11,15,20,0.5)] sm:p-10 lg:min-h-[520px]">
