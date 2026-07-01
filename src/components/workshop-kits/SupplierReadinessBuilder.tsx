@@ -168,6 +168,7 @@ export default function SupplierReadinessBuilder() {
   const [brainPrompt, setBrainPrompt] = useState('');
   const [painPrompt, setPainPrompt] = useState('');
   const [toast, setToast] = useState('');
+  const [copiedKey, setCopiedKey] = useState('');
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [sessionId, setSessionId] = useState('');
   // Mobile-only sub-slide within the Welcome step. 0 = welcome content,
@@ -239,6 +240,12 @@ export default function SupplierReadinessBuilder() {
     const timer = window.setTimeout(() => setToast(''), 2200);
     return () => window.clearTimeout(timer);
   }, [toast]);
+
+  useEffect(() => {
+    if (!copiedKey) return;
+    const timer = window.setTimeout(() => setCopiedKey(''), 1600);
+    return () => window.clearTimeout(timer);
+  }, [copiedKey]);
 
   const averageScore = useMemo(() => computeAverageScore(state.scores), [state.scores]);
   const activeEntry = prompts.find((entry) => entry.name === activePrompt) ?? prompts[0];
@@ -405,10 +412,11 @@ export default function SupplierReadinessBuilder() {
     setToast('Readiness plan downloaded.');
   }
 
-  async function copyText(value: string, message: string) {
+  async function copyText(value: string, message: string, key?: string) {
     try {
       await navigator.clipboard.writeText(value);
       setToast(message);
+      if (key) setCopiedKey(key);
     } catch {
       setToast('Copy failed. Select and copy manually.');
     }
@@ -649,8 +657,8 @@ export default function SupplierReadinessBuilder() {
                           Your prompt &mdash; copy and paste it into AI
                         </p>
                         <div className="flex gap-2">
-                          <button type="button" onClick={() => copyText(brainPrompt, 'Prompt copied.')} className="rounded-xl border border-white/15 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/[0.1]">
-                            Copy
+                          <button type="button" onClick={() => copyText(brainPrompt, 'Prompt copied.', 'brain')} className="rounded-xl border border-white/15 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/[0.1]">
+                            {copiedKey === 'brain' ? 'Copied' : 'Copy'}
                           </button>
                           <a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" className="rounded-xl bg-[#FF7A2F] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#EF1111]">
                             Open ChatGPT
@@ -1151,10 +1159,10 @@ export default function SupplierReadinessBuilder() {
                       {activeEntry && (
                         <button
                           type="button"
-                          onClick={() => copyText(activeEntry.text || '', 'Prompt copied.')}
+                          onClick={() => copyText(activeEntry.text || '', 'Prompt copied.', 'prompt')}
                           className="absolute right-3 top-3 rounded-lg border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur transition hover:border-[#FF7A2F] hover:bg-[#FF7A2F]"
                         >
-                          Copy
+                          {copiedKey === 'prompt' ? 'Copied' : 'Copy'}
                         </button>
                       )}
                     </div>
@@ -1403,10 +1411,10 @@ export default function SupplierReadinessBuilder() {
                           <div className="flex gap-2">
                             <button
                               type="button"
-                              onClick={() => copyText(painPrompt, 'Prompt copied.')}
+                              onClick={() => copyText(painPrompt, 'Prompt copied.', 'pain')}
                               className="rounded-xl border border-white/15 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/[0.1]"
                             >
-                              Copy
+                              {copiedKey === 'pain' ? 'Copied' : 'Copy'}
                             </button>
                             <a
                               href="https://chatgpt.com"
@@ -1502,15 +1510,15 @@ export default function SupplierReadinessBuilder() {
                         </p>
                       </div>
 
-                      {state.leadCaptured ? (
-                        <div className="rounded-2xl border border-[#F6C443]/30 bg-[#F6C443]/10 p-4">
-                          <p className="font-semibold text-white">Your kit is on the way.</p>
-                          <p className="mt-1 text-sm text-[#F7F1E8]/72">
-                            Keep building. Use Export any time for your local copy.
-                          </p>
-                        </div>
-                      ) : (
-                        <form onSubmit={captureLead} className="grid gap-3 md:grid-cols-2">
+                      <form onSubmit={captureLead} className="grid gap-3 md:grid-cols-2">
+                        {state.leadCaptured && (
+                          <div className="rounded-2xl border border-[#F6C443]/30 bg-[#F6C443]/10 p-3 md:col-span-2">
+                            <p className="text-sm font-semibold text-white">
+                              Sent &mdash; check your inbox. Need to change something? Update the
+                              fields and resend.
+                            </p>
+                          </div>
+                        )}
                           <Input
                             label="First name"
                             value={state.firstName}
@@ -1557,10 +1565,13 @@ export default function SupplierReadinessBuilder() {
                             disabled={submittingLead}
                             className="rounded-xl bg-[#FF7A2F] px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-[#FF7A2F]/25 transition hover:bg-[#EF1111] disabled:cursor-not-allowed disabled:opacity-60 md:col-span-2"
                           >
-                            {submittingLead ? 'Saving...' : 'Email me my kit'}
+                            {submittingLead
+                              ? 'Sending...'
+                              : state.leadCaptured
+                                ? 'Resend my kit'
+                                : 'Email me my kit'}
                           </button>
                         </form>
-                      )}
                     </div>
                   </div>
                   <p className="mt-6 max-w-3xl text-lg leading-relaxed text-[#334155] lg:text-xl">
@@ -1610,8 +1621,8 @@ export default function SupplierReadinessBuilder() {
                     <button type="button" onClick={downloadExport} className="rounded-xl border border-[#0B0F14]/15 bg-white/65 px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:border-[#FF7A2F]/50 hover:bg-white">
                       Download My Plan
                     </button>
-                    <button type="button" onClick={() => copyText(auditEmail(state), 'Working session request copied.')} className="rounded-xl border border-[#0B0F14]/15 bg-white/65 px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:border-[#FF7A2F]/50 hover:bg-white">
-                      Copy My Working Session Request
+                    <button type="button" onClick={() => copyText(auditEmail(state), 'Working session request copied.', 'audit')} className="rounded-xl border border-[#0B0F14]/15 bg-white/65 px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:border-[#FF7A2F]/50 hover:bg-white">
+                      {copiedKey === 'audit' ? 'Copied' : 'Copy My Working Session Request'}
                     </button>
                   </div>
                   <div className="mt-8 rounded-2xl border border-[#0B0F14] bg-[#0B0F14] p-5 text-white">
@@ -1936,8 +1947,8 @@ function makePrompts(state: KitState): PromptEntry[] {
     },
     {
       name: 'Strategic Target Client List',
-      why: 'Turns your service area and capabilities into a researched, qualified list of corporations, agencies, and primes to pursue.',
-      text: `Using my business profile below, build a Strategic Target Client List for procurement.\n\nMy business profile:\n${business}\n\nDo the following:\n1. Identify corporations, public agencies, and prime contractors that buy what I sell in my service area.\n2. For each, note why they are a fit and what they likely buy.\n3. Flag which are realistic now versus aspirational.\n4. List what I should verify about each before reaching out.\n\nDo not invent specific contacts or facts. Label anything uncertain as an assumption to confirm.`,
+      why: 'Uses the AI web research to turn your service area and capabilities into a list of real, named corporations, agencies, and primes to pursue.',
+      text: `Using my business profile below, build a Strategic Target Client List for procurement.\n\nMy business profile:\n${business}\n\nUse your web research and browsing tools to find REAL, currently operating organizations. Name actual companies, not hypothetical examples. Do the following:\n1. Search the web to identify real corporations, public agencies, and prime contractors that buy what I sell in my service area.\n2. For each, note why they are a fit, what they likely buy from a supplier like me, and any supplier registration, supplier-diversity program, or open procurement portal you can find. Include a source link where possible.\n3. Rank them into realistic-now versus aspirational.\n4. List exactly what I should verify about each before reaching out, such as current contracts, the right buyer or department, and registration requirements.\n\nIf you cannot browse the web, say so clearly, then give me the best real organizations you already know of and mark each as needing verification. Do not fabricate contact names, emails, or phone numbers.`,
     },
     {
       name: 'Financial Forecast & Capital Strategy',
