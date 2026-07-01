@@ -77,15 +77,6 @@ const manualGates = [
   'Give final approval before anything reaches a client, buyer, or partner.',
 ];
 
-const introAgenda = [
-  'Score readiness',
-  'Build Business Brain',
-  'AI as a teammate',
-  'Generate prompts',
-  'What stays manual',
-  'Automate the routine',
-];
-
 const scoreItems = [
   'Our core business documents are organized in one place.',
   'We have a current capability statement.',
@@ -809,7 +800,7 @@ export default function SupplierReadinessBuilder() {
               )}
 
               {activeStep === 'intro' && (
-                <section className="-mx-5 h-[calc(100dvh-8rem)] overflow-hidden bg-[#F7F1E8]/40 px-5 sm:-mx-6 sm:px-6 lg:mx-0 lg:h-auto lg:overflow-visible lg:rounded-3xl lg:border lg:border-[#E7D8C6] lg:bg-[#F7F1E8]/92 lg:p-10 lg:shadow-[0_28px_90px_-70px_rgba(11,15,20,0.55)] lg:backdrop-blur">
+                <section className="-mx-5 h-[calc(100dvh-8rem)] overflow-hidden bg-[#F7F1E8]/40 px-5 sm:-mx-6 sm:px-6 lg:mx-0 lg:h-auto lg:overflow-visible lg:bg-transparent lg:px-0 lg:py-0">
                   {/* Mobile welcome */}
                   <div className="flex h-full min-h-0 flex-col items-center justify-between py-[clamp(0.5rem,2.5vh,1.5rem)] text-center lg:hidden">
                     {/* Presenter card */}
@@ -881,54 +872,63 @@ export default function SupplierReadinessBuilder() {
                   </div>
 
                   {/* Desktop welcome */}
-                  <div className="hidden lg:flex lg:min-h-[calc(100dvh-10rem)] lg:flex-col lg:justify-center lg:gap-10">
-                    {/* Presenter + badge header */}
-                    <div className="flex items-center justify-between gap-6">
-                      <div className="flex items-center gap-4 rounded-2xl border border-[#E7D8C6] bg-white/70 p-3 pr-7 shadow-[0_18px_60px_-55px_rgba(11,15,20,0.6)]">
+                  <div className="hidden lg:flex lg:min-h-[calc(100dvh-8rem)] lg:flex-col lg:justify-between lg:gap-5">
+                    <div className="flex items-center justify-between gap-8">
+                      <div className="flex items-center gap-4">
                         <Image
                           src="/ian-mcdonald.png"
                           alt="Ian McDonald"
                           width={128}
                           height={128}
                           priority
-                          className="h-16 w-16 shrink-0 rounded-xl object-cover"
+                          className="h-14 w-14 shrink-0 rounded-2xl object-cover shadow-[0_18px_50px_-32px_rgba(11,15,20,0.65)]"
                         />
                         <div>
-                          <p className="text-sm font-black uppercase tracking-[0.16em] text-[#FF7A2F]">
+                          <p className="text-sm font-black uppercase tracking-[0.18em] text-[#FF7A2F]">
                             Ian McDonald
                           </p>
-                          <span className="mt-1.5 block h-px w-9 bg-[#FF7A2F]/60" />
-                          <p className="mt-1.5 text-xs font-black uppercase tracking-[0.14em] text-[#111827]">
+                          <p className="mt-1 text-xs font-black uppercase tracking-[0.2em] text-[#667085]">
                             Practical AI Workshops
                           </p>
                         </div>
                       </div>
-                      <Image
-                        src="/mbe-leadership-academy.png"
-                        alt="HMSDC MBE Leadership Academy"
-                        width={220}
-                        height={220}
-                        priority
-                        className="h-[110px] w-auto object-contain drop-shadow-lg"
-                      />
+                      <div className="flex items-center gap-4">
+                        <div className="text-right">
+                          <p className="text-xs font-black uppercase tracking-[0.22em] text-[#FF7A2F]">
+                            HMSDC
+                          </p>
+                          <p className="mt-1 text-sm font-black uppercase leading-tight tracking-[0.12em] text-[#0B0F14]">
+                            MBE Leadership
+                            <br />
+                            Academy
+                          </p>
+                        </div>
+                        <Image
+                          src="/mbe-leadership-academy.png"
+                          alt="HMSDC MBE Leadership Academy"
+                          width={180}
+                          height={180}
+                          priority
+                          className="h-16 w-auto shrink-0 object-contain drop-shadow-lg"
+                        />
+                      </div>
                     </div>
 
-                    <div className="grid w-full items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-                      {/* Left: title */}
-                      <div>
+                    <div className="mx-auto grid max-w-[1020px] flex-1 items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(345px,0.7fr)] xl:max-w-[1080px]">
+                      <div className="max-w-[660px]">
                         <div className="flex items-center gap-3">
-                          <span className="h-px w-7 bg-[#FF7A2F]/60" />
-                          <p className="text-xs font-black uppercase tracking-[0.2em] text-[#FF7A2F]">
+                          <span className="h-px w-10 bg-[#FF7A2F]/70" />
+                          <p className="text-sm font-black uppercase tracking-[0.26em] text-[#FF7A2F]">
                             AI for Supplier Readiness
                           </p>
                         </div>
-                        <h2 className="mt-5 font-serif text-[clamp(2.75rem,3.6vw,4rem)] font-bold leading-[1.03] tracking-tight text-[#111827]">
+                        <h2 className="mt-5 font-serif text-[clamp(4.05rem,4.9vw,5.6rem)] font-bold leading-[0.93] tracking-tight text-[#0B0F14]">
                           Turn your growth plan into a working{' '}
-                          <span className="relative whitespace-nowrap text-[#FF7A2F]">
+                          <span className="relative inline-block whitespace-nowrap text-[#FF7A2F]">
                             AI system.
                             <svg
                               aria-hidden
-                              className="absolute -bottom-2 left-0 h-3 w-full"
+                              className="absolute -bottom-2 left-0 h-4 w-full"
                               viewBox="0 0 200 10"
                               fill="none"
                               preserveAspectRatio="none"
@@ -942,76 +942,40 @@ export default function SupplierReadinessBuilder() {
                             </svg>
                           </span>
                         </h2>
-                        <p className="mt-7 max-w-xl text-lg leading-relaxed text-[#667085]">
+                        <p className="mt-6 max-w-[640px] text-[1.35rem] leading-relaxed text-[#667085]">
                           Practical AI you can put to work today. Over the next hour we build a real,
-                          reusable system together &mdash; and you walk out with a draft of three of
-                          your six Capstone deliverables.
+                          reusable system together, and you walk out with draft Capstone assets.
                         </p>
-
-                        <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
-                          <button
-                            type="button"
-                            onClick={() => goToStep('score')}
-                            className="rounded-xl bg-[#FF7A2F] px-7 py-4 text-base font-semibold text-white shadow-lg shadow-[#FF7A2F]/25 transition hover:bg-[#EF1111]"
-                          >
-                            Start: Score My Readiness -&gt;
-                          </button>
-                          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
-                            <a href="mailto:ian@ianmcdonald.ai" className="font-semibold text-[#0B0F14] transition hover:text-[#FF7A2F]">
-                              ian@ianmcdonald.ai
-                            </a>
-                            <span className="text-[#C9B8A4]">&middot;</span>
-                            <a
-                              href={BOOKING_URL}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="font-semibold text-[#0B0F14] transition hover:text-[#FF7A2F]"
-                            >
-                              Book a free Fit Call
-                            </a>
-                          </div>
-                        </div>
                       </div>
 
-                      {/* Right: agenda panel */}
-                      <div className="rounded-3xl border border-[#E7D8C6] bg-white/70 p-7 shadow-[0_28px_90px_-70px_rgba(11,15,20,0.55)]">
-                        <p className="text-xs font-black uppercase tracking-[0.2em] text-[#FF7A2F]">
-                          What we&rsquo;ll cover
+                      <div className="justify-self-center rounded-[2rem] border border-[#E7D8C6] bg-white/78 p-5 text-center shadow-[0_34px_90px_-62px_rgba(11,15,20,0.6)] backdrop-blur">
+                        <p className="text-sm font-black uppercase tracking-[0.3em] text-[#FF7A2F]">
+                          Scan to join
                         </p>
-                        <ol className="mt-5 space-y-2.5">
-                          {introAgenda.map((label, index) => (
-                            <li
-                              key={label}
-                              className="flex items-center gap-4 rounded-2xl border border-[#E7D8C6] bg-[#F7F1E8]/55 px-4 py-3"
-                            >
-                              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#FF7A2F] text-sm font-black text-white">
-                                {index + 1}
-                              </span>
-                              <span className="text-base font-bold text-[#0B0F14]">{label}</span>
-                            </li>
-                          ))}
-                        </ol>
+                        <Image
+                          src="/hmsdc-qr.png"
+                          alt="Scan to open the kit on your device"
+                          width={600}
+                          height={600}
+                          priority
+                          className="mt-4 h-[clamp(260px,21.5vw,325px)] w-[clamp(260px,21.5vw,325px)] rounded-2xl"
+                        />
+                        <p className="mt-5 text-2xl font-black leading-tight text-[#0B0F14]">
+                          Open it on your device
+                        </p>
+                        <p className="mt-2 text-xl font-black text-[#FF7A2F]">ianmcdonald.ai/hmsdc</p>
                       </div>
                     </div>
 
-                    {/* What you'll leave with */}
-                    <div>
-                      <p className="text-xs font-black uppercase tracking-[0.2em] text-[#FF7A2F]">
-                        What you&rsquo;ll leave with
-                      </p>
-                      <div className="mt-4 grid grid-cols-3 gap-4">
-                        {['Business Brain', 'Prompt Pack', 'Capstone Drafts'].map((item, index) => (
-                          <div
-                            key={item}
-                            className="flex items-center gap-3 rounded-2xl border border-[#E7D8C6] bg-white/70 p-4"
-                          >
-                            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#FF7A2F] text-sm font-black text-white">
-                              {index + 1}
-                            </span>
-                            <span className="text-base font-black text-[#0B0F14]">{item}</span>
-                          </div>
-                        ))}
-                      </div>
+                    <div className="grid grid-cols-3 overflow-hidden rounded-2xl border border-[#E7D8C6] bg-[#0B0F14] text-white shadow-[0_28px_90px_-70px_rgba(11,15,20,0.7)]">
+                      {['Score readiness', 'Build your Business Brain', 'Generate reusable prompts'].map((item, index) => (
+                        <div key={item} className="flex items-center gap-4 border-r border-white/10 px-5 py-3 last:border-r-0">
+                          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#FF7A2F] text-sm font-black text-white">
+                            {index + 1}
+                          </span>
+                          <span className="text-base font-black leading-tight">{item}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </section>
