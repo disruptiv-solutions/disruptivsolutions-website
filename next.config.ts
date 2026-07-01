@@ -3,10 +3,15 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   async redirects() {
     return [
-      // Short, say-out-loud vanity URL for the HMSDC MBE Leadership Academy room.
-      // Temporary so it can be repointed to a different kit for a future event.
+      // Short, say-out-loud vanity URLs for the HMSDC MBE Leadership Academy room.
+      // Temporary so they can be repointed to a different kit for a future event.
       {
         source: '/hmsdc',
+        destination: '/kits/supplier-readiness-builder',
+        permanent: false,
+      },
+      {
+        source: '/kits/mbe',
         destination: '/kits/supplier-readiness-builder',
         permanent: false,
       },
