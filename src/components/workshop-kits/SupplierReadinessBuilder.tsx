@@ -1603,13 +1603,9 @@ export default function SupplierReadinessBuilder() {
                         rebuild one growth-plan section live, and you leave with a prompt pack
                         tuned to your business.
                       </p>
-                      <div className="mt-4 flex flex-wrap items-baseline gap-2">
-                        <span className="text-2xl font-black text-[#0B0F14]">$500</span>
-                        <span className="text-sm text-[#667085] line-through">$750</span>
-                        <span className="text-xs font-semibold text-[#FF7A2F]">
-                          Academy rate &middot; book within 7 days
-                        </span>
-                      </div>
+                      <p className="mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-[#FF7A2F]">
+                        Academy rate for cohort members
+                      </p>
                     </div>
                     <div className="rounded-2xl border border-[#E7D8C6] bg-white/70 p-5">
                       <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#667085]">
