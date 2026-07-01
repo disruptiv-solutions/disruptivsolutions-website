@@ -378,23 +378,14 @@ export default function SupplierReadinessBuilder() {
       companyName: 'Gulf Coast Facility Solutions',
       businessType: 'Commercial facilities maintenance',
       overview:
-        'We help commercial property managers and institutional facilities teams keep high-traffic buildings clean, safe, and operational with responsive maintenance and janitorial support.',
-      services:
-        'Janitorial services, floor care, light maintenance, emergency cleaning, event support, consumables management.',
-      certifications: 'MBE certified, local small business certification, OSHA safety training.',
+        'We keep high-traffic commercial and institutional buildings clean, safe, and operational for property managers and facilities teams. We solve the problem of slow, unreliable maintenance and janitorial support.',
       pastPerformance:
-        'Supported multi-site office portfolio, recurring municipal facility maintenance, event cleanup for venues with 5,000+ attendees.',
+        'MBE certified with OSHA-trained crews. Supported a multi-site office portfolio, recurring municipal facility maintenance, and event cleanup for venues with 5,000+ attendees.',
       differentiators:
-        'Fast response times, bilingual crews, documented quality checks, flexible staffing for surge needs, owner-led account management.',
-      targets: 'Healthcare systems, universities, airports, city facilities, large commercial property managers.',
-      swot:
-        'Strengths: responsiveness, trained crews, relationship-driven service. Weaknesses: limited proposal library, manual follow-up. Opportunities: public facilities growth, supplier diversity programs. Threats: larger incumbents and pricing pressure.',
+        'Fast response times, bilingual crews, documented quality checks, and owner-led account management. We show up and we communicate.',
       goals:
-        'Earn placement on two corporate or agency supplier shortlists in 12 months. Build a documented follow-up process. Improve capability statement around facility readiness outcomes.',
-      workflowContext:
-        'We met a university facilities director at a supplier event. They mentioned upcoming needs for event cleanup and recurring janitorial support.',
+        'Win recurring contracts with healthcare systems and universities, get on two supplier shortlists in 12 months, and stop losing hours to manual follow-up.',
       scores: { 0: 3, 1: 3, 2: 4, 3: 3, 4: 2, 5: 2, 6: 3, 7: 2 },
-      selectedWorkflow: 'followUp',
     });
     setToast('Sample business loaded.');
   }
@@ -629,18 +620,35 @@ export default function SupplierReadinessBuilder() {
 
                   <Panel eyebrow="The action" title="Build Your Business Brain">
                   <p className="text-lg leading-relaxed text-[#334155] lg:text-xl">
-                    Now build yours. Capture safe, buyer-facing information. A few lines each is
-                    plenty.
+                    Four questions is all we need today. The goal is not the perfect profile. It is
+                    enough context that AI stops giving you generic answers. Rough is fine. Blank is
+                    what slows us down.
                   </p>
                   <div className="mt-6 grid gap-4 md:grid-cols-2">
-                    <Textarea label="Company overview" value={state.overview} onChange={(value) => update('overview', value)} />
-                    <Textarea label="Core services" value={state.services} onChange={(value) => update('services', value)} />
-                    <Textarea label="Certifications / categories" value={state.certifications} onChange={(value) => update('certifications', value)} />
-                    <Textarea label="Past performance" value={state.pastPerformance} onChange={(value) => update('pastPerformance', value)} />
-                    <Textarea label="Differentiators" value={state.differentiators} onChange={(value) => update('differentiators', value)} />
-                    <Textarea label="Target clients" value={state.targets} onChange={(value) => update('targets', value)} />
-                    <Textarea label="SWOT notes" value={state.swot} onChange={(value) => update('swot', value)} />
-                    <Textarea label="Top goals / KPIs" value={state.goals} onChange={(value) => update('goals', value)} />
+                    <Textarea
+                      label="1. Business snapshot"
+                      hint="What do you do, who do you serve, and what problem do you solve?"
+                      value={state.overview}
+                      onChange={(value) => update('overview', value)}
+                    />
+                    <Textarea
+                      label="2. Proof & qualifications"
+                      hint="What certifications, past performance, projects, or results prove you can do the work?"
+                      value={state.pastPerformance}
+                      onChange={(value) => update('pastPerformance', value)}
+                    />
+                    <Textarea
+                      label="3. Differentiators"
+                      hint="Why should a buyer choose you over a similar vendor?"
+                      value={state.differentiators}
+                      onChange={(value) => update('differentiators', value)}
+                    />
+                    <Textarea
+                      label="4. Growth focus"
+                      hint="What opportunity, buyer, workflow, or goal are you focused on next?"
+                      value={state.goals}
+                      onChange={(value) => update('goals', value)}
+                    />
                   </div>
                   <div className="mt-5 flex flex-wrap gap-3">
                     <button type="button" onClick={loadSample} className="rounded-xl border border-[#0B0F14]/15 bg-white/65 px-5 py-3 text-sm font-semibold text-[#0B0F14] transition hover:border-[#FF7A2F]/50 hover:bg-white">
@@ -1750,18 +1758,21 @@ function Input({
 
 function Textarea({
   label,
+  hint,
   value,
   onChange,
   className = '',
 }: {
   label: string;
+  hint?: string;
   value: string;
   onChange: (value: string) => void;
   className?: string;
 }) {
   return (
     <label className={`block ${className}`}>
-      <span className="mb-2 block text-sm font-semibold text-[#111827]">{label}</span>
+      <span className="mb-1 block text-sm font-semibold text-[#111827]">{label}</span>
+      {hint && <span className="mb-2 block text-xs leading-snug text-[#667085]">{hint}</span>}
       <textarea
         value={value}
         onChange={(event) => onChange(event.target.value)}
@@ -1916,14 +1927,10 @@ function businessContext(state: KitState): string {
     `Company: ${state.companyName || '[Company name]'}`,
     `Contact: ${state.firstName || '[Your name]'}, ${state.title || '[Your title]'}`,
     `Business type: ${state.businessType || '[Business type]'}`,
-    `Overview: ${state.overview || '[Company overview]'}`,
-    `Core services: ${state.services || '[Core services]'}`,
-    `Certifications/categories: ${state.certifications || '[Certifications/categories]'}`,
-    `Past performance: ${state.pastPerformance || '[Past performance]'}`,
-    `Differentiators: ${state.differentiators || '[Differentiators]'}`,
-    `Target clients: ${state.targets || '[Target clients]'}`,
-    `SWOT: ${state.swot || '[SWOT]'}`,
-    `Goals/KPIs: ${state.goals || '[Goals/KPIs]'}`,
+    `Business snapshot (what we do, who we serve, the problem we solve): ${state.overview || '[Business snapshot]'}`,
+    `Proof and qualifications (certifications, past performance, projects, results): ${state.pastPerformance || '[Proof and qualifications]'}`,
+    `Differentiators (why a buyer chooses us over a similar vendor): ${state.differentiators || '[Differentiators]'}`,
+    `Growth focus (the opportunity, buyer, workflow, or goal we are focused on next): ${state.goals || '[Growth focus]'}`,
   ].join('\n');
 }
 
