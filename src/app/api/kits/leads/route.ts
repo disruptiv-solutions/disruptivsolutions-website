@@ -12,12 +12,8 @@ const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
 
 type Worksheet = {
   overview: string;
-  services: string;
-  certifications: string;
   pastPerformance: string;
   differentiators: string;
-  targets: string;
-  swot: string;
   goals: string;
 };
 
@@ -46,14 +42,10 @@ type KitLead = {
 };
 
 const WORKSHEET_FIELDS: { key: keyof Worksheet; label: string }[] = [
-  { key: 'overview', label: 'Company overview' },
-  { key: 'services', label: 'Core services' },
-  { key: 'certifications', label: 'Certifications / categories' },
-  { key: 'pastPerformance', label: 'Past performance' },
+  { key: 'overview', label: 'Business snapshot' },
+  { key: 'pastPerformance', label: 'Proof & qualifications' },
   { key: 'differentiators', label: 'Differentiators' },
-  { key: 'targets', label: 'Target clients' },
-  { key: 'swot', label: 'SWOT notes' },
-  { key: 'goals', label: 'Top goals / KPIs' },
+  { key: 'goals', label: 'Growth focus' },
 ];
 
 function parseWorksheet(data: Record<string, unknown>): Worksheet {
