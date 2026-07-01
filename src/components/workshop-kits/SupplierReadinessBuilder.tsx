@@ -158,7 +158,7 @@ const emptyState: KitState = {
 };
 
 export default function SupplierReadinessBuilder() {
-  const { user, loading, signInWithGoogle } = useAuth();
+  const { user, loading } = useAuth();
   const [state, setState] = useState<KitState>(emptyState);
   const [activeStep, setActiveStep] = useState<StepId>('intro');
   const prompts = useMemo(() => makePrompts(state), [state]);
@@ -283,6 +283,8 @@ export default function SupplierReadinessBuilder() {
           sessionId,
           selectedWorkflow: state.selectedWorkflow,
           authUid: user?.uid ?? null,
+          businessBrain: businessContext(state),
+          promptPack: prompts.map((entry) => ({ name: entry.name, text: entry.text })),
           ...buildCapturePayload(state, averageScore),
         }),
       });
@@ -1498,20 +1500,6 @@ export default function SupplierReadinessBuilder() {
                           worksheet you built so I can tailor it to you. As HMSDC&rsquo;s AI expert for
                           the Academy, I can also help you implement it.
                         </p>
-                        {!loading && !user && (
-                          <button
-                            type="button"
-                            onClick={() => {
-                              trackButtonClick('kit_google_sign_in', 'supplier_readiness_capture');
-                              signInWithGoogle().catch(() =>
-                                setLeadError('Google sign-in was cancelled or failed.'),
-                              );
-                            }}
-                            className="mt-4 rounded-xl border border-white/15 bg-white/[0.04] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-white/[0.08]"
-                          >
-                            Sign in with Google
-                          </button>
-                        )}
                       </div>
 
                       {state.leadCaptured ? (

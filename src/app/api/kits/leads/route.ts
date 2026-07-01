@@ -7,6 +7,7 @@ export const dynamic = 'force-dynamic';
 const RESEND_API_KEY = process.env.RESEND_API_KEY ?? '';
 const RESEND_FROM = process.env.RESEND_FROM ?? 'Ian McDonald <ian@ianmcdonald.ai>';
 const ALERT_TO = process.env.ALERT_EMAIL ?? 'ian@ianmcdonald.ai';
+const BOOKING_URL = 'https://calendar.app.google/okpHPUV8TA85GBaA6';
 const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
 
 type Worksheet = {
@@ -38,6 +39,8 @@ type KitLead = {
   worksheet: Worksheet;
   scoresText: string;
   manualChecksText: string;
+  businessBrain: string;
+  promptPack: { name: string; text: string }[];
   sessionId: string;
   authUid: string | null;
 };
@@ -89,6 +92,20 @@ function validateLead(body: unknown): KitLead | null {
     scoresText: typeof data.scoresText === 'string' ? data.scoresText.trim().slice(0, 2000) : '',
     manualChecksText:
       typeof data.manualChecksText === 'string' ? data.manualChecksText.trim().slice(0, 2000) : '',
+    businessBrain:
+      typeof data.businessBrain === 'string' ? data.businessBrain.trim().slice(0, 8000) : '',
+    promptPack: Array.isArray(data.promptPack)
+      ? (data.promptPack as unknown[])
+          .slice(0, 10)
+          .map((entry) => {
+            const o = entry && typeof entry === 'object' ? (entry as Record<string, unknown>) : {};
+            return {
+              name: typeof o.name === 'string' ? o.name.trim().slice(0, 200) : '',
+              text: typeof o.text === 'string' ? o.text.trim().slice(0, 8000) : '',
+            };
+          })
+          .filter((entry) => entry.name || entry.text)
+      : [],
     sessionId: cleanSessionId(data.sessionId),
     kitSlug:
       typeof data.kitSlug === 'string'
@@ -190,6 +207,49 @@ async function sendLeadAlert(lead: KitLead, id: string | null): Promise<void> {
   }
 }
 
+// The "Email me my kit" promise: send the attendee their own Business Brain and
+// Prompt Pack immediately, with a soft Fit Call CTA. Replies route back to Ian.
+async function sendKitToAttendee(lead: KitLead): Promise<void> {
+  if (!resend) return;
+  const first = lead.contact.firstName;
+  const brain = lead.businessBrain
+    ? `<h2 style="color:#FF7A2F;font-size:16px;margin:24px 0 8px">Your Business Brain</h2>
+        <pre style="white-space:pre-wrap;background:#f6f7f9;border:1px solid #eee;border-radius:8px;padding:14px;font-size:13px;line-height:1.55;font-family:ui-monospace,Menlo,Consolas,monospace">${escapeHtml(lead.businessBrain)}</pre>`
+    : '';
+  const pack = lead.promptPack.length
+    ? `<h2 style="color:#FF7A2F;font-size:16px;margin:28px 0 6px">Your Prompt Pack</h2>
+        <p style="margin:0 0 12px;color:#374151">Paste any of these right after your Business Brain.</p>` +
+      lead.promptPack
+        .map(
+          (p) =>
+            `<h3 style="font-size:14px;margin:18px 0 6px;color:#111827">${escapeHtml(p.name)}</h3>
+        <pre style="white-space:pre-wrap;background:#0B0F14;color:#F7F1E8;border-radius:8px;padding:14px;font-size:12.5px;line-height:1.55;font-family:ui-monospace,Menlo,Consolas,monospace">${escapeHtml(p.text)}</pre>`,
+        )
+        .join('')
+    : '';
+  try {
+    await resend.emails.send({
+      from: RESEND_FROM,
+      to: lead.contact.email,
+      replyTo: ALERT_TO,
+      subject: `Your AI Supplier Readiness kit${first ? `, ${first}` : ''}`,
+      html: `<div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:640px;color:#111827;line-height:1.6">
+        <p style="margin:0 0 14px">Hi ${escapeHtml(first)},</p>
+        <p style="margin:0 0 14px">Thanks for building alongside me at the MBE Leadership Academy. Everything you put together is below. Save this email. It is the reusable core you can paste into ChatGPT or Claude at the start of any chat.</p>
+        ${brain}
+        ${pack}
+        <p style="margin:24px 0 14px"><strong>How to use it:</strong> paste your Business Brain first, then one prompt. Read what comes back, check the facts, keep what is true. That is the whole loop.</p>
+        <p style="margin:0 0 8px">Want a hand turning this into the sections corporate and government buyers actually read? I run a free 15-minute Fit Call. No pitch, just a straight read on where AI saves you the most time first.</p>
+        <p style="margin:0 0 22px"><a href="${BOOKING_URL}" style="display:inline-block;background:#FF7A2F;color:#ffffff;text-decoration:none;font-weight:700;padding:12px 22px;border-radius:10px">Book a free Fit Call</a></p>
+        <p style="margin:0 0 4px">Talk soon,<br>Ian</p>
+        <p style="margin:0;color:#6b7280;font-size:12px">Ian McDonald &middot; Practical AI Workshops &middot; HMSDC MBE Leadership Academy &middot; ian@ianmcdonald.ai</p>
+      </div>`,
+    });
+  } catch (error) {
+    console.error('[kits/leads] attendee kit email failed:', error);
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const lead = validateLead(await request.json());
@@ -220,7 +280,7 @@ export async function POST(request: NextRequest) {
       console.error('[kits/leads] Firebase admin unavailable:', adminError);
     }
 
-    await sendLeadAlert(lead, id);
+    await Promise.allSettled([sendLeadAlert(lead, id), sendKitToAttendee(lead)]);
 
     return NextResponse.json({ success: true, id }, { status: 200 });
   } catch (error) {
