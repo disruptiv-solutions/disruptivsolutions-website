@@ -10,7 +10,7 @@ const ALERT_TO = process.env.ALERT_EMAIL ?? 'ian@ianmcdonald.ai';
 const BOOKING_URL = 'https://calendar.app.google/okpHPUV8TA85GBaA6';
 const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
 
-export const INTAKE_FIELDS: { key: string; label: string }[] = [
+const INTAKE_FIELDS: { key: string; label: string }[] = [
   { key: 'doing', label: 'What they do / who they serve' },
   { key: 'timeDrain', label: 'Biggest time-drain / what runs through them' },
   { key: 'target', label: 'Who or what they want to win in 90 days' },
