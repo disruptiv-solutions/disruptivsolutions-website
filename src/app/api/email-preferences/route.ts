@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getPreferences, readToken, setPreferences } from '@/lib/mailchimp-preferences';
+import {
+  getPreferences,
+  missingConfig,
+  readToken,
+  setPreferences,
+} from '@/lib/mailchimp-preferences';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,6 +14,15 @@ export const dynamic = 'force-dynamic';
  * subscriber's groups — only the explicit POST below does that.
  */
 export async function GET(request: NextRequest) {
+  // Surface misconfiguration as itself. Without this, a missing env var throws
+  // and the page renders "this link isn't valid" — pointing at the token when
+  // the real fault is deployment config.
+  const missing = missingConfig();
+  if (missing.length) {
+    console.error('[API:email-preferences] not configured:', missing.join(', '));
+    return NextResponse.json({ error: 'not_configured', missing }, { status: 503 });
+  }
+
   const hash = readToken(request.nextUrl.searchParams.get('t'));
   if (!hash) {
     console.warn('[API:email-preferences] GET rejected: invalid or expired token');
@@ -28,6 +42,12 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const missing = missingConfig();
+  if (missing.length) {
+    console.error('[API:email-preferences] not configured:', missing.join(', '));
+    return NextResponse.json({ error: 'not_configured', missing }, { status: 503 });
+  }
+
   let body: { token?: string; launchbox?: unknown; ian?: unknown };
   try {
     body = await request.json();

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 type Preferences = { launchbox: boolean; ian: boolean };
-type Status = 'loading' | 'ready' | 'saving' | 'saved' | 'invalid' | 'error';
+type Status = 'loading' | 'ready' | 'saving' | 'saved' | 'invalid' | 'error' | 'unavailable';
 
 const LANES: { key: keyof Preferences; title: string; blurb: string }[] = [
   {
@@ -39,12 +39,20 @@ export default function EmailPreferencesPage() {
     // scanners fetch it before the subscriber does.
     fetch(`/api/email-preferences?t=${encodeURIComponent(t)}`)
       .then(async (res) => {
-        if (!res.ok) throw new Error(String(res.status));
+        if (!res.ok) {
+          // A server-side misconfiguration is not the subscriber's problem and
+          // must not be reported to them as an expired link.
+          const body = (await res.json().catch(() => ({}))) as { error?: string };
+          setStatus(
+            body.error === 'not_configured' || res.status >= 500 ? 'unavailable' : 'invalid',
+          );
+          return;
+        }
         const data = (await res.json()) as { preferences: Preferences };
         setPrefs(data.preferences);
         setStatus('ready');
       })
-      .catch(() => setStatus('invalid'));
+      .catch(() => setStatus('unavailable'));
   }, []);
 
   const save = useCallback(async () => {
@@ -91,6 +99,16 @@ export default function EmailPreferencesPage() {
             <p className="leading-relaxed text-zinc-400">
               It may have expired, or the address was copied incompletely. Open the link from your
               most recent email, or just reply to any email from me and I&rsquo;ll set it manually.
+            </p>
+          </div>
+        )}
+
+        {status === 'unavailable' && (
+          <div className="rounded-2xl border border-red-500/30 bg-gradient-to-b from-red-600/10 to-transparent p-8">
+            <h2 className="mb-3 text-xl font-bold">I can&rsquo;t load your preferences right now</h2>
+            <p className="leading-relaxed text-zinc-400">
+              That&rsquo;s a problem on my end, not with your link. Try again in a few minutes, or
+              reply to any email from me and I&rsquo;ll set it manually.
             </p>
           </div>
         )}

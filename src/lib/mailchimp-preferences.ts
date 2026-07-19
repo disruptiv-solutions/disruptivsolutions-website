@@ -28,6 +28,11 @@ export type Preferences = { launchbox: boolean; ian: boolean };
 
 const b64url = (b: Buffer) => b.toString('base64url');
 
+/** Which required env vars are absent. Empty array means the route can run. */
+export function missingConfig(): string[] {
+  return (['MAILCHIMP_API_KEY', 'PREF_TOKEN_SECRET'] as const).filter((k) => !process.env[k]);
+}
+
 function secret(): string {
   const s = process.env.PREF_TOKEN_SECRET;
   if (!s) throw new Error('PREF_TOKEN_SECRET is not set');
