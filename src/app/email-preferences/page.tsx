@@ -8,13 +8,13 @@ type Status = 'loading' | 'ready' | 'saving' | 'saved' | 'invalid' | 'error' | '
 const LANES: { key: keyof Preferences; title: string; blurb: string }[] = [
   {
     key: 'ian',
-    title: 'Ian McDonald — Founder Log + AI Workshops',
+    title: 'Ian McDonald: Founder Log + AI Workshops',
     blurb:
       'Weekly founder stories, real AI builds, practical lessons, demonstrations, and public or paid workshops.',
   },
   {
     key: 'launchbox',
-    title: 'LaunchBox — Product + Partner Updates',
+    title: 'LaunchBox: Product + Partner Updates',
     blurb:
       'Product changes, support resources, community updates, and included partner workshops.',
   },
