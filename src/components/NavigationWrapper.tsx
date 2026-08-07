@@ -84,7 +84,7 @@ const NavigationWrapper = () => {
     };
   }, [pathname]);
 
-  if (pathname?.startsWith('/launchbox-weekly')) {
+  if (pathname === '/' || pathname?.startsWith('/launchbox-weekly')) {
     return null;
   }
 

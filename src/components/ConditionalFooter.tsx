@@ -9,6 +9,6 @@ import { usePathname } from 'next/navigation';
  */
 export default function ConditionalFooter({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  if (pathname?.startsWith('/kits/')) return null;
+  if (pathname === '/' || pathname?.startsWith('/kits/')) return null;
   return <>{children}</>;
 }

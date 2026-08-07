@@ -3,6 +3,13 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   async redirects() {
     return [
+      // Keep the resource library out of the public site for now without
+      // deleting its content or breaking direct workshop/class links.
+      {
+        source: '/resources',
+        destination: '/',
+        permanent: false,
+      },
       // Short, say-out-loud vanity URLs for the HMSDC MBE Leadership Academy room.
       // Temporary so they can be repointed to a different kit for a future event.
       {

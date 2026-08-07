@@ -45,7 +45,7 @@ export const trackEvent = (
  * Track form submission
  */
 export const trackFormSubmission = (
-  formType: 'newsletter_signup' | 'waitlist_signup' | 'free_class_signup' | 'consulting_request' | 'cohort_signup',
+  formType: 'newsletter_signup' | 'waitlist_signup' | 'free_class_signup' | 'consulting_request' | 'cohort_signup' | 'speaking_inquiry',
   additionalData?: Record<string, unknown>
 ): void => {
   trackEvent(formType, {
