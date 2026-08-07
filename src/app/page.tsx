@@ -1,19 +1,19 @@
-import Hero from '@/components/Hero';
-import WhoThisIsFor from '@/components/WhoThisIsFor';
-import ImageSection from '@/components/ImageSection';
-import Consulting from '@/components/Consulting';
-import Launchbox from '@/components/LaunchBox';
-import Portfolio from '@/components/Portfolio';
+import type { Metadata } from "next";
+import HomeV2 from "@/components/home-v2/HomeV2";
+
+export const metadata: Metadata = {
+  title: "Ian McDonald — Practical AI Builder for Operators",
+  description:
+    "Ian McDonald builds practical AI products, platforms, and communities—and shows operators how to turn ideas into things people can use.",
+  openGraph: {
+    title: "Ian McDonald — Practical AI Builder for Operators",
+    description:
+      "Practical, self-taught, and evidence-led. Bring Ian to your event or see what he is building.",
+    type: "website",
+    images: ["/ian-stage.jpg"],
+  },
+};
 
 export default function Home() {
-  return (
-    <>
-      <Hero />
-      <WhoThisIsFor />
-      <ImageSection imagePath="/ian-stage.jpg" alt="Ian McDonald speaking on stage" />
-      <Consulting />
-      <Launchbox />
-      <Portfolio />
-    </>
-  );
+  return <HomeV2 />;
 }
