@@ -45,6 +45,14 @@ const personSchema = {
   performerIn: [
     {
       "@type": "Event",
+      name: "Grow with Google — Automate Business Workflows with Gemini",
+      location: "Virtual",
+      startDate: "2026-08-25",
+      eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
+      eventStatus: "https://schema.org/EventCompleted",
+    },
+    {
+      "@type": "Event",
       name: "Small & Diverse Business Inclusion Summit",
       location: {
         "@type": "Place",
@@ -83,6 +91,11 @@ const BEST_FIT: readonly string[] = [
 ];
 
 const STAGE_ITEMS = [
+  {
+    title: "Grow with Google — Automate Business Workflows with Gemini",
+    when: "August 25, 2026 · Virtual",
+    body: "Guest workshop showing small-business owners how to use Gemini with Gmail, Google Meet, Drive, and Calendar to turn client conversations into organized follow-ups, proposals, and next actions.",
+  },
   {
     title: "Small & Diverse Business Inclusion Summit",
     when: "June 26, 2026",
