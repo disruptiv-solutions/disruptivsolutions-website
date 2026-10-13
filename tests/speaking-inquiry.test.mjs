@@ -8,10 +8,13 @@ const botModule = encode('export const bot = { isBot: false, fail: false }; expo
 const mailModule = encode('export const sent = []; export class Resend { emails = { send: async email => { sent.push(email); return { error: null }; } }; }');
 const { bot } = await import(botModule);
 const { sent } = await import(mailModule);
+const spamModule = encode(readFileSync('src/lib/inquiry-spam.ts', 'utf8'));
+const { isAutomatedName } = await import(spamModule);
 process.env.RESEND_API_KEY = 'synthetic-test-key';
 const source = readFileSync('src/app/api/speaking-inquiry/route.ts', 'utf8')
   .replace("'botid/server'", JSON.stringify(botModule))
   .replace("'resend'", JSON.stringify(mailModule))
+  .replace("'@/lib/inquiry-spam'", JSON.stringify(spamModule))
   .replace("'next/server'", JSON.stringify(import.meta.resolve('next/server.js')));
 const { POST } = await import(encode(source));
 delete process.env.RESEND_API_KEY;
@@ -49,4 +52,15 @@ test('verified valid visitors retain both expected emails and reply routing', as
   assert.equal(sent[0].replyTo, inquiry.email);
   assert.equal(sent[1].to, inquiry.email);
   assert.equal(sent[1].replyTo, 'ian@ianmcdonald.ai');
+});
+
+test('randomized-name spam sends no mail even after browser verification', async () => {
+  sent.length = 0;
+  for (const name of ['qzABrSTuVwxYZaBc', 'ABCaDEFGHIJKlMNOpQ']) {
+    assert.equal((await POST(req({ ...inquiry, name }))).status, 400);
+  }
+  assert.equal(sent.length, 0);
+  for (const name of ['Ian McDonald', 'AnnaMariaMcDonald', 'DeLaCruzRodriguez', 'Chandrasekharan', 'CHANDRASEKHARAN', 'José García', '李明', "Mary O’Connor-Smith"]) {
+    assert.equal(isAutomatedName(name), false, name);
+  }
 });

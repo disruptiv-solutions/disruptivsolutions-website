@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { checkBotId } from 'botid/server';
+import { isAutomatedName } from '@/lib/inquiry-spam';
 
 export const dynamic = 'force-dynamic';
 
@@ -119,6 +120,10 @@ export async function POST(request: NextRequest) {
         { error: 'Please fill in your name, a valid email, and pick what you are interested in.' },
         { status: 400 },
       );
+    }
+
+    if (isAutomatedName(inquiry.name)) {
+      return NextResponse.json({ error: 'Please enter your name with normal spacing and capitalization, or email ian@ianmcdonald.ai.' }, { status: 400 });
     }
 
     if (!resend) {
