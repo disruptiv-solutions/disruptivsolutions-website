@@ -322,16 +322,16 @@ export default function NewsletterDirectoryPage() {
       <section className="border-b-2 border-zinc-700 pt-24 pb-8">
         <div className="max-w-5xl mx-auto px-6">
           <Link
-            href="/resources"
+            href="/"
             className="inline-flex items-center gap-2 text-gray-400 hover:text-white text-sm font-medium mb-6 transition-colors"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            Back to Resources
+            Back to Ian’s homepage
           </Link>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
-            Newsletter Archive
+            Notes from the workbench
           </h1>
           <p className="text-base sm:text-lg text-gray-400 mt-3 max-w-2xl">
             Past issues of Ian&apos;s newsletter — practical AI insights, what he&apos;s building, and lessons from the trenches.
@@ -442,8 +442,8 @@ export default function NewsletterDirectoryPage() {
           ) : error ? (
             <div className="text-center py-20">
               <p className="text-red-400">{error}</p>
-              <Link href="/resources" className="text-red-500 hover:text-red-400 mt-4 inline-block">
-                ← Back to Resources
+              <Link href="/" className="text-red-500 hover:text-red-400 mt-4 inline-block">
+                ← Back to Ian’s homepage
               </Link>
             </div>
           ) : newsletterIssues.length === 0 &&

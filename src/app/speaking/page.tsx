@@ -7,6 +7,7 @@ import SpeakingPageSubnav from "@/components/speaking/SpeakingPageSubnav";
 import VideoTestimonialsFolder from "@/components/speaking/VideoTestimonialsFolder";
 import { loadSpeakingTranscripts } from "@/lib/load-speaking-transcripts";
 import { cn } from "@/lib/cn";
+import publicStyles from "@/components/site/PublicPage.module.css";
 
 export const metadata: Metadata = {
   title: "Speaking — Ian McDonald",
@@ -349,105 +350,10 @@ export default async function SpeakingPage() {
       <SpeakingStickyCta />
       <SpeakingPageSubnav />
 
-      <section
-        className="relative min-h-[90vh] flex items-center justify-center bg-[#040404] px-5 sm:px-6 pt-32 pb-16 lg:pt-36 lg:pb-20 overflow-hidden snap-start"
-        aria-label="Intro"
-      >
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-[radial-gradient(ellipse_100%_60%_at_50%_-20%,rgba(220,38,38,0.16),transparent)]"
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[64px_64px] [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_75%)]"
-        />
-        <div aria-hidden className="speaking-grain absolute inset-0" />
-        <div
-          aria-hidden
-          className="absolute -top-32 -right-20 w-[min(90vw,640px)] h-[min(90vw,640px)] rounded-full bg-red-600/18 blur-[100px] pointer-events-none"
-        />
-        <div
-          aria-hidden
-          className="absolute top-1/2 left-1/2 h-[1px] w-[min(100vw,1200px)] -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-transparent via-red-500/15 to-transparent"
-        />
-
-        <div className="max-w-7xl w-full grid lg:grid-cols-2 gap-14 lg:gap-16 items-center relative z-10">
-          <div className="space-y-8 order-1">
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="speaking-hero-entrance inline-flex items-center gap-2.5 rounded-full border border-red-500/35 bg-gradient-to-b from-red-500/12 to-red-600/5 px-4 py-1.5 text-red-300/95 text-xs font-semibold tracking-wide uppercase shadow-[0_0_0_1px_rgba(0,0,0,0.4)]">
-                <span
-                  className="h-1.5 w-1.5 rounded-full bg-red-500 shadow-[0_0_10px_2px_rgba(239,68,68,0.5)]"
-                  aria-hidden
-                />
-                <span>Wednesdays @ 1 PM CT — Launch &amp; Learn</span>
-              </div>
-              <Link
-                href="/start"
-                className="speaking-hero-entrance inline-flex items-center gap-2 rounded-full border border-zinc-700/60 bg-zinc-900/60 px-4 py-1.5 text-xs font-semibold text-zinc-300 transition hover:border-zinc-500/80 hover:text-white"
-              >
-                Saw me speak? Start here →
-              </Link>
-            </div>
-            <h1 className="speaking-hero-entrance speaking-hero-delay-1 text-4xl sm:text-5xl lg:text-6xl xl:text-[3.35rem] font-bold leading-[1.05] tracking-[-0.03em] text-white">
-              I build AI products.
-              <br />
-              <span className="mt-1 inline-block bg-gradient-to-r from-red-400 via-red-500 to-rose-800 bg-clip-text text-transparent [text-shadow:0_0_40px_rgba(239,68,68,0.12)]">
-                Then I bring the lessons to your room.
-              </span>
-            </h1>
-            <p className="speaking-hero-entrance speaking-hero-delay-2 text-lg sm:text-xl text-zinc-400 leading-relaxed max-w-2xl [text-wrap:pretty]">
-              Self-taught builder. In 2025, I built the{" "}
-              <span className="text-zinc-100 font-semibold">AI for Business</span>{" "}
-              platform solo, supporting{" "}
-              <span className="text-zinc-100 font-semibold">1,600+ users</span>{" "}
-              and powering a business that reached{" "}
-              <span className="text-zinc-100 font-semibold">$1.2M ARR</span> in 9
-              months. Now building LaunchBox and speaking for rooms that want
-              to see how real people can use AI to build platforms, funnels,
-              communities, and businesses — without waiting for permission.
-            </p>
-            <div className="speaking-hero-entrance speaking-hero-delay-3 flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
-              <BookCta />
-              <Link
-                href={CALENDAR_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-14 items-center justify-center rounded-xl border border-zinc-600/80 bg-zinc-950/40 px-8 text-center text-base font-semibold text-zinc-100 transition hover:border-zinc-500 hover:bg-zinc-900/50 focus-visible:ring-2 focus-visible:ring-zinc-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
-              >
-                Check my calendar
-              </Link>
-            </div>
-            <p className="speaking-hero-entrance speaking-hero-delay-4 text-sm text-zinc-500 max-w-md leading-relaxed">
-              Keynotes, panels, and live builds. Based in Houston, available
-              to travel.
-            </p>
-            <div className="speaking-hero-entrance speaking-hero-delay-4">
-              <ProofStrip />
-            </div>
-          </div>
-
-          <div className="order-2 flex justify-center lg:justify-end">
-            <div className="speaking-hero-entrance speaking-hero-delay-2 relative w-full max-w-[320px] sm:max-w-[380px] lg:max-w-[440px]">
-              <div
-                aria-hidden
-                className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-red-500/45 via-zinc-900/40 to-red-950/20 blur-2xl"
-              />
-              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-[0_32px_80px_-20px_rgba(0,0,0,0.85),0_0_0_1px_rgba(255,255,255,0.06),inset_0_0_0_1px_rgba(255,255,255,0.04)]">
-                <div
-                  aria-hidden
-                  className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-t from-black/30 via-transparent to-white/[0.04]"
-                />
-                <Image
-                  src="/speaking/ian-speaker-aixp.jpg"
-                  alt="Ian McDonald speaking at AIXP Houston"
-                  fill
-                  priority
-                  sizes="(max-width: 640px) 320px, (max-width: 1024px) 380px, 440px"
-                  className="object-cover object-[47%_20%]"
-                />
-              </div>
-            </div>
-          </div>
+      <section className={publicStyles.page} aria-labelledby="speaking-title">
+        <div className={publicStyles.split}>
+          <div><p className={publicStyles.eyebrow}>Speaking & workshops</p><h1 id="speaking-title">Give your audience something to build on.</h1><p className={publicStyles.intro}>Keynotes, hands-on workshops, and live builds with a founder who uses AI to ship real products. Practical lessons your audience can put to work.</p><div className="flex flex-wrap gap-4 items-center"><BookCta /><a href={CALENDAR_URL} target="_blank" rel="noopener noreferrer" className={publicStyles.textLink}>Check my calendar →</a></div><p className={publicStyles.meta}>Based in Houston. Available to travel.</p><ProofStrip /></div>
+          <figure className={publicStyles.portrait}><div className={publicStyles.stagePortrait}><Image src="/speaking/ian-speaker-aixp.jpg" alt="Ian McDonald speaking at AIXP Houston" fill sizes="(max-width:760px) 100vw, 45vw" priority /></div><figcaption>AIXP Houston / April 2026</figcaption></figure>
         </div>
       </section>
 

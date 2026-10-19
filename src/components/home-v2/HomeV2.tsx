@@ -53,11 +53,11 @@ function InquiryForm() {
   return (
     <form className={styles.inquiryForm} onSubmit={submit}>
       <div className={styles.formGrid}>
-        <label>Your name<input name="name" autoComplete="name" placeholder="Jane Doe" disabled={status === "submitting"} /></label>
-        <label>Email<input name="email" type="email" autoComplete="email" placeholder="you@company.com" disabled={status === "submitting"} /></label>
+        <label>Your name<input name="name" required autoComplete="name" placeholder="Jane Doe" disabled={status === "submitting"} /></label>
+        <label>Email<input name="email" required type="email" autoComplete="email" placeholder="you@company.com" disabled={status === "submitting"} /></label>
       </div>
       <label>What are you interested in?
-        <select name="interest" defaultValue="" disabled={status === "submitting"}>
+        <select name="interest" required defaultValue="" disabled={status === "submitting"}>
           <option value="" disabled>Select one…</option>
           <option value="speaking-event">Keynote</option>
           <option value="corporate-workshop">Workshop / training</option>
@@ -68,83 +68,89 @@ function InquiryForm() {
         </select>
       </label>
       <label>Anything to add? <span>(optional)</span><textarea name="note" rows={4} maxLength={5000} placeholder="Event date, audience, format — whatever helps." disabled={status === "submitting"} /></label>
-      {status === "error" && <p className={styles.formError}>{error}</p>}
-      {status === "success" && <p className={styles.formSuccess}>Got it. Check your inbox for confirmation—Ian will reply personally.</p>}
+      {status === "error" && <p role="alert" className={styles.formError}>{error}</p>}
+      {status === "success" && <p role="status" className={styles.formSuccess}>Got it. Check your inbox for confirmation—Ian will reply personally.</p>}
       <button type="submit" disabled={status === "submitting" || status === "success"}>{status === "submitting" ? "Sending…" : status === "success" ? "Inquiry sent" : "Send inquiry"}</button>
       <small>You’ll get an email confirmation. Ian replies personally.</small>
     </form>
   );
 }
 
+function Arrow({ className }: { className?: string }) {
+  return <svg className={className} viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M7 25 25 7M7 7h18v18" stroke="currentColor" strokeWidth="1.8" /></svg>;
+}
+
 export default function HomeV2() {
   return <div className={styles.page}>
-    <section id="top" className={styles.hero}>
+    <section id="top" className={styles.hero} aria-labelledby="home-title">
       <div className={`${styles.container} ${styles.heroGrid}`}>
         <div className={styles.heroCopy}>
-          <p className={styles.eyebrow}>Builder. Founder. Speaker.</p>
-          <h1>Ian<br />McDonald<span className={styles.redPeriod}>.</span></h1>
-          <div className={styles.redRule} />
-          <h2>Practical AI.<br />Built from experience.</h2>
-          <p className={styles.heroDescription}>I build products, platforms, and business systems with AI—and help other people turn their ideas into something useful.</p>
-          <div className={styles.heroActions}><a className={styles.primaryButton} href="#inquiry" onClick={() => trackButtonClick("bring_ian_to_event", "home_v2_hero")}>Bring Ian to your event <span aria-hidden="true">↗</span></a><a className={styles.secondaryButton} href="#launchlearn">Learn with me <span aria-hidden="true">↓</span></a></div>
-          <p className={styles.projectLink}>Have something to build? <a href={`${DISRUPTIV_URL}/contact`} onClick={() => trackDisruptivVisit(`${DISRUPTIV_URL}/contact`, "home_v2_hero")}>Work with Disruptiv ↗</a></p>
+          <p className={styles.eyebrow}>Ian McDonald / Builder. Founder. Speaker.</p>
+          <h1 id="home-title">Make AI practical.<br />Build what’s <em>next.</em></h1>
+          <p className={styles.heroDescription}>I build products and businesses with AI. Then I share what works, on stage, in workshops, and with people ready to try it themselves.</p>
+          <a className={styles.heroAction} href="#speaking" onClick={() => trackButtonClick("bring_ian_to_event", "home_v2_hero")}><span>Let’s put the ideas to work</span><Arrow /></a>
         </div>
-        <figure className={styles.heroFigure}><div className={styles.heroImage}><Image src="/ian-mcdonald.png" alt="Ian McDonald, builder and speaker" fill sizes="(max-width: 760px) 100vw, 46vw" priority /></div><figcaption><span>Self-taught. Still building.</span><span>Houston, TX</span></figcaption></figure>
-      </div>
-      <div className={`${styles.container} ${styles.statsGrid}`} aria-label="Track record">
-        <div><strong>1,600+</strong><span>Users of the AI platform I built</span></div><div><strong>$1.2M</strong><span>Business ARR powered in 9 months</span></div><div><strong>500+</strong><span>People in my largest keynote room</span></div>
+        <figure className={styles.heroArt}>
+          <div className={styles.paperBack} aria-hidden="true" />
+          <div className={styles.stageFragment}><Image src="/speaking/ian-speaker-aixp.jpg" alt="Ian speaking at AIXP Houston" fill sizes="(max-width: 760px) 60vw, 26vw" className={styles.stagePhoto} priority /></div>
+          <div className={styles.portraitFragment}><Image src="/ian-mcdonald.png" alt="Ian McDonald" fill sizes="(max-width: 760px) 70vw, 34vw" priority /></div>
+          <svg className={styles.paperArrow} viewBox="0 0 260 120" aria-hidden="true"><path d="m4 75 139-16-4-48 115 69-116 37 4-35L4 108Z" fill="currentColor" /><path d="m142 59 104 20-105 4" stroke="#16181b" strokeWidth="2" fill="none" /></svg>
+          <span className={styles.tape}>Built. Tried. Shared.</span>
+          <figcaption>Real work. Real rooms. Still building.</figcaption>
+        </figure>
       </div>
     </section>
 
-    <section id="record" className={styles.section}>
+    <section id="speaking" className={styles.routes} aria-labelledby="routes-title">
       <div className={styles.container}>
-        <div className={styles.sectionHeading}><p className={styles.eyebrow}>The work, in the room</p><h2>Things I’ve built.<br />Rooms I’ve shared them in.</h2></div>
+        <header className={styles.routeHeading}><h2 id="routes-title">What brings you here?</h2><span>Three ways to work with Ian</span></header>
+        <div className={styles.routeSheet}>
+          <article id="talks" className={styles.routeRow}>
+            <span className={styles.routeNumber}>01 / SPEAKING</span><div><h3>A room ready for something real.</h3><p>Keynotes, workshops, and live builds that make AI feel useful, possible, and worth trying.</p></div><Link className={styles.routeLink} href="/speaking">Bring Ian to your event <Arrow /></Link>
+          </article>
+          <article id="launchlearn" className={styles.routeRow}>
+            <span className={styles.routeNumber}>02 / LEARNING</span><div><h3>Try it. Ask questions. Build.</h3><p>Join the free weekly call, work through a practical kit, or get notes from the workbench.</p></div><a className={styles.routeLink} href="#learn">Find your starting point <Arrow /></a>
+          </article>
+          <article id="disruptiv" className={styles.routeRow}>
+            <span className={styles.routeNumber}>03 / BUILDING</span><div><h3>Make it work for your business.</h3><p>Disruptiv is my company for websites, apps, AI workflows, video, and campaigns. It’s where we build together.</p></div><a className={styles.routeLink} href={`${DISRUPTIV_URL}/contact`} onClick={() => trackDisruptivVisit(`${DISRUPTIV_URL}/contact`, "home_v2_project")}>Build with Disruptiv <Arrow /></a>
+          </article>
+        </div>
+        <p className={styles.routeFoot}>This is where I teach and share. Disruptiv is where we put it to work in your business.</p>
+      </div>
+    </section>
+
+    <section id="record" className={styles.proof} aria-labelledby="proof-title">
+      <div className={styles.container}>
+        <header className={styles.sectionHeading}><h2 id="proof-title">Built in real life.<br />Shared in <em>real rooms.</em></h2><Link className={styles.textLink} href="/speaking#stage">See the speaking record <Arrow /></Link></header>
         <div className={styles.proofGrid}>
-          <figure className={styles.stageFilm}><video controls preload="none" poster="/speaking/ian-speaker-orlando-2025.png" aria-label="Watch Ian's Orlando keynote"><source src="/ian.mp4" type="video/mp4" /></video><figcaption><strong>Orlando keynote</strong><span>May 2025 · 500+ in the room</span></figcaption></figure>
-          <div className={styles.gigList}>{[
-            ["01", "Grow with Google", "August 2026", "A hands-on workshop on automating everyday business workflows with Gemini."],
-            ["02", "Houston AI Club", "May 2026", "From AI consumer to AI builder, with a live LaunchBox build and open Q&A."],
-            ["03", "AIXP Houston", "April 2026", "Four speaking slots on building from the operator’s seat."],
-          ].map(([number,title,date,copy]) => <article key={number}><span>{number}</span><div><div className={styles.gigTitle}><h3>{title}</h3><span>{date}</span></div><p>{copy}</p></div></article>)}<Link className={styles.textLink} href="/speaking#stage">See the full speaking record <span aria-hidden="true">↗</span></Link></div>
+          <figure className={styles.stageFilm}><video controls preload="none" poster="/speaking/ian-speaker-orlando-2025.png" aria-label="Watch Ian’s Orlando keynote"><source src="/ian.mp4" type="video/mp4" /></video><figcaption><strong>Orlando keynote</strong><span>May 2025 / 500+ in the room</span></figcaption></figure>
+          <div id="about" className={styles.proofCopy}>
+            <p className={styles.eyebrow}>From the builder’s seat</p><h3>I build first.<br />Then I teach from it.</h3><p>Self-taught, based in Houston, and building with AI every day. I share the lessons from shipping real products, including the parts that didn’t go to plan.</p>
+            <dl className={styles.stats}><div><dt>1,600+</dt><dd>Users of the AI platform I built</dd></div><div><dt>$1.2M</dt><dd>Business ARR powered in 9 months</dd></div></dl>
+            <Link href="/about" className={styles.textLink}>A little more about Ian <Arrow /></Link>
+          </div>
+        </div>
+        <blockquote className={styles.quote}><p>“I enjoyed your speech, the hands-on coding presentation, your honesty and humble attitude, and your drive.”</p><footer><strong>Monika Mielnik</strong><span>Director, UX/UI Design & Development<br />AIXP Houston</span></footer></blockquote>
+      </div>
+    </section>
+
+    <section id="learn" className={styles.learning} aria-labelledby="learn-title">
+      <div className={`${styles.container} ${styles.learningGrid}`}>
+        <div><p className={styles.eyebrow}>No stage. No ticket. Just start.</p><h2 id="learn-title">Bring a question.<br />Leave with <em>a next step.</em></h2><p>Launch & Learn is my free weekly call for practical AI building, live walkthroughs, and founder Q&A.</p><span className={styles.schedule}>Wednesdays / 1–2 PM Central / Google Meet</span><a className={styles.lightLink} href="https://meet.google.com/cgm-vcdg-hvh" target="_blank" rel="noreferrer">Join Launch & Learn <Arrow /></a></div>
+        <div className={styles.learningLinks}>
+          <Link href="/kits"><span>Work through it</span><strong>Practical workshop kits</strong><Arrow /></Link>
+          <Link href="/assessment"><span>Find your starting point</span><strong>The free AI Snapshot</strong><Arrow /></Link>
+          <Link href="/newsletter"><span>Notes from the workbench</span><strong>Get the builds and lessons</strong><Arrow /></Link>
+          <Link href="/newsletter-directory" className={styles.archiveLink}>Read past notes <Arrow /></Link>
         </div>
       </div>
     </section>
 
-    <section id="speaking" className={styles.section}>
-      <div className={styles.container}>
-        <div className={styles.headingSplit}><div className={styles.sectionHeading}><p className={styles.eyebrow}>For your next event</p><h2 id="talks">Send people home<br />ready to build.</h2></div><p>Keynotes, workshops, and live builds for founders, business owners, and teams putting AI to work. Practical lessons from someone doing the work.</p></div>
-        <div className={styles.talkGrid}>{[
-          ["01 / Founder story", "If I Can Build This, You Can Build Yours", "From a self-taught start to working AI products. A founder story and live show-and-tell that make the first step feel possible."],
-          ["02 / Business & teams", "AI for Employers", "Where AI helps in a small business, what gets in the way, and practical workflows your team can try on Monday."],
-        ].map(([label,title,copy]) => <article key={label}><span className={styles.eyebrow}>{label}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
-        <div className={styles.sectionLinks}><Link className={styles.textLink} href="/speaking#talks">All talks & formats ↗</Link><Link className={styles.textLink} href="/kits/supplier-readiness-builder">Try a workshop kit ↗</Link></div>
-        <blockquote className={styles.featuredQuote}><p>“I enjoyed your speech, the hands-on coding presentation, your honesty and humble attitude, and your drive.”</p><footer><strong>Monika Mielnik</strong><span>Director, UX/UI Design & Development · AIXP Houston</span></footer></blockquote>
+    <section id="inquiry" className={styles.inquirySection} aria-labelledby="inquiry-title">
+      <div className={`${styles.container} ${styles.inquiryGrid}`}>
+        <div><p className={styles.eyebrow}>Let’s make it useful</p><h2 id="inquiry-title">What could we<br /><em>make happen?</em></h2><p>Have an event, workshop, or conversation in mind? Tell me about it. I’ll reply personally within a day or two.</p><div className={styles.contactLinks}><a href={CALENDAR_URL} target="_blank" rel="noreferrer">Use my calendar <Arrow /></a><a href="mailto:ian@ianmcdonald.ai">ian@ianmcdonald.ai <Arrow /></a></div><p className={styles.projectNote}>Need a website, app, or workflow built?<br /><a href={`${DISRUPTIV_URL}/contact`} onClick={() => trackDisruptivVisit(`${DISRUPTIV_URL}/contact`, "home_v2_inquiry")}>Start a project with Disruptiv <Arrow /></a></p></div>
+        <InquiryForm />
       </div>
-    </section>
-
-    <section id="disruptiv" className={`${styles.section} ${styles.projectSection}`} aria-labelledby="disruptiv-heading">
-      <div className={`${styles.container} ${styles.projectGrid}`}>
-        <div><p className={styles.eyebrow}>Build with me / Disruptiv Solutions</p><h2 id="disruptiv-heading">Let’s build it<br />for your business.</h2><p>Disruptiv Solutions is my company for websites, apps, AI workflows, video, and campaigns. Work directly with me to choose a practical starting point and put it into use.</p><div className={styles.heroActions}><a className={styles.primaryButton} href={`${DISRUPTIV_URL}/contact`} onClick={() => trackDisruptivVisit(`${DISRUPTIV_URL}/contact`, "home_v2_project")}>Start a project <span aria-hidden="true">↗</span></a><a className={styles.secondaryButton} href={`${DISRUPTIV_URL}/work`} onClick={() => trackDisruptivVisit(`${DISRUPTIV_URL}/work`, "home_v2_project")}>See the work ↗</a></div></div>
-        <aside className={styles.projectExample}><p className={styles.eyebrow}>From the workbench</p><h3>A business, connected.</h3><p>One founder’s business knowledge, relationships, and daily workflows, brought into a private operating system.</p><a className={styles.textLink} href={`${DISRUPTIV_URL}/work/inclusioneer`} onClick={() => trackDisruptivVisit(`${DISRUPTIV_URL}/work/inclusioneer`, "home_v2_project")}>Explore Inclusioneer OS ↗</a><p className={styles.ecosystemNote}>Here, I teach and share what I’m building. At Disruptiv, I help put it to work in your business.</p></aside>
-      </div>
-    </section>
-
-    <section id="about" className={styles.section}>
-      <div className={`${styles.container} ${styles.aboutGrid}`}>
-        <figure><div className={styles.aboutImage}><Image src="/speaking/ian-speaker-aixp.jpg" alt="Ian McDonald speaking at AIXP Houston" fill sizes="(max-width:760px) 100vw, 42vw" /></div><figcaption>AIXP Houston · April 2026</figcaption></figure>
-        <div><p className={styles.eyebrow}>A little about me</p><h2>I build first.<br />Then I teach from it.</h2><div className={styles.aboutCopy}><p>I’m a Pensacola native, now in Houston. Before building software, I spent eight years working in addiction and recovery treatment in Colorado.</p><p>In December 2023, I went all-in on building with $5,000 and no safety net. No CS degree, bootcamp, or co-founder. By 2025, I’d built an AI platform supporting 1,600+ users and powering $1.2M ARR in nine months.</p><p>Today I’m building <a href="https://launchbox.space">LaunchBox ↗</a>, a platform for branded AI-powered communities, and helping business owners build through Disruptiv.</p></div><p className={styles.signature}>Still learning. Still shipping.</p></div>
-      </div>
-    </section>
-
-    <section id="launchlearn" className={styles.section}>
-      <div className={`${styles.container} ${styles.learningGrid}`}>
-        <div className={styles.learningCall}><p className={styles.eyebrow}>Learn with me / Free weekly call</p><h2>Bring a question.<br />Build something.</h2><p>Launch & Learn is an open call for practical AI building, founder Q&A, and live walkthroughs.</p><span className={styles.schedule}>Wednesdays · 1–2 PM Central · Google Meet</span><a className={styles.primaryButton} href="https://meet.google.com/cgm-vcdg-hvh" target="_blank" rel="noreferrer">Join Launch & Learn ↗</a></div>
-        <div className={styles.newsletterCard}><p className={styles.eyebrow}>Notes from the workbench</p><h3>The builds.<br />The lessons.<br />The messy middle.</h3><p>What I’m making, what I’m learning, and practical ideas to try in your own work.</p><Link className={styles.textLink} href="/newsletter">Get the newsletter ↗</Link><Link className={styles.archiveLink} href="/newsletter-directory">Read past notes</Link></div>
-      </div>
-    </section>
-
-    <section id="inquiry" className={styles.inquirySection}>
-      <div className={`${styles.container} ${styles.inquiryGrid}`}><div><p className={styles.eyebrow}>Let’s make it useful</p><h2>Bring Ian<br />to your event.</h2><p>Tell me about your audience, your event, or the session you have in mind. I’ll reply personally within a day or two.</p><div className={styles.contactLinks}><a href={CALENDAR_URL} target="_blank" rel="noreferrer">Use my calendar ↗</a><a href="mailto:ian@ianmcdonald.ai">ian@ianmcdonald.ai</a></div></div><InquiryForm /></div>
     </section>
   </div>;
 }
