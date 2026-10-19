@@ -89,3 +89,5 @@
 .editorial-subpage .editorial-content [class*="bg-black/"] { background-color: var(--site-panel); }
 .editorial-subpage .editorial-content [class*="shadow-"] { box-shadow: none; }
 .editorial-site[data-page="kits"] .editorial-content :is(a,button)[class~="bg-[#FF7A2F]"] { background: var(--site-red); color: white; }
+
+.editorial-subpage .editorial-content [class~="bg-red-600"] { background-color: var(--site-red); color: white; }
