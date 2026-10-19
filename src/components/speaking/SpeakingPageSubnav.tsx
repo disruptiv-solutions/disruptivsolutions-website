@@ -4,10 +4,9 @@ import { useEffect, useState } from 'react';
 import { cn } from '@/lib/cn';
 
 const NAV_ITEMS = [
-  { label: 'Fit', href: '#fit' },
   { label: 'Talks', href: '#talks' },
-  { label: 'Proof', href: '#proof' },
-  { label: 'Stage', href: '#stage' },
+  { label: 'Watch', href: '#proof' },
+  { label: 'Record', href: '#stage' },
   { label: 'Book', href: '#book' },
 ] as const;
 
