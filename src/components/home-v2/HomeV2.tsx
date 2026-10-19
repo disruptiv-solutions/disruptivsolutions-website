@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
-import { trackButtonClick, trackFormSubmission } from "@/lib/analytics";
+import { trackButtonClick, trackDisruptivVisit, trackFormSubmission } from "@/lib/analytics";
 import styles from "./HomeV2.module.css";
 
 const CALENDAR_URL = "https://calendar.app.google/J6uMiKkf3AM4zS9MA";
@@ -205,7 +205,7 @@ export default function HomeV2() {
                   <a className={styles.primaryButton} href="#inquiry" onClick={() => trackButtonClick("bring_ian_to_event", "home_v2_hero")}>Bring Ian to your event</a>
                   <a className={styles.secondaryButton} href="#launchlearn">Saw me speak? Start here</a>
                 </div>
-                <p className={styles.projectLink}>Need something built? <a href={`${DISRUPTIV_URL}/contact`} onClick={() => trackButtonClick("work_with_disruptiv", { location: "home_v2_hero", link_url: `${DISRUPTIV_URL}/contact` })}>Work with Disruptiv <span aria-hidden="true">↗</span></a></p>
+                <p className={styles.projectLink}>Need something built? <a href={`${DISRUPTIV_URL}/contact`} onClick={() => trackDisruptivVisit(`${DISRUPTIV_URL}/contact`, "home_v2_hero")}>Work with Disruptiv <span aria-hidden="true">↗</span></a></p>
                 <div className={styles.liveNote}><span /> Wednesdays @ 1 PM CT — Launch & Learn</div>
               </div>
               <div className={styles.heroImage}>
@@ -305,8 +305,8 @@ export default function HomeV2() {
 
         <section id="disruptiv" className={`${styles.section} ${styles.projectSection}`} aria-labelledby="disruptiv-heading">
           <div className={`${styles.container} ${styles.projectGrid}`}>
-            <div><Eyebrow>Build with me / Disruptiv Solutions</Eyebrow><h2 id="disruptiv-heading">Let’s build it<br />for your business.</h2><p>Disruptiv Solutions is my company for websites, apps, AI workflows, video, and campaigns. You’ll work directly with me to choose a practical starting point, agree on scope, and put it into use.</p><div className={styles.heroActions}><a className={styles.primaryButton} href={`${DISRUPTIV_URL}/contact`} onClick={() => trackButtonClick("work_with_disruptiv", { location: "home_v2_project", link_url: `${DISRUPTIV_URL}/contact` })}>Start a project with Disruptiv <span aria-hidden="true">↗</span></a><a className={styles.secondaryButton} href={`${DISRUPTIV_URL}/work`} onClick={() => trackButtonClick("disruptiv_work", { location: "home_v2_project", link_url: `${DISRUPTIV_URL}/work` })}>See the work <span aria-hidden="true">↗</span></a></div></div>
-            <aside className={styles.projectExample}><Eyebrow>From the workbench</Eyebrow><h3>A business, connected.</h3><p>See how Disruptiv brought one founder’s business knowledge, relationships, and daily workflows into a private operating system.</p><a href={`${DISRUPTIV_URL}/work/inclusioneer`} onClick={() => trackButtonClick("disruptiv_case_study", { location: "home_v2_project", link_url: `${DISRUPTIV_URL}/work/inclusioneer` })}>Explore Inclusioneer OS <span aria-hidden="true">↗</span></a><p className={styles.ecosystemNote}>Here, I share what I’m building and teach people to build. At Disruptiv, I help you put it to work in your business. LaunchBox is the community platform I build.</p></aside>
+            <div><Eyebrow>Build with me / Disruptiv Solutions</Eyebrow><h2 id="disruptiv-heading">Let’s build it<br />for your business.</h2><p>Disruptiv Solutions is my company for websites, apps, AI workflows, video, and campaigns. You’ll work directly with me to choose a practical starting point, agree on scope, and put it into use.</p><div className={styles.heroActions}><a className={styles.primaryButton} href={`${DISRUPTIV_URL}/contact`} onClick={() => trackDisruptivVisit(`${DISRUPTIV_URL}/contact`, "home_v2_project")}>Start a project with Disruptiv <span aria-hidden="true">↗</span></a><a className={styles.secondaryButton} href={`${DISRUPTIV_URL}/work`} onClick={() => trackDisruptivVisit(`${DISRUPTIV_URL}/work`, "home_v2_project")}>See the work <span aria-hidden="true">↗</span></a></div></div>
+            <aside className={styles.projectExample}><Eyebrow>From the workbench</Eyebrow><h3>A business, connected.</h3><p>See how Disruptiv brought one founder’s business knowledge, relationships, and daily workflows into a private operating system.</p><a href={`${DISRUPTIV_URL}/work/inclusioneer`} onClick={() => trackDisruptivVisit(`${DISRUPTIV_URL}/work/inclusioneer`, "home_v2_project")}>Explore Inclusioneer OS <span aria-hidden="true">↗</span></a><p className={styles.ecosystemNote}>Here, I share what I’m building and teach people to build. At Disruptiv, I help you put it to work in your business. LaunchBox is the community platform I build.</p></aside>
           </div>
         </section>
 
@@ -337,7 +337,7 @@ export default function HomeV2() {
         </section>
       </main>
 
-      <footer className={styles.footer}><div className={styles.container}><Brand /><span>Houston, TX</span><nav><a href="#speaking">Speaking</a><a href="#talks">Talks</a><a href="#launchlearn">Launch & Learn</a><Link href="/newsletter">Newsletter</Link><a href={`${DISRUPTIV_URL}/contact`} onClick={() => trackButtonClick("work_with_disruptiv", { location: "home_v2_footer", link_url: `${DISRUPTIV_URL}/contact` })}>Work with Disruptiv ↗</a><a href="mailto:ian@ianmcdonald.ai">Email Ian</a></nav></div></footer>
+      <footer className={styles.footer}><div className={styles.container}><Brand /><span>Houston, TX</span><nav><a href="#speaking">Speaking</a><a href="#talks">Talks</a><a href="#launchlearn">Launch & Learn</a><Link href="/newsletter">Newsletter</Link><a href={`${DISRUPTIV_URL}/contact`} onClick={() => trackDisruptivVisit(`${DISRUPTIV_URL}/contact`, "home_v2_footer")}>Work with Disruptiv ↗</a><a href="mailto:ian@ianmcdonald.ai">Email Ian</a></nav></div></footer>
     </div>
   );
 }

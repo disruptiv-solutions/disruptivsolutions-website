@@ -54,6 +54,7 @@ export default function RootLayout({
         <Script id="google-analytics" strategy="beforeInteractive">{`
           window.dataLayer = window.dataLayer || [];
           window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
+          gtag('set', 'linker', {domains: ['ianmcdonald.ai', 'disruptiv.solutions'], accept_incoming: true});
           gtag('js', new Date());
           gtag('config', '${GA_MEASUREMENT_ID}', new URLSearchParams(window.location.search).has('analytics_test') ? {debug_mode: true} : {});
         `}</Script>
