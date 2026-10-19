@@ -122,7 +122,7 @@ export default function DailyBriefPage() {
       </header>
 
       {/* Stories */}
-      <main className="w-full max-w-[90rem] mx-auto px-6 pb-16 md:pb-24">
+      <div className="w-full max-w-[90rem] mx-auto px-6 pb-16 md:pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10">
           {/* Main Column */}
           <div className="lg:col-span-8">
@@ -320,7 +320,7 @@ export default function DailyBriefPage() {
             </div>
           </aside>
         </div>
-      </main>
+      </div>
 
       {/* Brutalist Footer CTA */}
       <footer className="w-full bg-white text-black py-24 md:py-32 px-6 mt-12">

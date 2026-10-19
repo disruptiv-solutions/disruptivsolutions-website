@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Navigation from '@/components/Navigation';
 import { trackFormSubmission, trackButtonClick } from '@/lib/analytics';
 import { useAuth } from '@/contexts/AuthContext';
 import { db } from '@/lib/firebase';
@@ -185,7 +184,6 @@ const LaunchboxWaitlist: React.FC = () => {
   if (isLoadingAccess) {
     return (
       <>
-        <Navigation />
         <div className="min-h-screen bg-white flex items-center justify-center pt-[65px]">
           <div className="text-gray-600">Loading...</div>
         </div>
@@ -197,7 +195,6 @@ const LaunchboxWaitlist: React.FC = () => {
   if (hasWaitlistAccess || submitSuccess) {
     return (
       <>
-        <Navigation />
         <section className="min-h-screen pt-[65px] px-6 py-12 lg:py-20 bg-white font-satoshi">
           <div className="max-w-4xl mx-auto">
             {/* Hero Section */}
@@ -556,7 +553,6 @@ const LaunchboxWaitlist: React.FC = () => {
   // Show form page before submission
   return (
     <>
-      <Navigation />
       <section className="min-h-screen pt-[65px] px-6 py-12 lg:py-20 bg-white font-satoshi">
         <div className="max-w-4xl mx-auto">
           {/* Hero Section */}

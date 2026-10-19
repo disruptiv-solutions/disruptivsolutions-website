@@ -76,7 +76,7 @@ export default function NewsletterDatePage() {
       </header>
 
       {/* Content Section */}
-      <main className="w-full max-w-[90rem] mx-auto px-6 py-16 md:py-24 border-t border-zinc-900">
+      <div className="w-full max-w-[90rem] mx-auto px-6 py-16 md:py-24 border-t border-zinc-900">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
           
           {/* Left Sticky Sidebar (Desktop) */}
@@ -238,7 +238,7 @@ export default function NewsletterDatePage() {
             </div>
           </div>
         </div>
-      </main>
+      </div>
 
       {/* Brutalist Footer CTA */}
       <footer className="w-full bg-white text-black py-24 md:py-32 px-6 mt-12">

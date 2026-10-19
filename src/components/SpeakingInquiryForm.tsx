@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
+import { trackFormSubmission } from '@/lib/analytics';
 
 const INTEREST_OPTIONS = [
   { value: '', label: 'Select one…' },
@@ -27,6 +28,7 @@ export default function SpeakingInquiryForm() {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (status.kind === 'submitting' || status.kind === 'success') return;
 
     if (!name.trim() || !email.trim() || !interest) {
       setStatus({
@@ -59,6 +61,7 @@ export default function SpeakingInquiryForm() {
         return;
       }
 
+      trackFormSubmission('speaking_inquiry', { form_location: 'speaking_page' });
       setStatus({ kind: 'success' });
       setName('');
       setEmail('');

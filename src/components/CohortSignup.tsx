@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Navigation from './Navigation';
 import { trackFormSubmission, trackButtonClick } from '@/lib/analytics';
 
 const CohortSignup: React.FC = () => {
@@ -100,7 +99,6 @@ const CohortSignup: React.FC = () => {
 
   return (
     <>
-      <Navigation />
       <section className="min-h-screen bg-black text-white pt-24 pb-16 px-4 md:px-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
