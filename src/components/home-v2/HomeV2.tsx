@@ -97,6 +97,7 @@ function InquiryForm() {
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (status === "submitting" || status === "success") return;
     const form = event.currentTarget;
     const data = new FormData(form);
     const payload = {
@@ -122,7 +123,7 @@ function InquiryForm() {
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(result.error || "Could not send your inquiry.");
-      trackFormSubmission("speaking_inquiry", { page_location: "home_v2" });
+      trackFormSubmission("speaking_inquiry", { form_location: "home_v2" });
       form.reset();
       setStatus("success");
     } catch (cause) {
@@ -151,7 +152,7 @@ function InquiryForm() {
       <label>Anything to add? <span>(optional)</span><textarea name="note" rows={4} maxLength={5000} placeholder="Event date, audience, format — whatever helps." disabled={status === "submitting"} /></label>
       {status === "error" && <p className={styles.formError}>{error}</p>}
       {status === "success" && <p className={styles.formSuccess}>Got it. Check your inbox for confirmation—Ian will reply personally.</p>}
-      <button type="submit" disabled={status === "submitting"}>{status === "submitting" ? "Sending…" : "Send inquiry"}</button>
+      <button type="submit" disabled={status === "submitting" || status === "success"}>{status === "submitting" ? "Sending…" : status === "success" ? "Inquiry sent" : "Send inquiry"}</button>
       <small>You’ll get an email confirmation. Ian replies personally.</small>
     </form>
   );

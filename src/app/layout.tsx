@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Montserrat, Rosario } from "next/font/google";
 import "./globals.css";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import Script from "next/script";
+import { GA_MEASUREMENT_ID } from "@/lib/analytics";
 import NavigationWrapper from "@/components/NavigationWrapper";
 import Footer from "@/components/Footer";
 import ConditionalFooter from "@/components/ConditionalFooter";
@@ -49,6 +51,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth snap-y overscroll-y-contain" style={{ scrollPaddingTop: '65px' }} suppressHydrationWarning>
       <head>
+        <Script id="google-analytics" strategy="beforeInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
+          gtag('js', new Date());
+          gtag('config', '${GA_MEASUREMENT_ID}', new URLSearchParams(window.location.search).has('analytics_test') ? {debug_mode: true} : {});
+        `}</Script>
         <link
           href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap"
           rel="stylesheet"
