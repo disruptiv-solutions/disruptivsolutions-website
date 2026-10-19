@@ -3,7 +3,7 @@
   --site-paper: #efe7e0;
   --site-panel: #e4d9ce;
   --site-ink: #16181b;
-  --site-muted: #5b5653;
+  --site-muted: #494440;
   --site-red: #e2202a;
   --site-line: #16181b29;
   min-height: 100svh;
@@ -91,3 +91,6 @@
 .editorial-site[data-page="kits"] .editorial-content :is(a,button)[class~="bg-[#FF7A2F]"] { background: var(--site-red); color: white; }
 
 .editorial-subpage .editorial-content [class~="bg-red-600"] { background-color: var(--site-red); color: white; }
+
+/* Readable supporting copy in public archives and tools. */
+.editorial-subpage .editorial-content :is([class~="text-xs"],[class~="text-[10px]"],[class~="text-[11px]"],[class~="text-[12px]"]) { font-size: 14px; line-height: 1.7; }
