@@ -88,7 +88,7 @@ export default function HomeV2() {
           <p className={styles.eyebrow}>Ian McDonald / Builder. Founder. Speaker.</p>
           <h1 id="home-title">Make AI practical.<br />Build what’s <em>next.</em></h1>
           <p className={styles.heroDescription}>I build products and businesses with AI. Then I share what works, on stage, in workshops, and with people ready to try it themselves.</p>
-          <a className={styles.heroAction} href="#speaking" onClick={() => trackButtonClick("bring_ian_to_event", "home_v2_hero")}><span>Let’s put the ideas to work</span><Arrow /></a>
+          <Link className={styles.heroAction} href="/speaking" onClick={() => trackButtonClick("explore_speaking", "home_v2_hero")}><span>Explore speaking & workshops</span><Arrow /></Link>
         </div>
         <figure className={styles.heroArt}>
           <div className={styles.paperBack} aria-hidden="true" />
@@ -125,8 +125,8 @@ export default function HomeV2() {
         <div className={styles.proofGrid}>
           <figure className={styles.stageFilm}><video controls preload="none" poster="/speaking/ian-speaker-orlando-2025.png" aria-label="Watch Ian’s Orlando keynote"><source src="/ian.mp4" type="video/mp4" /></video><figcaption><strong>Orlando keynote</strong><span>May 2025 / 500+ in the room</span></figcaption></figure>
           <div id="about" className={styles.proofCopy}>
-            <p className={styles.eyebrow}>From the builder’s seat</p><h3>I build first.<br />Then I teach from it.</h3><p>Self-taught, based in Houston, and building with AI every day. I share the lessons from shipping real products, including the parts that didn’t go to plan.</p>
-            <dl className={styles.stats}><div><dt>1,600+</dt><dd>Users of the AI platform I built</dd></div><div><dt>$1.2M</dt><dd>Business ARR powered in 9 months</dd></div></dl>
+            <p className={styles.eyebrow}>The build behind the numbers / 2025</p><h3>AI for Business.<br />Built solo by Ian.</h3><p>I built the AI for Business platform myself. It supported more than 1,600 users, while the business it served reached $1.2M in annual recurring revenue within nine months.</p>
+            <dl className={styles.stats}><div><dt>1,600+</dt><dd>Users supported by the AI for Business platform</dd></div><div><dt>$1.2M</dt><dd>Annual recurring revenue of the business the platform supported</dd></div></dl>
             <Link href="/about" className={styles.textLink}>A little more about Ian <Arrow /></Link>
           </div>
         </div>

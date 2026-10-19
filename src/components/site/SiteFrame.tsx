@@ -15,7 +15,7 @@ export default function SiteFrame({ children }: { children: React.ReactNode }) {
   const home = pathname === '/';
   return <div className={`editorial-site ${home ? 'editorial-home' : 'editorial-subpage'}`} data-page={pathname.split('/')[1] || 'home'}>
     <a className="site-skip-link" href="#main-content">Skip to content</a>
-    <SiteHeader key={pathname} home={home} />
+    <SiteHeader key={pathname} home={home} bookingHref={pathname === "/speaking" ? "/speaking#book" : undefined} />
     <main id="main-content" className="editorial-content">{children}<SignUpModal /></main>
     {!pathname.startsWith('/kits/') && <SiteFooter home={home} />}
   </div>;

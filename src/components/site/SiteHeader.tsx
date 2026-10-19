@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { trackButtonClick } from '@/lib/analytics';
 import styles from './Site.module.css';
 
-export default function SiteHeader({ home = false }: { home?: boolean }) {
+export default function SiteHeader({ home = false, bookingHref }: { home?: boolean; bookingHref?: string }) {
   const [open, setOpen] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
   const section = (hash: string) => home ? hash : `/${hash}`;
@@ -28,7 +28,7 @@ export default function SiteHeader({ home = false }: { home?: boolean }) {
           ['Speaking', '/speaking'], ['Learn', section('#learn')],
           ['Notes', '/newsletter-directory'], ['About', '/about'],
         ].map(([label, href]) => <Link key={label} href={href} onClick={() => setOpen(false)}>{label}</Link>)}</div>
-        <Link href={section('#inquiry')} className={styles.navCta} onClick={() => { setOpen(false); trackButtonClick('book_ian', home ? 'home_v2_nav' : 'site_nav'); }}>Book Ian <span aria-hidden="true">↗</span></Link>
+        <Link href={bookingHref || section('#inquiry')} className={styles.navCta} onClick={() => { setOpen(false); trackButtonClick('book_ian', home ? 'home_v2_nav' : 'site_nav'); }}>Book Ian <span aria-hidden="true">↗</span></Link>
       </nav>
     </div>
   </header>;
