@@ -127,7 +127,7 @@ export default function HomeV2() {
           <div id="about" className={styles.proofCopy}>
             <p className={styles.eyebrow}>The build behind the numbers / 2025</p><h3>AI for Business.<br />Built solo by Ian.</h3><p>I built the AI for Business platform myself. It supported more than 1,600 users, while the business it served reached $1.2M in annual recurring revenue within nine months.</p>
             <dl className={styles.stats}><div><dt>1,600+</dt><dd>Users supported by the AI for Business platform</dd></div><div><dt>$1.2M</dt><dd>Annual recurring revenue of the business the platform supported</dd></div></dl>
-            <Link href="/about" className={styles.textLink}>A little more about Ian <Arrow /></Link>
+            <Link href="/work/ai-for-business" className={styles.textLink}>See the platform case study <Arrow /></Link>
           </div>
         </div>
         <blockquote className={styles.quote}><p>“I enjoyed your speech, the hands-on coding presentation, your honesty and humble attitude, and your drive.”</p><footer><strong>Monika Mielnik</strong><span>Director, UX/UI Design & Development<br />AIXP Houston</span></footer></blockquote>
