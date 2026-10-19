@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import type { CSSProperties } from 'react';
-import Navigation from '@/components/Navigation';
 import { trackFormSubmission, trackButtonClick } from '@/lib/analytics';
 import { useAuth } from '@/contexts/AuthContext';
 import { db } from '@/lib/firebase';
@@ -291,7 +290,6 @@ const LaunchboxWaitlist: React.FC = () => {
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-24 pt-8 sm:px-12">
         {/* Header */}
         <div className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-white/20">
-          <Navigation />
         </div>
 
         <div className="pt-24">

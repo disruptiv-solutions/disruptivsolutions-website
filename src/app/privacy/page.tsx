@@ -1,13 +1,11 @@
 'use client';
 
 import React from 'react';
-import Navigation from '@/components/Navigation';
 import Link from 'next/link';
 
 export default function PrivacyPage() {
   return (
     <>
-      <Navigation />
       <section className="min-h-screen pt-24 px-6 py-12 lg:py-20 bg-black">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8">

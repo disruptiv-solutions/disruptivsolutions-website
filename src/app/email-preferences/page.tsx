@@ -71,7 +71,7 @@ export default function EmailPreferencesPage() {
   }, [token, prefs]);
 
   return (
-    <main className="min-h-screen bg-[#040404] text-white antialiased">
+    <div className="min-h-screen bg-[#040404] text-white antialiased">
       <div className="pointer-events-none fixed inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_75%)]" />
       <div className="pointer-events-none fixed left-1/2 top-0 h-[400px] w-[min(100vw,900px)] -translate-x-1/2 rounded-full bg-red-600/10 blur-[120px]" />
 
@@ -169,6 +169,6 @@ export default function EmailPreferencesPage() {
           </>
         )}
       </div>
-    </main>
+    </div>
   );
 }

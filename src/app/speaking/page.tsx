@@ -37,9 +37,9 @@ const personSchema = {
   "@type": "Person",
   name: "Ian McDonald",
   jobTitle: "Founder, LaunchBox",
-  url: "https://disruptiv.solutions/speaking",
+  url: "https://www.ianmcdonald.ai/speaking",
   email: `mailto:${EMAIL}`,
-  image: "https://disruptiv.solutions/ian-stage.jpg",
+  image: "https://www.ianmcdonald.ai/ian-mcdonald.png",
   description:
     "Self-taught AI product builder. Speaks for operator audiences — employer networks, founder groups, community hosts.",
   performerIn: [
@@ -372,7 +372,7 @@ export default async function SpeakingPage() {
         />
 
         <div className="max-w-7xl w-full grid lg:grid-cols-2 gap-14 lg:gap-16 items-center relative z-10">
-          <div className="space-y-8 order-2 lg:order-1">
+          <div className="space-y-8 order-1">
             <div className="flex flex-wrap items-center gap-3">
               <div className="speaking-hero-entrance inline-flex items-center gap-2.5 rounded-full border border-red-500/35 bg-gradient-to-b from-red-500/12 to-red-600/5 px-4 py-1.5 text-red-300/95 text-xs font-semibold tracking-wide uppercase shadow-[0_0_0_1px_rgba(0,0,0,0.4)]">
                 <span
@@ -392,7 +392,7 @@ export default async function SpeakingPage() {
               I build AI products.
               <br />
               <span className="mt-1 inline-block bg-gradient-to-r from-red-400 via-red-500 to-rose-800 bg-clip-text text-transparent [text-shadow:0_0_40px_rgba(239,68,68,0.12)]">
-                Then I show operators how to turn AI into something real.
+                Then I bring the lessons to your room.
               </span>
             </h1>
             <p className="speaking-hero-entrance speaking-hero-delay-2 text-lg sm:text-xl text-zinc-400 leading-relaxed max-w-2xl [text-wrap:pretty]">
@@ -426,24 +426,24 @@ export default async function SpeakingPage() {
             </div>
           </div>
 
-          <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
+          <div className="order-2 flex justify-center lg:justify-end">
             <div className="speaking-hero-entrance speaking-hero-delay-2 relative w-full max-w-[320px] sm:max-w-[380px] lg:max-w-[440px]">
               <div
                 aria-hidden
                 className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-red-500/45 via-zinc-900/40 to-red-950/20 blur-2xl"
               />
-              <div className="relative aspect-[9/16] rounded-2xl overflow-hidden shadow-[0_32px_80px_-20px_rgba(0,0,0,0.85),0_0_0_1px_rgba(255,255,255,0.06),inset_0_0_0_1px_rgba(255,255,255,0.04)]">
+              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-[0_32px_80px_-20px_rgba(0,0,0,0.85),0_0_0_1px_rgba(255,255,255,0.06),inset_0_0_0_1px_rgba(255,255,255,0.04)]">
                 <div
                   aria-hidden
                   className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-t from-black/30 via-transparent to-white/[0.04]"
                 />
                 <Image
-                  src="/ian-stage.jpg"
-                  alt="Ian McDonald speaking on stage"
+                  src="/speaking/ian-speaker-aixp.jpg"
+                  alt="Ian McDonald speaking at AIXP Houston"
                   fill
                   priority
                   sizes="(max-width: 640px) 320px, (max-width: 1024px) 380px, 440px"
-                  className="object-cover"
+                  className="object-cover object-[47%_20%]"
                 />
               </div>
             </div>

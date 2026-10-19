@@ -164,7 +164,7 @@ export default function FeedbackPage() {
   return (
     <div className="min-h-screen bg-black text-white pt-20">
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-4 py-12">
+      <div className="max-w-4xl mx-auto px-4 py-12">
         {isSuccess ? (
           <div className="text-center space-y-6 py-16">
             <div className="text-8xl">✅</div>
@@ -509,7 +509,7 @@ export default function FeedbackPage() {
             </form>
           </div>
         )}
-      </main>
+      </div>
     </div>
   );
 }

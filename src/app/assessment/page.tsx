@@ -20,11 +20,11 @@ export default function AssessmentPage() {
         className="fixed top-0 left-1/2 -translate-x-1/2 w-[min(100vw,900px)] h-[400px] rounded-full bg-red-600/10 blur-[120px] pointer-events-none"
       />
 
-      <main className="relative z-10 flex min-h-screen flex-col items-center justify-center px-5 sm:px-6 pt-[105px] pb-20">
+      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-5 sm:px-6 pt-[105px] pb-20">
         <div className="w-full max-w-2xl">
           <AiAssessment />
         </div>
-      </main>
+      </div>
     </div>
   );
 }
