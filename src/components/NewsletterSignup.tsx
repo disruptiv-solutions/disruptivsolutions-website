@@ -12,9 +12,11 @@ const NewsletterSignup: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting || submitSuccess) return;
     
     if (!name || !email) {
       setSubmitError('Please fill in your name and email.');
@@ -32,9 +34,6 @@ const NewsletterSignup: React.FC = () => {
     };
 
     try {
-      console.log('[NewsletterSignup] Form submission started');
-      console.log('[NewsletterSignup] Sending webhook data:', webhookData);
-      
       const response = await fetch('/api/newsletter-signup', {
         method: 'POST',
         headers: {
@@ -43,8 +42,6 @@ const NewsletterSignup: React.FC = () => {
         body: JSON.stringify(webhookData),
       });
       
-      console.log('[NewsletterSignup] API response status:', response.status);
-
       // Check if response is actually JSON
       const contentType = response.headers.get('content-type');
       if (!contentType || !contentType.includes('application/json')) {
@@ -56,23 +53,18 @@ const NewsletterSignup: React.FC = () => {
         throw new Error(errorData.error || 'Failed to subscribe. Please try again.');
       }
 
-      console.log('[NewsletterSignup] Webhook success');
-      
-      // Track newsletter signup
-      console.log('[NewsletterSignup] Tracking analytics event');
-      trackFormSubmission('newsletter_signup', {
-        page_location: '/newsletter',
-        source: 'newsletter_page',
-      });
+      const result = await response.json();
+      if (result.status !== 'subscribed') throw new Error('Subscription could not be confirmed. Please try again.');
+      if (result.newSignup) {
+        trackFormSubmission('newsletter_signup', { form_location: 'newsletter_page' });
+      }
+      setSuccessMessage(result.newSignup ? 'You’re subscribed. Thanks for joining!' : 'You’re already subscribed. Thanks for checking!');
 
       setSubmitSuccess(true);
       setName('');
       setEmail('');
       setPhone('');
 
-      setTimeout(() => {
-        setSubmitSuccess(false);
-      }, 5000);
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : 'An error occurred. Please try again.');
     } finally {
@@ -157,7 +149,7 @@ const NewsletterSignup: React.FC = () => {
               {submitSuccess && (
                 <div className="p-4 rounded-lg bg-green-900/30 border border-green-600/50">
                   <p className="text-green-400 font-medium">
-                    ✓ Successfully subscribed! Check your email for confirmation.
+                    ✓ {successMessage}
                   </p>
                 </div>
               )}
@@ -174,7 +166,7 @@ const NewsletterSignup: React.FC = () => {
               <div className="pt-4">
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || submitSuccess}
                   onClick={() => {
                     if (!isSubmitting) {
                       trackButtonClick('subscribe_newsletter', 'newsletter_page');

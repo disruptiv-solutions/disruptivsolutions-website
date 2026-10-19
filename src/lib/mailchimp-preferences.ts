@@ -116,3 +116,29 @@ export async function setPreferences(
 }
 
 export const PREFERENCE_CATEGORY_ID = CATEGORY_ID;
+
+/** The public signup is complete only when this audience confirms membership. */
+export async function subscribeToNewsletter(name: string, email: string, phone: string) {
+  const hash = crypto.createHash('md5').update(email.toLowerCase()).digest('hex');
+  const previousResponse = await mailchimp(`/lists/${LIST_ID}/members/${hash}?fields=status,interests`);
+  if (!previousResponse.ok && previousResponse.status !== 404) throw new Error('Audience unavailable');
+  const previous = previousResponse.ok ? await previousResponse.json() : null;
+  const alreadySubscribed = previous?.status === 'subscribed' && previous?.interests?.[GROUPS.ian] === true;
+  if (alreadySubscribed) return { status: 'subscribed', newSignup: false } as const;
+
+  const response = await mailchimp(`/lists/${LIST_ID}/members/${hash}`, {
+    method: 'PUT',
+    body: JSON.stringify({ email_address: email, status_if_new: 'subscribed', status: 'subscribed',
+      merge_fields: { FNAME: name }, interests: { [GROUPS.ian]: true } }),
+  });
+  if (!response.ok) throw new Error('Subscription rejected');
+  const member = await response.json();
+  if (member.status !== 'subscribed' || member.interests?.[GROUPS.ian] !== true) throw new Error('Subscription not confirmed');
+  if (phone) {
+    const note = await mailchimp(`/lists/${LIST_ID}/members/${hash}/notes`, {
+      method: 'POST', body: JSON.stringify({ note: `Phone supplied with website newsletter signup: ${phone}` }),
+    });
+    if (!note.ok) console.error('[newsletter-signup] Optional phone note was not saved');
+  }
+  return { status: 'subscribed', newSignup: true } as const;
+}
