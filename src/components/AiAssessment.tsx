@@ -180,9 +180,9 @@ export default function AiAssessment() {
             <span className="text-sm text-gray-400 mb-1">
               Stage {readout.stage.level} of 4
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white">
+            <h1 className="text-4xl md:text-5xl font-bold text-white">
               {readout.stage.name}
-            </h2>
+            </h1>
           </div>
           <div className="flex items-center justify-center gap-2 pt-2">
             {[1, 2, 3, 4].map((n) => (
@@ -382,9 +382,9 @@ export default function AiAssessment() {
       <div className="w-full max-w-lg mx-auto">
         <ProgressBar step={step} total={total} />
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
             Where should I send your snapshot?
-          </h2>
+          </h1>
           <p className="text-gray-400">
             One readout, zero spam. You&apos;ll see your results on the next screen.
           </p>
@@ -478,9 +478,9 @@ export default function AiAssessment() {
     <div className="w-full max-w-lg mx-auto">
       <ProgressBar step={step} total={total} />
       <div className="mb-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight mb-2">
+        <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight mb-2">
           {q.prompt}
-        </h2>
+        </h1>
         {q.helper && <p className="text-gray-400">{q.helper}</p>}
       </div>
 

@@ -35,3 +35,10 @@
 
 .stagePortrait { position: relative; aspect-ratio: 4 / 4.3; overflow: hidden; }
 .stagePortrait img { object-fit: cover; object-position: 47% 20%; }
+
+.stagePhoto { display: flex; flex-direction: column; margin: 0; height: 100%; }
+.stageGalleryImage { position: relative; min-height: 220px; flex: 1; }
+.stageGalleryImage img { object-fit: cover; }
+.stagePhoto figcaption { padding-top: 13px; }
+.stagePhoto figcaption strong { display: block; font-size: 14px; }
+.stagePhoto figcaption span { display: block; margin-top: 6px; font-size: 11px; color: #96141a; }

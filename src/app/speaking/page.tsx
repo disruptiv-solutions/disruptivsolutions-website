@@ -227,15 +227,6 @@ const QUOTES: readonly {
   },
 ];
 
-const SESSION_FORMATS = [
-  "20–30 minute keynote",
-  "45–60 minute workshop",
-  "Live build session",
-  "Panel guest",
-  "Founder / operator fireside chat",
-  "Custom — ask",
-] as const;
-
 const HERO_PROOF = [
   { number: "1,600+", label: "platform users" },
   { number: "$1.2M", label: "ARR in 9 months" },
@@ -311,30 +302,6 @@ const ProofStrip = () => (
         </div>
       </div>
     ))}
-  </div>
-);
-
-const LaunchLearnBanner = () => (
-  <div className="mx-auto flex max-w-5xl flex-col gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-    <div>
-      <p className="text-red-500/95 text-xs font-semibold tracking-[0.25em] uppercase mb-1">
-        Not booking a stage?
-      </p>
-      <p className="text-base font-semibold text-white">
-        Launch &amp; Learn — free weekly open call
-      </p>
-      <p className="mt-1 text-sm text-zinc-500">
-        Google Meet · Wednesdays · 1:00–2:00 PM CT
-      </p>
-    </div>
-    <Link
-      href={LAUNCH_AND_LEARN_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-flex h-11 shrink-0 items-center justify-center rounded-xl border border-red-500/35 bg-red-500/10 px-6 text-sm font-semibold text-red-100 transition hover:border-red-400/50 hover:bg-red-500/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500/70"
-    >
-      Join the open call
-    </Link>
   </div>
 );
 
@@ -921,44 +888,12 @@ const StagePhoto = ({
   date: string;
   featured?: boolean;
 }) => {
-  return (
-    <div
-      className={cn(
-        "group relative h-full min-h-[200px] w-full overflow-hidden rounded-2xl",
-        "border border-white/[0.08] shadow-xl transition duration-500",
-        "hover:border-red-500/35 hover:shadow-[0_20px_50px_-15px_rgba(220,38,38,0.25)]",
-        featured && "min-h-[280px] md:min-h-full"
-      )}
-    >
-      <div
-        className={cn(
-          "relative w-full h-full",
-          featured ? "min-h-[280px] md:min-h-full md:aspect-auto" : "aspect-video"
-        )}
-      >
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes={featured ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 100vw, 25vw"}
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-        />
-      </div>
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"
-      />
-      <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
-        <div className="text-white text-base sm:text-lg font-semibold leading-tight">
-          {event}
-        </div>
-        <div className="text-[11px] sm:text-xs text-red-400/95 tracking-widest uppercase mt-1.5">
-          {date}
-        </div>
-      </div>
-    </div>
-  );
+  return <figure className={publicStyles.stagePhoto}>
+    <div className={publicStyles.stageGalleryImage}><Image src={src} alt={alt} fill sizes={featured ? "(max-width:768px) 100vw, 50vw" : "(max-width:768px) 100vw, 25vw"} /></div>
+    <figcaption><strong>{event}</strong><span>{date}</span></figcaption>
+  </figure>;
 };
+
 
 const Stage = ({
   title,

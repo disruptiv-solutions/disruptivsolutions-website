@@ -1,0 +1,1 @@
+These existing Disruptiv Solutions brand textures are reused across Ian’s personal site to give both sites a consistent visual family. Source: disruptiv-solutions/disruptiv-public-site, public/assets. The portrait and event photography remain the existing Ian site assets; the homepage collage is composed in CSS.

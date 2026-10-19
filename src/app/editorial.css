@@ -23,7 +23,7 @@
 .editorial-content { min-width: 0; }
 
 /* Bring existing public tools and archives into the same palette without changing their behavior. */
-.editorial-subpage .editorial-content :is([class~="bg-black"],[class~="bg-white"],[class*="bg-[#040404]"],[class*="bg-[#030303]"],[class*="bg-[#0B0F14]"],[class*="bg-[#F7F1E8]"]) { background-color: var(--site-paper); }
+.editorial-subpage .editorial-content :is([class~="bg-black"],[class~="bg-white"],[class*="bg-[#040404]"],[class*="bg-[#030303]"],[class*="bg-[#020202]"],[class*="bg-[#0B0F14]"],[class*="bg-[#F7F1E8]"]) { background-color: var(--site-paper); }
 .editorial-subpage .editorial-content :is([class*="bg-zinc-9"],[class*="bg-gray-9"],[class*="bg-slate-9"],[class*="bg-white/"]) { background-color: var(--site-panel); }
 .editorial-subpage .editorial-content :is([class*="bg-gradient-"],[class*="bg-[linear-gradient"],[class*="bg-[radial-gradient"]) { background-image: none; }
 .editorial-subpage .editorial-content [aria-hidden="true"]:is([class*="absolute"],[class*="fixed"]) { display: none; }
@@ -55,7 +55,7 @@
 .editorial-site[data-page="speaking"] .editorial-content .speaking-hero-entrance { animation: none; }
 .editorial-site[data-page="newsletter-directory"] .editorial-content > div > section:first-child { padding-top: 64px; padding-bottom: 40px; }
 .editorial-site[data-page="privacy"] .editorial-content > section { padding-top: 64px; }
-.editorial-site[data-page="assessment"] .editorial-content h2 { font-size: clamp(1.7rem, 4vw, 2.5rem); }
+.editorial-site[data-page="assessment"] .editorial-content :is(h1,h2) { font-size: clamp(1.7rem, 4vw, 2.5rem); }
 .editorial-site[data-page="assessment"] .editorial-content [class*="min-h-screen"] { min-height: calc(100svh - 72px); }
 .editorial-site[data-page="assessment"] .editorial-content [class*="pt-[105px]"] { padding-top: 56px; }
 .editorial-site:is([data-page="newsletter"],[data-page="brief"]) .editorial-content > div > header { padding-top: 64px; padding-bottom: 48px; }
@@ -85,3 +85,7 @@
 @media(min-width:1024px) { .editorial-site[data-page="kits"] .editorial-content aside[class*="lg:fixed"] { top: 89px; height: calc(100dvh - 89px); } }
 
 @media(max-width:760px) { .editorial-site[data-page="speaking"] .editorial-content nav[aria-label="On this page"] { top: 67px; } }
+
+.editorial-subpage .editorial-content [class*="bg-black/"] { background-color: var(--site-panel); }
+.editorial-subpage .editorial-content [class*="shadow-"] { box-shadow: none; }
+.editorial-site[data-page="kits"] .editorial-content :is(a,button)[class~="bg-[#FF7A2F]"] { background: var(--site-red); color: white; }
