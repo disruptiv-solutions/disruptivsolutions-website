@@ -100,8 +100,17 @@ export const trackExternalLink = (
 };
 
 /**
- * Track video play
+ * Track a handoff to Disruptiv. This measures intent, not a completed inquiry.
  */
+export const trackDisruptivVisit = (url: string, location: string): void => {
+  trackEvent('disruptiv_visit', {
+    event_category: 'outbound',
+    link_url: url,
+    link_location: location,
+  });
+};
+
+/** Track video play. */
 export const trackVideoPlay = (
   videoName: string
 ): void => {
