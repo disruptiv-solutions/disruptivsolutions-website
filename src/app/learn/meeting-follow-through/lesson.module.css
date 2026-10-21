@@ -31,29 +31,23 @@
 .section,.watch { padding:0 0 65px; }
 .sectionIntro { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:end; margin-bottom:28px; }
 .sectionIntro > p { font-size:14px; color:#494440; max-width:53ch; }
-.partButtons { display:flex; gap:8px; margin-bottom:12px; }
-.partButtons button { display:flex; gap:16px; align-items:center; padding:10px 17px; border:1px solid #16181b50; color:#16181b; cursor:pointer; background:transparent; font-size:12px; }
-.partButtons button[aria-pressed=true] { background:#16181b; color:#fffaf0; }
-.partButtons span { font-size:11px; }
 .player { position:relative; aspect-ratio:16/9; background:#16181b; overflow:hidden; }
-.player iframe { width:100%; height:100%; border:0; position:absolute; inset:0; }
-.player > button { display:block; border:0; width:100%; height:100%; text-align:left; color:white; background:#16181b; cursor:pointer; }
-.player img { object-fit:contain; opacity:.72; }
-.playIcon { position:absolute; left:50%; top:44%; transform:translate(-50%,-50%); display:grid; place-items:center; width:74px; height:74px; border-radius:50%; background:#f5d23d; color:#16181b; font-size:25px; padding-left:4px; box-shadow:0 0 0 10px #16181b55; }
-.playLabel { position:absolute; bottom:24px; left:28px; font:600 30px/1.2 var(--font-rosario),sans-serif; background:#16181be6; padding:10px 15px; }
-.playLabel small { display:block; font:400 12px/1.5 var(--font-montserrat),sans-serif; margin-top:5px; }
-.page .partTitle { margin-top:18px; font-size:23px; font-weight:600; }
-.partDescription,.playerHelp { margin-top:8px !important; color:#494440; font-size:12px; }
+.player video { display:block; width:100%; height:100%; }
+.chapterList { display:grid; grid-template-columns:1fr 1fr; gap:0 28px; list-style:none; padding:0 0 20px; margin:0; }
+.chapterList button { display:flex; align-items:baseline; gap:14px; width:100%; padding:13px 0; border:0; border-top:1px solid #16181b25; background:transparent; text-align:left; font:inherit; line-height:1.5; color:#16181b; cursor:pointer; }
+.chapterList button span { color:#96141a; font-weight:650; min-width:36px; font-variant-numeric:tabular-nums; }
+.chapterList button:hover { color:#96141a; }
+.chapterList button:focus-visible { outline:2px solid #96141a; outline-offset:3px; }
+.sourceRecordings { margin-top:12px; font-size:12px; color:#494440; }
+.sourceRecordings summary { cursor:pointer; padding:8px 0; }
+.sourceRecordings p { margin-top:8px; }
+@media(max-width:760px) { .chapterList { grid-template-columns:1fr; } }
+.playerHelp { margin-top:8px !important; color:#494440; font-size:12px; }
 .playerHelp a { color:#96141a; }
 .recordingNote { margin-top:23px; padding:17px 21px; border-left:3px solid #a31921; background:#e4d9ce80; font-size:12px; }
 .recordingNote p { margin-top:5px; }
 .chapters { margin-top:15px; border-bottom:1px solid #16181b40; font-size:13px; }
 .chapters summary,.setup summary { cursor:pointer; padding:17px 0; font-weight:650; }
-.chapters > div { display:grid; grid-template-columns:1fr 1fr; gap:25px; padding:12px 0 22px; }
-.chapters h3 { font-size:21px; }
-.chapters ul { margin:14px 0; padding-left:18px; line-height:1.9; font-size:12px; }
-.chapters b { margin-right:8px; font-variant-numeric:tabular-nums; }
-.chapters p { font-size:12px; color:#494440; }
 .toolGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
 .toolCard { display:grid; grid-template-columns:48px 1fr 10px; gap:13px; padding:21px 18px; border:1px solid #16181b25; border-radius:12px; background:#fffdf9; text-decoration:none; }
 .toolIcon { display:grid; place-items:center; width:48px; height:48px; border:1px solid #16181b1c; border-radius:10px; }
@@ -123,10 +117,6 @@
   .section,.watch { padding-bottom:45px; }
   .sectionIntro { margin-bottom:23px; }
   .sectionIntro > p { font-size:13px; }
-  .playIcon { width:48px; height:48px; font-size:18px; top:38%; box-shadow:0 0 0 6px #16181b55; }
-  .playLabel { font-size:21px; left:10px; bottom:10px; padding:6px 9px; }
-  .playLabel small { font-size:9px; margin-top:3px; }
-  .chapters > div { grid-template-columns:1fr; }
   .toolGrid { grid-template-columns:1fr; }
   .toolCard { padding:19px; grid-template-columns:48px 1fr 10px; }
   .toolCard h3 { font-size:16px; }
