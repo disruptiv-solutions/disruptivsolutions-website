@@ -3,9 +3,11 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import styles from './lesson.module.css';
 
-export default function CopyPrompt({ text, install = false }: { text: string; install?: boolean }) {
+export default function CopyPrompt({ text, install = false, compact = false }: { text: string; install?: boolean; compact?: boolean }) {
   const id = useId();
   const [status, setStatus] = useState('');
+  const [expanded, setExpanded] = useState(!compact);
+  const disclosure = useRef<HTMLDetailsElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   useEffect(() => () => clearTimeout(timer.current), []);
   async function copy() {
@@ -13,6 +15,8 @@ export default function CopyPrompt({ text, install = false }: { text: string; in
       await navigator.clipboard.writeText(text);
       setStatus('Copied');
     } catch {
+      setExpanded(true);
+      if (disclosure.current) disclosure.current.open = true;
       const node = document.getElementById(id);
       if (node) {
         const range = document.createRange();
@@ -27,7 +31,7 @@ export default function CopyPrompt({ text, install = false }: { text: string; in
   }
   return <div className={styles.prompt}>
     <div className={styles.promptBar}><span>{install ? 'The skill + instructions, in one prompt' : 'Make it yours / replace the brackets'}</span><button type="button" onClick={copy}>{install ? 'Copy for my agent' : 'Copy prompt'} <span aria-hidden="true">↗</span></button></div>
-    <pre id={id} tabIndex={0}>{text}</pre>
+    {compact ? <details ref={disclosure} open={expanded} onToggle={event => setExpanded(event.currentTarget.open)}><summary>{install ? 'Read the install prompt' : 'Read & adapt the prompt'}<span aria-hidden="true">+</span></summary><pre id={id} tabIndex={0}>{text}</pre></details> : <pre id={id} tabIndex={0}>{text}</pre>}
     <span className={styles.copyStatus} role="status" aria-live="polite">{status}</span>
   </div>;
 }

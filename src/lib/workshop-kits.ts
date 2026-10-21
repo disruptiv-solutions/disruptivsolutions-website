@@ -37,7 +37,7 @@ export const WORKSHOP_KITS: WorkshopKit[] = [
     eyebrow: 'Image creation + your AI agent',
     audience: 'People who want a logo, illustration, or character to become a useful little loop',
     description:
-      'Turn reference artwork into a looping GIF. Follow five practical steps, copy the prompts, and give your agent a downloadable skill for the whole process.',
+      'Scrub through the transformation frames, turn your own artwork into a looping GIF, and give your agent a downloadable skill for the whole process.',
     eventContext:
       'From Ian’s Disruptiv Solutions logo experiments: transformation poses, frame assembly, and a fixed wordmark.',
     status: 'live',
