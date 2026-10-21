@@ -7,11 +7,11 @@ import { steps, tools } from './lesson';
 import styles from './lesson.module.css';
 
 const title = 'Turn meetings into follow-through | Ian McDonald AI';
-const description = 'Turn a discovery call into a reviewed proposal, follow-up email, and next appointment. Ian’s original Gemini demo, six practical steps, and copyable prompts.';
+const description = 'Turn a discovery call into a reviewed proposal, follow-up email, and next appointment. Ian’s edited Gemini walkthrough, six practical steps, and copyable prompts.';
 export const metadata: Metadata = {
   title, description,
   alternates: { canonical: '/learn/meeting-follow-through' },
-  openGraph: { title, description, url: '/learn/meeting-follow-through', type: 'website', images: [{ url: '/learn/meeting-follow-through/part-1-poster.jpg', width: 1280, height: 720, alt: 'Ian demonstrates a proposal drafted from discovery-call context' }] },
+  openGraph: { title, description, url: '/learn/meeting-follow-through', type: 'website', images: [{ url: '/learn/meeting-follow-through/lesson-poster.jpg', width: 1280, height: 720, alt: 'Good meeting. Now follow through. A lesson with Ian McDonald AI.' }] },
 };
 
 function Workflow() {
@@ -29,7 +29,7 @@ export default function MeetingFollowThroughPage() {
         <h1>Good meeting.<br /><em>Now follow through.</em></h1>
         <p className={styles.dek}>Turn a discovery call into a proposal, a personal follow-up, and a clear next appointment—with Gemini helping you prepare each step.</p>
         <div className={styles.heroLinks}><a className={styles.primaryLink} href="#watch">Watch the demo <span aria-hidden="true">↗</span></a><a href="#steps">Get the six steps & prompts ↓</a></div>
-        <p className={styles.facts}>17-minute original run-through · 6 practical steps · Copyable prompts</p>
+        <p className={styles.facts}>9½-minute edited lesson · 6 practical steps · Copyable prompts</p>
       </div>
       <div className={styles.heroArtwork}>
         <span className={styles.paperLabel}>THE FOLLOW-THROUGH FILE</span>
@@ -44,10 +44,10 @@ export default function MeetingFollowThroughPage() {
     </section>
 
     <section id="watch" className={styles.watch} aria-labelledby="watch-title">
-      <div className={styles.sectionIntro}><div><p className={styles.eyebrow}>Watch it happen</p><h2 id="watch-title">One relationship.<br />One Gemini conversation.</h2></div><p>Ian’s original two-part run-through for the August 25, 2026 workshop with Maria Elena Duron. It includes the slides and the real app demonstration.</p></div>
+      <div className={styles.sectionIntro}><div><p className={styles.eyebrow}>Watch it happen</p><h2 id="watch-title">One relationship.<br />One Gemini conversation.</h2></div><p>One edited lesson from Ian’s August 25, 2026 workshop run-through with Maria Elena Duron. Follow the real app demonstration with close-ups, highlights, and notes beside the screen.</p></div>
       <Recording />
-      <div className={styles.recordingNote}><strong>About this example</strong><p>The inquiry and meeting transcript were staged with Ariel Santos’s permission, using her real business as context. This is a demonstration, not a client case study. The run-through includes pauses and the recording restart.</p></div>
-      <details className={styles.chapters}><summary>Where to find each part of the workflow</summary><div><section><h3>Part 1 / 12:21</h3><ul><li><b>0:23</b> Why saved notes still need follow-through</li><li><b>3:42</b> The inquiry in Gmail</li><li><b>4:47</b> Five questions in Gemini</li><li><b>5:39</b> Website context and sources</li><li><b>6:40</b> Move forward to the staged transcript</li><li><b>7:44</b> Reference Google Drive</li><li><b>8:48</b> “Gemini prepares. You approve.”</li><li><b>10:03</b> Open and review the proposal Doc</li><li><b>11:19</b> Check Calendar availability</li></ul></section><section><h3>Part 2 / 4:36</h3><ul><li><b>0:03</b> Continue after the recording restart</li><li><b>0:42</b> Draft the follow-up in Gmail</li><li><b>1:17</b> Read and approve the email</li><li><b>2:02</b> Create the Calendar placeholder</li><li><b>2:31</b> Open the event and verify it</li><li><b>3:07</b> Recap the workflow and next step</li></ul><p>Times are relative to each recording. Use the video controls to move to a chapter.</p></section></div></details>
+      <div className={styles.recordingNote}><strong>About this example</strong><p>The inquiry and meeting transcript were staged with Ariel Santos’s permission, using her real business as context. This is a demonstration, not a client case study. The two recordings have been combined, with long pauses, the restart, and navigation detours removed. Ian’s own voice carries the lesson.</p></div>
+
     </section>
 
     <section id="tools" className={styles.section} aria-labelledby="tools-title">

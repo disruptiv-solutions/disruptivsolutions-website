@@ -11,7 +11,7 @@ Research the public website and summarize what they do, who they serve, and what
 Give me five focused discovery questions about their priorities, current workflow, constraints, privacy requirements, and what success would look like. Use plain language. Do not contact anyone.`,
     check: 'Open the website yourself. Are the business details correct? Do the five questions help you understand the work before suggesting a solution?',
     result: 'A short business brief + five discovery questions.',
-    recorded: 'Part 1 · inquiry, website research, and discovery questions',
+    recorded: 'In the lesson · inquiry, website research, and discovery questions',
   },
   {
     id: 'context', number: '02', phase: 'After the call', title: 'Bring the conversation back.',
@@ -22,7 +22,7 @@ Use [EXACT TRANSCRIPT TITLE] in Google Drive, for [PARTICIPANTS] on [DATE]. If y
 First identify the source you used. Then summarize the priorities, constraints, decisions, open questions, and commitments. Put action items in a table with owner and due date. Mark anything unstated as “not agreed”; do not invent it. Distinguish a target or suggestion from a commitment. Do not create or send anything yet.`,
     check: 'Compare the summary with your notes. Check names, owners, dates, and which next steps were actually agreed.',
     result: 'A checked meeting summary and action list.',
-    recorded: 'Part 1 · transcript referenced through Google Drive',
+    recorded: 'In the lesson · transcript referenced through Google Drive',
   },
   {
     id: 'proposal', number: '03', phase: 'Make the work tangible', title: 'Draft a proposal you can defend.',
@@ -33,7 +33,7 @@ Include the problem in their words, objectives, proposed scope, deliverables, re
 Show me the draft for review. I will then save or export it to Google Docs as “[BUSINESS] — Draft proposal”. Do not share the document or change its access.`,
     check: 'Read the Doc itself. Confirm scope, price, timeline, and sharing permissions. Goals from a discovery call are not guaranteed results.',
     result: 'A reviewed proposal draft in Google Docs.',
-    recorded: 'Part 1 · generated proposal opened and reviewed in Docs',
+    recorded: 'In the lesson · generated proposal opened and reviewed in Docs',
   },
   {
     id: 'availability', number: '04', phase: 'Choose a real next step', title: 'Find a time. Check the date.',
@@ -43,7 +43,7 @@ Show me the draft for review. I will then save or export it to Google Docs as �
 Suggest up to three open slots during [WORKING HOURS]. Show each complete date, day of week, time, and time zone. If you cannot access my calendar, ask me for my available times. Do not create an event or invite anyone.`,
     check: 'Open Calendar. Match the full date, time, time zone, and duration. Resolve any disagreement between the transcript, proposal, and suggested slot.',
     result: 'One or more verified times to propose.',
-    recorded: 'Part 1 · Calendar availability checked for the proposed time',
+    recorded: 'In the lesson · Calendar availability checked for the proposed time',
   },
   {
     id: 'follow-up', number: '05', phase: 'Keep the relationship moving', title: 'Write the email. Then approve it.',
@@ -54,7 +54,7 @@ Thank them for our conversation, briefly recap their main priority, introduce th
 Keep it warm, concise, and in my voice. Show the subject, recipient, and body for review. Draft only. Do not send.`,
     check: 'Check the recipient, proposal link/access, tone, and proposed time. Remove placeholders. Send from Gmail only after you approve the complete message.',
     result: 'A personal follow-up ready for your approval.',
-    recorded: 'Part 2 · Gmail draft, explicit approval, and sent confirmation',
+    recorded: 'In the lesson · Gmail draft, explicit approval, and sent confirmation',
   },
   {
     id: 'hold', number: '06', phase: 'Close the loop', title: 'Give the next action a place.',
@@ -64,7 +64,7 @@ Keep it warm, concise, and in my voice. Show the subject, recipient, and body fo
 Include a short agenda and [PROPOSAL LINK]. Do not add guests or send invitations. Show all event details first and wait for my approval before creating it. If you cannot create the event, give me the details to add manually.`,
     check: 'Confirm the hold exists on the correct calendar. Check date/time again. Track “awaiting confirmation”; invite the other person only when you intend to do so.',
     result: 'A tentative hold and a clear next action.',
-    recorded: 'Part 2 · placeholder created and opened in Google Calendar',
+    recorded: 'In the lesson · placeholder created and opened in Google Calendar',
   },
 ] as const;
 
