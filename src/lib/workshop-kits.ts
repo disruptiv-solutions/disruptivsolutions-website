@@ -32,6 +32,17 @@ export const WORKSHOP_KITS: WorkshopKit[] = [
     status: 'live',
   },
   {
+    slug: 'animated-gifs',
+    title: 'Make your artwork move',
+    eyebrow: 'Image creation + your AI agent',
+    audience: 'People who want a logo, illustration, or character to become a useful little loop',
+    description:
+      'Turn reference artwork into a looping GIF. Follow five practical steps, copy the prompts, and give your agent a downloadable skill for the whole process.',
+    eventContext:
+      'From Ian’s Disruptiv Solutions logo experiments: transformation poses, frame assembly, and a fixed wordmark.',
+    status: 'live',
+  },
+  {
     slug: 'supplier-readiness-builder',
     title: 'AI Supplier Readiness Builder',
     eyebrow: 'HMSDC MBE Leadership Academy',
