@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Navigation from './Navigation';
 import { trackFormSubmission, trackButtonClick } from '@/lib/analytics';
 
 // Meta Pixel TypeScript declaration
@@ -132,7 +131,6 @@ const ClassSignup: React.FC = () => {
 
   return (
     <>
-      <Navigation />
       <section className="min-h-screen pt-24 px-6 py-12 lg:py-20">
         <div className="max-w-4xl mx-auto">
           {/* Header */}

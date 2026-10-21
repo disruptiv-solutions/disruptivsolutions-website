@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { checkBotId } from 'botid/server';
+import { isAutomatedName } from '@/lib/inquiry-spam';
 
 export const dynamic = 'force-dynamic';
 
@@ -94,6 +96,21 @@ function validate(body: unknown): SpeakingInquiry | null {
 }
 
 export async function POST(request: NextRequest) {
+  if (request.headers.get('origin') !== new URL(request.url).origin) {
+    return NextResponse.json({ error: 'Please send this form from the Ian McDonald website.' }, { status: 403 });
+  }
+  if (!request.headers.get('content-type')?.startsWith('application/json')) {
+    return NextResponse.json({ error: 'Please use the inquiry form.' }, { status: 415 });
+  }
+  // This protects both speaking forms, before either email can be sent.
+  try {
+    const verification = await checkBotId({ advancedOptions: { checkLevel: 'basic' } });
+    if (verification.isBot) {
+      return NextResponse.json({ error: 'We couldn’t verify your browser. Refresh and try again, or email ian@ianmcdonald.ai.' }, { status: 403 });
+    }
+  } catch {
+    return NextResponse.json({ error: 'We couldn’t verify your browser. Please try again, or email ian@ianmcdonald.ai.' }, { status: 503 });
+  }
   try {
     const raw = await request.json();
     const inquiry = validate(raw);
@@ -103,6 +120,10 @@ export async function POST(request: NextRequest) {
         { error: 'Please fill in your name, a valid email, and pick what you are interested in.' },
         { status: 400 },
       );
+    }
+
+    if (isAutomatedName(inquiry.name)) {
+      return NextResponse.json({ error: 'Please enter your name with normal spacing and capitalization, or email ian@ianmcdonald.ai.' }, { status: 400 });
     }
 
     if (!resend) {

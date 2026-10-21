@@ -1,0 +1,44 @@
+.header, .footer { color: var(--site-ink); background: var(--site-paper); font-family: var(--font-montserrat), sans-serif; }
+.header { position: sticky; top: 0; z-index: 60; background: #efe7e0f5; backdrop-filter: blur(12px); border-bottom: 1px solid var(--site-line); border-top: 3px solid var(--site-red); }
+.headerInner { width: min(1360px, calc(100% - 112px)); min-height: 86px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+.brand { display: inline-flex; align-items: center; gap: 11px; color: var(--site-ink); font-size: 15px; font-weight: 750; text-decoration: none; white-space: nowrap; }
+.brand img { width: 32px; height: 32px; }
+.nav { display: flex; align-items: center; gap: 32px; }
+.navLinks { display: flex; align-items: center; gap: 28px; padding: 3px 23px; border-radius: 99px; border: 1px solid var(--site-line); background: #e4dbd3; }
+.nav a { display: inline-flex; align-items: center; min-height: 44px; color: var(--site-ink); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; text-decoration: none; }
+.nav a:hover { color: var(--site-red); }
+.nav .navCta { gap: 18px; border-radius: 99px; background: var(--site-red); color: white; padding: 0 23px; }
+.nav .navCta:hover { background: var(--site-ink); color: white; }
+.menuButton { display: none; border: 0; background: transparent; color: inherit; width: 44px; height: 44px; place-content: center; gap: 7px; cursor: pointer; }
+.menuButton span { width: 23px; height: 2px; background: currentColor; }
+.footer { border-top: 2px solid var(--site-ink); padding: 52px max(28px, calc((100% - 1360px) / 2)) 24px; }
+.footerTop { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 56px; padding-bottom: 36px; }
+.footerTop p { margin: 16px 0; color: var(--site-muted); font-size: 14px; line-height: 1.7; }
+.footer nav { display: flex; align-items: flex-start; flex-direction: column; gap: 7px; }
+.eyebrow { color: #96141a; font-size: 12px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+.footer nav .eyebrow { margin-bottom: 10px; }
+.footer nav a { color: var(--site-ink); font-size: 14px; text-decoration: none; line-height: 1.7; padding-block: 3px; }
+.footer a:hover { color: var(--site-red); text-decoration: underline; text-underline-offset: 4px; }
+.footerBottom { display: flex; flex-wrap: wrap; gap: 12px 24px; padding-top: 24px; border-top: 1px solid var(--site-line); color: var(--site-muted); font-size: 14px; }
+.footerBottom > span { margin-right: auto; }
+.footerBottom a, .footerBottom button { min-height: 32px; color: inherit; background: none; border: 0; font: inherit; cursor: pointer; text-decoration: none; }
+.footerBottom > p { width: 100%; }
+.footer nav.socialLinks { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 8px 24px; padding-block: 16px; border-top: 1px solid var(--site-line); }
+.footer nav.socialLinks .eyebrow { margin-bottom: 0; }
+.footer nav.socialLinks a { min-height: 44px; display: inline-flex; align-items: center; }
+.header :is(a,button):focus-visible, .footer :is(a,button):focus-visible { outline: 2px solid var(--site-red); outline-offset: 5px; }
+@media(max-width: 1000px) { .headerInner { width: calc(100% - 72px); } .nav { gap: 15px; } .navLinks { gap: 16px; padding-inline: 16px; } .nav a { font-size: 12px; letter-spacing: .07em; } .headerInner { gap: 18px; } }
+@media(max-width: 760px) {
+  .headerInner { min-height: 64px; width: calc(100% - 36px); }
+  .menuButton { display: grid; }
+  .nav { display: none; position: absolute; top: 67px; left: 0; right: 0; padding: 12px 18px 20px; border-bottom: 1px solid var(--site-line); background: var(--site-paper); box-shadow: 0 18px 28px #16181b10; }
+  .navLinks { display: flex; flex-direction: column; align-items: stretch; border: 0; border-radius: 0; background: none; padding: 0; gap: 0; }
+  .navOpen { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
+  .nav a { min-height: 48px; padding: 12px; border-bottom: 1px solid var(--site-line); font-size: 14px; }
+  .nav .navCta { justify-content: space-between; margin-top: 10px; padding-inline: 22px; }
+  .footer { padding: 36px 18px 20px; }
+  .footerTop { grid-template-columns: 1fr 1fr; gap: 32px 20px; }
+  .footerTop > div { grid-column: 1 / -1; }
+  .footer nav a { min-height: 40px; display: inline-flex; align-items: center; }
+  .footerBottom > span { width: 100%; }
+}

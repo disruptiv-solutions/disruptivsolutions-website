@@ -1,0 +1,71 @@
+TURN MEETINGS INTO FOLLOW-THROUGH
+Ian McDonald AI
+https://www.ianmcdonald.ai/learn/meeting-follow-through
+
+Adapted lesson prompts, not verbatim recording transcripts.
+Replace every bracketed placeholder. Review before sending or changing anything.
+
+01 / Arrive with better questions.
+
+I’m preparing for a discovery call with [NAME] at [BUSINESS].
+Here is their inquiry: [PASTE EMAIL].
+Their website is [WEBSITE].
+
+Research the public website and summarize what they do, who they serve, and what they are asking me for. Separate facts from your suggestions and link to your sources. If you cannot access the website, ask me to paste the relevant text.
+
+Give me five focused discovery questions about their priorities, current workflow, constraints, privacy requirements, and what success would look like. Use plain language. Do not contact anyone.
+
+CHECK: Open the website yourself. Are the business details correct? Do the five questions help you understand the work before suggesting a solution?
+
+--------------------
+
+02 / Bring the conversation back.
+
+Continue with the same business and discovery call.
+Use [EXACT TRANSCRIPT TITLE] in Google Drive, for [PARTICIPANTS] on [DATE]. If you cannot access that file, ask me to paste or upload the transcript instead.
+
+First identify the source you used. Then summarize the priorities, constraints, decisions, open questions, and commitments. Put action items in a table with owner and due date. Mark anything unstated as “not agreed”; do not invent it. Distinguish a target or suggestion from a commitment. Do not create or send anything yet.
+
+CHECK: Compare the summary with your notes. Check names, owners, dates, and which next steps were actually agreed.
+
+--------------------
+
+03 / Draft a proposal you can defend.
+
+Using the checked meeting summary, draft a proposal for [BUSINESS].
+Include the problem in their words, objectives, proposed scope, deliverables, responsibilities, timeline, open questions, and next step. Clearly label anything suggested rather than agreed. Leave price and unconfirmed dates as [TO CONFIRM]. Do not promise savings, compliance, or privacy guarantees we have not verified.
+
+Show me the draft for review. I will then save or export it to Google Docs as “[BUSINESS] — Draft proposal”. Do not share the document or change its access.
+
+CHECK: Read the Doc itself. Confirm scope, price, timeline, and sharing permissions. Goals from a discovery call are not guaranteed results.
+
+--------------------
+
+04 / Find a time. Check the date.
+
+Check my Google Calendar for a [DURATION]-minute follow-up with [NAME] between [START DATE] and [END DATE]. My time zone is [TIME ZONE].
+
+Suggest up to three open slots during [WORKING HOURS]. Show each complete date, day of week, time, and time zone. If you cannot access my calendar, ask me for my available times. Do not create an event or invite anyone.
+
+CHECK: Open Calendar. Match the full date, time, time zone, and duration. Resolve any disagreement between the transcript, proposal, and suggested slot.
+
+--------------------
+
+05 / Write the email. Then approve it.
+
+Draft a follow-up email to [NAME] at [VERIFIED EMAIL].
+Thank them for our conversation, briefly recap their main priority, introduce the draft proposal, and suggest [VERIFIED DATE, TIME, TIME ZONE] for a [DURATION]-minute review. Ask whether that works for them. Use [PROPOSAL LINK] only if I have checked the link and their access; otherwise leave a clear placeholder.
+
+Keep it warm, concise, and in my voice. Show the subject, recipient, and body for review. Draft only. Do not send.
+
+CHECK: Check the recipient, proposal link/access, tone, and proposed time. Remove placeholders. Send from Gmail only after you approve the complete message.
+
+--------------------
+
+06 / Give the next action a place.
+
+Prepare a private calendar hold for [VERIFIED DATE, TIME, TIME ZONE], lasting [DURATION]. Title it “Tentative — [NAME] proposal review”.
+
+Include a short agenda and [PROPOSAL LINK]. Do not add guests or send invitations. Show all event details first and wait for my approval before creating it. If you cannot create the event, give me the details to add manually.
+
+CHECK: Confirm the hold exists on the correct calendar. Check date/time again. Track “awaiting confirmation”; invite the other person only when you intend to do so.

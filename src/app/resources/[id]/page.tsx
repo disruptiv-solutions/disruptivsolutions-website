@@ -790,7 +790,7 @@ export default function ResourcePage() {
       )}
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-6 pt-32 pb-20">
+      <div className="max-w-4xl mx-auto px-6 pt-32 pb-20">
         {/* Back Link */}
         <Link 
           href="/resources"
@@ -1025,7 +1025,7 @@ export default function ResourcePage() {
             </a>
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

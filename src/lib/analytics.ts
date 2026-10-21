@@ -1,4 +1,5 @@
 // Google Analytics event tracking utilities
+export const GA_MEASUREMENT_ID = 'G-F7F28TQPBP';
 
 declare global {
   interface Window {
@@ -8,34 +9,35 @@ declare global {
 }
 
 /**
- * Check if gtag is available
- */
-const isGtagAvailable = (): boolean => {
-  return typeof window !== 'undefined' && typeof window.gtag === 'function';
-};
-
-/**
  * Track a custom event
  */
 export const trackEvent = (
   eventName: string,
   params?: Record<string, unknown>
 ): void => {
-  if (!isGtagAvailable()) {
-    console.warn('[Analytics] Google Analytics not loaded');
-    return;
+  if (typeof window === 'undefined') return;
+  window.dataLayer = window.dataLayer || [];
+  if (typeof window.gtag !== 'function') {
+    window.gtag = function () {
+      // Google's command queue uses Arguments objects, including before gtag.js loads.
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer.push(arguments);
+    };
   }
 
   const eventParams = {
     ...params,
     event_category: params?.event_category || 'engagement',
+    // Callers use section labels in `location`; GA's page_location is always a URL.
+    page_location: window.location.href,
+    transport_type: 'beacon',
+    ...(new URLSearchParams(window.location.search).has('analytics_test')
+      ? { debug_mode: true, test_run_id: new URLSearchParams(window.location.search).get('analytics_test')?.slice(0, 40) }
+      : {}),
   };
-
-  console.log('[Analytics] Tracking event:', eventName, eventParams);
   
   try {
     window.gtag('event', eventName, eventParams);
-    console.log('[Analytics] Event sent successfully:', eventName);
   } catch (error) {
     console.error('[Analytics] Error sending event:', eventName, error);
   }
@@ -98,8 +100,17 @@ export const trackExternalLink = (
 };
 
 /**
- * Track video play
+ * Track a handoff to Disruptiv. This measures intent, not a completed inquiry.
  */
+export const trackDisruptivVisit = (url: string, location: string): void => {
+  trackEvent('disruptiv_visit', {
+    event_category: 'outbound',
+    link_url: url,
+    link_location: location,
+  });
+};
+
+/** Track video play. */
 export const trackVideoPlay = (
   videoName: string
 ): void => {

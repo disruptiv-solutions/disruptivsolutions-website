@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import Navigation from '@/components/Navigation';
 import { trackButtonClick } from '@/lib/analytics';
 import { uploadFileToStorage } from '@/lib/firebase';
 
@@ -590,7 +589,6 @@ const ClassRegistrationForm: React.FC = () => {
 
   return (
     <>
-      <Navigation />
       <section className="min-h-screen pt-24 px-6 py-12 lg:py-20">
         <div className="max-w-4xl mx-auto">
           {/* Header */}

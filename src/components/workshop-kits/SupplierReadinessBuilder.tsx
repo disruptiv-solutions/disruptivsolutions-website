@@ -286,7 +286,7 @@ export default function SupplierReadinessBuilder() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           kitSlug: KIT_SLUG,
-          source: 'ianmcdonald.ai/kits/supplier-readiness-builder',
+          source: 'ianmcdonald.ai/learn/supplier-readiness-builder',
           sessionId,
           selectedWorkflow: state.selectedWorkflow,
           authUid: user?.uid ?? null,
@@ -414,7 +414,7 @@ export default function SupplierReadinessBuilder() {
   }
 
   return (
-    <main className="relative z-10 min-h-[calc(100dvh-4rem)] overflow-x-hidden pt-16 lg:pt-16">
+    <div className="relative z-10 min-h-[calc(100dvh-4rem)] overflow-x-hidden pt-16 lg:pt-16">
       <div className="grid min-h-[calc(100dvh-4rem)] min-w-0 lg:grid-cols-[250px_minmax(0,1fr)_330px]">
         <aside className="hidden border-b border-[#0B0F14]/10 bg-[#0B0F14] p-5 text-white shadow-2xl shadow-[#0B0F14]/20 lg:fixed lg:right-0 lg:top-16 lg:z-20 lg:flex lg:flex-col lg:h-[calc(100dvh-64px)] lg:w-[330px] lg:border-b-0 lg:border-l lg:border-[#0B0F14]">
           <div className="lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
@@ -1715,7 +1715,7 @@ export default function SupplierReadinessBuilder() {
           {toast}
         </div>
       )}
-    </main>
+    </div>
   );
 }
 

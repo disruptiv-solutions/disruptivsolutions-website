@@ -6,11 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { isAdmin } from '@/lib/adminConfig';
 import { newsletterIssues } from '@/data/newsletter-issues';
 import { dailyBriefs } from '@/data/daily-briefs';
-import {
-  LAUNCHBOX_SITE_URL,
-  LAUNCHBOX_CTA_LABEL,
-  LAUNCHBOX_LINK_NEW_TAB,
-} from '@/lib/launchbox-marketing';
+
 
 interface NewsletterResource {
   id: string;
@@ -322,16 +318,16 @@ export default function NewsletterDirectoryPage() {
       <section className="border-b-2 border-zinc-700 pt-24 pb-8">
         <div className="max-w-5xl mx-auto px-6">
           <Link
-            href="/resources"
+            href="/"
             className="inline-flex items-center gap-2 text-gray-400 hover:text-white text-sm font-medium mb-6 transition-colors"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            Back to Resources
+            Back to Ian’s homepage
           </Link>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
-            Newsletter Archive
+            Notes from the workbench
           </h1>
           <p className="text-base sm:text-lg text-gray-400 mt-3 max-w-2xl">
             Past issues of Ian&apos;s newsletter — practical AI insights, what he&apos;s building, and lessons from the trenches.
@@ -435,15 +431,15 @@ export default function NewsletterDirectoryPage() {
       {/* Directory Content */}
       <section className="py-8 md:py-10">
         <div className="max-w-5xl mx-auto px-6">
-          {loading ? (
+          {loading && newsletterIssues.length === 0 && dailyBriefs.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-gray-400">Loading newsletters...</p>
             </div>
-          ) : error ? (
+          ) : error && newsletterIssues.length === 0 && dailyBriefs.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-red-400">{error}</p>
-              <Link href="/resources" className="text-red-500 hover:text-red-400 mt-4 inline-block">
-                ← Back to Resources
+              <Link href="/" className="text-red-500 hover:text-red-400 mt-4 inline-block">
+                ← Back to Ian’s homepage
               </Link>
             </div>
           ) : newsletterIssues.length === 0 &&
@@ -579,17 +575,7 @@ export default function NewsletterDirectoryPage() {
             <p className="text-gray-300 mb-4 max-w-xl mx-auto">
               Subscribe to Ian&apos;s newsletter for practical AI insights, what he&apos;s building with LaunchBox, and lessons from building in public.
             </p>
-            <p className="text-gray-400 text-sm mb-6 max-w-xl mx-auto">
-              Launch your own white-label community at{' '}
-              <a
-                href={LAUNCHBOX_SITE_URL}
-                {...LAUNCHBOX_LINK_NEW_TAB}
-                className="text-red-400 hover:text-red-300 font-semibold underline underline-offset-2"
-              >
-                launchbox.space
-              </a>
-              . {LAUNCHBOX_CTA_LABEL} — $39.99 first month, then $49.99/mo.
-            </p>
+
             <Link
               href="/newsletter"
               className="inline-block px-8 py-4 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-all shadow-lg shadow-red-600/40"

@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { Montserrat, Rosario } from "next/font/google";
 import "./globals.css";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
-import NavigationWrapper from "@/components/NavigationWrapper";
-import Footer from "@/components/Footer";
-import ConditionalFooter from "@/components/ConditionalFooter";
+import Script from "next/script";
+import { GA_MEASUREMENT_ID } from "@/lib/analytics";
+import SiteFrame from "@/components/site/SiteFrame";
+import "./editorial.css";
 import { Analytics } from "@vercel/analytics/next";
 import { AuthProvider } from "@/contexts/AuthContext";
 
@@ -23,8 +24,9 @@ const rosario = Rosario({
 });
 
 export const metadata: Metadata = {
-  title: "Ian McDonald — Build Real Apps Without a CS Degree | Launchbox",
-  description: "From barely making rent to building an AI platform with 1,500+ active users. I teach others to build their dreams the same way I built mine. No jargon, no fluff—just real apps.",
+  metadataBase: new URL("https://www.ianmcdonald.ai"),
+  title: "Ian McDonald — Builder, Founder & Practical AI Speaker",
+  description: "Practical AI, built from experience. Keynotes and workshops with Ian McDonald, notes from the workbench, and help building through Disruptiv Solutions.",
   keywords: ["Ian McDonald", "Launchbox", "Launch Box", "AI for Business", "AI product builder", "build without CS degree", "practical AI", "AI training", "no-code AI", "ChatterCard", "Disruptiv Solutions"],
   authors: [{ name: "Ian McDonald" }],
   icons: {
@@ -35,8 +37,8 @@ export const metadata: Metadata = {
     apple: "/DS-Logo.svg",
   },
   openGraph: {
-    title: "Ian McDonald — Build Real Apps Without a CS Degree",
-    description: "From barely making rent to building an AI platform with 1,500+ active users. Join Launchbox and build your first app in 30 days.",
+    title: "Ian McDonald — Builder, Founder & Practical AI Speaker",
+    description: "Practical AI, built from experience. Speaking, workshops, and real lessons from building products and businesses.",
     type: "website",
   },
 };
@@ -47,8 +49,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth snap-y overscroll-y-contain" style={{ scrollPaddingTop: '65px' }} suppressHydrationWarning>
+    <html lang="en" className="scroll-smooth" style={{ scrollPaddingTop: '65px' }} suppressHydrationWarning>
       <head>
+        <Script id="google-analytics" strategy="beforeInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
+          gtag('set', 'linker', {domains: ['ianmcdonald.ai', 'disruptiv.solutions'], accept_incoming: true});
+          gtag('js', new Date());
+          gtag('config', '${GA_MEASUREMENT_ID}', new URLSearchParams(window.location.search).has('analytics_test') ? {debug_mode: true} : {});
+        `}</Script>
         <link
           href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap"
           rel="stylesheet"
@@ -59,13 +68,7 @@ export default function RootLayout({
       >
         <GoogleAnalytics />
         <AuthProvider>
-          <NavigationWrapper />
-          <main className="relative">
-            {children}
-          </main>
-          <ConditionalFooter>
-            <Footer />
-          </ConditionalFooter>
+          <SiteFrame>{children}</SiteFrame>
         </AuthProvider>
         <Analytics />
       </body>

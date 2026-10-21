@@ -4,10 +4,9 @@ import { useEffect, useState } from 'react';
 import { cn } from '@/lib/cn';
 
 const NAV_ITEMS = [
-  { label: 'Fit', href: '#fit' },
   { label: 'Talks', href: '#talks' },
-  { label: 'Proof', href: '#proof' },
-  { label: 'Stage', href: '#stage' },
+  { label: 'Watch', href: '#proof' },
+  { label: 'Record', href: '#stage' },
   { label: 'Book', href: '#book' },
 ] as const;
 
@@ -24,7 +23,7 @@ const SpeakingPageSubnav = () => {
   return (
     <nav
       aria-label="On this page"
-      className="pointer-events-none sticky top-[65px] z-30 -mb-2 hidden sm:block px-4 pt-2 sm:px-6"
+      className="pointer-events-none sticky top-[89px] z-30 -mb-2 hidden sm:block px-4 pt-2 sm:px-6"
     >
       <div className="mx-auto flex max-w-7xl justify-center">
         <ul className="pointer-events-auto flex list-none flex-wrap items-center justify-center gap-2 p-0 m-0">

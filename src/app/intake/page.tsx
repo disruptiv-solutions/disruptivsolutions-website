@@ -112,7 +112,7 @@ export default function IntakePage() {
         className="pointer-events-none fixed left-1/2 top-0 h-[400px] w-[min(100vw,900px)] -translate-x-1/2 rounded-full bg-red-600/10 blur-[120px]"
       />
 
-      <main className="relative z-10 mx-auto max-w-2xl px-5 py-16 sm:px-6 lg:py-24">
+      <div className="relative z-10 mx-auto max-w-2xl px-5 py-16 sm:px-6 lg:py-24">
         {done ? (
           <div className="rounded-2xl border border-red-500/30 bg-gradient-to-b from-red-600/10 to-transparent p-8 text-center">
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-red-400">
@@ -222,7 +222,7 @@ export default function IntakePage() {
             </form>
           </>
         )}
-      </main>
+      </div>
     </div>
   );
 }

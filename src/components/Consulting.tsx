@@ -1,6 +1,9 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
+import styles from '@/components/site/PublicPage.module.css';
+import DisruptivProjectLink from '@/components/site/DisruptivProjectLink';
 import { trackButtonClick, trackExternalLink } from '@/lib/analytics';
 
 const AI_OPS_URL = 'https://calendar.app.google/okpHPUV8TA85GBaA6';
@@ -15,48 +18,12 @@ const Consulting: React.FC = () => {
   };
 
   return (
-    <section
-      id="consulting"
-      className="bg-black snap-start pt-[65px] pb-20 lg:py-0 min-h-screen"
-    >
-      <div className="max-w-7xl mx-auto px-6 w-full h-[calc(100vh-65px)] lg:h-[calc(100vh-65px)]">
-        <div className="h-full flex items-center justify-center pt-0 lg:pt-0">
-          <div className="w-full max-w-xl mx-auto">
-            <div className="space-y-6 flex flex-col justify-center">
-              <p className="text-red-500/90 text-xs font-semibold tracking-[0.3em] uppercase">
-                AI Ops
-              </p>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
-                Simplify your business with AI
-              </h2>
-              <p className="text-gray-300 leading-relaxed">
-                Tool sprawl, workflow chaos, or automation that never quite works. We'll audit what you have, cut what you don't need, and build what actually moves the needle.
-              </p>
-              <div className="space-y-3">
-                {[
-                  'Identify where AI can save you the most time',
-                  'Cut tools you\'re paying for but not using',
-                  'Build automations that actually run',
-                ].map((item) => (
-                  <p key={item} className="flex items-start gap-3 text-gray-300">
-                    <span className="text-red-600 font-bold mt-0.5">→</span>
-                    <span>{item}</span>
-                  </p>
-                ))}
-              </div>
-              <button
-                type="button"
-                onClick={handleBookCall}
-                className="w-full px-6 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white text-base font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50"
-              >
-                Book an AI Ops Call
-              </button>
-            </div>
-          </div>
-        </div>
+    <section id="consulting" className={styles.page}>
+      <div className={styles.split}>
+        <header><p className={styles.eyebrow}>AI Ops with Ian</p><h1>Less friction.<br />More useful work.</h1><p className={styles.intro}>Tool sprawl, workflow chaos, or automation that never quite works. Let’s find where AI can actually help your business.</p><Link href="/assessment" className={styles.textLink}>Start with the free AI Snapshot →</Link></header>
+        <div className={styles.panel}><h2>Find the right next step.</h2><p className={styles.intro}>We’ll look at the work you do, the tools you use, and the places your time disappears.</p><button type="button" onClick={handleBookCall} className={styles.button}>Book an AI Ops call →</button><p className={styles.note}>Need someone to build it? Disruptiv is Ian’s company for putting websites, apps, and AI workflows into practice.<br /><DisruptivProjectLink location="consulting_page" className={styles.textLink} /></p></div>
       </div>
     </section>
   );
 };
-
 export default Consulting;

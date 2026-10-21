@@ -1,0 +1,598 @@
+WEBVTT
+
+00:00:00.057 --> 00:00:03.137
+All right, a lot of business happens through conversations.
+
+00:00:03.680 --> 00:00:06.830
+Calls with clients, prospective customers, partners, and people
+
+00:00:06.840 --> 00:00:08.940
+helping me build different projects.
+
+00:00:09.518 --> 00:00:11.608
+What I have learned is that a good meeting
+
+00:00:11.618 --> 00:00:13.858
+doesn't automatically create good follow-through.
+
+00:00:14.078 --> 00:00:16.468
+The conversation may be valuable, but once the meeting
+
+00:00:16.478 --> 00:00:19.387
+ends, somebody still has to remember what happened, write
+
+00:00:19.397 --> 00:00:22.307
+the email, update the project, and schedule whatever should
+
+00:00:22.317 --> 00:00:24.507
+happen next. I want to show you how I
+
+00:00:24.517 --> 00:00:26.647
+use Google Meet and Gemini to make all of
+
+00:00:26.657 --> 00:00:30.620
+that easier. The meeting record gives me something tangible,
+
+00:00:30.840 --> 00:00:32.540
+reliable that I can return to.
+
+00:00:32.820 --> 00:00:34.950
+It also helps me get back into the context
+
+00:00:34.960 --> 00:00:38.510
+of that specific relationship instead of depending entirely on
+
+00:00:38.520 --> 00:00:41.180
+my memory because my memory is not the best.
+
+00:00:41.270 --> 00:00:44.590
+I mainly use transcripts in a few different ways.
+
+00:00:44.970 --> 00:00:46.450
+They help me maintain context.
+
+00:00:47.270 --> 00:00:50.390
+I can remember the person's priorities, needs, and history.
+
+00:00:50.790 --> 00:00:52.810
+Second, they help me follow up accurately.
+
+00:00:53.510 --> 00:00:55.690
+I can confirm what was decided during the call,
+
+00:00:55.770 --> 00:00:58.610
+what questions remain, and what each person committed to.
+
+00:00:58.667 --> 00:01:01.860
+Third, they help me track work in progress, projects,
+
+00:01:02.780 --> 00:01:04.100
+opportunities, and next actions.
+
+00:01:04.320 --> 00:01:06.540
+But a transcript is business memory.
+
+00:01:06.660 --> 00:01:08.180
+It's not necessarily finished work.
+
+00:01:08.208 --> 00:01:10.167
+This is where the process usually breaks.
+
+00:01:10.407 --> 00:01:12.837
+The meeting ends, the notes are saved, but the
+
+00:01:12.847 --> 00:01:15.667
+follow-through still depends on somebody remembering to act.
+
+00:01:15.987 --> 00:01:19.437
+Email gets delayed, the tracker becomes outdated, the next
+
+00:01:19.447 --> 00:01:21.127
+conversation never gets scheduled.
+
+00:01:21.250 --> 00:01:23.947
+So capturing the meeting isn't the entire solution.
+
+00:01:24.067 --> 00:01:27.177
+The real opportunity is using that captured information to
+
+00:01:27.187 --> 00:01:28.467
+move the work forward.
+
+00:01:28.538 --> 00:01:31.918
+So what we'll do is check out that email.
+
+00:01:32.083 --> 00:01:34.845
+We are going to prepare for a discovery call
+
+00:01:34.855 --> 00:01:37.605
+with her, get five questions that I should be
+
+00:01:37.615 --> 00:01:40.507
+asking her on that Google Meet call, and we're
+
+00:01:40.517 --> 00:01:42.017
+gonna use Gemini for this.
+
+00:01:42.597 --> 00:01:44.747
+So first off, I'm just gonna show you that
+
+00:01:44.757 --> 00:01:46.037
+email that's come through.
+
+00:01:46.130 --> 00:01:48.572
+all right. So this is an email from Ariel.
+
+00:01:48.712 --> 00:01:50.792
+It says, hi Ian, I run Ariel Santos Tech,
+
+00:01:51.232 --> 00:01:53.452
+veteran owned technology services company.
+
+00:01:53.572 --> 00:01:56.702
+We do career mentorship, IT consulting, web development and
+
+00:01:56.712 --> 00:01:59.242
+training. I keep hearing I should be using AI
+
+00:01:59.252 --> 00:02:01.162
+in the business, but I want it done with
+
+00:02:01.172 --> 00:02:03.572
+clarity and without compromising client privacy
+
+00:02:04.152 --> 00:02:07.242
+between creating mentorship content, answering inquiries, and the
+
+00:02:07.252 --> 00:02:09.552
+consulting work itself, my weeks are completely full.
+
+00:02:09.693 --> 00:02:12.143
+Can we set up a short discovery call to
+
+00:02:12.153 --> 00:02:15.303
+talk about what practical AI integration would look like
+
+00:02:15.313 --> 00:02:16.633
+for a company like mine?
+
+00:02:17.053 --> 00:02:18.843
+My site has the full picture of what we
+
+00:02:18.853 --> 00:02:21.623
+offer. you could just copy it, head over, start
+
+00:02:21.633 --> 00:02:23.463
+a new conversation in Gemini.
+
+00:02:23.473 --> 00:02:25.913
+This is Google's AI platform.
+
+00:02:26.535 --> 00:02:29.640
+And I'm going to ask Gemini, given this email
+
+00:02:29.650 --> 00:02:33.380
+from a prospective client, can you generate five questions
+
+00:02:33.390 --> 00:02:35.840
+for me that I should ask on our short
+
+00:02:35.850 --> 00:02:38.958
+discovery call? I'm gonna just paste that in, send
+
+00:02:38.968 --> 00:02:42.150
+it. We're gonna see what our friend Gemini has
+
+00:02:42.160 --> 00:02:44.850
+to say. It says, here are five targeted questions
+
+00:02:44.860 --> 00:02:48.410
+tailored to Ariel specific business offerings, pain points, and
+
+00:02:48.420 --> 00:02:52.057
+core values. What I do wanna do as well
+
+00:02:52.067 --> 00:02:56.497
+is just give me a bit more context
+
+00:02:56.507 --> 00:02:58.847
+about her company,
+
+00:02:59.625 --> 00:03:03.487
+and what they do, and how I could
+
+00:03:03.497 --> 00:03:07.362
+possibly help. So because that URL is in that
+
+00:03:07.372 --> 00:03:10.253
+initial email, it's gonna know that it's gonna go
+
+00:03:10.263 --> 00:03:11.803
+check out her website.
+
+00:03:11.923 --> 00:03:15.405
+Sweet, and you can see there's also a source
+
+00:03:15.583 --> 00:03:17.908
+from her website, so we can go see exactly
+
+00:03:17.918 --> 00:03:20.677
+where that's from. So who they are, their core
+
+00:03:20.687 --> 00:03:21.247
+pillars,
+
+00:03:21.827 --> 00:03:25.057
+core's values, and brand identity, how you can help
+
+00:03:25.067 --> 00:03:28.760
+positioning your solutions, a private, local, or enterprise grade
+
+00:03:28.770 --> 00:03:31.332
+AI setup. All right, so we have our five
+
+00:03:31.342 --> 00:03:35.462
+questions. We have our initial information on her company.
+
+00:03:35.553 --> 00:03:39.730
+We are going to travel in time, assuming
+
+00:03:39.740 --> 00:03:42.620
+that Ariel and I had this Google Meet call.
+
+00:03:43.100 --> 00:03:45.990
+It went well. All of those five questions got
+
+00:03:46.000 --> 00:03:49.270
+answered on the call, and now I have a
+
+00:03:49.280 --> 00:03:52.770
+transcript file. I have a notes file, and typically
+
+00:03:52.780 --> 00:03:55.585
+what that looks like is something like this.
+
+00:03:55.665 --> 00:03:57.485
+Right here, so discovery call.
+
+00:03:57.685 --> 00:04:00.295
+This is what a Google Meet transcript typically tends
+
+00:04:00.305 --> 00:04:02.275
+to look like. You'll have a summary, you'll have
+
+00:04:02.285 --> 00:04:06.475
+details, you'll have action items, proposed
+
+00:04:06.485 --> 00:04:10.275
+decision holders, or actions
+
+00:04:10.285 --> 00:04:14.317
+to take. So what I'm going to do
+
+00:04:14.327 --> 00:04:18.537
+is ask Gemini to use that to help me
+
+00:04:18.547 --> 00:04:20.907
+with the follow through with those actions.
+
+00:04:21.005 --> 00:04:25.408
+I'm going to say, based on the transcript,
+
+00:04:25.538 --> 00:04:30.022
+call document, and I'm going to use at, and
+
+00:04:30.032 --> 00:04:32.742
+here you'll be able to see a pop-up
+
+00:04:32.752 --> 00:04:35.598
+shows up that gives us different tools that we
+
+00:04:35.608 --> 00:04:37.987
+can use to help us with this.
+
+00:04:38.567 --> 00:04:41.107
+So Gemini can actually use these tools.
+
+00:04:41.307 --> 00:04:43.937
+So we have Google Calendar, Google Keep, Task, Google
+
+00:04:43.947 --> 00:04:45.797
+Docs. We're going to use Google Drive.
+
+00:04:45.807 --> 00:04:48.257
+That is the home of all of our files
+
+00:04:48.267 --> 00:04:52.067
+that get stored in Google within Google.
+
+00:04:52.152 --> 00:04:55.525
+So based on the transcript, call document, in Google
+
+00:04:55.535 --> 00:04:59.597
+Drive between me and Ariel, create
+
+00:04:59.607 --> 00:05:02.722
+a draft proposal doc.
+
+00:05:02.840 --> 00:05:05.120
+So this is the most important habit in the
+
+00:05:05.130 --> 00:05:08.760
+entire workflow. Gemini prepares, you approve, check the facts,
+
+00:05:08.770 --> 00:05:12.250
+did it represent the conversation accurately, check the voice,
+
+00:05:12.370 --> 00:05:15.000
+does this sound appropriate for the relationship, check the
+
+00:05:15.010 --> 00:05:17.570
+next step, is the action clear and correct?
+
+00:05:17.950 --> 00:05:20.180
+The goal is not to remove ourselves from our
+
+00:05:20.190 --> 00:05:22.680
+business relationships. The goal is to spend less time
+
+00:05:22.690 --> 00:05:24.890
+reconstructing information we already have.
+
+00:05:25.033 --> 00:05:27.833
+Drafting faster does not remove responsibility.
+
+00:05:27.893 --> 00:05:29.073
+So I'm going to send that
+
+00:05:30.292 --> 00:05:32.857
+while that is working, Gemini can call the same
+
+00:05:32.867 --> 00:05:34.467
+tools that I already use.
+
+00:05:34.507 --> 00:05:37.477
+Like I said, you can call Drive, Google Docs,
+
+00:05:37.487 --> 00:05:40.720
+Calendar, Gmail, that way I'm not re-explaining everything.
+
+00:05:40.940 --> 00:05:44.880
+This thread has carried context since that original email.
+
+00:05:44.932 --> 00:05:48.602
+Okay, so here we've got a little link to
+
+00:05:48.612 --> 00:05:50.772
+our proposal doc that it generated.
+
+00:05:50.917 --> 00:05:54.443
+This looks awesome. Prepared for Ariel, founder of Ariel
+
+00:05:54.453 --> 00:05:58.378
+Santos, executive summary, four objectives and success metrics,
+
+00:05:58.578 --> 00:06:01.388
+time recovery is what she's interested in, response, velocity
+
+00:06:01.398 --> 00:06:04.243
+and consistency, full operational autonomy.
+
+00:06:04.563 --> 00:06:07.153
+The scope of work is a four-week AI
+
+00:06:07.163 --> 00:06:11.393
+clarity sprint. Week one, two, three, four are all
+
+00:06:11.403 --> 00:06:15.658
+mapped out here, resource and commitment requirements and next
+
+00:06:15.668 --> 00:06:18.080
+steps. So the next steps are we will review
+
+00:06:18.090 --> 00:06:21.480
+this proposal together during our follow-up call, which
+
+00:06:21.490 --> 00:06:23.170
+we will schedule later this week.
+
+00:06:23.245 --> 00:06:25.815
+So here it's given us a proposed time to
+
+00:06:25.825 --> 00:06:27.455
+follow up with her.
+
+00:06:27.500 --> 00:06:30.753
+Saying August 27th, What matters is that I do
+
+00:06:30.763 --> 00:06:33.037
+take the time that you do as well when
+
+00:06:33.047 --> 00:06:36.257
+you're generating proposal documents like this to ensure that
+
+00:06:36.267 --> 00:06:39.737
+it's factual, that it does properly represent the call
+
+00:06:39.747 --> 00:06:42.127
+that I had or you have with your clients.
+
+00:06:42.205 --> 00:06:45.035
+And next piece of this follow through is I
+
+00:06:45.045 --> 00:06:46.675
+want it to do a check.
+
+00:06:46.685 --> 00:06:50.192
+So I'm going to type in at Google calendar.
+
+00:06:50.487 --> 00:06:54.863
+Can you check my schedule for the week or
+
+00:06:54.873 --> 00:06:59.125
+a time I may be able to meet
+
+00:06:59.135 --> 00:07:00.595
+with her?
+
+00:07:01.933 --> 00:07:04.923
+All right, connecting to Google calendar, your schedule for
+
+00:07:04.933 --> 00:07:07.883
+this coming week, August 24th through the 30th is
+
+00:07:07.893 --> 00:07:11.643
+wide open with the exception of one commitment on
+
+00:07:11.653 --> 00:07:14.623
+Friday. So I think on that document, it said
+
+00:07:14.633 --> 00:07:17.968
+Thursday, August 27th. I'm going to say, is this
+
+00:07:17.978 --> 00:07:20.415
+time available? Paste that in.
+
+00:07:20.475 --> 00:07:21.935
+All right, says that time is available.
+
+00:07:22.037 --> 00:07:25.788
+Create a follow up email, sending it to Ariel,
+
+00:07:25.928 --> 00:07:28.188
+thanking her for our conversation today.
+
+00:07:28.560 --> 00:07:31.410
+That I've created a draft proposal and I would
+
+00:07:31.420 --> 00:07:34.870
+like to meet with her August 27th at 2
+
+00:07:34.880 --> 00:07:36.868
+p .m. Seeing if that time is okay with
+
+00:07:36.878 --> 00:07:38.477
+her. And we'll go from there.
+
+00:07:38.575 --> 00:07:40.887
+All right. It's created a draft for us, draft
+
+00:07:40.897 --> 00:07:42.277
+proposal and follow up call.
+
+00:07:42.498 --> 00:07:44.398
+Hi Ariel, thank you for our conversation today.
+
+00:07:44.478 --> 00:07:46.748
+I've put together a draft proposal for our practical
+
+00:07:46.758 --> 00:07:49.138
+AI integration work based on what we discuss.
+
+00:07:49.300 --> 00:07:50.650
+I would love to walk through it with you
+
+00:07:50.660 --> 00:07:52.690
+and make sure it aligns with your goals and
+
+00:07:52.700 --> 00:07:55.890
+privacy requirements. With Thursday, August 27th at 2 p
+
+00:07:55.900 --> 00:07:58.635
+.m. Central work for you for a quick follow
+
+00:07:58.645 --> 00:07:59.965
+up call to review it together.
+
+00:08:00.125 --> 00:08:02.837
+I think that sounds like a good email to
+
+00:08:02.847 --> 00:08:03.767
+send to her.
+
+00:08:04.747 --> 00:08:05.867
+I'm just going to go ahead and hit send.
+
+00:08:05.952 --> 00:08:06.752
+Now that's sent.
+
+00:08:08.647 --> 00:08:11.690
+The last part of this is I'm going to
+
+00:08:11.700 --> 00:08:14.507
+see if we can have Google Calendar.
+
+00:08:14.867 --> 00:08:19.162
+Can you add a placeholder on our calendar
+
+00:08:19.172 --> 00:08:22.615
+for that event connecting to Google Calendar?
+
+00:08:22.625 --> 00:08:25.615
+It has added the placeholder for the proposal meeting
+
+00:08:25.625 --> 00:08:27.475
+with Ariel. We're going to go and check that
+
+00:08:27.485 --> 00:08:30.225
+out. And there it is on our Google Calendar.
+
+00:08:30.785 --> 00:08:31.745
+We're good to go.
+
+00:08:32.303 --> 00:08:35.077
+So awesome. We started with a reliable source of
+
+00:08:35.087 --> 00:08:38.197
+information. That being the email in Ariel's own words
+
+00:08:38.207 --> 00:08:40.972
+and her website. And we used a single Gemini
+
+00:08:40.982 --> 00:08:44.522
+thread, carried it through a real business process.
+
+00:08:44.842 --> 00:08:46.722
+The inquiry became a prepared call.
+
+00:08:47.122 --> 00:08:48.742
+The call became a proposal.
+
+00:08:48.962 --> 00:08:51.772
+The proposal became an email in time on our
+
+00:08:51.782 --> 00:08:54.793
+calendar. I never re-explained the same information twice
+
+00:08:54.803 --> 00:08:57.373
+and I reviewed everything before I went anywhere.
+
+00:08:57.383 --> 00:08:59.865
+If you want to apply this, don't start by
+
+00:08:59.875 --> 00:09:03.065
+automating everything. Start with one relationship and one
+
+00:09:03.075 --> 00:09:06.175
+conversation. Give Gemini reliable context.
+
+00:09:06.655 --> 00:09:08.985
+Let it reach into the tools you already use
+
+00:09:08.995 --> 00:09:10.975
+and keep yourself in the approval step.
+
+00:09:11.012 --> 00:09:14.062
+The beginner version can be as simple as using
+
+00:09:14.072 --> 00:09:17.262
+information already stored in your Google Drive to prepare
+
+00:09:17.272 --> 00:09:18.752
+a better Gmail draft.
+
+00:09:18.913 --> 00:09:21.923
+As you become more comfortable, that same context can
+
+00:09:21.933 --> 00:09:24.413
+support your tracking and scheduling as well.

@@ -106,7 +106,7 @@ function validateLead(body: unknown): KitLead | null {
     source:
       typeof data.source === 'string'
         ? data.source.trim().slice(0, 240)
-        : 'ianmcdonald.ai/kits',
+        : 'ianmcdonald.ai/learn',
     contact: {
       firstName,
       email,

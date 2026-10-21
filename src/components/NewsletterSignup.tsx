@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Navigation from './Navigation';
+import styles from '@/components/site/PublicPage.module.css';
 import { trackFormSubmission, trackButtonClick } from '@/lib/analytics';
 
 const NewsletterSignup: React.FC = () => {
@@ -12,9 +12,11 @@ const NewsletterSignup: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting || submitSuccess) return;
     
     if (!name || !email) {
       setSubmitError('Please fill in your name and email.');
@@ -32,9 +34,6 @@ const NewsletterSignup: React.FC = () => {
     };
 
     try {
-      console.log('[NewsletterSignup] Form submission started');
-      console.log('[NewsletterSignup] Sending webhook data:', webhookData);
-      
       const response = await fetch('/api/newsletter-signup', {
         method: 'POST',
         headers: {
@@ -43,8 +42,6 @@ const NewsletterSignup: React.FC = () => {
         body: JSON.stringify(webhookData),
       });
       
-      console.log('[NewsletterSignup] API response status:', response.status);
-
       // Check if response is actually JSON
       const contentType = response.headers.get('content-type');
       if (!contentType || !contentType.includes('application/json')) {
@@ -56,23 +53,18 @@ const NewsletterSignup: React.FC = () => {
         throw new Error(errorData.error || 'Failed to subscribe. Please try again.');
       }
 
-      console.log('[NewsletterSignup] Webhook success');
-      
-      // Track newsletter signup
-      console.log('[NewsletterSignup] Tracking analytics event');
-      trackFormSubmission('newsletter_signup', {
-        page_location: '/newsletter',
-        source: 'newsletter_page',
-      });
+      const result = await response.json();
+      if (result.status !== 'subscribed') throw new Error('Subscription could not be confirmed. Please try again.');
+      if (result.newSignup) {
+        trackFormSubmission('newsletter_signup', { form_location: 'newsletter_page' });
+      }
+      setSuccessMessage(result.newSignup ? 'You’re subscribed. Thanks for joining!' : 'You’re already subscribed. Thanks for checking!');
 
       setSubmitSuccess(true);
       setName('');
       setEmail('');
       setPhone('');
 
-      setTimeout(() => {
-        setSubmitSuccess(false);
-      }, 5000);
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : 'An error occurred. Please try again.');
     } finally {
@@ -81,137 +73,30 @@ const NewsletterSignup: React.FC = () => {
   };
 
   return (
-    <>
-      <Navigation />
-      <section className="min-h-screen pt-24 px-6 py-12 lg:py-20">
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-              Join My Newsletter
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-300 leading-relaxed">
-              Weekly builds, lessons, and behind-the-scenes of building AI products. Get practical insights delivered to your inbox.
-            </p>
-            <Link
-              href="/newsletter-directory"
-              className="inline-block mt-4 text-red-400 hover:text-red-300 text-sm font-medium"
-            >
-              Browse past issues →
-            </Link>
-          </div>
-
-          {/* Form Container */}
-          <div className="bg-zinc-900/60 rounded-2xl border border-gray-800 p-8 lg:p-12">
-            <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Personal Information */}
-              <div className="space-y-6">
-                <h2 className="text-2xl font-bold text-white mb-2">Your Information</h2>
-                
-                <div>
-                  <label htmlFor="name" className="block text-sm text-gray-400 mb-2">
-                    Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    id="name"
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
-                    placeholder="Jane Doe"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="email" className="block text-sm text-gray-400 mb-2">
-                    Email <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
-                    placeholder="jane@example.com"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="phone" className="block text-sm text-gray-400 mb-2">
-                    Phone <span className="text-gray-500 text-xs">(optional)</span>
-                  </label>
-                  <input
-                    id="phone"
-                    type="tel"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="w-full bg-zinc-900 text-white rounded-lg border border-gray-700 h-12 px-4 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-all"
-                    placeholder="(555) 555-5555"
-                  />
-                </div>
-              </div>
-
-              {/* Success/Error Messages */}
-              {submitSuccess && (
-                <div className="p-4 rounded-lg bg-green-900/30 border border-green-600/50">
-                  <p className="text-green-400 font-medium">
-                    ✓ Successfully subscribed! Check your email for confirmation.
-                  </p>
-                </div>
-              )}
-
-              {submitError && (
-                <div className="p-4 rounded-lg bg-red-900/30 border border-red-600/50">
-                  <p className="text-red-400 font-medium">
-                    {submitError}
-                  </p>
-                </div>
-              )}
-
-              {/* Submit Button */}
-              <div className="pt-4">
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  onClick={() => {
-                    if (!isSubmitting) {
-                      trackButtonClick('subscribe_newsletter', 'newsletter_page');
-                    }
-                  }}
-                  className="w-full px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-red-600/50 disabled:opacity-50 disabled:cursor-not-allowed text-lg"
-                >
-                  {isSubmitting ? 'Subscribing...' : 'Subscribe to Newsletter'}
-                </button>
-                <p className="text-xs text-gray-500 text-center mt-4">
-                  By subscribing, you&apos;ll receive weekly updates about building AI products and practical insights.
-                  <br />
-                  By submitting this form, you agree to our{' '}
-                  <a href="/privacy" className="text-red-500 hover:text-red-400 underline" target="_blank" rel="noopener noreferrer">
-                    Privacy Policy
-                  </a>
-                  {' '}and consent to being contacted for marketing purposes.
-                </p>
-              </div>
-            </form>
-          </div>
-
-          {/* Additional Info */}
-          <div className="mt-12 text-center text-gray-400">
-            <p className="mb-2">Questions? Email me at</p>
-            <a 
-              href="mailto:ian@ianmcdonald.ai" 
-              className="text-red-500 hover:text-red-400 underline"
-            >
-              ian@ianmcdonald.ai
-            </a>
-          </div>
+    <section className={styles.page}>
+      <div className={styles.split}>
+        <header>
+          <p className={styles.eyebrow}>From Ian’s workbench</p>
+          <h1>What I’m building.<br />What I’m learning.</h1>
+          <p className={styles.intro}>Practical notes on AI, products, and the work behind them. The useful lessons, including the things that didn’t go to plan.</p>
+          <p className={styles.meta}>Weekly. Written from experience.</p>
+          <Link className={styles.textLink} href="/newsletter-directory">Read a past issue →</Link>
+        </header>
+        <div className={styles.panel}>
+          <h2>Get the next note.</h2>
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <label htmlFor="name">Name<input id="name" autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} required disabled={isSubmitting || submitSuccess} placeholder="Your name" /></label>
+            <label htmlFor="email">Email<input id="email" type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} required disabled={isSubmitting || submitSuccess} placeholder="you@example.com" /></label>
+            <label htmlFor="phone">Phone <span>(optional)</span><input id="phone" type="tel" autoComplete="tel" value={phone} onChange={(e) => setPhone(e.target.value)} disabled={isSubmitting || submitSuccess} placeholder="Your phone number" /></label>
+            {submitSuccess && <p role="status" className={styles.success}>{successMessage}</p>}
+            {submitError && <p role="alert">{submitError}</p>}
+            <button type="submit" disabled={isSubmitting || submitSuccess} onClick={() => { if (!isSubmitting && !submitSuccess) trackButtonClick('subscribe_newsletter', 'newsletter_page'); }} className={styles.button}>{isSubmitting ? 'Subscribing…' : submitSuccess ? 'You’re subscribed' : 'Send me the notes →'}</button>
+            <p className={styles.finePrint}>By subscribing, you’ll receive weekly updates about building AI products and practical insights. You agree to the <Link href="/privacy">Privacy Policy</Link> and consent to being contacted for marketing purposes.</p>
+          </form>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 
 export default NewsletterSignup;
-
