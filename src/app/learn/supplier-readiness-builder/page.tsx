@@ -3,6 +3,7 @@ import SupplierReadinessBuilder from '@/components/workshop-kits/SupplierReadine
 
 export const metadata: Metadata = {
   title: 'AI Supplier Readiness Builder | Ian McDonald AI',
+  alternates: { canonical: '/learn/supplier-readiness-builder' },
   description:
     'A practical AI workshop kit for HMSDC MBE Leadership Academy participants to organize business knowledge, generate prompts, and draft their Capstone deliverables.',
 };

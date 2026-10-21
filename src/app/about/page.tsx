@@ -13,7 +13,7 @@ export default function AboutPage() {
       <figure className={styles.portrait}><Image src="/ian-mcdonald.png" alt="Ian McDonald" width={1024} height={1024} priority sizes="(max-width:760px) 100vw, 45vw" /><figcaption>Houston, Texas / Still learning. Still building.</figcaption></figure>
     </div>
     <div className={styles.cards}>
-      <article className={styles.card}><span>TEACHING & SHARING</span><h2>Ian McDonald AI</h2><p>This is where I share what I’m building, teach practical AI, and take speaking and workshop bookings.</p><Link href="/#learn" className={styles.textLink}>Learn with me →</Link></article>
+      <article className={styles.card}><span>TEACHING & SHARING</span><h2>Ian McDonald AI</h2><p>This is where I share what I’m building, teach practical AI, and take speaking and workshop bookings.</p><Link href="/learn" className={styles.textLink}>Learn with me →</Link></article>
       <article className={styles.card}><span>BUILDING FOR BUSINESSES</span><h2>Disruptiv Solutions</h2><p>My company for custom websites, apps, AI workflows, video, and campaigns. Work directly with me to choose a useful first project.</p><DisruptivProjectLink location="about_page" className={styles.textLink} /></article>
       <article className={styles.card}><span>COMMUNITIES & PLATFORMS</span><h2>LaunchBox</h2><p>The product I’m building for people turning their expertise into branded AI-powered communities.</p><a href="https://launchbox.space" className={styles.textLink}>Explore LaunchBox →</a></article>
     </div>
