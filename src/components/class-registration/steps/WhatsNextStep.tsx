@@ -1,13 +1,14 @@
 import React from 'react';
+import { IAN_SOCIAL_URLS } from '@/lib/ian-social-links';
 
 const WAITLIST_URL = 'https://www.ianmcdonald.ai/waitlist';
 const NEWSLETTER_URL = 'https://www.ianmcdonald.ai/newsletter';
 const COMMUNITY_URL = 'https://www.facebook.com/groups/2000295250823114';
-const FACEBOOK_URL = 'https://www.facebook.com/ian.mcmonster/';
-const LINKEDIN_URL = 'https://www.linkedin.com/in/ian-mcdonald-673225243/';
-const INSTAGRAM_URL = 'https://www.instagram.com/disruptiv.solutions/';
-const TIKTOK_URL = 'https://www.tiktok.com/@ianmcdonaldai';
-const YOUTUBE_URL = 'https://www.youtube.com/@IansDisruptivSolutions/shorts';
+const FACEBOOK_URL = IAN_SOCIAL_URLS.Facebook;
+const LINKEDIN_URL = IAN_SOCIAL_URLS.LinkedIn;
+const INSTAGRAM_URL = IAN_SOCIAL_URLS.Instagram;
+const TIKTOK_URL = IAN_SOCIAL_URLS.TikTok;
+const YOUTUBE_URL = IAN_SOCIAL_URLS.YouTube;
 
 const openLink = (url: string) => {
   window.open(url, '_blank', 'noopener,noreferrer');

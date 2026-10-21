@@ -223,6 +223,9 @@
 .footer nav { display: flex; flex-wrap: wrap; gap: 23px; margin-left: auto; font-size: 10px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
 .footer nav a { color: var(--red-dark); }
 .footer nav a:hover { color: var(--ink); }
+.footer .socialRow { width: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; padding-top: 20px; border-top: 1px solid rgba(22,24,27,.14); }
+.footer .socialRow > span { font-size: 10px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.footer .socialRow nav { margin-left: 0; }
 
 .page :is(a, button, input, select, textarea):focus-visible { outline: 3px solid rgba(225,5,16,.4); outline-offset: 3px; }
 

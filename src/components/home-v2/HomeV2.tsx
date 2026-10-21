@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
 import { trackButtonClick, trackFormSubmission } from "@/lib/analytics";
 import styles from "./HomeV2.module.css";
+import { IAN_SOCIAL_URLS } from "@/lib/ian-social-links";
 
 const CALENDAR_URL = "https://calendar.app.google/J6uMiKkf3AM4zS9MA";
 const LAUNCH_AND_LEARN_URL = "https://meet.google.com/cgm-vcdg-hvh";
@@ -326,7 +327,7 @@ export default function HomeV2() {
         </section>
       </main>
 
-      <footer className={styles.footer}><div className={styles.container}><Brand /><span>Houston, TX</span><nav><a href="#speaking">Speaking</a><a href="#talks">Talks</a><a href="#launchlearn">Launch & Learn</a><Link href="/newsletter">Newsletter</Link><a href="mailto:ian@ianmcdonald.ai">Email Ian</a></nav></div></footer>
+      <footer className={styles.footer}><div className={styles.container}><Brand /><span>Houston, TX</span><nav aria-label="Footer navigation"><a href="#speaking">Speaking</a><a href="#talks">Talks</a><a href="#launchlearn">Launch & Learn</a><Link href="/newsletter">Newsletter</Link><a href="mailto:ian@ianmcdonald.ai">Email Ian</a></nav><div className={styles.socialRow}><span>Follow Ian</span><nav aria-label="Follow Ian">{Object.entries(IAN_SOCIAL_URLS).map(([name, href]) => <a key={name} href={href} target="_blank" rel="noopener noreferrer">{name}</a>)}</nav></div></div></footer>
     </div>
   );
 }
