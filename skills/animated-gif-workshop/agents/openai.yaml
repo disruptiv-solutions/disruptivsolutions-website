@@ -1,0 +1,4 @@
+interface:
+  display_name: "Animated GIF Workshop"
+  short_description: "Turn reference artwork into polished looping GIFs"
+  default_prompt: "Use $animated-gif-workshop to turn my reference artwork into a clean looping GIF."
