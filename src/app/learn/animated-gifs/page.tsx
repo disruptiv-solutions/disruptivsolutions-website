@@ -4,12 +4,13 @@ import Link from 'next/link';
 import CopyPrompt from './CopyPrompt';
 import LoopPreview from './LoopPreview';
 import FrameLab from './FrameLab';
+import GifGallery from './GifGallery';
 import { installPrompt, skillUrl, steps } from './lesson';
 import styles from './lesson.module.css';
 
 export const metadata: Metadata = {
   title: 'Make your artwork move | Ian McDonald AI',
-  description: 'Make a looping GIF from your own artwork. Explore the transformation frames, follow five practical moves, and download the skill for your AI agent.',
+  description: 'Browse Ian’s GIF gallery, inspect the transformation frames, and make your own looping animation with five practical moves and a downloadable agent skill.',
   alternates: { canonical: '/learn/animated-gifs' },
   openGraph: { title: 'Make your artwork move', description: 'Your artwork. A few good prompts. One useful loop.', url: '/learn/animated-gifs', images: [{ url: '/learn/animated-gifs/ian-lockup-still.png', width: 1100, height: 384, alt: 'Ian McDonald AI animated logo workshop' }] },
 };
@@ -37,6 +38,8 @@ export default function AnimatedGifsPage() {
       </figure>
       <div className={styles.heroBottom}><span>ONE REFERENCE. A FEW GOOD PROMPTS. SOMETHING WORTH WATCHING.</span><a href="#frame-lab">Pull it apart <span aria-hidden="true">↓</span></a></div>
     </header>
+
+    <GifGallery />
 
     <section id="frame-lab" className={styles.labSection} aria-labelledby="lab-title">
       <div className={styles.sectionHeading}><div><p className={styles.eyebrow}>01 / See what makes it work</p><h2 id="lab-title">The good stuff<br />is <em>in between.</em></h2></div><p>A transformation is a series of drawings. In this simpler cube-to-star example, each pose carries a little of the old shape into the new one.<br /><strong>Go on. Scrub through it.</strong></p></div>
