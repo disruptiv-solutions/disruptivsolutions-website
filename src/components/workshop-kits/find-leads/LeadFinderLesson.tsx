@@ -65,7 +65,7 @@ export default function LeadFinderLesson() {
       style={{ background: "#EFE7E0", lineHeight: "1.6" }}
     >
       <nav className="kit-breadcrumb" aria-label="Breadcrumb">
-        <Link href="/kits">← Workshop kits</Link>
+        <Link href="/learn">← Learn</Link>
         <span aria-current="page">Find leads with AI</span>
       </nav>
       <div>
@@ -2135,8 +2135,8 @@ export default function LeadFinderLesson() {
                 {"ian@ianmcdonald.ai"}
               </a>
             </span>
-            <Link className="z6" href="/kits">
-              {"More workshop kits"}
+            <Link className="z6" href="/learn">
+              {"More lessons"}
             </Link>
           </div>
         </div>

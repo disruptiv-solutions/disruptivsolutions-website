@@ -1,9 +1,9 @@
 # Find leads with AI workshop kit
 
-- Public lesson: `https://www.ianmcdonald.ai/kits/find-leads`
-- Listing: `https://www.ianmcdonald.ai/kits`
-- Discovery: homepage **Learn** section → **Practical workshop kits** → **Find leads with AI**.
-- `/lead-finder` permanently redirects to `/kits/find-leads`.
+- Public lesson: `https://www.ianmcdonald.ai/learn/find-leads`
+- Listing: `https://www.ianmcdonald.ai/learn`
+- Discovery: **Learn** in the site navigation → **Find leads with AI**.
+- `/lead-finder` permanently redirects to `/learn/find-leads`.
 
 The lesson uses the main site's navigation, footer, Rosario/Montserrat fonts, and analytics. The listing comes from `src/lib/workshop-kits.ts`. Its CSS Module scopes the migrated lesson styles so they cannot restyle other pages.
 
@@ -13,10 +13,10 @@ Media lives under `public/workshop-kits/find-leads/`. The MP4 is approximately 2
 
 ## Local review
 
-Run `npm ci`, then `npm run dev`. Open `http://localhost:3002/kits/find-leads` and `http://localhost:3002/kits`. Use a separate checkout for production builds while a development server is running, because both use `.next`.
+Run `npm ci`, then `npm run dev`. Open `http://localhost:3002/learn/find-leads` and `http://localhost:3002/learn`. Use a separate checkout for production builds while a development server is running, because both use `.next`.
 
 ## Vercel
 
 This is part of the existing `disruptivsolutions-website` repository and its existing Vercel deployments. No new Vercel project or domain is required. Review the branch preview, then merge to `main` to trigger the configured production deployment. After deployment, verify both public routes, the `/lead-finder` redirect, video playback, and the copy buttons.
 
-Validation: `npm run build`, targeted ESLint, `npx tsc --noEmit`, and `node --test tests/*.test.mjs`. Browser review covers the desktop and phone layouts, Workshop Kits navigation, copy buttons, prompt selection, verification checkboxes, and MP4 playback.
+Validation: `npm run build`, targeted ESLint, `npx tsc --noEmit`, and `node --test tests/*.test.mjs`. Browser review covers the desktop and phone layouts, Learn navigation, copy buttons, prompt selection, verification checkboxes, and MP4 playback.

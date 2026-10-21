@@ -286,7 +286,7 @@ export default function SupplierReadinessBuilder() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           kitSlug: KIT_SLUG,
-          source: 'ianmcdonald.ai/kits/supplier-readiness-builder',
+          source: 'ianmcdonald.ai/learn/supplier-readiness-builder',
           sessionId,
           selectedWorkflow: state.selectedWorkflow,
           authUid: user?.uid ?? null,

@@ -138,7 +138,7 @@ export default function HomeV2() {
       <div className={`${styles.container} ${styles.learningGrid}`}>
         <div><p className={styles.eyebrow}>No stage. No ticket. Just start.</p><h2 id="learn-title">Bring a question.<br />Leave with <em>a next step.</em></h2><p>Launch & Learn is my free weekly call for practical AI building, live walkthroughs, and founder Q&A.</p><span className={styles.schedule}>Wednesdays / 1–2 PM Central / Google Meet</span><a className={styles.lightLink} href="https://meet.google.com/cgm-vcdg-hvh" target="_blank" rel="noreferrer">Join Launch & Learn <Arrow /></a></div>
         <div className={styles.learningLinks}>
-          <Link href="/kits"><span>Work through it</span><strong>Practical workshop kits</strong><Arrow /></Link>
+          <Link href="/learn"><span>Work through it</span><strong>Practical AI lessons & kits</strong><Arrow /></Link>
           <Link href="/assessment"><span>Find your starting point</span><strong>The free AI Snapshot</strong><Arrow /></Link>
           <Link href="/newsletter"><span>Notes from the workbench</span><strong>Get the builds and lessons</strong><Arrow /></Link>
           <Link href="/newsletter-directory" className={styles.archiveLink}>Read past notes <Arrow /></Link>

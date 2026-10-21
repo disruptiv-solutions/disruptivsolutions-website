@@ -82,13 +82,13 @@
 .editorial-subpage .editorial-content :is(.font-sans,.font-satoshi) { font-family: var(--font-montserrat), sans-serif; }
 .editorial-subpage .editorial-content :is(a,button)[class~="bg-black"] { background: var(--site-ink); color: white; border-radius: 99px; }
 
-@media(min-width:1024px) { .editorial-site[data-page="kits"] .editorial-content aside[class*="lg:fixed"] { top: 89px; height: calc(100dvh - 89px); } }
+@media(min-width:1024px) { .editorial-site[data-page="learn"] .editorial-content aside[class*="lg:fixed"] { top: 89px; height: calc(100dvh - 89px); } }
 
 @media(max-width:760px) { .editorial-site[data-page="speaking"] .editorial-content nav[aria-label="On this page"] { top: 67px; } }
 
 .editorial-subpage .editorial-content [class*="bg-black/"] { background-color: var(--site-panel); }
 .editorial-subpage .editorial-content [class*="shadow-"] { box-shadow: none; }
-.editorial-site[data-page="kits"] .editorial-content :is(a,button)[class~="bg-[#FF7A2F]"] { background: var(--site-red); color: white; }
+.editorial-site[data-page="learn"] .editorial-content :is(a,button)[class~="bg-[#FF7A2F]"] { background: var(--site-red); color: white; }
 
 .editorial-subpage .editorial-content [class~="bg-red-600"] { background-color: var(--site-red); color: white; }
 

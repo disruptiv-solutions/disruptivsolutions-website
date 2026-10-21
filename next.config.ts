@@ -6,7 +6,22 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/lead-finder',
-        destination: '/kits/find-leads',
+        destination: '/learn/find-leads',
+        permanent: true,
+      },
+      {
+        source: '/kits/mbe',
+        destination: '/learn/supplier-readiness-builder',
+        permanent: false,
+      },
+      {
+        source: '/kit/mbe',
+        destination: '/learn/supplier-readiness-builder',
+        permanent: false,
+      },
+      {
+        source: '/kits/:slug*',
+        destination: '/learn/:slug*',
         permanent: true,
       },
       // Keep the resource library out of the public site for now without
@@ -20,18 +35,13 @@ const nextConfig: NextConfig = {
       // Temporary so they can be repointed to a different kit for a future event.
       {
         source: '/hmsdc',
-        destination: '/kits/supplier-readiness-builder',
+        destination: '/learn/supplier-readiness-builder',
         permanent: false,
       },
-      {
-        source: '/kits/mbe',
-        destination: '/kits/supplier-readiness-builder',
-        permanent: false,
-      },
-      // Catch the singular "kit/..." mistype and send it to the real plural route.
+      // Preserve older singular kit links as well as the former /kits routes.
       {
         source: '/kit/:slug*',
-        destination: '/kits/:slug*',
+        destination: '/learn/:slug*',
         permanent: true,
       },
     ];

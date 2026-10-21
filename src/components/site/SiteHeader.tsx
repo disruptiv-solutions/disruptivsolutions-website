@@ -25,7 +25,7 @@ export default function SiteHeader({ home = false, bookingHref }: { home?: boole
       <button ref={menuButton} type="button" className={styles.menuButton} aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} aria-controls="site-navigation" onClick={() => setOpen(!open)}><span /><span /></button>
       <nav id="site-navigation" aria-label="Main navigation" className={`${styles.nav} ${open ? styles.navOpen : ''}`}>
         <div className={styles.navLinks}>{[
-          ['Speaking', '/speaking'], ['Learn', section('#learn')],
+          ['Speaking', '/speaking'], ['Learn', '/learn'],
           ['Notes', '/newsletter-directory'], ['About', '/about'],
         ].map(([label, href]) => <Link key={label} href={href} onClick={() => setOpen(false)}>{label}</Link>)}</div>
         <Link href={bookingHref || section('#inquiry')} className={styles.navCta} onClick={() => { setOpen(false); trackButtonClick('book_ian', home ? 'home_v2_nav' : 'site_nav'); }}>Book Ian <span aria-hidden="true">↗</span></Link>
