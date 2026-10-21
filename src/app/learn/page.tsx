@@ -31,6 +31,10 @@ function MeetingArtwork() {
   return <div className={styles.meetingArt} aria-hidden="true"><span>THE FOLLOW-THROUGH FILE</span><div><b>01</b> The conversation</div><div><b>02</b> The proposal</div><div><b>03</b> The next appointment</div><strong>Gemini prepares.<br />You approve. <i>✓</i></strong></div>;
 }
 
+function GifArtwork() {
+  return <div className={styles.gifArt} aria-hidden="true"><span>YOUR ARTWORK / IN MOTION</span><div>{[0, 2, 3].map(i => <Image key={i} src={`/learn/animated-gifs/pose-${i}.png`} width={90} height={90} alt="" />)}</div><strong>Make it move. <i>↻</i></strong></div>;
+}
+
 export default function LearnPage() {
   const lessons = WORKSHOP_KITS.filter((kit) => kit.status === 'live');
   const featured = lessons.find((kit) => kit.slug === 'find-leads');
@@ -79,14 +83,14 @@ export default function LearnPage() {
       </Link>}
 
       {moreLessons.map((kit, index) => <Link key={kit.slug} href={`/learn/${kit.slug}`} className={styles.workshop} aria-labelledby={`lesson-${kit.slug}`}>
-        {kit.slug === 'meeting-follow-through' ? <MeetingArtwork /> : kit.slug === 'supplier-readiness-builder' ? <ReadinessArtwork /> : <div className={styles.genericArt} aria-hidden="true">{String(index + 2).padStart(2, '0')}<span>LEARN / DO / REPEAT</span></div>}
+        {kit.slug === 'meeting-follow-through' ? <MeetingArtwork /> : kit.slug === 'animated-gifs' ? <GifArtwork /> : kit.slug === 'supplier-readiness-builder' ? <ReadinessArtwork /> : <div className={styles.genericArt} aria-hidden="true">{String(index + 2).padStart(2, '0')}<span>LEARN / DO / REPEAT</span></div>}
         <div className={styles.workshopCopy}>
-          <p className={styles.resourceType}>{String(index + 2).padStart(2, '0')} / {kit.slug === 'meeting-follow-through' ? 'Video lesson + copyable prompts' : 'Interactive workshop kit'}</p>
+          <p className={styles.resourceType}>{String(index + 2).padStart(2, '0')} / {kit.slug === 'meeting-follow-through' ? 'Video lesson + copyable prompts' : kit.slug === 'animated-gifs' ? 'GIF lesson + downloadable agent skill' : 'Interactive workshop kit'}</p>
           <h2 id={`lesson-${kit.slug}`}>{kit.title}</h2>
           <p>{kit.description}</p>
           <span className={styles.workshopAudience}>{kit.eyebrow}</span>
         </div>
-        <span className={styles.workshopAction}><span>{kit.slug === 'meeting-follow-through' ? 'Start the lesson' : 'Open the kit'}</span><Arrow /></span>
+        <span className={styles.workshopAction}><span>{kit.slug === 'animated-gifs' ? 'Make a GIF' : kit.slug === 'meeting-follow-through' ? 'Start the lesson' : 'Open the kit'}</span><Arrow /></span>
       </Link>)}
     </section>
 

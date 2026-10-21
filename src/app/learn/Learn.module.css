@@ -56,6 +56,12 @@
 .workshopAction svg { width: 22px; height: 22px; flex-shrink: 0; color: #a31921; transition: transform 180ms ease; }
 .workshop:hover .workshopAction svg { transform: translate(3px,-3px); }
 .genericArt { padding: 20px; font: 600 70px/1 var(--font-rosario), sans-serif; background: #dfd0bf; }
+.gifArt { padding:20px 14px; border:1px solid #16181b40; background:#fffcf6; transform:rotate(1.5deg); box-shadow:4px 5px 0 #d6c5b5; }
+.gifArt > span { display:block; font-size:8px; font-weight:700; letter-spacing:.08em; padding-bottom:14px; border-bottom:1px solid #16181b38; }
+.gifArt > div { display:flex; padding:8px 0; }
+.gifArt img { width:33.333%; height:auto; }
+.gifArt strong { display:flex; align-items:center; justify-content:space-between; gap:8px; font:600 26px/1.1 var(--font-rosario),sans-serif; }
+.gifArt i { font-style:normal; font-size:32px; color:#a51922; }
 .genericArt span { display: block; margin-top: 20px; font: 600 10px/1.6 var(--font-montserrat), sans-serif; letter-spacing: .1em; }
 .meetingArt { position:relative; margin:7px 5px 17px; padding:17px 17px 65px; background:#fffcf6; border:1px solid #16181b50; transform:rotate(-2deg); box-shadow:5px 6px 0 #d6c5b5; }
 .meetingArt > span { display:block; padding-bottom:12px; border-bottom:2px solid #16181b; font-size:8px; letter-spacing:.06em; font-weight:700; }
