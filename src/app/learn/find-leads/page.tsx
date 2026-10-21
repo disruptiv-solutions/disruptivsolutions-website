@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     description,
     url: '/learn/find-leads',
     type: 'website',
-    images: [{ url: '/workshop-kits/find-leads/lead-finder-walkthrough-v3.jpg', width: 1920, height: 1080, alt: 'Find leads with AI: a Gemini and Google Sheets workshop' }],
+    images: [{ url: '/workshop-kits/find-leads/lead-finder-walkthrough-v4.jpg', width: 1920, height: 1080, alt: 'Find leads with AI: a Gemini and Google Sheets workshop' }],
   },
 };
 
