@@ -23,6 +23,9 @@
 .footerBottom > span { margin-right: auto; }
 .footerBottom a, .footerBottom button { min-height: 32px; color: inherit; background: none; border: 0; font: inherit; cursor: pointer; text-decoration: none; }
 .footerBottom > p { width: 100%; }
+.footer nav.socialLinks { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 8px 24px; padding-block: 16px; border-top: 1px solid var(--site-line); }
+.footer nav.socialLinks .eyebrow { margin-bottom: 0; }
+.footer nav.socialLinks a { min-height: 44px; display: inline-flex; align-items: center; }
 .header :is(a,button):focus-visible, .footer :is(a,button):focus-visible { outline: 2px solid var(--site-red); outline-offset: 5px; }
 @media(max-width: 1000px) { .headerInner { width: calc(100% - 72px); } .nav { gap: 15px; } .navLinks { gap: 16px; padding-inline: 16px; } .nav a { font-size: 12px; letter-spacing: .07em; } .headerInner { gap: 18px; } }
 @media(max-width: 760px) {

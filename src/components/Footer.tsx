@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { usePathname } from 'next/navigation';
+import { IAN_SOCIAL_URLS } from '@/lib/ian-social-links';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -65,6 +66,10 @@ const Footer: React.FC = () => {
             </p>
           </div>
         </div>
+        <nav aria-label="Follow Ian" className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-gray-800 pt-4 text-sm text-gray-400">
+          <span>Follow Ian</span>
+          {Object.entries(IAN_SOCIAL_URLS).map(([name, href]) => <a key={name} href={href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center hover:text-white focus-visible:underline">{name}</a>)}
+        </nav>
       </div>
     </footer>
   );
