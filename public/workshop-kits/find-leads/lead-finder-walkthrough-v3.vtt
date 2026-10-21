@@ -1,0 +1,253 @@
+WEBVTT
+
+1
+00:00:00.200 --> 00:00:02.454
+A list of names isn't a pipeline.
+
+2
+00:00:03.134 --> 00:00:05.694
+Find leads with AI, then actually follow up.
+
+3
+00:00:07.200 --> 00:00:10.582
+Give AI context once, then repeat three moves,
+
+4
+00:00:11.202 --> 00:00:13.183
+find leads, verify the details,
+
+5
+00:00:13.542 --> 00:00:16.122
+and organize the follow-up. What you learn
+
+6
+00:00:16.122 --> 00:00:17.342
+shapes your next search.
+
+7
+00:00:18.567 --> 00:00:21.175
+Start by teaching Gemini what you do and
+
+8
+00:00:21.175 --> 00:00:21.855
+who you help.
+
+9
+00:00:22.575 --> 00:00:24.855
+Here, I paste a short public business description
+
+10
+00:00:24.855 --> 00:00:26.795
+and ask for an audience summary.
+
+11
+00:00:27.255 --> 00:00:28.835
+You can do this without connecting your inbox.
+
+12
+00:00:31.567 --> 00:00:34.609
+Give the search a clear audience, location, and
+
+13
+00:00:34.609 --> 00:00:35.149
+time window.
+
+14
+00:00:35.649 --> 00:00:38.369
+Here it is small business owners, Houston or
+
+15
+00:00:38.369 --> 00:00:40.629
+online, and November through January.
+
+16
+00:00:41.149 --> 00:00:42.969
+Then ask why each opportunity fits.
+
+17
+00:00:44.767 --> 00:00:47.254
+Notice the six parts of the prompt, a
+
+18
+00:00:47.254 --> 00:00:52.194
+research role, a specific task, where, when, the
+
+19
+00:00:52.194 --> 00:00:52.654
+workshop
+
+20
+00:00:52.654 --> 00:00:55.254
+offer, and a table as the output.
+
+21
+00:00:55.794 --> 00:00:58.214
+I also asked Gemini to flag anything it
+
+22
+00:00:58.214 --> 00:00:59.034
+cannot verify.
+
+23
+00:01:00.767 --> 00:01:02.644
+Next, research the gaps.
+
+24
+00:01:03.364 --> 00:01:06.984
+A public contact path, an application link, a
+
+25
+00:01:06.984 --> 00:01:09.944
+pitch angle, and a concrete next action.
+
+26
+00:01:10.664 --> 00:01:12.664
+A missing field should stay missing.
+
+27
+00:01:13.264 --> 00:01:16.044
+These are candidates to review, not confirmed speaking
+
+28
+00:01:16.044 --> 00:01:16.544
+invitations.
+
+29
+00:01:18.267 --> 00:01:19.595
+Open the original source.
+
+30
+00:01:20.435 --> 00:01:22.915
+The expo page confirms December 2nd,
+
+31
+00:01:23.115 --> 00:01:25.375
+but the speaker application adds something important.
+
+32
+00:01:26.055 --> 00:01:28.695
+It is unpaid, spots are not guaranteed,
+
+33
+00:01:29.415 --> 00:01:31.415
+and applications fill last-minute openings.
+
+34
+00:01:32.255 --> 00:01:34.035
+I correct the next action and keep the
+
+35
+00:01:34.035 --> 00:01:35.375
+status as needs review.
+
+36
+00:01:36.355 --> 00:01:38.335
+Gemini prepares. You approve.
+
+37
+00:01:40.267 --> 00:01:42.836
+Put the corrected leads into a simpler table.
+
+38
+00:01:43.336 --> 00:01:45.276
+Give every row a status and a next
+
+39
+00:01:45.276 --> 00:01:45.716
+action.
+
+40
+00:01:46.276 --> 00:01:49.016
+Open the table menu, choose Export to Sheets,
+
+41
+00:01:49.396 --> 00:01:51.056
+and open the spreadsheet when it is ready.
+
+42
+00:01:53.267 --> 00:01:56.168
+Now make the tracker easy to use. Select
+
+43
+00:01:56.168 --> 00:01:57.988
+the table and wrap the text.
+
+44
+00:01:58.468 --> 00:02:01.268
+Add filters, make the heading row bold, and
+
+45
+00:02:01.268 --> 00:02:02.108
+give it a little color.
+
+46
+00:02:02.988 --> 00:02:05.728
+Freeze one row, then widen the columns so
+
+47
+00:02:05.728 --> 00:02:07.408
+the next actions are readable.
+
+48
+00:02:08.088 --> 00:02:10.228
+Keep the review status until you decide what
+
+49
+00:02:10.228 --> 00:02:10.848
+happens next.
+
+50
+00:02:13.267 --> 00:02:16.328
+My example is speaking gigs. Yours might be
+
+51
+00:02:16.328 --> 00:02:18.748
+clients, referral partners, or sponsors.
+
+52
+00:02:19.408 --> 00:02:22.188
+Keep the method, swap in your ideal lead
+
+53
+00:02:22.188 --> 00:02:23.028
+and your offer.
+
+54
+00:02:24.233 --> 00:02:25.519
+Here is the next step.
+
+55
+00:02:26.139 --> 00:02:29.119
+Turn one researched lead into a draft proposal.
+
+56
+00:02:29.599 --> 00:02:30.779
+Ask for a short message,
+
+57
+00:02:31.059 --> 00:02:32.839
+check its claims, and revise it.
+
+58
+00:02:33.199 --> 00:02:34.119
+Keep it as a draft.
+
+59
+00:02:34.459 --> 00:02:36.339
+You review it before anything sends.
+
+60
+00:02:38.233 --> 00:02:39.994
+The list is your starting point.
+
+61
+00:02:40.514 --> 00:02:41.934
+The relationship comes next.
+
+62
+00:02:42.454 --> 00:02:44.174
+You'll find the full prompts on the lesson
+
+63
+00:02:44.174 --> 00:02:44.514
+page.
