@@ -4,6 +4,11 @@ import { withBotId } from "botid/next/config";
 const nextConfig: NextConfig = {
   async redirects() {
     return [
+      {
+        source: '/lead-finder',
+        destination: '/kits/find-leads',
+        permanent: true,
+      },
       // Keep the resource library out of the public site for now without
       // deleting its content or breaking direct workshop/class links.
       {
