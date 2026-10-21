@@ -27,6 +27,10 @@ function ReadinessArtwork() {
   </div>;
 }
 
+function MeetingArtwork() {
+  return <div className={styles.meetingArt} aria-hidden="true"><span>THE FOLLOW-THROUGH FILE</span><div><b>01</b> The conversation</div><div><b>02</b> The proposal</div><div><b>03</b> The next appointment</div><strong>Gemini prepares.<br />You approve. <i>✓</i></strong></div>;
+}
+
 export default function LearnPage() {
   const lessons = WORKSHOP_KITS.filter((kit) => kit.status === 'live');
   const featured = lessons.find((kit) => kit.slug === 'find-leads');
@@ -75,14 +79,14 @@ export default function LearnPage() {
       </Link>}
 
       {moreLessons.map((kit, index) => <Link key={kit.slug} href={`/learn/${kit.slug}`} className={styles.workshop} aria-labelledby={`lesson-${kit.slug}`}>
-        {kit.slug === 'supplier-readiness-builder' ? <ReadinessArtwork /> : <div className={styles.genericArt} aria-hidden="true">{String(index + 2).padStart(2, '0')}<span>LEARN / DO / REPEAT</span></div>}
+        {kit.slug === 'meeting-follow-through' ? <MeetingArtwork /> : kit.slug === 'supplier-readiness-builder' ? <ReadinessArtwork /> : <div className={styles.genericArt} aria-hidden="true">{String(index + 2).padStart(2, '0')}<span>LEARN / DO / REPEAT</span></div>}
         <div className={styles.workshopCopy}>
-          <p className={styles.resourceType}>{String(index + 2).padStart(2, '0')} / Interactive workshop kit</p>
+          <p className={styles.resourceType}>{String(index + 2).padStart(2, '0')} / {kit.slug === 'meeting-follow-through' ? 'Video lesson + copyable prompts' : 'Interactive workshop kit'}</p>
           <h2 id={`lesson-${kit.slug}`}>{kit.title}</h2>
           <p>{kit.description}</p>
           <span className={styles.workshopAudience}>{kit.eyebrow}</span>
         </div>
-        <span className={styles.workshopAction}><span>Open the kit</span><Arrow /></span>
+        <span className={styles.workshopAction}><span>{kit.slug === 'meeting-follow-through' ? 'Start the lesson' : 'Open the kit'}</span><Arrow /></span>
       </Link>)}
     </section>
 

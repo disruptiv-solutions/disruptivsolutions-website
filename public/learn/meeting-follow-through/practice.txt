@@ -1,0 +1,76 @@
+TURN MEETINGS INTO FOLLOW-THROUGH — PRACTICE
+Ian McDonald AI
+https://www.ianmcdonald.ai/learn/meeting-follow-through
+
+This is a fully fictional example. Do not send messages or create invitations for these characters. Use your own verified contact details and dates when you apply the workflow for real.
+
+PART 1 — AN INQUIRY
+
+Subject: Help with our workshop follow-up?
+
+Hi,
+
+I run Northstar Training, a small training business for local business owners. We deliver hands-on workshops and one-to-one sessions.
+
+I spend too much time turning workshop notes into resources and answering the same inquiry emails. I would like a simple way to draft materials and follow up consistently, while reviewing everything myself. We already use Gmail, Docs, Drive, Meet, and Calendar. I do not want to add a new CRM.
+
+Could we arrange a discovery call to work out where to start?
+
+Jordan
+
+Website: none supplied. Use only the description above. Do not invent a website or pretend to research one.
+
+PART 2 — PRACTICE MEETING NOTES
+
+Meeting: Northstar Training discovery call
+Participants: Jordan (business owner), you (consultant)
+Date: [YOUR PRACTICE DATE]
+Status: fictional meeting notes, not a recording or verbatim transcript
+
+Priorities:
+- Spend less evening time drafting workshop handouts.
+- Reply to prospective clients more consistently.
+- Keep the existing Google tools.
+- Review every client-facing draft personally.
+
+Constraints:
+- Jordan can spend about two hours per week testing a workflow.
+- Real participant information must not be included in practice prompts.
+- Any account settings and privacy requirements must be checked before using real client information.
+
+Decisions:
+- Start by mapping the inquiry-to-follow-up process.
+- Test a draft reply workflow with fictional inquiries.
+- Keep human approval before anything is sent.
+
+Suggested, not yet agreed:
+- A four-week pilot.
+- A target of saving several hours per week. No measured results exist.
+- A short proposal review next week.
+
+Open questions:
+- Which inquiry types take the most time?
+- Who reviews the drafts if Jordan is unavailable?
+- What is the budget?
+- Which Google account and features are available?
+
+Action items:
+- You: prepare a draft proposal. Due date not agreed.
+- Jordan: gather three fictional or anonymized inquiry examples. Due date not agreed.
+- Both: confirm a proposal review time. No appointment has been accepted.
+
+PART 3 — TRY THE LESSON
+
+1. Generate five discovery questions from the inquiry.
+2. Add the notes to the same Gemini conversation.
+3. Draft a proposal with unconfirmed details clearly marked.
+4. Use your own calendar to propose a future practice time.
+5. Draft a follow-up using placeholders. Do not send it.
+6. Prepare a private tentative hold, with no guests. Create it only if you choose to.
+
+CHECK YOUR WORK
+
+Did Gemini invent a price, date, website, commitment, or guaranteed saving?
+Does the proposal distinguish the agreed first step from the suggested pilot?
+Does the email ask whether the time works rather than imply it is confirmed?
+Does the calendar hold clearly say “Tentative” and have no guests?

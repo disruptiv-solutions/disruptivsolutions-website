@@ -21,6 +21,17 @@ export const WORKSHOP_KITS: WorkshopKit[] = [
     status: 'live',
   },
   {
+    slug: 'meeting-follow-through',
+    title: 'Turn meetings into follow-through',
+    eyebrow: 'Google Gemini + Meet, Drive, Docs, Gmail & Calendar',
+    audience: 'Business owners who want a useful next step after a discovery call',
+    description:
+      'Turn an inquiry and discovery call into a reviewed proposal, personal follow-up, and next appointment. Watch Ian’s original demo and use six steps with copyable prompts.',
+    eventContext:
+      'Adapted from Ian’s August 25, 2026 workshop with Maria Elena Duron.',
+    status: 'live',
+  },
+  {
     slug: 'supplier-readiness-builder',
     title: 'AI Supplier Readiness Builder',
     eyebrow: 'HMSDC MBE Leadership Academy',
