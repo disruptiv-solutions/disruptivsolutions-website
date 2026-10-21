@@ -5,7 +5,7 @@ export type WorkshopKit = {
   audience: string;
   description: string;
   eventContext: string;
-  status: 'live' | 'draft';
+  status: 'live' | 'draft' | 'unlisted';
 };
 
 export const WORKSHOP_KITS: WorkshopKit[] = [
@@ -29,7 +29,7 @@ export const WORKSHOP_KITS: WorkshopKit[] = [
       'A guided kit for organizing business knowledge, scoring AI readiness, and generating prompts that draft your Capstone deliverables.',
     eventContext:
       'Created by Ian McDonald | Practical AI Workshops, a Disruptiv Solutions LLC brand, for HMSDC MBE Leadership Academy participants.',
-    status: 'live',
+    status: 'unlisted',
   },
 ];
 

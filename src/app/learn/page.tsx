@@ -48,7 +48,7 @@ export default function LearnPage() {
     <section aria-label="Lessons and workshop kits" className={styles.library}>
       <div className={styles.libraryHeading}>
         <span>The practical collection</span>
-        <span>{String(lessons.length).padStart(2, '0')} resources / ready when you are</span>
+        <span>{String(lessons.length).padStart(2, '0')} {lessons.length === 1 ? 'resource' : 'resources'} / ready when you are</span>
       </div>
 
       {featured && <Link href={`/learn/${featured.slug}`} className={styles.featured} aria-labelledby="featured-lesson-title">
