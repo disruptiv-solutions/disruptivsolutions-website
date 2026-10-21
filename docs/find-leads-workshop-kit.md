@@ -7,9 +7,13 @@
 
 The lesson uses the main site's navigation, footer, Rosario/Montserrat fonts, and analytics. The listing comes from `src/lib/workshop-kits.ts`. Its CSS Module scopes the migrated lesson styles so they cannot restyle other pages.
 
-The complete reviewed lesson is included: the v3 narrated browser walkthrough, English captions, the Gemini and Sheets tool cards, eight steps, six copyable prompts, the interactive prompt breakdown, the verification checklist, and the tracker animation. The preview of Drive, Gmail, and Calendar remains clearly separated from the basic Gemini-to-Sheets workflow.
+The complete reviewed lesson is included: the v4 narrated browser walkthrough (2 min 56 sec), English captions, the Gemini and Sheets tool cards, eight steps, six copyable prompts, the interactive prompt breakdown, the verification checklist, and the tracker animation. The preview of Drive, Gmail, and Calendar remains clearly separated from the basic Gemini-to-Sheets workflow.
 
-Media lives under `public/workshop-kits/find-leads/`. The MP4 is approximately 24 MB and plays on demand (`preload="none"`); no external video service or new environment variables are needed. `ASSET-SOURCES.md` records the Google icon sources. The original lesson ZIP was not modified.
+The October 21, 2026 correction replaces manual formatting instructions in Step 7 with Gemini inside Google Sheets. Learners click the sheet's top-right Gemini sparkle, submit the tested prompt, then review the formatted tracker. The tested Beta applied the edits directly; other interfaces may show a preview and Apply button. The lesson notes account eligibility and keeps the exported tracker usable when the assistant is unavailable.
+
+The tested formatting prompt is: “Give this tracker a clean, polished look: dark blue headers, subtle alternating rows, wrapped text, and readable column widths. Keep all data and links unchanged.”
+
+Media lives under `public/workshop-kits/find-leads/`. The active files are `lead-finder-walkthrough-v4.mp4`, `lead-finder-walkthrough-v4.vtt`, and `lead-finder-walkthrough-v4.jpg`. The MP4 plays on demand (`preload="none"`); no external video service or new environment variables are needed. `ASSET-SOURCES.md` records the Google icon sources. The original lesson ZIP was not modified. This page has no chapter jump controls or downloadable SRT/source ZIP links.
 
 ## Local review
 

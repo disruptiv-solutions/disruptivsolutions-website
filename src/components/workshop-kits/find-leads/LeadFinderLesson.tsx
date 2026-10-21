@@ -116,7 +116,7 @@ export default function LeadFinderLesson() {
               <h2 className="y6 y4 y1" id="lesson-video-title">
                 Watch the workflow
               </h2>
-              <span>2 min 46 sec</span>
+              <span>2 min 56 sec</span>
             </div>
             <video
               className="lesson-video-player"
@@ -125,22 +125,22 @@ export default function LeadFinderLesson() {
               controls
               playsInline
               preload="none"
-              poster="/workshop-kits/find-leads/lead-finder-walkthrough-v3.jpg"
+              poster="/workshop-kits/find-leads/lead-finder-walkthrough-v4.jpg"
               aria-label="Find leads with AI: Gemini and Google Sheets walkthrough"
               aria-describedby="lesson-video-description"
             >
               <source
-                src="/workshop-kits/find-leads/lead-finder-walkthrough-v3.mp4"
+                src="/workshop-kits/find-leads/lead-finder-walkthrough-v4.mp4"
                 type="video/mp4"
               />
               <track
-                src="/workshop-kits/find-leads/lead-finder-walkthrough-v3.vtt"
+                src="/workshop-kits/find-leads/lead-finder-walkthrough-v4.vtt"
                 kind="captions"
                 srcLang="en"
                 label="English"
               />
               <p>
-                <a href="/workshop-kits/find-leads/lead-finder-walkthrough-v3.mp4">
+                <a href="/workshop-kits/find-leads/lead-finder-walkthrough-v4.mp4">
                   Watch or download the lesson video
                 </a>.
               </p>
@@ -193,7 +193,7 @@ export default function LeadFinderLesson() {
           </ul>
           <p className="lesson-tools-connection">
             <span>How they connect</span>
-            Gemini <span aria-hidden="true">→</span> Export to Sheets <span aria-hidden="true">→</span> Google Sheets
+            Gemini <span aria-hidden="true">→</span> Export to Sheets <span aria-hidden="true">→</span> Ask Gemini in Sheets
           </p>
         </section>
         <section
@@ -1390,13 +1390,13 @@ export default function LeadFinderLesson() {
             <div className="z9">{"07"}</div>
             <div className="z13">
               <div className="z4">
-                <span className="z3">{"In Gemini"}</span>
-                <span className="z3">{"Then Google Sheets"}</span>
+                <span className="z3">{"In Google Sheets"}</span>
+                <span className="z3">{"Ask Gemini"}</span>
               </div>
               <h2 className="z12">{"Make it easy to use"}</h2>
               <p className="z11">
                 {
-                  "The data's all there. It's just not pretty. Ask Gemini exactly what to fix, then make the changes yourself in Sheets. It takes a few minutes, and clear headings and readable columns make it something you'll open again."
+                  "Open your exported tracker in Google Sheets. Click the Gemini sparkle button at the top right of the sheet, then paste the prompt below into the side panel. Gemini can format the sheet for you. Use the button inside Sheets, rather than Chrome's separate Ask Gemini button."
                 }
               </p>
             </div>
@@ -1407,10 +1407,21 @@ export default function LeadFinderLesson() {
               </div>
               <p className="z19" id="prompt-5">
                 {
-                  "I have a lead tracker in Google Sheets with these columns: event, date, location, contact, email or phone, why it fits, pitch angle, apply link, status, and next action. Give me step-by-step instructions to make it easier to read, including frozen bold headers, wrapped text, alternating row colors, and a dropdown for status."
+                  "Give this tracker a clean, polished look: dark blue headers, subtle alternating rows, wrapped text, and readable column widths. Keep all data and links unchanged."
                 }
               </p>
             </div>
+            <p className="z11" style={{ flex: "1 1 100%" }}>
+              Let Gemini finish; it can take a few minutes. In the tested Beta,
+              it applied the formatting directly. If your interface shows a
+              preview and an Apply button, review the changes and apply them
+              there. Check that the rows, details, and links are still intact.
+            </p>
+            <p className="y6 y22 y49" style={{ flex: "1 1 100%" }}>
+              Gemini in Sheets is available to eligible Google accounts. If you
+              do not see the sparkle button in Sheets, keep using your exported
+              tracker; you can still complete the research and export steps.
+            </p>
             <div
               className="y7 y0 y8 y55"
               style={{ flex: "1 1 100%", paddingTop: "8px" }}
@@ -1471,7 +1482,7 @@ export default function LeadFinderLesson() {
                         <td className="z1">{"[EVENT NAME]"}</td>
                         <td className="z1">{"[DATE]"}</td>
                         <td className="z1">
-                          {"[A LONG SENTENCE THAT GETS CUT OFF HALFWAY]"}
+                          {"[A LONG SENTENCE ABOUT WHY THIS EVENT FITS YOUR OFFER]"}
                         </td>
                         <td className="z1">{"verify"}</td>
                       </tr>
@@ -1480,7 +1491,7 @@ export default function LeadFinderLesson() {
                         <td className="z1">{"[EVENT NAME]"}</td>
                         <td className="z1">{"[DATE]"}</td>
                         <td className="z1">
-                          {"[A LONG SENTENCE THAT GETS CUT OFF HALFWAY]"}
+                          {"[A LONG SENTENCE ABOUT WHY THIS EVENT FITS YOUR OFFER]"}
                         </td>
                         <td className="z1">{"pitched"}</td>
                       </tr>
@@ -1489,7 +1500,7 @@ export default function LeadFinderLesson() {
                         <td className="z1">{"[EVENT NAME]"}</td>
                         <td className="z1">{"[DATE]"}</td>
                         <td className="z1">
-                          {"[A LONG SENTENCE THAT GETS CUT OFF HALFWAY]"}
+                          {"[A LONG SENTENCE ABOUT WHY THIS EVENT FITS YOUR OFFER]"}
                         </td>
                         <td className="z1">{"booked"}</td>
                       </tr>
@@ -1499,7 +1510,7 @@ export default function LeadFinderLesson() {
               </div>
               <div className="z53">
                 <div className="y4 y60 y29 y51">
-                  {"After a few minutes of formatting"}
+                  {"After Gemini formats it (illustration)"}
                 </div>
                 <div className="y71 y10 y32" style={{ borderRadius: "12px" }}>
                   <table
@@ -1507,15 +1518,15 @@ export default function LeadFinderLesson() {
                     style={{ minWidth: "440px", lineHeight: "1.45" }}
                   >
                     <thead>
-                      <tr className="y23 y26" style={{ textAlign: "left" }}>
+                      <tr style={{ background: "#17365D", color: "#FFFFFF", textAlign: "left" }}>
                         <th className="z27" scope="col">
-                          {"Event"}
+                          {"Event Name"}
                         </th>
                         <th className="z27" scope="col">
                           {"Date"}
                         </th>
                         <th className="z27" scope="col">
-                          {"Why it fits"}
+                          {"Why it's a good fit"}
                         </th>
                         <th className="z27" scope="col">
                           {"Status"}
@@ -1527,41 +1538,25 @@ export default function LeadFinderLesson() {
                         <td className="z46">{"[EVENT NAME]"}</td>
                         <td className="z48">{"[DATE]"}</td>
                         <td className="z40">
-                          {"[A LONG SENTENCE THAT NOW WRAPS AND READS IN FULL]"}
+                          {"[A LONG SENTENCE ABOUT WHY THIS EVENT FITS YOUR OFFER]"}
                         </td>
-                        <td className="z39">
-                          <span
-                            className="y51 y9 y73 y1"
-                            style={{ background: "#FBE3DF" }}
-                          >
-                            {"Verify"}
-                          </span>
-                        </td>
+                        <td className="z39">{"verify"}</td>
                       </tr>
-                      <tr style={{ background: "#FAF7F3" }}>
+                      <tr style={{ background: "#EEF3F8" }}>
                         <td className="z46">{"[EVENT NAME]"}</td>
                         <td className="z48">{"[DATE]"}</td>
                         <td className="z40">
-                          {"[A LONG SENTENCE THAT NOW WRAPS AND READS IN FULL]"}
+                          {"[A LONG SENTENCE ABOUT WHY THIS EVENT FITS YOUR OFFER]"}
                         </td>
-                        <td className="z39">
-                          <span
-                            className="y9 y73 y1"
-                            style={{ background: "#FDF3C4", color: "#5C4A05" }}
-                          >
-                            {"Pitched"}
-                          </span>
-                        </td>
+                        <td className="z39">{"pitched"}</td>
                       </tr>
                       <tr>
                         <td className="z46">{"[EVENT NAME]"}</td>
                         <td className="z48">{"[DATE]"}</td>
                         <td className="z40">
-                          {"[A LONG SENTENCE THAT NOW WRAPS AND READS IN FULL]"}
+                          {"[A LONG SENTENCE ABOUT WHY THIS EVENT FITS YOUR OFFER]"}
                         </td>
-                        <td className="z39">
-                          <span className="y23 y26 y9 y73 y1">{"Booked"}</span>
-                        </td>
+                        <td className="z39">{"booked"}</td>
                       </tr>
                     </tbody>
                   </table>
