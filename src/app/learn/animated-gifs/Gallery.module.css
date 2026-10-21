@@ -50,6 +50,14 @@
 .details dd { font-size:11px; font-weight:600; margin:0; }
 .play { display:flex; align-items:center; justify-content:space-between; gap:20px; width:100%; color:#fff9ef; background:#16181b; border:0; padding:13px 16px; font-size:12px; font-weight:600; cursor:pointer; }
 .play span { color:#f5d23d; font-size:18px; }
+.share { margin-top:10px; }
+.shareActions { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.shareActions :is(a,button) { display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:44px; padding:11px 12px; border:1px solid #16181b60; background:transparent; color:#16181b; font:600 10px/1.5 var(--font-montserrat),sans-serif; text-decoration:none; cursor:pointer; }
+.shareActions a { background:#f5d23d; border-color:#16181b; }
+.shareActions :is(a,button):hover { border-color:#a51922; }
+.shareActions span { color:#951923; font-size:18px; line-height:1; }
+.details .shareStatus { margin:9px 0 0; color:#62534a; font-size:9px; line-height:1.8; }
+.linkField { width:100%; margin-top:9px; padding:10px; border:1px solid #16181b60; background:#fff9ef; color:#16181b; font-size:12px; }
 .surfaces { border:0; padding:0; margin:22px 0 0; display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
 .surfaces legend { font-size:10px; color:#62534a; margin-bottom:10px; }
 .surfaces button { display:flex; align-items:center; gap:7px; padding:7px 9px; border:1px solid #16181b40; color:#16181b; background:transparent; font-size:9px; cursor:pointer; text-transform:capitalize; }

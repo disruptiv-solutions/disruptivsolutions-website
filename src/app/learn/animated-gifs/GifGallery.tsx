@@ -9,6 +9,40 @@ function seconds(duration: number) {
   return (duration / 1000).toFixed(2).replace(/\.?0+$/, '');
 }
 
+function GifActions({ item }: { item: GalleryItem }) {
+  const [status, setStatus] = useState('');
+  const [manualLink, setManualLink] = useState('');
+  const linkField = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (manualLink) {
+      linkField.current?.focus();
+      linkField.current?.select();
+    }
+  }, [manualLink]);
+
+  async function copyLink() {
+    const url = new URL(item.gif, window.location.origin).href;
+    try {
+      await navigator.clipboard.writeText(url);
+      setManualLink('');
+      setStatus('GIF link copied. Ready to paste.');
+    } catch {
+      setManualLink(url);
+      setStatus('Copy the selected GIF link below.');
+    }
+  }
+
+  return <div className={styles.share}>
+    <div className={styles.shareActions}>
+      <a href={item.gif} download={`${item.id}.gif`}>Save GIF <span aria-hidden="true">↓</span></a>
+      <button type="button" onClick={copyLink}>Copy GIF link <span aria-hidden="true">↗</span></button>
+    </div>
+    <p className={styles.shareStatus} role="status" aria-live="polite">{status || 'Save the animation, or copy a link to share it.'}</p>
+    {manualLink && <input ref={linkField} className={styles.linkField} aria-label="GIF link to copy" value={manualLink} readOnly onFocus={event => event.currentTarget.select()} />}
+  </div>;
+}
+
 export default function GifGallery() {
   const [category, setCategory] = useState<GalleryCategory | 'All'>('All');
   const [limit, setLimit] = useState(9);
@@ -84,7 +118,7 @@ export default function GifGallery() {
         <div className={styles.viewerTop}><span>IAN’S GIF COLLECTION <i>/</i> {String(index + 1).padStart(2, '0')} OF {filtered.length}</span><button type="button" onClick={() => setActiveId(null)} autoFocus aria-label="Close GIF viewer">Close <span aria-hidden="true">×</span></button></div>
         <div className={styles.viewerBody}>
           <div className={styles.stage} data-surface={surface}><Image key={active.id + String(playing)} src={playing ? active.src : active.poster} alt={active.description} width={active.width} height={active.height} unoptimized loading="eager" /></div>
-          <div className={styles.details}><span className={styles.category}>{active.category}</span><h3 id="gif-viewer-title">{active.title}</h3><p>{active.description}</p><dl><div><dt>Length</dt><dd>{seconds(active.durationMs)} seconds</dd></div><div><dt>Canvas</dt><dd>{active.width} × {active.height}</dd></div><div><dt>Frames</dt><dd>{active.frames}</dd></div></dl><button type="button" className={styles.play} aria-pressed={playing} onClick={() => setPlaying(value => !value)}>{playing ? 'Pause animation' : 'Play animation'} <span aria-hidden="true">{playing ? 'Ⅱ' : '▷'}</span></button><fieldset className={styles.surfaces}><legend>Try a background</legend>{['paper', 'white', 'dark'].map(value => <button type="button" key={value} data-swatch={value} aria-label={`Use ${value} background`} aria-pressed={surface === value} onClick={() => setSurface(value)}><span aria-hidden="true" />{value}</button>)}</fieldset><span className={styles.previewNote}>Animation plays here when you open it. The gallery stays still.</span></div>
+          <div className={styles.details}><span className={styles.category}>{active.category}</span><h3 id="gif-viewer-title">{active.title}</h3><p>{active.description}</p><dl><div><dt>Length</dt><dd>{seconds(active.durationMs)} seconds</dd></div><div><dt>Canvas</dt><dd>{active.width} × {active.height}</dd></div><div><dt>Frames</dt><dd>{active.frames}</dd></div></dl><button type="button" className={styles.play} aria-pressed={playing} onClick={() => setPlaying(value => !value)}>{playing ? 'Pause animation' : 'Play animation'} <span aria-hidden="true">{playing ? 'Ⅱ' : '▷'}</span></button><GifActions key={active.id} item={active} /><fieldset className={styles.surfaces}><legend>Try a background</legend>{['paper', 'white', 'dark'].map(value => <button type="button" key={value} data-swatch={value} aria-label={`Use ${value} background`} aria-pressed={surface === value} onClick={() => setSurface(value)}><span aria-hidden="true" />{value}</button>)}</fieldset><span className={styles.previewNote}>Animation plays here when you open it. The gallery stays still.</span></div>
         </div>
         <div className={styles.navigation}><button type="button" onClick={() => move(-1)} aria-label="Previous GIF">← <span>Previous</span></button><span aria-live="polite">{index + 1} / {filtered.length}</span><button type="button" onClick={() => move(1)} aria-label="Next GIF"><span>Next</span> →</button></div>
         <div className={styles.thumbStrip} ref={strip} role="group" aria-label="Choose a GIF in the viewer">{filtered.map(item => <button type="button" key={item.id} aria-label={`Show ${item.title}`} aria-pressed={item.id === active.id} onClick={() => setActiveId(item.id)}><Image src={item.poster} alt="" width={80} height={60} unoptimized /></button>)}</div>
