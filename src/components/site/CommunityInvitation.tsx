@@ -1,7 +1,8 @@
 "use client";
 
-import { IAN_COMMUNITY_URL } from '@/lib/ian-community';
-import { trackCommunityVisit } from '@/lib/analytics';
+import Link from 'next/link';
+import { IAN_COMMUNITY_PAGE_URL, IAN_COMMUNITY_URL } from '@/lib/ian-community';
+import { trackButtonClick, trackCommunityVisit } from '@/lib/analytics';
 import styles from './CommunityInvitation.module.css';
 
 export default function CommunityInvitation() {
@@ -13,6 +14,7 @@ export default function CommunityInvitation() {
         <p className={styles.description}>Join my free community for practical AI lessons, prompts, and the things I’m making. Bring an idea, a question, or something you’d like to make easier.</p>
         <a className={styles.join} href={IAN_COMMUNITY_URL} onClick={() => trackCommunityVisit('site_invitation')}>Join my free community <span aria-hidden="true">↗</span></a>
         <p className={styles.note}>Find us on LaunchBox. Start wherever you are.</p>
+        <Link className={styles.overview} href={IAN_COMMUNITY_PAGE_URL} onClick={() => trackButtonClick('community_overview', 'site_invitation')}>Meet the community &amp; the platform I built <span aria-hidden="true">→</span></Link>
       </div>
       <div className={styles.inside}>
         <p className={styles.insideLabel}>A place to put AI into practice</p>
