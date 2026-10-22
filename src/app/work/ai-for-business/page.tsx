@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
+import { ProductFilm } from '@/components/site/ProductFilm';
 import Link from 'next/link';
 import DisruptivProjectLink from '@/components/site/DisruptivProjectLink';
 import styles from './CaseStudy.module.css';
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'AI for Business — a platform built by Ian McDonald',
     description: 'The brief, the build, and the results from a 2025 platform engagement.',
-    images: ['/speaking/ai-for-business-workspace.webp'],
+    images: ['/films/ai4b-poster.jpg'],
   },
 };
 
@@ -23,8 +23,8 @@ export default function AiForBusinessCaseStudy() {
     </header>
 
     <figure className={styles.product}>
-      <Image src="/speaking/ai-for-business-workspace.webp" alt="The AI for Business workspace with chat, image, video, copy, and profile tools" width={1600} height={555} sizes="(max-width:760px) 100vw, 1120px" priority />
-      <figcaption>The actual AI for Business workspace, shown during Ian’s Orlando keynote in 2025. Cropped from the original recording.</figcaption>
+      <ProductFilm src="/films/ai4b-demo.mp4" poster="/films/ai4b-poster.jpg" title="AI for Business platform walkthrough" />
+      <figcaption>A motion recreation of the platform I built in 2025, showing its connected workspace and creative tools.</figcaption>
     </figure>
 
     <div className={styles.story}>
