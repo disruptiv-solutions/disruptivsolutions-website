@@ -5,7 +5,7 @@ import CopyPrompt from './CopyPrompt';
 import LoopPreview from './LoopPreview';
 import FrameLab from './FrameLab';
 import GifGallery from './GifGallery';
-import { installPrompt, skillUrl, steps } from './lesson';
+import { geminiCreationPrompt, geminiImportPrompt, geminiSkillUrl, installPrompt, skillUrl, steps } from './lesson';
 import styles from './lesson.module.css';
 
 export const metadata: Metadata = {
@@ -48,7 +48,16 @@ export default function AnimatedGifsPage() {
 
     <section className={styles.method} aria-label="The reference-to-GIF workflow"><span className={styles.methodLabel}>Your route through the workshop</span><ol>{[['01', 'Bring the artwork'], ['02', 'Make the poses'], ['03', 'Check the cuts'], ['04', 'Find the rhythm'], ['05', 'Export the loop']].map(([n, text]) => <li key={n}><a href={`#step-${n}`}><b>{n}</b><span>{text}</span><i aria-hidden="true">↗</i></a></li>)}</ol></section>
 
-    <section className={styles.tools} aria-labelledby="tools-title"><div><p className={styles.eyebrow}>The working stack</p><h2 id="tools-title">Three jobs.<br />A small toolkit.</h2></div><dl><div><span className={styles.toolIcon}><Image src="/logos/openai.svg" alt="" width={30} height={30} /></span><dt>Make the images</dt><dd>ChatGPT<small>Or your available image tool. This is where the transformation poses come from.</small></dd></div><div><span className={styles.toolGlyph} aria-hidden="true">↳</span><dt>Put it together</dt><dd>Your AI agent<small>An agent that can download files, inspect images, and run code.</small></dd></div><div><span className={styles.toolGlyph} aria-hidden="true">{`{ }`}</span><dt>Export the files</dt><dd>Python + Pillow<small>The included helper handles the GIF, WebP, still, and review sheet.</small></dd></div></dl><p className={styles.toolsNote}>The helper runs locally with Python 3.10+ and Pillow. Image generation depends on your tool and account. If your agent cannot generate images, it can write the prompt and work with the sheet you bring back.</p></section>
+    <section className={styles.tools} aria-labelledby="tools-title">
+      <div><p className={styles.eyebrow}>The working stack</p><h2 id="tools-title">Three jobs.<br />A small toolkit.</h2></div>
+      <dl>
+        <div><span className={styles.toolGlyph} aria-hidden="true">✦</span><dt>Make the images</dt><dd>Your agent’s image tool<small>Generate the transformation poses in Codex or Gemini on desktop.</small></dd></div>
+        <div><span className={styles.toolGlyph} aria-hidden="true">↳</span><dt>Put it together</dt><dd>Codex / Gemini desktop<small>Use the skill to inspect the frames and assemble the loop.</small></dd></div>
+        <div><span className={styles.toolGlyph} aria-hidden="true">{`{ }`}</span><dt>Export the files</dt><dd>The workshop helper<small>Export the GIF, WebP, still preview, and review sheet in your agent’s workspace.</small></dd></div>
+      </dl>
+      <p className={styles.testedWorkflow}>I created the original examples in Codex. I also successfully tested the shared Animated GIF Workshop skill in Gemini on desktop, where it generated the artwork and assembled the finished GIF.</p>
+      <p className={styles.toolsNote}>The helper runs in your agent’s workspace. Image generation and skill availability depend on your tool and account. Your agent can also work with a sprite sheet you provide.</p>
+    </section>
 
     <section id="steps" className={styles.steps} aria-labelledby="steps-title">
       <div className={styles.sectionHeading}><div><p className={styles.eyebrow}>02 / Make it yours</p><h2 id="steps-title">One clear action.<br /><em>Five useful moves.</em></h2></div><p>Start with one image and one action. These prompts give your agent the direction. You decide what feels right.</p></div>
@@ -60,7 +69,26 @@ export default function AnimatedGifsPage() {
 
     <section className={styles.lockup} aria-labelledby="lockup-title"><div className={styles.sectionHeading}><div><p className={styles.eyebrow}>A useful little variation</p><h2 id="lockup-title">Move the symbol.<br /><em>Leave the name alone.</em></h2></div><p>The name does not need to be redrawn with every pose. Keep the original lettering, composite it beside the animation, and give both some breathing room.</p></div><div className={styles.lockupDiagram}><div className={styles.movingPart}><span>THIS PART MOVES <i aria-hidden="true">↻</i></span><LoopPreview src="/learn/animated-gifs/cube-to-gemini.gif" still="/learn/animated-gifs/cube-still.png" width={384} height={384} alt="The cube-to-Gemini symbol animates inside its own area" /></div><div className={styles.fixedPart}><span>THIS PART STAYS</span><strong>Ian McDonald AI</strong><p>Same lettering. Every frame.</p></div></div></section>
 
-    <section id="get-the-skill" className={styles.install} aria-labelledby="skill-title"><div className={styles.installIntro}><p className={styles.eyebrow}>03 / Take the workbench with you</p><span className={styles.skillStamp} aria-hidden="true">GIF<br /><i>WORKSHOP</i></span><h2 id="skill-title">Your agent.<br /><em>A better starting point.</em></h2><p>The skill carries the whole process: generation prompts, frame inspection, timing, exports, and the things we learned by making these loops.</p><a href={skillUrl}>Download the skill ZIP <span aria-hidden="true">↓</span></a><span className={styles.version}>Version 1.0.0 · 12 KB · No API calls in the helper</span></div><div className={styles.installAction}><span className={styles.installNumber}>COPY → PASTE → MAKE SOMETHING</span><h3>Let your agent<br />pick it up from here.</h3><p>Copy this prompt into an agent that can download files and run code. It gets the skill and asks for your artwork.</p><CopyPrompt text={installPrompt} install compact /><p className={styles.installFootnote}>The ZIP works on its own. No access to Ian’s files, accounts, or this conversation needed.</p></div></section>
+    <section id="get-the-skill" className={styles.install} aria-labelledby="skill-title"><div className={styles.installIntro}><p className={styles.eyebrow}>03 / Take the workbench with you</p><span className={styles.skillStamp} aria-hidden="true">GIF<br /><i>WORKSHOP</i></span><h2 id="skill-title">Your agent.<br /><em>A better starting point.</em></h2><p>The skill carries the whole process: generation prompts, frame inspection, timing, exports, and the things we learned by making these loops.</p><a href={skillUrl}>Download the skill ZIP <span aria-hidden="true">↓</span></a><span className={styles.version}>Version 1.0.0 · 12 KB · No API calls in the helper</span><a href="#gemini-desktop">Using Gemini on desktop? Start here <span aria-hidden="true">↘</span></a></div><div className={styles.installAction}><span className={styles.installNumber}>COPY → PASTE → MAKE SOMETHING</span><h3>Let your agent<br />pick it up from here.</h3><p>Copy this prompt into an agent that can download files and run code. It gets the skill and asks for your artwork.</p><CopyPrompt text={installPrompt} install compact /><p className={styles.installFootnote}>The ZIP works on its own. No access to Ian’s files, accounts, or this conversation needed.</p></div></section>
+
+    <section id="gemini-desktop" className={styles.geminiInstall} aria-labelledby="gemini-title">
+      <div className={styles.sectionHeading}>
+        <div><p className={styles.eyebrow}>Use it in Gemini / desktop</p><h2 id="gemini-title">Upload the skill.<br /><em>Bring your artwork.</em></h2></div>
+        <div className={styles.geminiDownload}><p>This is the Gemini-ready version of the workshop I successfully tested.</p><a href={geminiSkillUrl} download="animated-gif-workshop-gemini-1.0.0.zip">Download the Gemini skill ZIP <span aria-hidden="true">↓</span></a><span>Version 1.0.0 · 11 KB</span></div>
+      </div>
+      <ol className={styles.geminiSteps}>
+        <li><strong>Start a desktop chat.</strong> Open <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a> in your desktop browser and start a new chat.</li>
+        <li><strong>Attach the skill ZIP.</strong> Upload the Gemini ZIP you downloaded, then send the import prompt below.</li>
+        <li><strong>Wait for confirmation.</strong> Let Gemini confirm that it has imported and activated the skill before you start making the animation.</li>
+        <li><strong>Add your artwork and motion.</strong> Attach your reference image, describe one clear action, and use the creation prompt below.</li>
+        <li><strong>Review and keep the files.</strong> Open the finished GIF and watch two full loops. Check the artwork, timing, and return, then download the GIF, WebP, still preview, and source files.</li>
+      </ol>
+      <div className={styles.geminiPrompts}>
+        <div><h3>After attaching the ZIP</h3><CopyPrompt text={geminiImportPrompt} install /></div>
+        <div><h3>After adding your artwork</h3><CopyPrompt text={geminiCreationPrompt} /></div>
+      </div>
+      <p className={styles.geminiAlternative}>You can also upload the ZIP through Customize → Skills → Create → Upload. <a href="https://support.google.com/gemini/answer/17094296?hl=en" target="_blank" rel="noopener noreferrer">Google’s skill instructions <span aria-hidden="true">↗</span></a></p>
+    </section>
 
     <footer className={styles.finish}><span aria-hidden="true">↻</span><div><p className={styles.eyebrow}>Make a small thing. Make it yours.</p><h2>Keep the character.<br /><em>Make the movement count.</em></h2><Link href="/learn">More things you can put to work ↗</Link></div></footer>
   </article>;
