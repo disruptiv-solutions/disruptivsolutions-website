@@ -35,6 +35,9 @@
   .navLinks { position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap; }
 }
 @media(max-width: 1360px) { .headerInner { width: calc(100% - 72px); } .nav { gap: 12px; } .navLinks { gap: 16px; padding-inline: 16px; } .nav a { font-size: 11px; letter-spacing: .07em; } .headerInner { gap: 18px; } }
+@media(min-width: 1101px) and (max-width: 1200px) {
+  .navLinks { gap: 8px; padding-inline: 10px; }
+}
 @media(max-width: 1100px) {
   .headerInner { min-height: 64px; width: calc(100% - 36px); }
   .brand { margin-right: auto; }
