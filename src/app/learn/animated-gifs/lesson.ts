@@ -1,5 +1,10 @@
 export const skillUrl = 'https://raw.githubusercontent.com/disruptiv-solutions/disruptivsolutions-website/fe644f97b593ca94fe32198aa460a9d8d033925a/public/skills/animated-gif-workshop-1.0.0.zip';
 export const skillSha256 = '6d0012359128bd8659940b075b4de44e2afed1040d28cbdab869d5d075c95c80';
+export const geminiSkillUrl = '/skills/animated-gif-workshop-gemini-1.0.0.zip';
+
+export const geminiImportPrompt = 'Import and activate the attached Animated GIF Workshop skill for this chat. Read its instructions and confirm when it is ready. Wait for my artwork and motion request before starting.';
+
+export const geminiCreationPrompt = 'Use the Animated GIF Workshop skill with my attached artwork. Make a short looping animation that [describe one clear action]. Generate the in-between artwork, inspect the frames, and assemble the animation. Preserve the artwork’s character and keep the original unchanged. Show me the finished animation, then provide downloadable GIF, animated WebP, still PNG, and source files.';
 
 export const installPrompt = `Help me create an animated GIF using Ian McDonald’s Animated GIF Workshop skill.
 

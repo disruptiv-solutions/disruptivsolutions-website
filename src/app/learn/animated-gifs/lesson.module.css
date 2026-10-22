@@ -94,6 +94,7 @@
 .tools dd { font-size:14px; line-height:1.6; font-weight:650; }
 .tools small { display:block; color:#494440; font-size:11px; line-height:1.85; font-weight:400; margin-top:9px; }
 .toolsNote { grid-column:2; font-size:10px; line-height:1.9; color:#494440; }
+.testedWorkflow { grid-column:1/-1; padding:21px 24px; border-left:3px solid var(--loop-red); background:#e1d4c65c; font-size:14px; line-height:1.9; color:#302a26; }
 .steps { padding-top:25px; }
 .steps > .sectionHeading { padding-bottom:15px; }
 .step { display:grid; grid-template-columns:280px 1fr; gap:60px; border-top:1px solid #16181b50; padding:36px 0 43px; }
@@ -171,6 +172,22 @@
 .installAction .promptBar button { width:100%; display:flex; align-items:center; justify-content:space-between; gap:15px; background:#f5d23d; color:#16181b; padding:14px 16px; font-size:13px; }
 .installAction .prompt pre { font-size:10px; max-height:330px; overflow:auto; }
 .installAction .installFootnote { font-size:10px; }
+.geminiInstall { padding:58px 0 48px; border-bottom:1px solid #16181b40; }
+.geminiDownload { min-width:0; }
+.geminiDownload > p { font-size:14px; line-height:1.9; color:#494440; max-width:44ch; }
+.geminiDownload > a { display:inline-flex; align-items:center; gap:20px; margin-top:18px; padding:12px 0; border-bottom:1px solid #16181b60; font-size:12px; font-weight:650; text-decoration:none; }
+.geminiDownload > a > span { font-size:23px; color:var(--loop-red); }
+.geminiDownload > span { display:block; margin-top:10px; font-size:10px; color:#62534a; }
+.geminiSteps { display:grid; grid-template-columns:1fr 1fr; gap:20px 42px; padding-left:22px; margin:0; }
+.geminiSteps li { padding-left:5px; font-size:13px; line-height:1.9; color:#494440; }
+.geminiSteps li::marker { color:#951923; font-weight:650; }
+.geminiSteps strong { display:block; font-size:13px; color:#16181b; }
+.geminiSteps a,.geminiAlternative a { text-underline-offset:4px; }
+.geminiPrompts { display:grid; grid-template-columns:1fr 1fr; gap:30px; margin-top:32px; }
+.geminiPrompts > div { min-width:0; }
+.geminiPrompts h3 { font-size:23px; font-weight:500; line-height:1.3; }
+.geminiPrompts .prompt { margin-top:15px; }
+.geminiAlternative { margin-top:26px !important; max-width:80ch; font-size:11px; line-height:1.9; color:#494440; }
 .finish { display:flex; align-items:center; gap:45px; padding:65px 0; }
 .finish > span { font-size:130px; line-height:1; color:var(--loop-red); }
 .finish h2 { font-size:clamp(32px,4vw,54px); }
@@ -250,6 +267,7 @@
   .tools dd { font-size:14px; }
   .tools small { font-size:11px; margin-top:7px; }
   .toolsNote { grid-column:auto; }
+  .testedWorkflow { padding:17px 18px; font-size:12px; }
   .steps { padding-top:25px; }
   .step { grid-template-columns:1fr; gap:25px; padding:25px 0 35px; }
   .stepAside { display:grid; grid-template-columns:50px 1fr; align-items:start; gap:22px; }
@@ -297,6 +315,14 @@
   .installAction > p { font-size:11px; }
   .installAction .promptBar button { font-size:12px; padding:12px; }
   .installAction .installFootnote { font-size:9px; }
+  .geminiInstall { padding:40px 0 35px; }
+  .geminiDownload > p { font-size:13px; }
+  .geminiDownload > a { font-size:11px; gap:16px; }
+  .geminiSteps { grid-template-columns:1fr; gap:17px; }
+  .geminiSteps li,.geminiSteps strong { font-size:12px; }
+  .geminiPrompts { grid-template-columns:1fr; gap:27px; margin-top:27px; }
+  .geminiPrompts h3 { font-size:24px; }
+  .geminiAlternative { font-size:10px; }
   .finish { align-items:start; gap:22px; padding:45px 0; }
   .finish > span { font-size:57px; }
   .finish .eyebrow { font-size:8px; }
