@@ -15,6 +15,8 @@ Learners use `@Google Drive` to request the tracker and open the created-file ca
 
 The contact sections show `ian@ianmcdonald.ai` and invite help with AI training, workflows, automation, and social media content. Labeled social links come from `src/lib/ian-social-links.ts`, the same verified profile map used by the site footer. Do not restore the older hardcoded handles.
 
+The top contact block links directly to the optional project inquiry form at `#project-inquiry`. It collects a name, email, one of the four service interests, and an optional project note. Submissions use `/api/project-inquiry` and the site's existing Resend notification configuration; the notification includes the resource-page source and uses the visitor's email as Reply-To. This form does not enroll visitors in a mailing list or gate the lesson. It records a `generate_lead` analytics event only after the API confirms notification acceptance, with `form_name=project_inquiry`, `form_location=find_leads`, and the selected interest; no contact details or message text are included in analytics.
+
 The tested formatting prompt is: “Give this tracker a clean, polished look: dark blue headers, subtle alternating rows, wrapped text, and readable column widths. Keep all data and links unchanged.”
 
 Media lives under `public/workshop-kits/find-leads/`. The active files are `lead-finder-walkthrough-v4.mp4`, `lead-finder-walkthrough-v4.vtt`, and `lead-finder-walkthrough-v4.jpg`. The MP4 plays on demand (`preload="none"`); no external video service or new environment variables are needed. `ASSET-SOURCES.md` records the Google icon sources. The original lesson ZIP was not modified. This page has no chapter jump controls or downloadable SRT/source ZIP links.
