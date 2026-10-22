@@ -15,7 +15,7 @@ export const WORKSHOP_KITS: WorkshopKit[] = [
     eyebrow: 'Google Gemini + Google Sheets',
     audience: 'Small business owners looking for clients, referral partners, sponsors, or speaking gigs',
     description:
-      'Follow a real Gemini demo, use eight practical steps and copyable prompts, and build a lead tracker that helps you follow up.',
+      'Give Gemini your business context, research leads, create and format a Google Sheets tracker, then draft your first outreach with copyable workshop prompts.',
     eventContext:
       'Created by Ian McDonald AI for the opportunity-finding workshop.',
     status: 'live',

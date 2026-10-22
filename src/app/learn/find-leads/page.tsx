@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import LeadFinderLesson from '@/components/workshop-kits/find-leads/LeadFinderLesson';
 
 const title = 'Find leads with AI | Ian McDonald AI';
-const description = 'Use Google Gemini to find opportunities, research who to contact, and build a lead tracker in Google Sheets. A real demo and eight steps with copyable prompts.';
+const description = 'Use Gemini to research leads, create and format a Google Sheets tracker, and draft outreach. Follow the workshop with copyable prompts, examples, and help from Ian McDonald.';
 
 export const metadata: Metadata = {
   title,

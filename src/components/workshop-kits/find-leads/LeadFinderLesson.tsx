@@ -3,7 +3,18 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import CopyButton from "./CopyButton";
+import { IAN_SOCIAL_URLS } from "@/lib/ian-social-links";
 import styles from "./LeadFinderLesson.module.css";
+
+function SocialLinks() {
+  return (
+    <div className="resource-socials" aria-label="Follow Ian">
+      {Object.entries(IAN_SOCIAL_URLS).map(([label, href]) => (
+        <a key={label} href={href} target="_blank" rel="noopener noreferrer">{label}</a>
+      ))}
+    </div>
+  );
+}
 
 export default function LeadFinderLesson() {
   const [activePart, setActivePart] = useState<number | null>(null);
@@ -89,7 +100,7 @@ export default function LeadFinderLesson() {
               style={{ maxWidth: "52ch", fontSize: "18px" }}
             >
               {
-                "I use Gemini to find opportunities, research who to contact, and build a simple lead tracker in Google Sheets. My example is speaking gigs. As you read, think about who you'd use it for."
+                "Use Gemini to find relevant opportunities, check the sources, and create a Google Sheet with a status and next action for every lead. Ask Gemini inside Sheets to format it. Back in the Gemini conversation, draft your first outreach message. My example is speaking opportunities for hands-on AI workshops."
               }
             </p>
             <div className="y0 y8 y39">
@@ -105,6 +116,13 @@ export default function LeadFinderLesson() {
             >
               {"Jump to the eight steps"}
             </a>
+            <aside className="resource-contact" aria-label="Contact Ian and follow along">
+              <p className="resource-contact-label">Work with Ian</p>
+              <p>Need help with AI training, a workflow or automation built, or social media content?</p>
+              <a className="resource-email" href="mailto:ian@ianmcdonald.ai">ian@ianmcdonald.ai</a>
+              <p className="resource-social-label">Follow along</p>
+              <SocialLinks />
+            </aside>
           </div>
           <figure
             className="lesson-video y7"
@@ -114,7 +132,7 @@ export default function LeadFinderLesson() {
           >
             <div className="lesson-video-heading">
               <h2 className="y6 y4 y1" id="lesson-video-title">
-                Watch the workflow
+                Watch the earlier walkthrough
               </h2>
               <span>2 min 56 sec</span>
             </div>
@@ -146,8 +164,11 @@ export default function LeadFinderLesson() {
               </p>
             </video>
             <figcaption id="lesson-video-description">
-              Follow the real Gemini and Sheets demo, then use the prompts below.
-              Use full screen for a closer look and CC for captions.
+              This earlier, short recording shows a real Gemini and Sheets run.
+              The October 22, 2026 workshop uses a newer Workspace example, creates the
+              Sheet through Drive, and adds the outreach bonus. Use the updated
+              prompts and instructions below to follow the current presentation.
+              Full screen and CC are available.
             </figcaption>
           </figure>
         </section>
@@ -193,7 +214,7 @@ export default function LeadFinderLesson() {
           </ul>
           <p className="lesson-tools-connection">
             <span>How they connect</span>
-            Gemini <span aria-hidden="true">→</span> Export to Sheets <span aria-hidden="true">→</span> Ask Gemini in Sheets
+            Gemini <span aria-hidden="true">→</span> Create a Sheet with Google Drive <span aria-hidden="true">→</span> Ask Gemini in Sheets
           </p>
         </section>
         <section
@@ -460,7 +481,7 @@ export default function LeadFinderLesson() {
                 <li className="z5">
                   <span className="z7">{"01"}</span>
                   <a className="z8" href="#step-1">
-                    {"Teach AI what you do"}
+                    {"Start with your website"}
                   </a>
                 </li>
                 <li className="z5">
@@ -472,13 +493,13 @@ export default function LeadFinderLesson() {
                 <li className="z5">
                   <span className="z7">{"03"}</span>
                   <a className="z8" href="#step-3">
-                    {"Pick what you're searching for"}
+                    {"Personalize four search fields"}
                   </a>
                 </li>
                 <li className="z5">
                   <span className="z7">{"04"}</span>
                   <a className="z8" href="#step-4">
-                    {"Research first, export once"}
+                    {"Research the gaps"}
                   </a>
                 </li>
                 <li className="z5">
@@ -506,6 +527,7 @@ export default function LeadFinderLesson() {
                   </a>
                 </li>
               </ol>
+              <p style={{ margin: "24px 0 0" }}><a href="#email-bonus">Bonus: draft the first message →</a></p>
             </nav>
           </div>
         </section>
@@ -520,16 +542,16 @@ export default function LeadFinderLesson() {
               <div className="z4">
                 <span className="z3">{"In Gemini"}</span>
               </div>
-              <h2 className="z12">{"Teach AI what you do"}</h2>
+              <h2 className="z12">{"Start with your website"}</h2>
               <p className="z11">
                 {
-                  "Give Gemini context on your business: what you offer and who you help. Paste a short bio, or point it at files you've already connected. Everything after this gets better because of it."
+                  "Start with your website, then name your audience and offer. Read Gemini’s summary and correct anything it misses before searching. If it cannot open a page—or you do not have a website—paste the relevant text or a short business bio."
                 }
               </p>
               <div
                 className="y40 y36"
                 role="img"
-                aria-label="Google Drive, Gmail, and your bio all feed into one profile Gemini builds: your background, speaking topics, and target audience."
+                aria-label="Your website, audience, and offer give Gemini a business brief: your background, expertise, and target audience."
                 style={{ width: "320px", height: "228px", marginTop: "12px" }}
               >
                 <svg
@@ -612,19 +634,19 @@ export default function LeadFinderLesson() {
                   className="y2 y35 y63 y64 y25 y65 y0 y3 y20 y21 y24 y10 y66 y22 y1"
                   style={{ top: "0px" }}
                 >
-                  {"Google Drive"}
+                  {"Your website"}
                 </div>
                 <div
                   className="y2 y35 y63 y64 y25 y65 y0 y3 y20 y21 y24 y10 y66 y22 y1"
                   style={{ top: "92px" }}
                 >
-                  {"Gmail"}
+                  {"Your audience"}
                 </div>
                 <div
                   className="y2 y35 y63 y64 y25 y65 y0 y3 y20 y21 y24 y10 y66 y22 y1"
                   style={{ top: "184px" }}
                 >
-                  {"Your bio"}
+                  {"Your offer"}
                 </div>
                 <div
                   className="y2 y25 y0 y3 y20 y21 y23 y26 y27 y22"
@@ -644,7 +666,7 @@ export default function LeadFinderLesson() {
                     <br />
                     {"Background"}
                     <br />
-                    {"Speaking topics"}
+                    {"Expertise"}
                     <br />
                     {"Target audience"}
                   </span>
@@ -658,9 +680,13 @@ export default function LeadFinderLesson() {
               </div>
               <p className="z19" id="prompt-1">
                 {
-                  "Search my Google Drive and my Gmail for [YOUR NAME] to understand my background, speaking topics, and target audience."
+                  "Review my website(s): [WEBSITE]. I help [AUDIENCE] with [OFFER]. Use the website context to summarize my expertise, audience, and what makes a good opportunity for me. Ask about anything important that is missing. If you cannot access a page, tell me so I can paste the relevant text."
                 }
               </p>
+            </div>
+            <div className="resource-note">
+              <p><strong>Optional, recommended context:</strong> connect Google Workspace to draw on relevant business files or messages you choose. This prepared workshop example uses that connection too. You can still start with your website or a short bio.</p>
+              <p><strong>Ian’s example:</strong> ianmcdonald.ai and disruptiv.solutions; small-business owners; hands-on AI workshops. The prepared conversation began with a short bio, so this website prompt is the reusable template, not a transcript of that first message.</p>
             </div>
           </section>
           <section className="z20" id="step-2">
@@ -672,7 +698,7 @@ export default function LeadFinderLesson() {
               <h2 className="z12">{"Find leads that fit"}</h2>
               <p className="z11">
                 {
-                  "Tell it exactly what you're looking for, then make it explain why each result fits your business. If it can't explain the fit, it isn't a lead."
+                  "Use your business brief to decide what a useful opportunity looks like. Gemini should explain why each candidate fits. A search result is a candidate to investigate, not a confirmed client or an available speaking slot."
                 }
               </p>
             </div>
@@ -700,10 +726,10 @@ export default function LeadFinderLesson() {
               <div className="z4">
                 <span className="z3">{"In Gemini"}</span>
               </div>
-              <h2 className="z12">{"Pick what you're searching for"}</h2>
+              <h2 className="z12">{"Personalize four search fields"}</h2>
               <p className="z11">
                 {
-                  "I'm searching for speaking opportunities. The same prompt works for clients, referral partners, sponsors, or businesses that need your services. Give the AI a role and a specific ask."
+                  "Now that Gemini has your context, personalize four fields: opportunity type, location, dates, and offer. The expert role, five-result count, output columns, and source instructions stay fixed. Tap a field to find its place in the prompt, then replace every bracketed value before sending."
                 }
               </p>
             </div>
@@ -713,236 +739,26 @@ export default function LeadFinderLesson() {
                 <CopyButton promptId="prompt-2" />
               </div>
               <p className="y6 y28" id="prompt-2" style={{ lineHeight: "2.1" }}>
-                <span
-                  className={
-                    "sg" +
-                    (activePart === null
-                      ? ""
-                      : activePart === 1
-                        ? " sg-on"
-                        : " sg-off")
-                  }
-                  data-seg="1"
-                >
-                  <span className="z42" data-marker="1" aria-hidden="true">
-                    {"1"}
-                  </span>
-                  <span className="z35">
-                    {"Act as an expert lead generator."}
-                  </span>
-                </span>{" "}
-                <span
-                  className={
-                    "sg" +
-                    (activePart === null
-                      ? ""
-                      : activePart === 2
-                        ? " sg-on-y"
-                        : " sg-off")
-                  }
-                  data-seg="2"
-                >
-                  <span className="z45" data-marker="1" aria-hidden="true">
-                    {"2"}
-                  </span>
-                  <span className="z49">
-                    {"Find five upcoming business, tech, or AI summits"}
-                  </span>
-                </span>{" "}
-                <span
-                  className={
-                    "sg" +
-                    (activePart === null
-                      ? ""
-                      : activePart === 3
-                        ? " sg-on"
-                        : " sg-off")
-                  }
-                  data-seg="3"
-                >
-                  <span className="z42" data-marker="1" aria-hidden="true">
-                    {"3"}
-                  </span>
-                  <span className="z35">{"in the [YOUR CITY] area"}</span>
-                </span>{" "}
-                <span
-                  className={
-                    "sg" +
-                    (activePart === null
-                      ? ""
-                      : activePart === 4
-                        ? " sg-on-y"
-                        : " sg-off")
-                  }
-                  data-seg="4"
-                >
-                  <span className="z45" data-marker="1" aria-hidden="true">
-                    {"4"}
-                  </span>
-                  <span className="z49">
-                    {"happening in Q4 2026 or early 2027"}
-                  </span>
-                </span>{" "}
-                <span
-                  className={
-                    "sg" +
-                    (activePart === null
-                      ? ""
-                      : activePart === 5
-                        ? " sg-on"
-                        : " sg-off")
-                  }
-                  data-seg="5"
-                >
-                  <span className="z42" data-marker="1" aria-hidden="true">
-                    {"5"}
-                  </span>
-                  <span className="z35">
-                    {"where I could pitch my [YOUR OFFER]."}
-                  </span>
-                </span>{" "}
-                <span
-                  className={
-                    "sg" +
-                    (activePart === null
-                      ? ""
-                      : activePart === 6
-                        ? " sg-on-y"
-                        : " sg-off")
-                  }
-                  data-seg="6"
-                >
-                  <span className="z45" data-marker="1" aria-hidden="true">
-                    {"6"}
-                  </span>
-                  <span className="z49">
-                    {"Provide the event name, date, and why it's a good fit."}
-                  </span>
-                </span>
+                {"Act as an expert lead generator. Find five upcoming "}
+                <span className={"sg" + (activePart === 1 ? " sg-on-y" : "")}>[OPPORTUNITY TYPE]</span>
+                {" in "}<span className={"sg" + (activePart === 2 ? " sg-on-y" : "")}>[LOCATION]</span>
+                {", happening "}<span className={"sg" + (activePart === 3 ? " sg-on-y" : "")}>[DATES]</span>
+                {", where I could offer a "}<span className={"sg" + (activePart === 4 ? " sg-on-y" : "")}>[OFFER]</span>
+                {". Return the event name, audience, location, date, why it fits, and official source URL. Use official organizer sources. If a date or speaker call is not published, say so. Do not invent contacts or imply that a speaking slot is available."}
               </p>
-              <div
-                className="y33 y1 y49"
-                style={{
-                  marginTop: "8px",
-                  paddingTop: "14px",
-                  borderTop: "1px solid #3A3734",
-                }}
-              >
-                {"Tap a part to see it in the prompt"}
+              <div className="resource-search-fields" aria-label="Four fields to personalize">
+                {["Opportunity type", "Location", "Dates", "Offer"].map((label, index) => (
+                  <button key={label} type="button" className={"lg z14" + (activePart === index + 1 ? " lg-on" : "")}
+                    aria-pressed={activePart === index + 1}
+                    onClick={() => setActivePart(activePart === index + 1 ? null : index + 1)}>
+                    <span aria-hidden="true">0{index + 1} </span>{label}
+                  </button>
+                ))}
               </div>
-              <ol
-                className="y6 y59 y50 y68"
-                style={{
-                  padding: "0",
-                  listStyle: "none",
-                  gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-                  gap: "4px 8px",
-                  lineHeight: "1.45",
-                }}
-              >
-                <li>
-                  <button
-                    type="button"
-                    data-pick="1"
-                    aria-pressed={activePart === 1}
-                    className={"lg z14" + (activePart === 1 ? " lg-on" : "")}
-                    onClick={() =>
-                      setActivePart((current) => (current === 1 ? null : 1))
-                    }
-                  >
-                    <b className="z44">{"1"}</b>
-                    <span>
-                      <b className="z6">{"Role."}</b>
-                      {" Tells it how to think."}
-                    </span>
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    data-pick="2"
-                    aria-pressed={activePart === 2}
-                    className={"lg z14" + (activePart === 2 ? " lg-on" : "")}
-                    onClick={() =>
-                      setActivePart((current) => (current === 2 ? null : 2))
-                    }
-                  >
-                    <b className="z41">{"2"}</b>
-                    <span>
-                      <b className="z6">{"Task and count."}</b>
-                      {" What to find, and how many."}
-                    </span>
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    data-pick="3"
-                    aria-pressed={activePart === 3}
-                    className={"lg z14" + (activePart === 3 ? " lg-on" : "")}
-                    onClick={() =>
-                      setActivePart((current) => (current === 3 ? null : 3))
-                    }
-                  >
-                    <b className="z44">{"3"}</b>
-                    <span>
-                      <b className="z6">{"Where."}</b>
-                      {" Keeps results local."}
-                    </span>
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    data-pick="4"
-                    aria-pressed={activePart === 4}
-                    className={"lg z14" + (activePart === 4 ? " lg-on" : "")}
-                    onClick={() =>
-                      setActivePart((current) => (current === 4 ? null : 4))
-                    }
-                  >
-                    <b className="z41">{"4"}</b>
-                    <span>
-                      <b className="z6">{"When."}</b>
-                      {" Rules out stale events."}
-                    </span>
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    data-pick="5"
-                    aria-pressed={activePart === 5}
-                    className={"lg z14" + (activePart === 5 ? " lg-on" : "")}
-                    onClick={() =>
-                      setActivePart((current) => (current === 5 ? null : 5))
-                    }
-                  >
-                    <b className="z44">{"5"}</b>
-                    <span>
-                      <b className="z6">{"Your offer."}</b>
-                      {" So it judges fit against what you sell."}
-                    </span>
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    data-pick="6"
-                    aria-pressed={activePart === 6}
-                    className={"lg z14" + (activePart === 6 ? " lg-on" : "")}
-                    onClick={() =>
-                      setActivePart((current) => (current === 6 ? null : 6))
-                    }
-                  >
-                    <b className="z41">{"6"}</b>
-                    <span>
-                      <b className="z6">{"Output."}</b>
-                      {" What to hand back."}
-                    </span>
-                  </button>
-                </li>
-              </ol>
+              <details className="resource-example">
+                <summary>See Ian’s filled-in example</summary>
+                <p className="z19">Business, tech, or AI events · greater Houston or online · November 2026 through January 2027 · hands-on AI workshop for small-business owners.</p>
+              </details>
             </div>
           </section>
           <section className="z63" id="step-4">
@@ -951,10 +767,10 @@ export default function LeadFinderLesson() {
               <div className="z4">
                 <span className="z3">{"In Gemini"}</span>
               </div>
-              <h2 className="z12">{"Research first, export once"}</h2>
+              <h2 className="z12">{"Research the gaps"}</h2>
               <p className="z11">
                 {
-                  "Before you build anything, get what you need to act: who to contact, how to reach them, and how to open the conversation. A list without names is just a list."
+                  "Research the organizer, a public contact route or submission form, the pitch angle, and the official sources. Missing contact details should stay missing. A form-only lead can still have a useful next action; Gemini must not invent an email address."
                 }
               </p>
               <div className="y0 y5 y53" style={{ marginTop: "10px" }}>
@@ -989,9 +805,10 @@ export default function LeadFinderLesson() {
               </div>
               <p className="z19" id="prompt-3">
                 {
-                  "Before we export this, find the email and phone number for each event organizer, or the speaker submission link, and add a suggested pitch strategy for each event."
+                  "Before we export this conduct some deeper research, find the event organizer and a public contact route or speaker submission link. Add a suggested pitch angle and the official source for each detail. Mark missing information as not found. Separate confirmed opportunities from organizations worth contacting."
                 }
               </p>
+              <p className="resource-small-note">“Confirmed” still needs a source check. A real event or published application route does not establish available speaking space.</p>
             </div>
           </section>
         </div>
@@ -1174,7 +991,7 @@ export default function LeadFinderLesson() {
                 <span
                   className={"ck-t" + (verified.includes(3) ? " ck-dim" : "")}
                 >
-                  {"The contact person is current"}
+                  {"The public contact or submission route is current"}
                 </span>
               </label>
               <label className="z29">
@@ -1214,7 +1031,7 @@ export default function LeadFinderLesson() {
                 <span
                   className={"ck-t" + (verified.includes(4) ? " ck-dim" : "")}
                 >
-                  {"The fit still holds when you read it yourself"}
+                  {"I have reviewed the terms and know what availability still needs confirming"}
                 </span>
               </label>
               <div
@@ -1243,9 +1060,9 @@ export default function LeadFinderLesson() {
                 </svg>
                 <span>
                   <b className="y4" style={{ fontSize: "18px" }}>
-                    {"Ready to reach out."}
+                    {"Choose your next action."}
                   </b>
-                  {" Every detail checks out."}
+                  {" Keep unresolved details marked Needs review."}
                 </span>
               </div>
             </fieldset>
@@ -1253,7 +1070,7 @@ export default function LeadFinderLesson() {
               className="y7 y0 y5 y53"
               style={{ flex: "1 1 100%", paddingTop: "16px" }}
             >
-              <div className="z58">{"What a miss looks like"}</div>
+              <div className="z58">{"Why the source changes the next action"}</div>
               <div className="y0 y8 y70" style={{ alignItems: "stretch" }}>
                 <div
                   className="y7 y30 y0 y5 y42"
@@ -1286,13 +1103,9 @@ export default function LeadFinderLesson() {
                       lineHeight: "1.6",
                     }}
                   >
-                    {"3. "}
-                    <b>{"[EVENT NAME]"}</b>
+                    <b>Houston Small Business Expo</b>
                     <br />
-                    {"Date: "}
-                    <span className="z43">{"November 12"}</span>
-                    <br />
-                    {"Location: [CITY] convention center"}
+                    The prepared response called it a “Confirmed Event Opportunity” and described the speaker application as open.
                   </div>
                 </div>
                 <div
@@ -1305,7 +1118,7 @@ export default function LeadFinderLesson() {
                     fontWeight: "750",
                   }}
                 >
-                  {"Doesn't match"}
+                  {"Check the terms"}
                 </div>
                 <div
                   className="y7 y24 y11 y30 y57 y0 y5"
@@ -1321,37 +1134,21 @@ export default function LeadFinderLesson() {
                       className="y24 y9 y69 y33"
                       style={{ flex: "1", marginLeft: "8px", color: "#5B5653" }}
                     >
-                      {"[event website]"}
+                      {"Official speaker application"}
                     </span>
                   </div>
                   <div
                     className="y0 y5"
                     style={{ padding: "20px 22px", gap: "6px" }}
                   >
-                    <div className="z58">{"[EVENT NAME]"}</div>
-                    <div className="z57">
-                      {"Date: "}
-                      <span
-                        className="y29 y51 y9"
-                        style={{
-                          display: "inline-block",
-                          border: "2px solid #E2202A",
-                          padding: "0 10px",
-                        }}
-                      >
-                        {"November 19"}
-                      </span>
-                    </div>
-                    <div className="z57">
-                      {"Location: [CITY] convention center"}
-                    </div>
+                    <div className="z58">A real route, with conditions</div>
+                    <div className="z57">Unpaid speaking · placement not guaranteed · last-minute openings.</div>
+                    <div className="z57"><strong>Next action:</strong> decide whether the terms work for you and confirm availability before submitting.</div>
                   </div>
                 </div>
               </div>
               <p className="y6 y22 y49">
-                {
-                  "Example only. The event moved a week, and Gemini had the old date. Pitch from the AI's answer and you'd look like you didn't do your homework."
-                }
+                Workshop example checked October 22, 2026. Read the current <a className="z6" href="https://www.thesmallbusinessexpo.com/city/houston/" target="_blank" rel="noopener noreferrer">official event page</a> and <a className="z6" href="https://www.thesmallbusinessexpo.com/speaker-submission/" target="_blank" rel="noopener noreferrer">speaker submission terms</a> yourself. A confirmed event or an application form does not confirm an available Houston speaking slot. Keep this row marked Needs review until your decision is made.
               </p>
             </div>
           </div>
@@ -1365,12 +1162,12 @@ export default function LeadFinderLesson() {
             <div className="z13">
               <div className="z4">
                 <span className="z3">{"In Gemini"}</span>
-                <span className="z3">{"Export to Sheets"}</span>
+                <span className="z3">{"@Google Drive"}</span>
               </div>
               <h2 className="z12">{"Give every lead a next step"}</h2>
               <p className="z11">
                 {
-                  "Pull it all into one table with contact details, a status, and a next action. Then click Export to Sheets under the table. That turns a list into a little CRM you can actually follow up from."
+                  "Choose @Google Drive in Gemini and use the prompt below in the same conversation. In the workshop run, Gemini created a native Google Sheet and returned a file card with an Open button. Open that created file, then check its sources, Status, and Next action."
                 }
               </p>
             </div>
@@ -1381,10 +1178,11 @@ export default function LeadFinderLesson() {
               </div>
               <p className="z19" id="prompt-4">
                 {
-                  "Great. Now put all of this finalized data (event names, dates, contact info, and pitch strategies) into one table I can use as my lead tracker. Add a Status column and a Next action column."
+                  "@Google Drive Put the researched leads into one table. Include opportunity, date, location, contact, public email or phone, why it fits, pitch angle, apply link, and official source URL. Add Status and Next action. Mark unverified items Needs review and give each row a specific next action. Do not treat an unpublished date as confirmed."
                 }
               </p>
             </div>
+            <p className="resource-note">If your account returns only a table, use Export to Sheets when offered, or copy it into a new Sheet. This is a fallback; the prepared workshop uses the created-file card and Open button. Keep unpublished dates unconfirmed and check suggested next actions against the terms you found.</p>
           </section>
           <section className="z20" id="step-7">
             <div className="z9">{"07"}</div>
@@ -1396,7 +1194,7 @@ export default function LeadFinderLesson() {
               <h2 className="z12">{"Make it easy to use"}</h2>
               <p className="z11">
                 {
-                  "Open your exported tracker in Google Sheets. Click the Gemini sparkle button at the top right of the sheet, then paste the prompt below into the side panel. Gemini can format the sheet for you. Use the button inside Sheets, rather than Chrome's separate Ask Gemini button."
+                  "Open the created tracker in Google Sheets. Click the Gemini sparkle button at the top right of the sheet, then paste this tested prompt into the side panel. Use the Gemini button inside Sheets; Chrome’s separate Ask Gemini control is a different interface."
                 }
               </p>
             </div>
@@ -1412,20 +1210,25 @@ export default function LeadFinderLesson() {
               </p>
             </div>
             <p className="z11" style={{ flex: "1 1 100%" }}>
-              Let Gemini finish; it can take a few minutes. In the tested Beta,
-              it applied the formatting directly. If your interface shows a
-              preview and an Apply button, review the changes and apply them
-              there. Check that the rows, details, and links are still intact.
+              Review the formatting plan and choose Approve if your interface
+              offers it. Let Gemini finish, then check that the rows, details,
+              and links are intact. The prepared Workspace example showed a
+              “Format Lead Tracker Layout” plan, approval, and a completed
+              result with dark blue headers, alternating rows, wrapped text,
+              and readable widths. It is already formatted in the presentation.
+              Other interfaces may offer Apply or make the changes directly;
+              review the result either way.
             </p>
             <p className="y6 y22 y49" style={{ flex: "1 1 100%" }}>
               Gemini in Sheets is available to eligible Google accounts. If you
-              do not see the sparkle button in Sheets, keep using your exported
-              tracker; you can still complete the research and export steps.
+              do not see the sparkle button in Sheets, keep using your tracker;
+              you can still complete the research and organize your next actions.
             </p>
             <div
               className="y7 y0 y8 y55"
               style={{ flex: "1 1 100%", paddingTop: "8px" }}
             >
+              <p className="resource-note">Simplified before/after illustration. The workshop’s actual Sheet has eleven columns and five lead rows; formatting should leave their content unchanged.</p>
               <div className="z53">
                 <div className="y4 y60 y29">{"Before"}</div>
                 <div
@@ -1484,7 +1287,7 @@ export default function LeadFinderLesson() {
                         <td className="z1">
                           {"[A LONG SENTENCE ABOUT WHY THIS EVENT FITS YOUR OFFER]"}
                         </td>
-                        <td className="z1">{"verify"}</td>
+                        <td className="z1">{"Needs review"}</td>
                       </tr>
                       <tr>
                         <td className="z26">{"3"}</td>
@@ -1493,7 +1296,7 @@ export default function LeadFinderLesson() {
                         <td className="z1">
                           {"[A LONG SENTENCE ABOUT WHY THIS EVENT FITS YOUR OFFER]"}
                         </td>
-                        <td className="z1">{"pitched"}</td>
+                        <td className="z1">{"Needs review"}</td>
                       </tr>
                       <tr>
                         <td className="z26">{"4"}</td>
@@ -1502,7 +1305,7 @@ export default function LeadFinderLesson() {
                         <td className="z1">
                           {"[A LONG SENTENCE ABOUT WHY THIS EVENT FITS YOUR OFFER]"}
                         </td>
-                        <td className="z1">{"booked"}</td>
+                        <td className="z1">{"Needs review"}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -1540,7 +1343,7 @@ export default function LeadFinderLesson() {
                         <td className="z40">
                           {"[A LONG SENTENCE ABOUT WHY THIS EVENT FITS YOUR OFFER]"}
                         </td>
-                        <td className="z39">{"verify"}</td>
+                        <td className="z39">{"Needs review"}</td>
                       </tr>
                       <tr style={{ background: "#EEF3F8" }}>
                         <td className="z46">{"[EVENT NAME]"}</td>
@@ -1548,7 +1351,7 @@ export default function LeadFinderLesson() {
                         <td className="z40">
                           {"[A LONG SENTENCE ABOUT WHY THIS EVENT FITS YOUR OFFER]"}
                         </td>
-                        <td className="z39">{"pitched"}</td>
+                        <td className="z39">{"Needs review"}</td>
                       </tr>
                       <tr>
                         <td className="z46">{"[EVENT NAME]"}</td>
@@ -1556,7 +1359,7 @@ export default function LeadFinderLesson() {
                         <td className="z40">
                           {"[A LONG SENTENCE ABOUT WHY THIS EVENT FITS YOUR OFFER]"}
                         </td>
-                        <td className="z39">{"booked"}</td>
+                        <td className="z39">{"Needs review"}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -1573,19 +1376,14 @@ export default function LeadFinderLesson() {
               <h2 className="z12">{"Run it for your business"}</h2>
               <p className="z11">
                 {
-                  "Same method, your offer and your audience. Swap two things in the prompts and the whole workflow is yours."
+                  "Use your website, audience, and offer for the brief. Then replace opportunity type, location, dates, and offer in the search prompt. Find five candidates, check one against an official source, and choose its next action."
                 }
               </p>
             </div>
             <div className="y67 y7 y0 y5 y34">
-              <div className="z50">
-                <span className="z59">{"Business and tech summits"}</span>
-                <span className="z43">{"[YOUR IDEAL LEAD]"}</span>
-              </div>
-              <div className="z50">
-                <span className="z59">{"My live demo and AI workshops"}</span>
-                <span className="z43">{"[YOUR OFFER]"}</span>
-              </div>
+              {["Opportunity type", "Location", "Dates", "Offer"].map((field) => (
+                <div className="z50" key={field}><span className="z59">{field}</span><span className="z43">Your information</span></div>
+              ))}
             </div>
           </section>
         </section>
@@ -1607,7 +1405,7 @@ export default function LeadFinderLesson() {
             >
               <p className="y6 y38" style={{ maxWidth: "60ch" }}>
                 {
-                  "These are the columns my sheet ended with. Status and next action matter most. Without them, it's a spreadsheet you forget about."
+                  "Keep all eleven columns, including the official source URL. This is a template with three illustrative rows, not the prepared five-lead Sheet. Start unverified rows at Needs review and give each a specific next action."
                 }
               </p>
               <button
@@ -1646,7 +1444,7 @@ export default function LeadFinderLesson() {
               <table
                 className="y72 y41 y50"
                 style={{
-                  minWidth: "1000px",
+                  minWidth: "1220px",
                   fontVariantNumeric: "lining-nums tabular-nums",
                 }}
               >
@@ -1676,6 +1474,7 @@ export default function LeadFinderLesson() {
                     <th className="z2" scope="col">
                       {"Apply link"}
                     </th>
+                    <th className="z2" scope="col">Official source URL</th>
                     <th className="z64" scope="col">
                       {"Status"}
                     </th>
@@ -1756,6 +1555,7 @@ export default function LeadFinderLesson() {
                         {"[LINK]"}
                       </span>
                     </td>
+                    <td className="z0"><span className="tk-c" style={{ animationDelay: "700ms" }}>[OFFICIAL URL]</span></td>
                     <td className="z0">
                       <span
                         className="tk-pill y51 y9 y75 y1"
@@ -1764,7 +1564,7 @@ export default function LeadFinderLesson() {
                           animationDelay: "760ms",
                         }}
                       >
-                        {"Verify"}
+                        {"Needs review"}
                       </span>
                     </td>
                     <td className="z2">
@@ -1772,7 +1572,7 @@ export default function LeadFinderLesson() {
                         className="tk-c"
                         style={{ animationDelay: "860ms" }}
                       >
-                        {"Confirm date on the event site"}
+                        {"Confirm the date on the official site"}
                       </span>
                     </td>
                   </tr>
@@ -1847,6 +1647,7 @@ export default function LeadFinderLesson() {
                         {"[LINK]"}
                       </span>
                     </td>
+                    <td className="z0"><span className="tk-c" style={{ animationDelay: "700ms" }}>[OFFICIAL URL]</span></td>
                     <td className="z0">
                       <span
                         className="tk-pill y9 y75 y1"
@@ -1856,7 +1657,7 @@ export default function LeadFinderLesson() {
                           animationDelay: "1410ms",
                         }}
                       >
-                        {"Pitched"}
+                        {"Needs review"}
                       </span>
                     </td>
                     <td className="z2">
@@ -1864,7 +1665,7 @@ export default function LeadFinderLesson() {
                         className="tk-c"
                         style={{ animationDelay: "1510ms" }}
                       >
-                        {"Follow up in 7 days"}
+                        {"Check speaker terms and availability"}
                       </span>
                     </td>
                   </tr>
@@ -1928,12 +1729,13 @@ export default function LeadFinderLesson() {
                         {"[LINK]"}
                       </span>
                     </td>
+                    <td className="z0"><span className="tk-c" style={{ animationDelay: "700ms" }}>[OFFICIAL URL]</span></td>
                     <td className="z0">
                       <span
                         className="tk-pill y23 y26 y9 y75 y1"
                         style={{ animationDelay: "2060ms" }}
                       >
-                        {"Booked"}
+                        {"Needs review"}
                       </span>
                     </td>
                     <td className="z2">
@@ -1941,7 +1743,7 @@ export default function LeadFinderLesson() {
                         className="tk-c"
                         style={{ animationDelay: "2160ms" }}
                       >
-                        {"Send talk outline"}
+                        {"Find a current public contact route"}
                       </span>
                     </td>
                   </tr>
@@ -1950,112 +1752,29 @@ export default function LeadFinderLesson() {
             </div>
           </div>
         </section>
-        <section
-          className="y12 y13"
-          id="sneak-peek"
-          style={{ padding: "0 24px 88px" }}
-        >
-          <div
-            className="y24 y10 y30 y0 y5 y55"
-            style={{ padding: "clamp(24px, 4vw, 48px)" }}
-          >
-            <div className="z4">
-              <span
-                className="y11 y9 y69 y33 y29"
-                style={{ background: "#F5D23D" }}
-              >
-                {"Sneak peek"}
-              </span>
+        <section className="y12 y13" id="email-bonus" style={{ padding: "0 24px 88px" }}>
+          <div className="y24 y10 y30 y0 y5 y55" style={{ padding: "clamp(24px, 4vw, 48px)" }}>
+            <div className="z4"><span className="y11 y9 y69 y33 y29" style={{ background: "#F5D23D" }}>Bonus</span></div>
+            <h2 className="y6 y4 y1 y74 y43" style={{ fontSize: "clamp(30px, 3.8vw, 44px)" }}>Draft the first message</h2>
+            <p className="z62">With your tracker organized, use the business context and researched leads in the same Gemini conversation to prepare outreach. Review the recipient, facts, fit, and availability before you send anything.</p>
+            <div className="z21">
+              <div className="z16"><div className="z15">You type</div><CopyButton promptId="prompt-6" /></div>
+              <p className="z19" id="prompt-6">@Gmail Use the lead tracker and business context in this chat to draft a personalized outreach email for each lead. Include a specific subject, relevant workshop angle, and one easy question. Keep each email under 150 words, warm and direct. Use only sourced facts and public contact emails; don’t guess. Ask about availability when unconfirmed. Save drafts only—do not send. For form-only leads, show a pasteable message. If Gmail draft creation is unavailable, show recipient, subject, and body here.</p>
             </div>
-            <h2
-              className="y6 y4 y1 y74 y43 y37"
-              style={{ fontSize: "clamp(30px, 3.8vw, 44px)", maxWidth: "22ch" }}
-            >
-              {"From a tracker row to a booked call"}
-            </h2>
-            <p className="z62">
-              {
-                "Once your tracker is in place, the same Gemini conversation can take a lead the rest of the way. This is the more advanced version I use, with Gmail, Drive, and Calendar connected to Gemini. It all starts with the foundation above."
-              }
-            </p>
-            <div className="y0 y8 y34">
-              <div className="z34">
-                <div className="z24">{"1"}</div>
-                <div className="z22">{"Paste one lead"}</div>
-                <div className="z10">{"A verified row from your tracker."}</div>
-              </div>
-              <svg
-                className="z37"
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                stroke="#96141A"
-                strokeWidth="2"
-                aria-hidden="true"
-              >
-                <path d="M7 4 L13 10 L7 16"></path>
-              </svg>
-              <div className="z34">
-                <div className="z24">{"2"}</div>
-                <div className="z22">{"Gemini drafts the pitch"}</div>
-                <div className="z10">
-                  {"Using your bio in Drive and the pitch angle."}
-                </div>
-              </div>
-              <svg
-                className="z37"
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                stroke="#96141A"
-                strokeWidth="2"
-                aria-hidden="true"
-              >
-                <path d="M7 4 L13 10 L7 16"></path>
-              </svg>
-              <div className="z34">
-                <div className="z24">{"3"}</div>
-                <div className="z22">{"You review in Gmail"}</div>
-                <div className="z10">
-                  {"Nothing sends until you approve it."}
-                </div>
-              </div>
-              <svg
-                className="z37"
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                stroke="#96141A"
-                strokeWidth="2"
-                aria-hidden="true"
-              >
-                <path d="M7 4 L13 10 L7 16"></path>
-              </svg>
-              <div className="z34">
-                <div className="z24">{"4"}</div>
-                <div className="z22">{"Hold time on Calendar"}</div>
-                <div className="z10">
-                  {"Gemini suggests open slots for the call."}
-                </div>
-              </div>
-            </div>
-            <div
-              className="y23 y26 y27 y0 y5 y39"
-              style={{ padding: "22px 24px" }}
-            >
-              <div className="z16">
-                <div className="z15">{"You type"}</div>
-                <CopyButton promptId="prompt-6" />
-              </div>
-              <p className="z19" id="prompt-6">
-                {
-                  "Here's the next lead from my tracker: [PASTE THE ROW]. Using my bio in Drive and the pitch angle, draft a short email to the organizer in Gmail. Check my Calendar for two open 30-minute slots next week and suggest them in the email. Don't send anything. I'll review it first."
-                }
-              </p>
-            </div>
+            <p className="z62">Gmail draft creation depends on the account and mode. Standard work or school connections may return the message in chat instead. Review that text and copy it into Gmail or the official form; use Share &amp; export → Draft in Gmail only if offered. This workshop does not demonstrate saved Gmail drafts.</p>
+            <details className="resource-draft" open>
+              <summary>Illustrative draft · not sent</summary>
+              <p><strong>Route:</strong> Houston Small Business Expo speaker submission form. No recipient email is assumed.</p>
+              <p><strong>Subject:</strong> Hands-on AI workshop for Houston business owners</p>
+              <blockquote>
+                <p>Hi Small Business Expo team,</p>
+                <p>I’m Ian McDonald, a Houston-based AI builder and educator. I teach small-business owners practical AI workflows through hands-on workshops.</p>
+                <p>Would a session on using Gemini and Google Sheets to research prospects and organize follow-up fit your Houston programming? Attendees would leave with a source-linked lead tracker and a clear next action.</p>
+                <p>Are you considering workshop proposals, or is there someone I should contact about future dates?</p>
+                <p>Thanks,<br />Ian</p>
+              </blockquote>
+              <p className="resource-small-note">Prepared teaching example, not a claim that Gemini generated or saved this exact message. It asks about availability rather than assuming a slot is open.</p>
+            </details>
           </div>
         </section>
         <section
@@ -2086,20 +1805,8 @@ export default function LeadFinderLesson() {
                   "Ian McDonald is an AI workflow consultant and developer who helps small business owners save hours every week using the tools they already have. He adds AI in ways that save real time while keeping the owner in the approval seat."
                 }
               </p>
-              <div className="y0 y8 y28 y1" style={{ gap: "10px 20px" }}>
-                <a href="mailto:ian@ianmcdonald.ai">{"ian@ianmcdonald.ai"}</a>
-                <a href="https://ianmcdonald.ai">{"ianmcdonald.ai"}</a>
-                <a href="https://www.youtube.com/@IansDisruptivSolutions">
-                  {"YouTube"}
-                </a>
-                <a href="https://www.instagram.com/disruptiv.solutions/">
-                  {"Instagram"}
-                </a>
-                <a href="https://www.tiktok.com/@ianmcmonster">{"TikTok"}</a>
-                <a href="https://www.facebook.com/ian.mcmonster/">
-                  {"Facebook"}
-                </a>
-              </div>
+              <a className="resource-email" href="mailto:ian@ianmcdonald.ai">ian@ianmcdonald.ai</a>
+              <SocialLinks />
             </div>
           </div>
         </section>
@@ -2116,6 +1823,12 @@ export default function LeadFinderLesson() {
             {"The list is your starting point. "}
             <span className="z47">{"The relationship comes next."}</span>
           </p>
+          <div className="resource-closing-cta">
+            <h2>Need help putting AI to work?</h2>
+            <p>For AI training, a workflow or automation built for your business, or social media content, email me with what you have in mind.</p>
+            <a className="resource-email" href="mailto:ian@ianmcdonald.ai">ian@ianmcdonald.ai</a>
+            <SocialLinks />
+          </div>
           <div
             className="y0 y8 y54 y22 y49"
             style={{
