@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import SpeakingInquiryForm from "@/components/SpeakingInquiryForm";
 import SpeakingStickyCta from "@/components/speaking/SpeakingStickyCta";
-import SpeakingPageSubnav from "@/components/speaking/SpeakingPageSubnav";
 import styles from "./Speaking.module.css";
 
 export const metadata: Metadata = {
@@ -31,7 +30,6 @@ export default function SpeakingPage() {
   return <div className={styles.page}>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "Person", name: "Ian McDonald", jobTitle: "AI product builder and speaker", url: "https://www.ianmcdonald.ai/speaking", image: "https://www.ianmcdonald.ai/ian-mcdonald.png", email: "mailto:ian@ianmcdonald.ai", description: "Self-taught AI builder delivering practical keynotes, workshops, and live builds." }) }} />
     <SpeakingStickyCta />
-    <SpeakingPageSubnav />
 
     <section className={`${styles.container} ${styles.hero}`} aria-labelledby="speaking-title">
       <div><p className={styles.eyebrow}>Speaking & workshops</p><h1 id="speaking-title">Give your audience something to <em>build on.</em></h1><p className={styles.heroCopy}>Practical AI keynotes, workshops, and live builds from someone doing the work. For founder groups, business owners, and teams ready to put the ideas into practice.</p><div className={styles.actions}><a className={styles.button} href="#book">Bring Ian to your event <span aria-hidden="true">↗</span></a><a className={styles.textLink} href="#proof">Watch Ian speak <span aria-hidden="true">↓</span></a></div><p id="fit" className={styles.location}>Based in Houston. Available to travel.</p></div>

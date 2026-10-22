@@ -75,7 +75,6 @@
 @media(prefers-reduced-motion:reduce) { .editorial-site *, .editorial-site *::before, .editorial-site *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; } }
 
 .editorial-site [id] { scroll-margin-top: 90px; }
-.editorial-site[data-page="speaking"] .editorial-content section[id] { scroll-margin-top: 140px; }
 .editorial-site[data-page="speaking"] .editorial-content h1 { font-size: clamp(2.7rem, 4.4vw, 4rem); }
 .editorial-subpage .editorial-content [class*="border-red-"] { border-color: #c4041040; }
 .editorial-subpage .editorial-content :is([class~="bg-red-500/10"],[class~="bg-red-600/10"]) { background-color: #c404100a; }
@@ -85,7 +84,7 @@
 
 @media(min-width:1024px) { .editorial-site[data-page="learn"] .editorial-content aside[class*="lg:fixed"] { top: var(--site-header-height); height: calc(100dvh - var(--site-header-height)); } }
 
-@media(max-width:1100px) { .editorial-site { --site-header-height: 67px; } .editorial-site[data-page="speaking"] .editorial-content nav[aria-label="On this page"] { top: var(--site-header-height); } }
+@media(max-width:1100px) { .editorial-site { --site-header-height: 67px; } }
 
 .editorial-subpage .editorial-content [class*="bg-black/"] { background-color: var(--site-panel); }
 .editorial-subpage .editorial-content [class*="shadow-"] { box-shadow: none; }
