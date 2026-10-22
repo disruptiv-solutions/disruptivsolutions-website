@@ -143,3 +143,6 @@
 }
 @media(max-width: 360px) { .hero h1 { font-size: 38px; } .heroAction { font-size: 21px; gap: 12px; } .heroArt { height: 320px; } }
 @media(prefers-reduced-motion:reduce) { .page * { scroll-behavior: auto; transition: none; } }
+.page .heroLearning { display: flex; align-items: center; gap: 12px; width: fit-content; min-height: 44px; margin-top: 12px; font-size: 13px; line-height: 1.7; font-weight: 600; color: #96141a; text-decoration: underline; text-underline-offset: 5px; }
+.heroLearning svg { width: 18px; height: 18px; flex-shrink: 0; }
+.heroLearning:hover { color: var(--site-ink); }

@@ -1324,3 +1324,15 @@
 }
 @media (prefers-reduced-motion: reduce) {
 }
+.readiness { max-width: 1112px; margin: 0 auto 40px; padding: 28px 30px; border: 1px solid #bdb5aa; border-top: 4px solid #b61923; background: #faf5ed; display: grid; grid-template-columns: .85fr 1.2fr; gap: 40px; }
+.readiness .readinessLabel { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #96141a; margin: 0 0 13px; }
+.readiness h2 { font-size: clamp(28px,3vw,38px); line-height: 1.1; margin: 0; }
+.readiness p { font-size: 13px; line-height: 1.8; margin: 17px 0 0; color: #5b5653; }
+.readiness dl { margin: 0; }
+.readiness dl > div { display: grid; grid-template-columns: 58px 1fr; gap: 17px; padding: 12px 0; border-bottom: 1px solid #ddd7cb; }
+.readiness dl > div:first-child { padding-top: 0; }
+.readiness dt { font-size: 12px; font-weight: 700; color: #96141a; }
+.readiness dd { font-size: 13px; line-height: 1.75; margin: 0; }
+.readiness .accessNote { font-size: 12px; }
+@media(max-width:1160px) { .readiness { margin-inline: 24px; } }
+@media(max-width:760px) { .readiness { grid-template-columns: 1fr; gap: 23px; padding: 23px 20px; } }

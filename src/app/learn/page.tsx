@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Learn.module.css';
 import { WORKSHOP_KITS } from '@/lib/workshop-kits';
+import { LAUNCH_AND_LEARN } from '@/lib/launch-and-learn';
 
 export const metadata: Metadata = {
   title: 'Learn | Ian McDonald AI',
@@ -49,11 +50,17 @@ export default function LearnPage() {
       <div className={styles.introNote}>
         <span className={styles.noteMark} aria-hidden="true">↳</span>
         <p>Real demos. Useful prompts.<br />Something you can put to work.</p>
-        <span>Pick a workflow. Make it yours.</span>
+        <span>Start with a lesson. Bring your questions. Keep building.</span>
       </div>
     </header>
 
-    <section aria-label="Lessons and workshop kits" className={styles.library}>
+    <nav className={styles.startingPath} aria-label="Choose how to learn">
+      <a href="#lessons"><span>01 / Try it yourself</span><strong>Start with a free lesson <Arrow /></strong></a>
+      <a href="#learn-live"><span>02 / Work through a question</span><strong>Join the weekly call <Arrow /></strong></a>
+      <Link href="/community"><span>03 / Keep building together</span><strong>Explore the free community <Arrow /></strong></Link>
+    </nav>
+
+    <section id="lessons" aria-label="Lessons and workshop kits" className={styles.library}>
       <div className={styles.libraryHeading}>
         <span>The practical collection</span>
         <span>{String(lessons.length).padStart(2, '0')} {lessons.length === 1 ? 'resource' : 'resources'} / ready when you are</span>
@@ -77,7 +84,7 @@ export default function LearnPage() {
           <div className={styles.featuredMeta}><span className={styles.startHere}>Start here</span><span>Video + copyable prompts</span></div>
           <h2 id="featured-lesson-title">{featured.title}.<br /><em>Then follow up.</em></h2>
           <p>Find the right opportunities, check the details, and turn a list into a tracker you’ll actually use.</p>
-          <div className={styles.lessonFacts}><span>2:46 walkthrough</span><span>8 practical steps</span></div>
+          <div className={styles.lessonFacts}><span>Short walkthrough</span><span>8 practical steps</span></div>
           <span className={styles.featuredAction}>Get the walkthrough & prompts <Arrow /></span>
         </div>
       </Link>}
@@ -93,6 +100,12 @@ export default function LearnPage() {
         <span className={styles.workshopAction}><span>{kit.slug === 'animated-gifs' ? 'Make a GIF' : kit.slug === 'meeting-follow-through' ? 'Start the lesson' : 'Open the kit'}</span><Arrow /></span>
       </Link>)}
     </section>
+
+    <section id="learn-live" className={styles.liveSession} aria-labelledby="live-title">
+      <div><p className={styles.eyebrow}>Free / Launch &amp; Learn</p><h2 id="live-title">Bring what you’re<br /><em>working on.</em></h2></div>
+      <div><p>Join my weekly call for practical AI building, live walkthroughs, and founder Q&amp;A. Bring a question from a lesson, a project you’re trying, or something you want to make easier.</p><p className={styles.schedule}>{LAUNCH_AND_LEARN.schedule}</p><a className={styles.liveLink} href={LAUNCH_AND_LEARN.meetingUrl} target="_blank" rel="noopener noreferrer">Join Launch &amp; Learn <Arrow /></a><Link className={styles.communityLink} href="/community">Keep the conversation going in my free community <span aria-hidden="true">→</span></Link></div>
+    </section>
+    <aside className={styles.extraResources} aria-label="More ways to learn"><p>Still choosing a starting point? <Link href="/assessment">Try the free AI Snapshot.</Link></p><p>Prefer to follow along? <Link href="/newsletter">Get notes from my workbench.</Link></p></aside>
 
   </div>;
 }

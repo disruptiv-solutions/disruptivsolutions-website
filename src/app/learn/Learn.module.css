@@ -118,3 +118,24 @@
 @media (prefers-reduced-motion:reduce) {
   .page *, .page *::before, .page *::after { transition: none !important; }
 }
+.startingPath { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); margin: 0 0 42px; border-block: 1px solid var(--site-line); }
+.startingPath a { display: block; padding: 22px 20px; }
+.startingPath a:first-child { padding-left: 0; }
+.startingPath a + a { border-left: 1px solid var(--site-line); }
+.startingPath span { display: block; font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #96141a; }
+.startingPath strong { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 10px; font-size: 14px; line-height: 1.6; }
+.startingPath svg { flex-shrink: 0; width: 18px; }
+.startingPath a:hover strong { text-decoration: underline; text-underline-offset: 4px; }
+.liveSession { display: grid; grid-template-columns: 1fr 1.2fr; gap: 70px; padding: 48px 0; border-bottom: 1px solid var(--site-line); scroll-margin-top: 120px; }
+.liveSession h2 { font-size: clamp(32px,3.7vw,48px); line-height: 1.1; margin: 16px 0 0; letter-spacing: -.03em; }
+.liveSession h2 em { color: #b61923; font-style: normal; }
+.liveSession > div > p:not(.eyebrow) { font-size: 15px; line-height: 1.9; margin: 0; max-width: 57ch; }
+.liveSession .schedule { font-size: 12px !important; font-weight: 700; margin-top: 20px !important; }
+.page .liveLink { display: inline-flex; align-items: center; gap: 28px; min-height: 48px; padding: 11px 19px; background: #b61923; color: #fffaf1; font-size: 14px; font-weight: 700; margin-top: 18px; }
+.page .liveLink:hover { background: var(--site-ink); }
+.page .communityLink { display: flex; align-items: center; gap: 12px; width: fit-content; min-height: 44px; margin-top: 8px; font-size: 12px; line-height: 1.7; text-decoration: underline; text-underline-offset: 4px; }
+.extraResources { display: flex; justify-content: space-between; gap: 12px 30px; flex-wrap: wrap; padding-top: 24px; font-size: 12px; line-height: 1.8; }
+.extraResources p { margin: 0; }
+.page .extraResources a { text-decoration: underline; text-underline-offset: 4px; }
+@media(max-width:760px) { .startingPath { grid-template-columns: 1fr; margin-bottom: 28px; } .startingPath a,.startingPath a:first-child { padding: 17px 0; } .startingPath a + a { border-left: 0; border-top: 1px solid var(--site-line); } .liveSession { grid-template-columns: 1fr; gap: 24px; padding-block: 34px; } }
+.library { scroll-margin-top: 120px; }

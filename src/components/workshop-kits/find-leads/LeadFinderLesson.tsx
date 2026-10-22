@@ -174,6 +174,10 @@ export default function LeadFinderLesson() {
             </figcaption>
           </figure>
         </section>
+        <section className={styles.readiness} aria-labelledby="before-you-start-title">
+          <div><p className={styles.readinessLabel}>Before you start</p><h2 id="before-you-start-title">One useful lead<br />is a good first win.</h2><p>Suggested first session: 30 minutes. Research and account setup may take longer.</p></div>
+          <div><dl><div><dt>Bring</dt><dd>Your public website or a short bio, who you help, and what you offer.</dd></div><div><dt>Open</dt><dd>Gemini on desktop and Google Sheets. Connected Workspace context is optional; your website is enough to start.</dd></div><div><dt>Make</dt><dd>A lead tracker with source links, review status, a next action, and an outreach draft you check before sending.</dd></div></dl><p className={styles.accessNote}>The connected Drive/Gmail actions and Gemini inside Sheets depend on your account’s access. If an option is missing, keep the table and email draft in Gemini, copy the table into Sheets, and continue reviewing your leads. Formatting can wait.</p></div>
+        </section>
         <section
           className="lesson-tools y12 y13"
           id="tools-used"

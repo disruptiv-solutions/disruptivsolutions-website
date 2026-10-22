@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import CommunityAction from './CommunityAction';
 import styles from './Community.module.css';
+import { LAUNCH_AND_LEARN } from '@/lib/launch-and-learn';
 
 export const metadata: Metadata = {
   title: 'My Community & the Platform I Built | Ian McDonald AI',
@@ -33,13 +34,13 @@ export default function CommunityPage() {
 
     <section className={styles.inside} aria-labelledby="inside-title">
       <div className={styles.sectionIntro}>
-        <p className={styles.eyebrow}>Inside my community</p>
+        <p className={styles.eyebrow}>Your first steps inside</p>
         <h2 id="inside-title">Come with an idea.<br /><em>Try something real.</em></h2>
         <p>You don’t need a technical background or a finished project. Start with one thing you’d like to make easier, then use the examples to find your next step.</p>
         <ol className={styles.practices}>
-          <li><span aria-hidden="true">01</span><div><h3>See how I made it.</h3><p>Practical lessons, demonstrations, and the prompts behind the work.</p></div></li>
-          <li><span aria-hidden="true">02</span><div><h3>Make it yours.</h3><p>Take a workflow or creative project and adapt it to your own business, skills, or ideas.</p></div></li>
-          <li><span aria-hidden="true">03</span><div><h3>Bring the questions, too.</h3><p>Share what you’re trying, where you got stuck, and what you figured out along the way.</p></div></li>
+          <li><span aria-hidden="true">01</span><div><h3>Try one small project.</h3><p>Start with the lead tracker or animated GIF lesson. Use the prompts with your own information and make something you can use.</p><Link className={styles.textLink} href="/learn">Choose a free lesson <span aria-hidden="true">→</span></Link></div></li>
+          <li><span aria-hidden="true">02</span><div><h3>Show what you’re trying.</h3><p>Introduce yourself in the community. Share your result or the step where you got stuck so there’s something concrete to work through.</p></div></li>
+          <li><span aria-hidden="true">03</span><div><h3>Bring it to Launch &amp; Learn.</h3><p>My free weekly call is a place for live walkthroughs and questions.<br />{LAUNCH_AND_LEARN.schedule}.</p><Link className={styles.textLink} href="/learn#learn-live">Get the call details <span aria-hidden="true">→</span></Link></div></li>
         </ol>
       </div>
       <div className={styles.workbench}>
@@ -74,16 +75,16 @@ export default function CommunityPage() {
       <div className={styles.platformCopy}>
         <div className={styles.platformBrand}><Image src="/launchbox-no-text.png" alt="" width={48} height={48} /><span>LaunchBox</span></div>
         <h2 id="platform-title">Have a community<br />of your own in mind?</h2>
-        <p>Maybe you have a workshop, a skill to teach, a group you want to bring together, or an idea that’s still taking shape. That’s what I built LaunchBox for.</p>
-        <p>You can start with a free private preview and explore what your community could look like. You choose the people it serves, the experience, and the brand.</p>
+        <p>Turn your workshop, expertise, or idea into a place for your people. Start a private preview on LaunchBox, with your own audience and brand.</p>
         <CommunityAction action="build" location="community_page_build" className={styles.buildButton}>Build my community preview</CommunityAction>
-        <p className={styles.planNote}>The private preview is free. Publishing and inviting members requires a paid Business plan.</p>
+        <p className={styles.planNote}>Start without a card. A free account saves your preview. Publishing and inviting members requires a paid Business plan.</p>
         <a className={styles.platformLink} href="https://www.launchbox.space/">Explore LaunchBox and its plans <span aria-hidden="true">↗</span></a>
       </div>
       <div className={styles.platformNote}>
         <span className={styles.noteLabel}>Your community / Your brand</span>
-        <h3>Give your people<br />a place to gather.</h3>
-        <ul><li><strong>Bring people together.</strong><span>A home for conversations, events, and member relationships.</span></li><li><strong>Share what you know.</strong><span>Courses, resources, and offers organized around your expertise.</span></li><li><strong>Build and run it.</strong><span>AI tools, marketing, and payments alongside the community.</span></li></ul>
+        <h3>Start by being<br />part of mine.</h3>
+        <p className={styles.memberFirst}>You don’t need to build a community to join mine. Come for the lessons, questions, and things we can make together.</p>
+        <CommunityAction location="community_page_platform_member" className={styles.textLink}>Join Ian McDonald AI free</CommunityAction>
         <a href="https://www.youtube.com/watch?v=t4WRiGmD630" className={styles.storyVideo}><span aria-hidden="true">▷</span><span>Watch why I built LaunchBox<small>My founder story · 3:14</small></span><span aria-hidden="true">↗</span></a>
       </div>
     </section>

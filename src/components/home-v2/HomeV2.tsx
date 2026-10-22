@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { trackButtonClick, trackDisruptivVisit, trackFormSubmission } from "@/lib/analytics";
 import styles from "./HomeV2.module.css";
+import { LAUNCH_AND_LEARN } from "@/lib/launch-and-learn";
 
 const CALENDAR_URL = "https://calendar.app.google/J6uMiKkf3AM4zS9MA";
 const DISRUPTIV_URL = "https://www.disruptiv.solutions";
@@ -89,6 +90,7 @@ export default function HomeV2() {
           <h1 id="home-title">Make AI practical.<br />Build what’s <em>next.</em></h1>
           <p className={styles.heroDescription}>I build products and businesses with AI. Then I share what works, on stage, in workshops, and with people ready to try it themselves.</p>
           <Link className={styles.heroAction} href="/speaking" onClick={() => trackButtonClick("explore_speaking", "home_v2_hero")}><span>Explore speaking & workshops</span><Arrow /></Link>
+          <Link className={styles.heroLearning} href="/learn" onClick={() => trackButtonClick("start_learning", "home_v2_hero")}>Heard me speak? Start with a free lesson <Arrow /></Link>
         </div>
         <figure className={styles.heroArt}>
           <div className={styles.paperBack} aria-hidden="true" />
@@ -109,7 +111,7 @@ export default function HomeV2() {
             <span className={styles.routeNumber}>01 / SPEAKING</span><div><h3>A room ready for something real.</h3><p>Keynotes, workshops, and live builds that make AI feel useful, possible, and worth trying.</p></div><Link className={styles.routeLink} href="/speaking">Bring Ian to your event <Arrow /></Link>
           </article>
           <article id="launchlearn" className={styles.routeRow}>
-            <span className={styles.routeNumber}>02 / LEARNING</span><div><h3>Try it. Ask questions. Build.</h3><p>Join the free weekly call, work through a practical kit, or get notes from the workbench.</p></div><a className={styles.routeLink} href="#learn">Find your starting point <Arrow /></a>
+            <span className={styles.routeNumber}>02 / LEARNING</span><div><h3>Try it. Ask questions. Build.</h3><p>Start with a free lesson, bring a question to the weekly call, and keep building in the community.</p></div><Link className={styles.routeLink} href="/learn">Find your starting point <Arrow /></Link>
           </article>
           <article id="disruptiv" className={styles.routeRow}>
             <span className={styles.routeNumber}>03 / BUILDING</span><div><h3>Make it work for your business.</h3><p>Disruptiv is my company for websites, apps, AI workflows, video, and campaigns. It’s where we build together.</p></div><Link className={styles.routeLink} href="/build" onClick={() => trackButtonClick("build_with_ian", "home_v2_routes")}>Build with Ian <Arrow /></Link>
@@ -136,7 +138,7 @@ export default function HomeV2() {
 
     <section id="learn" className={styles.learning} aria-labelledby="learn-title">
       <div className={`${styles.container} ${styles.learningGrid}`}>
-        <div><p className={styles.eyebrow}>No stage. No ticket. Just start.</p><h2 id="learn-title">Bring a question.<br />Leave with <em>a next step.</em></h2><p>Launch & Learn is my free weekly call for practical AI building, live walkthroughs, and founder Q&A.</p><span className={styles.schedule}>Wednesdays / 1–2 PM Central / Google Meet</span><a className={styles.lightLink} href="https://meet.google.com/cgm-vcdg-hvh" target="_blank" rel="noreferrer">Join Launch & Learn <Arrow /></a></div>
+        <div><p className={styles.eyebrow}>No stage. No ticket. Just start.</p><h2 id="learn-title">Bring a question.<br />Leave with <em>a next step.</em></h2><p>Launch & Learn is my free weekly call for practical AI building, live walkthroughs, and founder Q&A.</p><span className={styles.schedule}>{LAUNCH_AND_LEARN.schedule}</span><a className={styles.lightLink} href={LAUNCH_AND_LEARN.meetingUrl} target="_blank" rel="noreferrer">Join Launch & Learn <Arrow /></a></div>
         <div className={styles.learningLinks}>
           <Link href="/learn"><span>Work through it</span><strong>Practical AI lessons & kits</strong><Arrow /></Link>
           <Link href="/assessment"><span>Find your starting point</span><strong>The free AI Snapshot</strong><Arrow /></Link>
