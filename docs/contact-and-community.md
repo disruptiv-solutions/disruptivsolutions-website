@@ -1,0 +1,7 @@
+# Contact and community invitations
+
+The main navigation uses **Contact Ian** and links to `/contact`. On `/speaking`, the contextual button remains **Book Ian** and links to `/speaking#book`. The footer also links to Contact Ian. The general contact page reuses the project inquiry endpoint with `source=contact`, the four service interests, visible direct email, canonical social links, and an event-booking link.
+
+`src/lib/ian-community.ts` holds the public entry URL for **Ian McDonald AI** on LaunchBox. The shared public header has a Free community link; at compact widths a Join free link stays visible beside the menu. `CommunityInvitation` provides a fuller invitation before the footer on public pages, including the resource pages. The supplier readiness builder and waitlist keep the header invitation but omit the large lower invitation because their fixed sidebars would cover it; the builder also retains its existing footer exclusion. Admin tools, full-screen lesson decks, and LaunchBox's separate newsletter reader retain their own layouts. Existing Summit and class-completion community invitations use the same destination.
+
+The invitation offers practical lessons, prompts, questions, and sharing work; it does not promise all paid courses, unlimited AI tools, or a response schedule. The `community_visit` event records outgoing interest by placement, not a completed signup. Contact submissions emit `generate_lead` only after notification acceptance, with no contact details or project text in Analytics.

@@ -6,7 +6,7 @@ import ts from 'typescript';
 const source = ts.transpileModule(readFileSync('src/lib/analytics.ts', 'utf8'), {
   compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
 }).outputText;
-const { trackEvent, trackFormSubmission, trackDisruptivVisit } = await import('data:text/javascript;base64,' + Buffer.from(source).toString('base64'));
+const { trackEvent, trackFormSubmission, trackDisruptivVisit, trackCommunityVisit } = await import('data:text/javascript;base64,' + Buffer.from(source).toString('base64'));
 
 test('an event before the tag loads is queued once with its source URL', () => {
   global.window = { location: { href: 'https://www.ianmcdonald.ai/?utm_source=verification', search: '?utm_source=verification' } };
@@ -45,5 +45,17 @@ test('a Disruptiv link counts one handoff with its source placement, not a lead'
   assert.equal(sent[0][1], 'disruptiv_visit');
   assert.equal(sent[0][2].link_url, 'https://www.disruptiv.solutions/contact');
   assert.equal(sent[0][2].link_location, 'home_v2_project');
+  assert.equal(sent[0][2].page_location, window.location.href);
+});
+
+test('community invitations record outbound intent and placement without claiming a signup', () => {
+  const sent = [];
+  global.window = { dataLayer: [], gtag: (...args) => sent.push(args),
+    location: { href: 'https://www.ianmcdonald.ai/contact', search: '' } };
+  trackCommunityVisit('site_invitation');
+  assert.equal(sent.length, 1);
+  assert.equal(sent[0][1], 'community_visit');
+  assert.equal(sent[0][2].event_category, 'outbound');
+  assert.equal(sent[0][2].link_location, 'site_invitation');
   assert.equal(sent[0][2].page_location, window.location.href);
 });

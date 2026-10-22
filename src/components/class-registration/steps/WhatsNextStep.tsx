@@ -1,9 +1,10 @@
 import React from 'react';
 import { IAN_SOCIAL_URLS } from '@/lib/ian-social-links';
+import { IAN_COMMUNITY_URL } from '@/lib/ian-community';
 
 const WAITLIST_URL = 'https://www.ianmcdonald.ai/waitlist';
 const NEWSLETTER_URL = 'https://www.ianmcdonald.ai/newsletter';
-const COMMUNITY_URL = 'https://www.facebook.com/groups/2000295250823114';
+const COMMUNITY_URL = IAN_COMMUNITY_URL;
 const FACEBOOK_URL = IAN_SOCIAL_URLS.Facebook;
 const LINKEDIN_URL = IAN_SOCIAL_URLS.LinkedIn;
 const INSTAGRAM_URL = IAN_SOCIAL_URLS.Instagram;

@@ -1,0 +1,91 @@
+.invitation {
+  color: var(--site-ink);
+  background: #e4d9ce;
+  border-top: 1px solid var(--site-line);
+  font-family: var(--font-montserrat), sans-serif;
+}
+.inner {
+  width: min(1248px, calc(100% - 112px));
+  margin: auto;
+  padding: 72px 0;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: clamp(40px, 6vw, 100px);
+  align-items: center;
+}
+.eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 24px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+.free {
+  display: inline-block;
+  padding: 6px 9px;
+  border: 1px solid #96141a;
+  color: #96141a;
+  transform: rotate(-3deg);
+}
+.copy h2 {
+  margin: 0;
+  font-family: var(--font-rosario), sans-serif;
+  font-size: clamp(36px, 4.1vw, 58px);
+  line-height: 1.06;
+  letter-spacing: -.025em;
+}
+.copy h2 em { font-style: normal; color: #a5141d; }
+.description {
+  max-width: 47ch;
+  margin: 24px 0;
+  font-size: 16px;
+  line-height: 1.8;
+}
+.join {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  min-height: 52px;
+  padding: 14px 23px;
+  background: var(--site-ink);
+  color: #fffdf9;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 5px;
+}
+.join:hover { background: #96141a; }
+.join:focus-visible { outline: 2px solid #96141a; outline-offset: 5px; }
+.join span { font-size: 21px; line-height: 1; }
+.note { margin: 13px 0 0; color: #56504b; font-size: 12px; line-height: 1.7; }
+.inside {
+  padding: 28px 32px 12px;
+  background: #f8f3eb;
+  border-top: 3px solid #96141a;
+  box-shadow: 7px 7px 0 #16181b12;
+}
+.insideLabel {
+  margin: 0 0 10px;
+  font-size: 11px;
+  letter-spacing: .09em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #6b5248;
+}
+.inside ol { list-style: none; margin: 0; padding: 0; }
+.inside li { display: grid; grid-template-columns: 29px 1fr; gap: 20px; padding: 22px 0; }
+.inside li + li { border-top: 1px solid var(--site-line); }
+.number { color: #96141a; font-size: 12px; padding-top: 5px; font-weight: 700; }
+.inside h3 { margin: 0 0 8px; font-size: 23px; line-height: 1.2; font-family: var(--font-rosario), sans-serif; }
+.inside li p { margin: 0; color: #494440; font-size: 14px; line-height: 1.7; }
+@media(max-width: 800px) {
+  .inner { width: calc(100% - 40px); padding: 44px 0; grid-template-columns: 1fr; gap: 30px; }
+  .description { max-width: 54ch; }
+  .inside { padding: 24px 24px 6px; box-shadow: 4px 4px 0 #16181b12; }
+  .inside li { gap: 12px; }
+}

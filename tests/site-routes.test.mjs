@@ -9,7 +9,7 @@ const source = ts.transpileModule(readFileSync('src/lib/site-routes.ts', 'utf8')
 const { isEditorialRoute } = await import('data:text/javascript;base64,' + Buffer.from(source).toString('base64'));
 
 test('public pages share the editorial frame, including nested readers and tools', () => {
-  for (const route of ['/', '/speaking', '/newsletter', '/newsletter/3-15-26', '/brief/3-23-26', '/assessment', '/intake', '/learn', '/learn/supplier-readiness-builder', '/learn/find-leads', '/privacy']) {
+  for (const route of ['/', '/contact', '/speaking', '/newsletter', '/newsletter/3-15-26', '/brief/3-23-26', '/assessment', '/intake', '/learn', '/learn/supplier-readiness-builder', '/learn/find-leads', '/privacy']) {
     assert.equal(isEditorialRoute(route), true, route);
   }
 });
