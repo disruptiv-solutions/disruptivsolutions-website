@@ -26,7 +26,7 @@ export default function SiteHeader({ home = false, bookingHref }: { home?: boole
       <button ref={menuButton} type="button" className={styles.menuButton} aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} aria-controls="site-navigation" onClick={() => setOpen(!open)}><span /><span /></button>
       <nav id="site-navigation" aria-label="Main navigation" className={`${styles.nav} ${open ? styles.navOpen : ''}`}>
         <div className={styles.navLinks}>{[
-          ['Speaking', '/speaking'], ['Learn', '/learn'],
+          ['Home', '/'], ['Speaking', '/speaking'], ['Learn', '/learn'],
           ['About', '/about'],
         ].map(([label, href]) => <Link key={label} href={href} onClick={() => setOpen(false)}>{label}</Link>)}</div>
         <Link href={IAN_COMMUNITY_PAGE_URL} className={styles.communityCta} onClick={() => { setOpen(false); trackButtonClick('community_overview', 'site_navigation'); }}>Free community <span aria-hidden="true">→</span></Link>
