@@ -112,3 +112,5 @@
   .close { padding-block: 45px 52px; gap: 24px; }
 }
 @media(prefers-reduced-motion:reduce) { .founder,.founderStamp,.platformNote { transform: none; } }
+.platformNote .memberFirst { margin-top: 18px; font-size: 14px; line-height: 1.8; color: var(--site-muted); }
+.platformNote > .textLink { margin-top: 12px; }

@@ -41,7 +41,11 @@ export default function BuildPage() {
     </section>
 
     <section className={styles.work} aria-labelledby="work-title">
-      <div className={styles.sectionHeading}><div><p className={styles.eyebrow}>A couple of things I’ve built</p><h2 id="work-title">Experience you can see.</h2></div><p>My approach comes from building products, putting them in people’s hands, and improving how they work.</p></div>
+      <div className={styles.sectionHeading}><div><p className={styles.eyebrow}>From one workflow to a whole platform</p><h2 id="work-title">Experience you can see.</h2></div><p>You don’t need a whole platform to get started. A useful first project can tackle one repeat task in your day.</p></div>
+      <article className={styles.workflow}>
+        <div className={styles.workflowImage}><Image src="/learn/find-leads-tracker.png" width={1920} height={1144} alt="Ian’s real opportunity tracker, with review status and a next action for each lead" sizes="(max-width: 760px) 90vw, 520px" /></div>
+        <div><p className={styles.projectType}>My own workflow / Research &amp; follow-up</p><h3>From scattered research<br />to a useful lead tracker.</h3><p>I used Gemini to research speaking opportunities, organize them in Google Sheets, and prepare outreach drafts. Each lead has a source and a next action; I check the details before contacting anyone.</p><p>That’s a practical starting point for a business project: take one repeat process, decide what AI can prepare, and keep the decisions that need you in your hands.</p><Link href="/learn/find-leads" className={styles.textLink}>See the actual workflow and prompts <span aria-hidden="true">→</span></Link></div>
+      </article>
       <div className={styles.projects}>
         <article className={styles.project}>
           <div className={styles.launchboxVisual}><Image src="/launchbox-no-text.png" width={90} height={90} alt="" /><strong>LaunchBox</strong><span>Conversations. Courses. Events. AI tools.</span></div>

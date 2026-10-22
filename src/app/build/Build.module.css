@@ -70,3 +70,10 @@
   .project h3 { font-size: 29px; }
   .next { padding-block: 39px 46px; gap: 22px; }
 }
+.workflow { display: grid; grid-template-columns: 1fr 1.1fr; align-items: center; gap: 35px; padding: 28px; margin-bottom: 30px; background: #f8f1e8; border: 1px solid var(--site-line); }
+.workflowImage { overflow: hidden; border: 1px solid var(--site-line); background: white; }
+.workflowImage img { display: block; width: 100%; height: auto; }
+.workflow h3 { font-size: clamp(28px,3vw,36px); margin-top: 13px; }
+.workflow p:not(.projectType) { font-size: 14px; line-height: 1.85; margin-top: 15px; color: var(--site-muted); }
+.workflow .textLink { margin-top: 12px; }
+@media(max-width:760px) { .workflow { grid-template-columns: 1fr; gap: 25px; padding: 20px; } }
