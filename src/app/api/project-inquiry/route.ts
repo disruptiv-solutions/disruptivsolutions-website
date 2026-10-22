@@ -17,11 +17,17 @@ const INTEREST_LABELS = {
   'social-media-content': 'Social media content',
 } as const;
 
+const SOURCES = {
+  find_leads: { label: 'Find Leads resource page', url: 'https://www.ianmcdonald.ai/learn/find-leads' },
+  contact: { label: 'Contact Ian page', url: 'https://www.ianmcdonald.ai/contact' },
+} as const;
+
 type ProjectInquiry = {
   name: string;
   email: string;
   interest: keyof typeof INTEREST_LABELS;
   note: string;
+  source: keyof typeof SOURCES;
 };
 
 function validate(body: unknown): ProjectInquiry | null {
@@ -29,6 +35,7 @@ function validate(body: unknown): ProjectInquiry | null {
   const b = body as Record<string, unknown>;
   if (typeof b.name !== 'string' || typeof b.email !== 'string' || typeof b.interest !== 'string') return null;
   if (b.note !== undefined && typeof b.note !== 'string') return null;
+  if (b.source !== undefined && (typeof b.source !== 'string' || !Object.prototype.hasOwnProperty.call(SOURCES, b.source))) return null;
 
   const name = b.name.trim();
   const email = b.email.trim();
@@ -40,7 +47,7 @@ function validate(body: unknown): ProjectInquiry | null {
   if (!Object.prototype.hasOwnProperty.call(INTEREST_LABELS, interest)) return null;
   if (note.length > 5000) return null;
 
-  return { name, email, interest: interest as ProjectInquiry['interest'], note };
+  return { name, email, interest: interest as ProjectInquiry['interest'], note, source: (b.source ?? 'find_leads') as ProjectInquiry['source'] };
 }
 
 function esc(value: string): string {
@@ -84,6 +91,7 @@ export async function POST(request: NextRequest) {
   }
 
   const interestLabel = INTEREST_LABELS[inquiry.interest];
+  const source = SOURCES[inquiry.source];
   const safeName = inquiry.name.replace(/[\r\n]+/g, ' ').trim();
   try {
     const notification = await resend.emails.send({
@@ -91,14 +99,14 @@ export async function POST(request: NextRequest) {
       to: ALERT_TO,
       replyTo: inquiry.email,
       subject: `New project inquiry: ${safeName} — ${interestLabel}`,
-      text: `New project inquiry\n\nName: ${inquiry.name}\nEmail: ${inquiry.email}\nInterested in: ${interestLabel}\n\nProject details:\n${inquiry.note || 'No additional details.'}\n\nSource: Find Leads resource page\nhttps://www.ianmcdonald.ai/learn/find-leads`,
+      text: `New project inquiry\n\nName: ${inquiry.name}\nEmail: ${inquiry.email}\nInterested in: ${interestLabel}\n\nProject details:\n${inquiry.note || 'No additional details.'}\n\nSource: ${source.label}\n${source.url}`,
       html: `<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:620px;color:#16181d;line-height:1.6">
         <p style="color:#e10510;font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase">New project inquiry</p>
         <h1 style="font-size:28px;line-height:1.15">${esc(inquiry.name)}</h1>
         <p><strong>Email:</strong> <a href="mailto:${esc(inquiry.email)}">${esc(inquiry.email)}</a></p>
         <p><strong>Interested in:</strong> ${esc(interestLabel)}</p>
         <div style="padding:18px;border-left:3px solid #e10510;background:#f4efe6"><strong>Project details</strong><br>${inquiry.note ? esc(inquiry.note).replace(/\n/g, '<br>') : 'No additional details.'}</div>
-        <p style="color:#6b7280;font-size:12px">Source: <a href="https://www.ianmcdonald.ai/learn/find-leads">Find Leads resource page</a></p>
+        <p style="color:#6b7280;font-size:12px">Source: <a href="${source.url}">${source.label}</a></p>
       </div>`,
     });
 

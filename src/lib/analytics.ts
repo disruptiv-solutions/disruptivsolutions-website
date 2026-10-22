@@ -110,6 +110,14 @@ export const trackDisruptivVisit = (url: string, location: string): void => {
   });
 };
 
+/** Outbound interest in the community, not a completed membership signup. */
+export const trackCommunityVisit = (location: string): void => {
+  trackEvent('community_visit', {
+    event_category: 'outbound',
+    link_location: location,
+  });
+};
+
 /** Track video play. */
 export const trackVideoPlay = (
   videoName: string

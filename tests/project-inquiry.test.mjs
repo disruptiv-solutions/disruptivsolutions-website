@@ -73,6 +73,28 @@ test('all four interests accept optional notes, while configured mail routing is
   assert.ok(mail.sent.every(email => email.to === 'ian-inbox@example.test' && email.from === 'Website <website@example.test>'));
 });
 
+test('contact and lesson inquiries identify the correct trusted source in both email formats', async () => {
+  for (const [source, label, path] of [
+    ['contact', 'Contact Ian page', '/contact'],
+    ['find_leads', 'Find Leads resource page', '/learn/find-leads'],
+  ]) {
+    const response = await POST(req({ ...inquiry, source }));
+    assert.equal(response.status, 200);
+    const notification = mail.sent.at(-1);
+    assert.ok(notification.text.includes(`Source: ${label}\nhttps://www.ianmcdonald.ai${path}`));
+    assert.ok(notification.html.includes(`<a href="https://www.ianmcdonald.ai${path}">${label}</a>`));
+    assert.equal(notification.replyTo, inquiry.email);
+  }
+  assert.equal(mail.sent.length, 2);
+});
+
+test('unknown or malformed sources cannot inject a link into the inquiry notification', async () => {
+  for (const source of ['https://untrusted.example', 'constructor', '', null, {}, ['contact'], '<a href="https://untrusted.example">contact</a>']) {
+    assert.equal((await POST(req({ ...inquiry, source }))).status, 400);
+  }
+  assert.equal(mail.sent.length, 0);
+});
+
 test('invalid inputs, spoofed origins, unsupported content types and malformed JSON send no email', async () => {
   assert.equal((await POST(req(inquiry, { origin: 'https://untrusted.example' }))).status, 403);
   assert.equal((await POST(req(inquiry, { 'content-type': 'text/plain' }))).status, 415);

@@ -6,6 +6,7 @@
   --site-muted: #494440;
   --site-red: #e2202a;
   --site-line: #16181b29;
+  --site-header-height: 89px;
   min-height: 100svh;
   color: var(--site-ink);
   background: var(--site-paper);
@@ -82,9 +83,9 @@
 .editorial-subpage .editorial-content :is(.font-sans,.font-satoshi) { font-family: var(--font-montserrat), sans-serif; }
 .editorial-subpage .editorial-content :is(a,button)[class~="bg-black"] { background: var(--site-ink); color: white; border-radius: 99px; }
 
-@media(min-width:1024px) { .editorial-site[data-page="learn"] .editorial-content aside[class*="lg:fixed"] { top: 89px; height: calc(100dvh - 89px); } }
+@media(min-width:1024px) { .editorial-site[data-page="learn"] .editorial-content aside[class*="lg:fixed"] { top: var(--site-header-height); height: calc(100dvh - var(--site-header-height)); } }
 
-@media(max-width:760px) { .editorial-site[data-page="speaking"] .editorial-content nav[aria-label="On this page"] { top: 67px; } }
+@media(max-width:1100px) { .editorial-site { --site-header-height: 67px; } .editorial-site[data-page="speaking"] .editorial-content nav[aria-label="On this page"] { top: var(--site-header-height); } }
 
 .editorial-subpage .editorial-content [class*="bg-black/"] { background-color: var(--site-panel); }
 .editorial-subpage .editorial-content [class*="shadow-"] { box-shadow: none; }

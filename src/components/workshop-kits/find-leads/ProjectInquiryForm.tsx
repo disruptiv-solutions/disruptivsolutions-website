@@ -6,7 +6,7 @@ import styles from "./ProjectInquiryForm.module.css";
 
 type Status = "idle" | "sending" | "success" | "error";
 
-export default function ProjectInquiryForm() {
+export default function ProjectInquiryForm({ source = "find_leads" }: { source?: "find_leads" | "contact" }) {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
   const messageRef = useRef<HTMLDivElement>(null);
@@ -24,6 +24,7 @@ export default function ProjectInquiryForm() {
       email: String(data.get("email") ?? "").trim(),
       interest: String(data.get("interest") ?? ""),
       note: String(data.get("note") ?? "").trim(),
+      source,
     };
     setStatus("sending");
     setError("");
@@ -46,7 +47,7 @@ export default function ProjectInquiryForm() {
       trackEvent("generate_lead", {
         event_category: "form",
         form_name: "project_inquiry",
-        form_location: "find_leads",
+        form_location: source,
         interest: inquiry.interest,
       });
       setStatus("success");
@@ -63,7 +64,7 @@ export default function ProjectInquiryForm() {
           <span className={styles.eyebrow}>Message sent</span>
           <h3>Thanks for reaching out.</h3>
           <p>Your inquiry has been sent to Ian. He’ll reply to the email you provided.</p>
-          <a href="#steps">Back to the lesson ↑</a>
+          {source === "contact" ? <a href="/learn">Explore the free resources ↗</a> : <a href="#steps">Back to the lesson ↑</a>}
         </div>
       ) : (
         <form onSubmit={handleSubmit} aria-label="Tell Ian about your project" aria-busy={status === "sending"}>

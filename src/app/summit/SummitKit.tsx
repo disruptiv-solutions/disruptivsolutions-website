@@ -2,14 +2,15 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { IAN_COMMUNITY_URL } from "@/lib/ian-community";
 
 /* ── Conversion links (confirm before the talk) ───────────────────────────
    BOOKING_URL: the "AI Ops / Fit Call" booking already live on this site.
-   COMMUNITY_URL: the Idea-to-AI Facebook group.
+   COMMUNITY_URL: Ian McDonald AI on LaunchBox.
    Both are easy to swap — single constants. */
 const ASSESSMENT_URL = "/assessment";
 const BOOKING_URL = "https://calendar.app.google/okpHPUV8TA85GBaA6";
-const COMMUNITY_URL = "https://www.facebook.com/groups/2000295250823114";
+const COMMUNITY_URL = IAN_COMMUNITY_URL;
 
 /* ── Content ─────────────────────────────────────────────────────────── */
 const PROFILE_PROMPT = `You are a sharp small-business consultant. Build me a reusable business profile from these answers:
