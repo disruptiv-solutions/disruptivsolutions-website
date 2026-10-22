@@ -12,7 +12,7 @@
 .nav .communityCta { gap: 10px; padding: 0 15px; border: 1px solid #96141a; border-radius: 99px; color: #96141a; white-space: nowrap; }
 .nav .communityCta:hover { background: #96141a; color: white; }
 .mobileCommunity { display: none; }
-.menuButton { display: none; border: 0; background: transparent; color: inherit; width: 44px; height: 44px; place-content: center; gap: 7px; cursor: pointer; }
+.menuButton { display: none; flex-shrink: 0; border: 0; background: transparent; color: inherit; width: 44px; height: 44px; place-content: center; gap: 7px; cursor: pointer; }
 .menuButton span { width: 23px; height: 2px; background: currentColor; }
 .footer { border-top: 2px solid var(--site-ink); padding: 52px max(28px, calc((100% - 1360px) / 2)) 24px; }
 .footerTop { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 56px; padding-bottom: 36px; }
@@ -54,4 +54,9 @@
   .footerTop > div { grid-column: 1 / -1; }
   .footer nav a { min-height: 40px; display: inline-flex; align-items: center; }
   .footerBottom > span { width: 100%; }
+}
+@media(max-width: 360px) {
+  .headerInner { width: calc(100% - 24px); gap: 6px; }
+  .brand { font-size: 12px; gap: 6px; }
+  .mobileCommunity { font-size: 10px; padding-inline: 6px; }
 }
