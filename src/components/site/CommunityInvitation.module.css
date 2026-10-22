@@ -63,6 +63,20 @@
 .join:focus-visible { outline: 2px solid #96141a; outline-offset: 5px; }
 .join span { font-size: 21px; line-height: 1; }
 .note { margin: 13px 0 0; color: #56504b; font-size: 12px; line-height: 1.7; }
+.overview {
+  display: inline-block;
+  margin-top: 21px;
+  color: #96141a;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.7;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.overview:hover { color: var(--site-ink); }
+.overview:focus-visible { outline: 2px solid #96141a; outline-offset: 5px; }
+.overview span { white-space: nowrap; }
 .inside {
   padding: 28px 32px 12px;
   background: #f8f3eb;

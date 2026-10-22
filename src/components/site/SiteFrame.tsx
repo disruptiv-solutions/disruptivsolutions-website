@@ -18,7 +18,7 @@ export default function SiteFrame({ children }: { children: React.ReactNode }) {
     <a className="site-skip-link" href="#main-content">Skip to content</a>
     <SiteHeader key={pathname} home={home} bookingHref={pathname === "/speaking" ? "/speaking#book" : undefined} />
     <main id="main-content" className="editorial-content">{children}<SignUpModal /></main>
-    {pathname !== '/learn/supplier-readiness-builder' && pathname !== '/waitlist' && <CommunityInvitation />}
+    {pathname !== '/community' && pathname !== '/learn/supplier-readiness-builder' && pathname !== '/waitlist' && <CommunityInvitation />}
     {pathname !== '/learn/supplier-readiness-builder' && <SiteFooter home={home} />}
   </div>;
 }
