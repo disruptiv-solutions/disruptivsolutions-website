@@ -112,7 +112,7 @@ export default function HomeV2() {
             <span className={styles.routeNumber}>02 / LEARNING</span><div><h3>Try it. Ask questions. Build.</h3><p>Join the free weekly call, work through a practical kit, or get notes from the workbench.</p></div><a className={styles.routeLink} href="#learn">Find your starting point <Arrow /></a>
           </article>
           <article id="disruptiv" className={styles.routeRow}>
-            <span className={styles.routeNumber}>03 / BUILDING</span><div><h3>Make it work for your business.</h3><p>Disruptiv is my company for websites, apps, AI workflows, video, and campaigns. It’s where we build together.</p></div><a className={styles.routeLink} href={`${DISRUPTIV_URL}/contact`} onClick={() => trackDisruptivVisit(`${DISRUPTIV_URL}/contact`, "home_v2_project")}>Build with Disruptiv <Arrow /></a>
+            <span className={styles.routeNumber}>03 / BUILDING</span><div><h3>Make it work for your business.</h3><p>Disruptiv is my company for websites, apps, AI workflows, video, and campaigns. It’s where we build together.</p></div><Link className={styles.routeLink} href="/build" onClick={() => trackButtonClick("build_with_ian", "home_v2_routes")}>Build with Ian <Arrow /></Link>
           </article>
         </div>
         <p className={styles.routeFoot}>This is where I teach and share. Disruptiv is where we put it to work in your business.</p>

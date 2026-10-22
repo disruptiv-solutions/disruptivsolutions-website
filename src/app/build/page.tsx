@@ -1,0 +1,62 @@
+import type { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import BuildAction from './BuildAction';
+import styles from './Build.module.css';
+
+export const metadata: Metadata = {
+  title: 'Build with Ian | Ian McDonald AI',
+  description: 'Work with Ian McDonald on an AI workflow, automation, website, custom tool, or content for your business. Explore his work and start a project through Disruptiv Solutions.',
+  alternates: { canonical: '/build' },
+  openGraph: {
+    title: 'Build with Ian — let’s build something useful',
+    description: 'Practical consulting and implementation through Disruptiv Solutions, the company Ian founded.',
+    images: ['/ian-mcdonald.png'],
+  },
+};
+
+export default function BuildPage() {
+  return <div className={styles.page}>
+    <section className={styles.hero} aria-labelledby="build-title">
+      <div className={styles.heroCopy}>
+        <p className={styles.eyebrow}>Build with Ian</p>
+        <h1 id="build-title">Let’s build<br /><em>something useful.</em></h1>
+        <p className={styles.intro}>An AI workflow. An automation. A website or custom tool. Content that brings your expertise to life.</p>
+        <p className={styles.connection}>My consulting and implementation work happens through <strong>Disruptiv Solutions</strong>—the company I founded. You’ll work directly with me to choose a practical starting point and put it into use.</p>
+        <div className={styles.actions}>
+          <BuildAction location="build_page_hero_project" className={styles.primary}>Start a project with Disruptiv</BuildAction>
+          <BuildAction destination="services" location="build_page_hero_explore" className={styles.textLink}>Explore Disruptiv Solutions</BuildAction>
+        </div>
+        <p className={styles.note}>Have the idea, but not the technical brief? That’s a useful place to start.</p>
+      </div>
+      <aside className={styles.startingPoints} aria-labelledby="starting-points-title">
+        <div className={styles.company}><Image src="/DS-Logo.svg" width={38} height={38} alt="" /><span>Disruptiv Solutions<small>Consulting &amp; implementation</small></span></div>
+        <h2 id="starting-points-title">What could we<br />make work better?</h2>
+        <ol>
+          <li><span className={styles.number} aria-hidden="true">01</span><div><h3>Automate the repeat work.</h3><p>Connect your tools and simplify research, preparation, and follow-up.</p></div></li>
+          <li><span className={styles.number} aria-hidden="true">02</span><div><h3>Build the tool you need.</h3><p>A website, client portal, or app shaped around how your business works.</p></div></li>
+          <li><span className={styles.number} aria-hidden="true">03</span><div><h3>Turn expertise into content.</h3><p>Videos, social posts, and campaign creative that give your ideas a clear form.</p></div></li>
+        </ol>
+      </aside>
+    </section>
+
+    <section className={styles.work} aria-labelledby="work-title">
+      <div className={styles.sectionHeading}><div><p className={styles.eyebrow}>A couple of things I’ve built</p><h2 id="work-title">Experience you can see.</h2></div><p>My approach comes from building products, putting them in people’s hands, and improving how they work.</p></div>
+      <div className={styles.projects}>
+        <article className={styles.project}>
+          <div className={styles.launchboxVisual}><Image src="/launchbox-no-text.png" width={90} height={90} alt="" /><strong>LaunchBox</strong><span>Conversations. Courses. Events. AI tools.</span></div>
+          <div className={styles.projectCopy}><p className={styles.projectType}>My product / Community platform</p><h3>A home for people and their ideas.</h3><p>I designed and built LaunchBox, the platform that hosts my own community and several others. It brings learning, conversations, events, and AI tools together.</p><Link href="/community#the-platform" className={styles.textLink}>Meet the platform I built <span aria-hidden="true">→</span></Link></div>
+        </article>
+        <article className={styles.project}>
+          <div className={styles.workspaceVisual}><Image src="/speaking/ai-for-business-workspace.webp" width={1600} height={555} alt="The AI for Business workspace Ian built, with chat and creative tools" sizes="(max-width: 760px) 90vw, 580px" /></div>
+          <div className={styles.projectCopy}><p className={styles.projectType}>Client platform / 2025</p><h3>AI for Business.</h3><p>I built this shared AI workspace solo. It brought chat, creative tools, and business context into one platform and supported more than 1,600 users.</p><Link href="/work/ai-for-business" className={styles.textLink}>See the project <span aria-hidden="true">→</span></Link></div>
+        </article>
+      </div>
+    </section>
+
+    <section className={styles.next} aria-labelledby="next-title">
+      <div><p className={styles.eyebrow}>Your next useful step</p><h2 id="next-title">Tell me what<br /><em>you want to make easier.</em></h2></div>
+      <div><p>Share what you’re working toward through Disruptiv. I’ll review your message, talk through the options with you, and agree on scope and cost before work begins.</p><BuildAction location="build_page_close_project" className={styles.primary}>Start a project with Disruptiv</BuildAction><a className={styles.email} href="mailto:ian@ianmcdonald.ai">Or email me: ian@ianmcdonald.ai</a></div>
+    </section>
+  </div>;
+}
