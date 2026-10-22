@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'AI for Business — a platform built by Ian McDonald',
     description: 'The brief, the build, and the results from a 2025 platform engagement.',
-    images: ['/films/ai4b-poster.jpg'],
+    images: ['/films/ai4b-poster-v2.jpg'],
   },
 };
 
@@ -23,8 +23,8 @@ export default function AiForBusinessCaseStudy() {
     </header>
 
     <figure className={styles.product}>
-      <ProductFilm src="/films/ai4b-demo.mp4" poster="/films/ai4b-poster.jpg" title="AI for Business platform walkthrough" />
-      <figcaption>A motion recreation of the platform I built in 2025, showing its connected workspace and creative tools.</figcaption>
+      <ProductFilm src="/films/ai4b-demo-v2.mp4" poster="/films/ai4b-poster-v2.jpg" title="AI for Business platform walkthrough" />
+      <figcaption>A recreation of the platform I built in 2025: select a sample knowledge base, send a request, and copy the response.</figcaption>
     </figure>
 
     <div className={styles.story}>
