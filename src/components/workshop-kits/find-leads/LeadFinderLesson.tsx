@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import CopyButton from "./CopyButton";
+import ProjectInquiryForm from "./ProjectInquiryForm";
 import { IAN_SOCIAL_URLS } from "@/lib/ian-social-links";
 import styles from "./LeadFinderLesson.module.css";
 
@@ -119,6 +120,7 @@ export default function LeadFinderLesson() {
             <aside className="resource-contact" aria-label="Contact Ian and follow along">
               <p className="resource-contact-label">Work with Ian</p>
               <p>Need help with AI training, a workflow or automation built, or social media content?</p>
+              <a className="resource-inquiry-link" href="#project-inquiry">Tell me about your project →</a>
               <a className="resource-email" href="mailto:ian@ianmcdonald.ai">ian@ianmcdonald.ai</a>
               <p className="resource-social-label">Follow along</p>
               <SocialLinks />
@@ -1823,12 +1825,16 @@ export default function LeadFinderLesson() {
             {"The list is your starting point. "}
             <span className="z47">{"The relationship comes next."}</span>
           </p>
-          <div className="resource-closing-cta">
-            <h2>Need help putting AI to work?</h2>
-            <p>For AI training, a workflow or automation built for your business, or social media content, email me with what you have in mind.</p>
-            <a className="resource-email" href="mailto:ian@ianmcdonald.ai">ian@ianmcdonald.ai</a>
-            <SocialLinks />
-          </div>
+          <section className="resource-project-grid" id="project-inquiry" aria-labelledby="project-inquiry-title">
+            <div className="resource-closing-cta">
+              <h2 id="project-inquiry-title">Need help putting AI to work?</h2>
+              <p>AI training, a workflow or automation built for your business, or social media content. Tell me what you have in mind, and let’s figure out the next step.</p>
+              <p>Prefer email? Reach me directly:</p>
+              <a className="resource-email" href="mailto:ian@ianmcdonald.ai">ian@ianmcdonald.ai</a>
+              <SocialLinks />
+            </div>
+            <ProjectInquiryForm />
+          </section>
           <div
             className="y0 y8 y54 y22 y49"
             style={{

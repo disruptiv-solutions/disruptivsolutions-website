@@ -1166,6 +1166,22 @@
   font-weight: 600;
   margin: 16px 0 8px;
 }
+.lesson :global(.resource-inquiry-link) {
+  display: block;
+  width: fit-content;
+  margin: 14px 0 16px;
+  padding: 12px 16px;
+  color: #fff;
+  background: #b90e18;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.lesson :global(.resource-inquiry-link:hover) {
+  background: #96141a;
+  color: #fff;
+}
 .lesson :global(.resource-email) {
   display: inline-block;
   font-family: var(--font-rosario), Rosario, sans-serif;
@@ -1263,6 +1279,13 @@
 .lesson :global(.resource-closing-cta) {
   max-width: 820px;
 }
+.lesson :global(.resource-project-grid) {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: 44px;
+  align-items: start;
+  scroll-margin-top: 100px;
+}
 .lesson :global(.resource-closing-cta h2) {
   font-family: var(--font-rosario), Rosario, sans-serif;
   font-size: clamp(26px, 3vw, 36px);
@@ -1283,6 +1306,12 @@
 }
 .lesson :global(.resource-closing-cta .resource-socials a:hover) {
   background: #3a3734;
+}
+@media (max-width: 800px) {
+  .lesson :global(.resource-project-grid) {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
 }
 @media (max-width: 420px) {
   .lesson :global(.resource-contact),
