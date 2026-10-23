@@ -57,7 +57,9 @@
 .timeline h3 { font-size: 28px; }
 .timeline p { font-size: 15px; line-height: 1.9; color: var(--site-muted); margin-top: 14px; }
 .timeline .textLink { margin-top: 6px; }
-.platform { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; background: var(--site-ink); color: #f6eee4; padding: 52px; }
+.platform { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; background: var(--site-ink); color: #f6eee4; padding: 52px; scroll-margin-top: 110px; }
+.platformFilm { grid-column: 1 / -1; min-width: 0; margin: 0; }
+.platformFilm figcaption { padding-top: 14px; color: #d8cec3; font-size: 12px; line-height: 1.7; }
 .platformBrand { display: flex; align-items: center; gap: 13px; font-size: 22px; font-weight: 700; margin-bottom: 28px; }
 .platformBrand img { object-fit: contain; }
 .platformCopy > p { margin-top: 23px; font-size: 16px; line-height: 1.85; color: #d8cec3; }

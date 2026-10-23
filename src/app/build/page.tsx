@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ProductFilm } from '@/components/site/ProductFilm';
 import BuildAction from './BuildAction';
 import styles from './Build.module.css';
 
@@ -48,8 +49,12 @@ export default function BuildPage() {
       </article>
       <div className={styles.projects}>
         <article className={styles.project}>
-          <div className={styles.launchboxVisual}><Image src="/launchbox-no-text.png" width={90} height={90} alt="" /><strong>LaunchBox</strong><span>Conversations. Courses. Events. AI tools.</span></div>
+          <figure className={styles.projectFilm}><ProductFilm src="/films/launchbox-demo-v1.mp4" poster="/films/launchbox-poster-v1.jpg" title="LaunchBox member learning journey" /><figcaption>A recreated member journey using sample learning material in the LaunchBox interface.</figcaption></figure>
           <div className={styles.projectCopy}><p className={styles.projectType}>My product / Community platform</p><h3>A home for people and their ideas.</h3><p>I designed and built LaunchBox, the platform that hosts my own community and several others. It brings learning, conversations, events, and AI tools together.</p><Link href="/community#the-platform" className={styles.textLink}>Meet the platform I built <span aria-hidden="true">→</span></Link></div>
+        </article>
+        <article className={styles.project}>
+          <figure className={styles.projectFilm}><ProductFilm src="/films/command-center-demo-v1.mp4" poster="/films/command-center-poster-v1.jpg" title="Command Center agent-work walkthrough" /><figcaption>Recreated interface with sample records: review an assignment, inspect its recorded result, and choose a next action.</figcaption></figure>
+          <div className={styles.projectCopy}><p className={styles.projectType}>My own operating system / Command Center</p><h3>Keep agent work connected to the business.</h3><p>I built Command Center to keep my business context, assignments, recorded results, and next actions together. Agents work through their connected tools; I can inspect what came back and decide what happens next.</p><a href="https://www.disruptiv.solutions/work#command-center" className={styles.textLink}>See how I use what I build <span aria-hidden="true">↗</span></a></div>
         </article>
         <article className={styles.project}>
           <div className={styles.workspaceVisual}><Image src="/speaking/ai-for-business-workspace.webp" width={1600} height={555} alt="The AI for Business workspace Ian built, with chat and creative tools" sizes="(max-width: 760px) 90vw, 580px" /></div>

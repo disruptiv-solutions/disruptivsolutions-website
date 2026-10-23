@@ -4,6 +4,7 @@ import Link from 'next/link';
 import CommunityAction from './CommunityAction';
 import styles from './Community.module.css';
 import { LAUNCH_AND_LEARN } from '@/lib/launch-and-learn';
+import { ProductFilm } from '@/components/site/ProductFilm';
 
 export const metadata: Metadata = {
   title: 'My Community & the Platform I Built | Ian McDonald AI',
@@ -57,7 +58,7 @@ export default function CommunityPage() {
       </div>
     </section>
 
-    <section id="the-platform" className={styles.story} aria-labelledby="story-title">
+    <section className={styles.story} aria-labelledby="story-title">
       <div className={styles.storyHeading}>
         <p className={styles.eyebrow}>The story behind the place</p>
         <h2 id="story-title">I learned by building.<br /><em>Then I built a place<br /> for other people.</em></h2>
@@ -71,7 +72,11 @@ export default function CommunityPage() {
       </ol>
     </section>
 
-    <section className={styles.platform} aria-labelledby="platform-title">
+    <section id="the-platform" className={styles.platform} aria-labelledby="platform-title">
+      <figure className={styles.platformFilm}>
+        <ProductFilm src="/films/launchbox-demo-v1.mp4" poster="/films/launchbox-poster-v1.jpg" title="LaunchBox member learning journey" />
+        <figcaption>A recreated member journey using sample learning material in the LaunchBox interface.</figcaption>
+      </figure>
       <div className={styles.platformCopy}>
         <div className={styles.platformBrand}><Image src="/launchbox-no-text.png" alt="" width={48} height={48} /><span>LaunchBox</span></div>
         <h2 id="platform-title">Have a community<br />of your own in mind?</h2>
