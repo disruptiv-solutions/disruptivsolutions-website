@@ -139,3 +139,7 @@
 .page .extraResources a { text-decoration: underline; text-underline-offset: 4px; }
 @media(max-width:760px) { .startingPath { grid-template-columns: 1fr; margin-bottom: 28px; } .startingPath a,.startingPath a:first-child { padding: 17px 0; } .startingPath a + a { border-left: 0; border-top: 1px solid var(--site-line); } .liveSession { grid-template-columns: 1fr; gap: 24px; padding-block: 34px; } }
 .library { scroll-margin-top: 120px; }
+.androidArt { background: #e7d9ca; padding: 18px; min-width: 0; }
+.androidArt > span { display: block; font-size: 9px; letter-spacing: .07em; margin-bottom: 16px; color: #96141a; }
+.androidArt > div { display: flex; align-items: center; justify-content: center; gap: 14px; }
+.androidArt img { display: block; width: calc(50% - 7px); height: auto; max-height: 250px; object-fit: contain; border-radius: 12px; }

@@ -1,0 +1,9 @@
+I want to build a personal Android home screen using the attached android-home-screen skill and its source starter.
+
+Read the skill first. Check this computer for local file/terminal access, an Android SDK and Java. Reuse installed tools. Tell me what is available and what is missing before downloading anything large.
+
+Help me connect my chosen phone by USB debugging or wireless pairing. Identify the actual phone before any install; if more than one phone is present, ask which one I mean. Keep pairing details and keys private.
+
+Then guide me through a small design: my colours, three useful shortcuts and local text capture. Build a preview and a signed APK. Open it as an ordinary app first and verify the controls. I will choose when to make it my default Home app. Keep my original launcher and personal data available. Update this app in place rather than uninstalling it.
+
+Distinguish a working preview, a successful build and a real phone test. Add online services or audio-file recording only after the basic home screen works and I ask for those features.

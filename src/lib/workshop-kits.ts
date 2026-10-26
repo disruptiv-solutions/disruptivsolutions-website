@@ -43,6 +43,17 @@ export const WORKSHOP_KITS: WorkshopKit[] = [
     status: 'live',
   },
   {
+    slug: 'android-home',
+    title: 'Build your own Android home screen',
+    eyebrow: 'Android + your coding agent',
+    audience: 'Android users who want a home screen shaped around their own day',
+    description:
+      'Try two interactive phone designs, work through five practical chapters, and give your coding agent the free home-screen skill and source starter.',
+    eventContext:
+      'From Ian’s custom S24 and S25 home screens. Browser examples use sample data.',
+    status: 'live',
+  },
+  {
     slug: 'supplier-readiness-builder',
     title: 'AI Supplier Readiness Builder',
     eyebrow: 'HMSDC MBE Leadership Academy',
