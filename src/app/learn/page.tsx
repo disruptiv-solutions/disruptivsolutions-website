@@ -36,6 +36,10 @@ function GifArtwork() {
   return <div className={styles.gifArt} aria-hidden="true"><span>YOUR ARTWORK / IN MOTION</span><div>{[0, 2, 3].map(i => <Image key={i} src={`/learn/animated-gifs/pose-${i}.png`} width={90} height={90} alt="" />)}</div><strong>Make it move. <i>↻</i></strong></div>;
 }
 
+function AndroidArtwork() {
+  return <div className={styles.androidArt} aria-hidden="true"><span>YOUR PHONE / YOUR DAY</span><div><Image src="/learn/android-home/assets/paper-ink-s24.png" alt="" width={140} height={304} /><Image src="/learn/android-home/assets/disruptiv-s25-browser.png" alt="" width={140} height={304} /></div></div>;
+}
+
 export default function LearnPage() {
   const lessons = WORKSHOP_KITS.filter((kit) => kit.status === 'live');
   const featured = lessons.find((kit) => kit.slug === 'find-leads');
@@ -90,14 +94,14 @@ export default function LearnPage() {
       </Link>}
 
       {moreLessons.map((kit, index) => <Link key={kit.slug} href={`/learn/${kit.slug}`} className={styles.workshop} aria-labelledby={`lesson-${kit.slug}`}>
-        {kit.slug === 'meeting-follow-through' ? <MeetingArtwork /> : kit.slug === 'animated-gifs' ? <GifArtwork /> : kit.slug === 'supplier-readiness-builder' ? <ReadinessArtwork /> : <div className={styles.genericArt} aria-hidden="true">{String(index + 2).padStart(2, '0')}<span>LEARN / DO / REPEAT</span></div>}
+        {kit.slug === 'meeting-follow-through' ? <MeetingArtwork /> : kit.slug === 'animated-gifs' ? <GifArtwork /> : kit.slug === 'android-home' ? <AndroidArtwork /> : kit.slug === 'supplier-readiness-builder' ? <ReadinessArtwork /> : <div className={styles.genericArt} aria-hidden="true">{String(index + 2).padStart(2, '0')}<span>LEARN / DO / REPEAT</span></div>}
         <div className={styles.workshopCopy}>
-          <p className={styles.resourceType}>{String(index + 2).padStart(2, '0')} / {kit.slug === 'meeting-follow-through' ? 'Video lesson + copyable prompts' : kit.slug === 'animated-gifs' ? 'GIF lesson + downloadable agent skill' : 'Interactive workshop kit'}</p>
+          <p className={styles.resourceType}>{String(index + 2).padStart(2, '0')} / {kit.slug === 'meeting-follow-through' ? 'Video lesson + copyable prompts' : kit.slug === 'animated-gifs' ? 'GIF lesson + downloadable agent skill' : kit.slug === 'android-home' ? 'Interactive lesson + downloadable agent skill' : 'Interactive workshop kit'}</p>
           <h2 id={`lesson-${kit.slug}`}>{kit.title}</h2>
           <p>{kit.description}</p>
           <span className={styles.workshopAudience}>{kit.eyebrow}</span>
         </div>
-        <span className={styles.workshopAction}><span>{kit.slug === 'animated-gifs' ? 'Make a GIF' : kit.slug === 'meeting-follow-through' ? 'Start the lesson' : 'Open the kit'}</span><Arrow /></span>
+        <span className={styles.workshopAction}><span>{kit.slug === 'animated-gifs' ? 'Make a GIF' : ['meeting-follow-through','android-home'].includes(kit.slug) ? 'Start the lesson' : 'Open the kit'}</span><Arrow /></span>
       </Link>)}
     </section>
 

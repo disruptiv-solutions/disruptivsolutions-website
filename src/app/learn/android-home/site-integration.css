@@ -1,0 +1,41 @@
+#android-home-lesson {
+  position: relative; display: grid; grid-template-columns: 245px minmax(0,1fr);
+  color: var(--ink); background: var(--paper); min-width: 0;
+  font-family: var(--font-montserrat), Montserrat, sans-serif;
+}
+#android-home-lesson.menu-open { overflow: visible; }
+#android-home-lesson .topbar {
+  grid-column: 1 / -1; position: sticky; inset: auto; top: var(--site-header-height);
+  height: 64px; z-index: 45; padding: 0 30px; gap: 24px;
+}
+#android-home-lesson .lesson-back { font-size: 13px; font-weight: 600; }
+#android-home-lesson .header-discussion { margin-left: auto; font-size: 13px; color: var(--accent); }
+#android-home-lesson .header-download { margin-left: 0; }
+#android-home-lesson .sidebar {
+  position: sticky; inset: auto; top: calc(var(--site-header-height) + 64px);
+  grid-column: 1; align-self: start; width: 245px; height: calc(100svh - var(--site-header-height) - 64px);
+}
+#android-home-lesson .android-main { grid-column: 2; margin: 0; padding: 0; min-width: 0; }
+#android-home-lesson .page { padding-top: 46px; }
+#android-home-lesson .lesson-teaser { margin-top: 48px; }
+#android-home-lesson .lesson-teaser h2 { font-size: 35px; line-height: 1.15; margin: 12px 0 22px; }
+#android-home-lesson .lesson-teaser video { display: block; width: min(100%,600px); height: auto; aspect-ratio: 1; background: #f1ead9; }
+#android-home-lesson .lesson-teaser > p:last-child { font-size: 12px; line-height: 1.8; max-width: 58ch; margin-top: 14px; }
+#android-home-lesson .lesson-community { max-width: 900px; margin: 40px auto; padding: 30px 40px; border-block: 1px solid var(--line); }
+#android-home-lesson .lesson-community h2 { font-size: 34px; line-height: 1.15; margin: 12px 0; }
+#android-home-lesson .lesson-community > p { font-size: 15px; line-height: 1.85; }
+#android-home-lesson .lesson-community .button { margin-top: 20px; }
+#android-home-lesson .lesson-community .community-access { font-size: 11px; margin-top: 14px; max-width: 70ch; }
+@media(max-width:950px) {
+  #android-home-lesson { grid-template-columns: minmax(0,1fr); }
+  #android-home-lesson .android-main { grid-column: 1; }
+  #android-home-lesson .sidebar { position: fixed; inset: calc(var(--site-header-height) + 64px) auto 0 0; width: min(300px,90vw); height: auto; }
+  #android-home-lesson .shade.open { inset: calc(var(--site-header-height) + 64px) 0 0; height: auto; }
+}
+@media(max-width:650px) {
+  #android-home-lesson .topbar { padding-inline: 18px; gap: 17px; }
+  #android-home-lesson .project-name,#android-home-lesson .top-separator { display:none; }
+  #android-home-lesson .header-discussion,#android-home-lesson .header-download,#android-home-lesson .lesson-back { font-size: 11px; }
+  #android-home-lesson .lesson-community { margin: 25px 22px; padding: 25px 0; }
+  #android-home-lesson .lesson-community h2 { font-size: 30px; }
+}

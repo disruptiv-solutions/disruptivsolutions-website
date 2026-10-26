@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#eee7d8"><title>Paper & Ink — A day with intention</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="interactions.css"><link rel="stylesheet" href="embedded.css"></head>
+<body>
+<svg class="symbols" xmlns="http://www.w3.org/2000/svg"><defs>
+<symbol id="mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M9 22h6"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><path d="m5 12 4 4L20 5"/></symbol>
+<symbol id="arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+<symbol id="phone" viewBox="0 0 24 24"><path d="M7 3 4 4C1 8 12 23 18 20l3-3-5-4-2 3c-3-1-5-4-6-6l3-2Z"/></symbol>
+<symbol id="chat" viewBox="0 0 24 24"><path d="M21 11a9 9 0 0 1-9 9H4l-2 2 1-8A9 9 0 1 1 21 11Z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/></symbol>
+<symbol id="globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6h14M5 18h14"/></symbol>
+<symbol id="grid" viewBox="0 0 24 24"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="3" y="15" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/></symbol>
+<symbol id="close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+<symbol id="sunicon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 1v3m0 16v3M1 12h3m16 0h3M4 4l2 2m12 12 2 2M4 20l2-2M18 6l2-2"/></symbol>
+</defs></svg>
+<main class="studio">
+<aside class="notes">
+<div class="eyebrow"><span class="red-dot"></span> A WORKING STUDY / 001</div>
+<h1>Paper.<br>Ink.<br><em>Your day.</em></h1>
+<p class="intro">A little less screen.<br>A little more intention.</p>
+<div class="controls">
+<div class="control-title"><span>MOVE THROUGH THE DAY</span><span id="previewTime">09:41</span></div>
+<input id="timeRange" type="range" min="0" max="1439" value="581" aria-label="Preview time of day">
+<div class="range-labels"><span>MIDNIGHT</span><span>NOON</span><span>MIDNIGHT</span></div>
+<div class="button-row"><button id="play" class="small-button">Pause day</button><button id="live" class="small-button">Use real time</button></div>
+<p class="control-note" id="modeNote">Day preview · one day in 90 seconds</p>
+<div class="divider"></div>
+<div class="control-title"><span>TRY THE LITTLE THINGS</span></div>
+<button class="try-button" id="editOutside"><span>01</span> Make the one thing yours <svg><use href="#arrow"/></svg></button>
+<button class="try-button" id="captureOutside"><span>02</span> Capture a passing thought <svg><use href="#arrow"/></svg></button>
+<button class="try-button" id="reveal"><span>03</span> Replay the brush reveal <svg><use href="#arrow"/></svg></button>
+
+</div>
+<footer>LOCAL PROTOTYPE <span>Tasks & captures stay in this browser.<br>Command Center is not connected.</span></footer>
+</aside>
+<section class="device-area" aria-label="Interactive launcher prototype">
+<div class="device" id="device">
+<div class="screen" id="screen">
+<div class="paper" aria-hidden="true"></div>
+<div class="status"><span id="statusTime">09:41</span><span class="status-right"><span class="signal">▂▄▆█</span><svg viewBox="0 0 24 18"><path d="M2 5q10-9 20 0M6 9q6-5 12 0M10 13q2-2 4 0" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="12" cy="16" r="1"/></svg><span class="battery"></span></span></div>
+<div class="landscape" aria-hidden="true">
+<div class="orb" id="orb"><span class="moon-cut"></span></div>
+<svg class="mountains" viewBox="0 0 430 290" preserveAspectRatio="none"><defs>
+<filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="4" seed="9" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="9"/></filter>
+<filter id="ink"><feTurbulence baseFrequency=".7" numOctaves="3" seed="8"/><feColorMatrix type="saturate" values="0"/><feComposite in2="SourceGraphic" operator="in"/><feBlend in="SourceGraphic" mode="multiply"/></filter>
+<linearGradient id="mist" x2="0" y2="1"><stop offset="0" stop-color="white"/><stop offset="1" stop-color="black"/></linearGradient>
+<mask id="fade"><rect width="430" height="290" fill="url(#mist)"/></mask>
+</defs>
+<g mask="url(#fade)"><path class="ridge back" filter="url(#rough)" d="M-20 280 25 250 45 255 76 214 99 229 119 172 142 169 157 130 178 136 193 172 216 151 231 104 247 118 267 92 280 96 302 55 316 72 333 17 350 34 369 68 385 50 409 83 449 38V310H-20Z"/><path class="ridge front" filter="url(#ink)" d="M0 289 75 260 122 249 154 205 174 211 198 176 212 184 239 149 252 161 269 110 282 134 304 101 322 69 336 90 355 38 370 59 382 27 399 50 417 46 445 17V310Z"/>
+<g class="trees" fill="none" stroke="currentColor" stroke-width="2"><path d="M355 88V7m-17 25 17-9 15 7m-28 13 13-9 21 12m-36 7 15-10 25 15M313 129V65m-13 19 13-8 13 7m-30 13 17-10 20 11M389 84V16m-13 18 13-9 13 10m-31 12 18-12 20 15"/></g></g>
+<svg class="reference-mountains" x="0" y="0" width="430" height="290" viewBox="0 340 853 410" preserveAspectRatio="none"><defs><clipPath id="mountainCrop"><path d="M210 750 290 707 355 685 412 654 460 638 498 581 527 557 560 570 595 555 629 527 657 529 684 500 718 485 747 452 779 440 789 386 808 377 829 389 853 397V750Z"/></clipPath></defs><image href="reference.png" width="853" height="1844" clip-path="url(#mountainCrop)"/></svg>
+<g class="birds" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M171 147q8-5 13 2 5-8 12-6M202 125q7-3 10 4 2-7 10-7M144 187q5-4 9 1 3-5 7-3"/></g></svg>
+</div>
+<div class="home-content">
+<div class="date" id="date">SUNDAY, OCT 25</div>
+<div class="clock" id="clock">09:41</div>
+<div class="greeting-block"><span class="red-rule"></span><h2 id="greeting">Morning, Ian.</h2></div>
+<article class="task-card" id="taskCard">
+<div class="card-grain" aria-hidden="true"></div>
+<div class="card-heading"><span>ONE THING <span class="kanji">今</span></span><button class="edit-task" id="editTask" aria-label="Edit your one thing">EDIT ↗</button></div>
+<div class="card-rule"></div><h3 id="taskTitle">A little room<br>to breathe.</h3>
+<p id="deadline" class="deadline"></p>
+<button class="complete" id="complete"><svg><use href="#check"/></svg><span>Mark complete</span><svg class="complete-arrow"><use href="#arrow"/></svg></button>
+<button class="undo" id="undo" hidden>Undo completion ↶</button>
+<div class="stamp" id="stamp" aria-label="Task completed"><span>完了</span><small>DONE</small></div>
+
+</article>
+<div class="below-card"><span id="dailyLine">One thing at a time.</span><button id="inboxButton">CAPTURES <span id="captureCount">0</span> ↗</button></div>
+<nav class="dock" aria-label="Home shortcuts"><button data-app="Phone" aria-label="Phone"><svg><use href="#phone"/></svg></button><button data-app="Messages" aria-label="Messages"><svg><use href="#chat"/></svg></button><button class="capture-button" id="capture" aria-label="Capture a thought"><svg><use href="#mic"/></svg></button><button data-app="Browser" aria-label="Browser"><svg><use href="#globe"/></svg></button><button id="apps" aria-label="Open all apps"><svg><use href="#grid"/></svg></button></nav>
+</div>
+<div class="home-indicator"></div>
+<div class="app-drawer" id="appDrawer" hidden><div class="drawer-top"><h2>All apps.</h2><button id="closeApps" aria-label="Close app drawer">✕</button></div><label class="app-search"><span>⌕</span><input id="appSearch" placeholder="Find something…" autocomplete="off"></label><p class="drawer-note">Your little tools. Tap one to begin.</p><div id="appList"></div></div>
+</div></div>
+<div class="device-caption"><span class="red-dot"></span> PAPER & INK <span>INTERACTIVE EDITION</span></div>
+</section>
+</main>
+<dialog id="taskDialog"><form id="taskForm"><div class="modal-top"><span>MAKE ROOM FOR WHAT MATTERS</span><button type="button" class="close-modal" aria-label="Close"><svg><use href="#close"/></svg></button></div><h2>Your one thing.</h2><label>WHAT NEEDS YOUR ATTENTION?<textarea id="taskInput" maxlength="110" required rows="3"></textarea></label><label>WHEN IS IT DUE?<input type="datetime-local" id="dueInput"></label><p class="modal-note">Saved on this device. Choose one clear, doable action.</p><button class="primary" type="submit">Set my focus <svg><use href="#arrow"/></svg></button><button type="button" id="clearTask" class="text-button">Clear my focus</button></form></dialog>
+<dialog id="captureDialog"><div class="modal-top"><span>LEAVE IT HERE. COME BACK LATER.</span><button class="close-modal" aria-label="Close"><svg><use href="#close"/></svg></button></div><h2>A passing thought.</h2><form id="captureForm"><label class="sr-only" for="captureText">Your thought</label><textarea id="captureText" placeholder="An idea, a reminder, a little something…" rows="4" maxlength="3000"></textarea><div class="voice-row"><button type="button" id="record" class="small-button"><svg><use href="#mic"/></svg> Record voice</button><span id="recordStatus">Or type your thought above.</span></div><audio id="audioPreview" controls hidden></audio><p class="modal-note" id="voiceNote">Voice recording requires microphone access. Captures stay in this browser.</p><button type="submit" class="primary" id="saveCapture">Keep this thought <svg><use href="#arrow"/></svg></button></form></dialog>
+<dialog id="inboxDialog"><div class="modal-top"><span>A LITTLE SPACE FOR LATER</span><button class="close-modal" aria-label="Close"><svg><use href="#close"/></svg></button></div><h2>Your captures.</h2><div id="captureList"></div></dialog>
+<dialog id="shortcutDialog"><div class="modal-top"><span id="shortcutKicker">PAPER & INK</span><button class="close-modal" aria-label="Close"><svg><use href="#close"/></svg></button></div><h2 id="shortcutTitle"></h2><div id="shortcutBody"></div></dialog>
+<div class="toast" id="toast" role="status"></div>
+<script src="app.js"></script><script src="embedded.js"></script></body></html>
