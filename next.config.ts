@@ -2,6 +2,18 @@ import type { NextConfig } from "next";
 import { withBotId } from "botid/next/config";
 
 const nextConfig: NextConfig = {
+  async rewrites() {
+    return [{ source: '/card', destination: '/card/index.html' }];
+  },
+  async headers() {
+    return [{
+      source: '/card/sw.js',
+      headers: [
+        { key: 'Service-Worker-Allowed', value: '/card' },
+        { key: 'Cache-Control', value: 'no-cache' },
+      ],
+    }];
+  },
   async redirects() {
     return [
       {
