@@ -35,7 +35,6 @@
 
   <main class="card" aria-labelledby="card-name">
     <header class="identity">
-      <div class="eyebrow tape-label">GOOD TO CONNECT.</div>
       <div class="name-row">
         <div class="identity-copy">
           <h1 id="card-name">Ian<br><span class="last-name">McDonald.</span></h1>
@@ -43,34 +42,24 @@
         </div>
         <div class="portrait-collage"><img class="portrait" src="/card/assets/ian-portrait.webp" alt="Ian McDonald" width="600" height="600" fetchpriority="high"></div>
       </div>
-      <p class="introduction">Making AI useful in the real world.</p>
     </header>
 
     <a class="booking-button" href="https://calendar.app.google/SBa6dqoKQFCfu5jM6" target="_blank" rel="noopener noreferrer">
-      <span><span class="button-kicker">LET’S TALK</span><span class="booking-label">Book a 15-minute call</span></span>
+      <span class="booking-label">Book a 15-minute call</span>
       <svg class="icon booking-arrow" aria-hidden="true"><use href="#icon-arrow"/></svg>
     </a>
 
-    <div class="quick-actions" aria-label="Share this card">
-      <button class="action-button" id="show-qr" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-qr"/></svg>Show QR</button>
-      <button class="action-button" id="share-card" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-share"/></svg>Share card</button>
-    </div>
-
-    <section class="destinations" aria-labelledby="explore-heading">
-      <h2 class="section-label" id="explore-heading">A FEW PLACES TO START</h2>
+    <section class="destinations" aria-label="Explore Ian’s work">
       <a class="destination" href="https://www.disruptiv.solutions/" target="_blank" rel="noopener noreferrer">
-        <span class="link-number" aria-hidden="true">01</span>
         <span class="destination-copy"><span class="destination-title">Disruptiv Solutions</span><span class="destination-description">Websites, apps &amp; AI workflows</span></span>
         <svg class="icon destination-arrow" aria-hidden="true"><use href="#icon-arrow"/></svg>
       </a>
       <a class="destination" href="https://www.launchbox.space/ianmcdonaldai" target="_blank" rel="noopener noreferrer">
-        <span class="link-number" aria-hidden="true">02</span>
         <span class="destination-copy"><span class="destination-title">LaunchBox community</span><span class="destination-description">Learn, ask questions &amp; build</span></span>
         <svg class="icon destination-arrow" aria-hidden="true"><use href="#icon-arrow"/></svg>
       </a>
       <a class="destination destination-small" href="https://www.ianmcdonald.ai/" target="_blank" rel="noopener noreferrer">
-        <span class="link-number" aria-hidden="true">03</span>
-        <span class="destination-copy"><span class="destination-title">A little more about Ian</span></span>
+        <span class="destination-copy"><span class="destination-title">About Ian</span></span>
         <svg class="icon destination-arrow" aria-hidden="true"><use href="#icon-arrow"/></svg>
       </a>
     </section>
@@ -82,9 +71,10 @@
       <a href="https://www.youtube.com/@IansDisruptivSolutions" target="_blank" rel="noopener noreferrer"><img class="social-logo" src="/card/assets/social-youtube.svg" width="21" height="21" alt=""><span>YouTube</span></a>
     </nav>
 
-    <footer class="card-footer">
-      <button class="save-contact" id="save-contact" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-contact"/></svg>Save my contact</button>
-      <span class="footer-mark" aria-hidden="true">LET’S BUILD.</span>
+    <footer class="card-footer" aria-label="Card options">
+      <button class="action-button" id="save-contact" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-contact"/></svg>Save contact</button>
+      <button class="action-button" id="share-card" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-share"/></svg>Share</button>
+      <button class="action-button" id="show-qr" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-qr"/></svg>QR code</button>
     </footer>
     <p class="status" id="card-status" role="status" aria-live="polite" aria-atomic="true"></p>
   </main>
@@ -103,3 +93,4 @@
   </dialog>
 </body>
 </html>
+
