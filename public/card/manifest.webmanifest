@@ -3,7 +3,7 @@
   "name": "My Card",
   "short_name": "My Card",
   "description": "Connect with Ian, book a 15-minute call, or explore LaunchBox.",
-  "start_url": "/card",
+  "start_url": "/card/qr",
   "scope": "/card",
   "display": "standalone",
   "background_color": "#efe7e0",
@@ -13,6 +13,6 @@
     {"src": "/card/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
   ],
   "shortcuts": [
-    {"name": "Show my QR", "short_name": "Show QR", "url": "/card?qr=1", "icons": [{"src":"/card/assets/icon-192.png","sizes":"192x192"}]}
+    {"name": "Open my links", "short_name": "My links", "url": "/card", "icons": [{"src":"/card/assets/icon-192.png","sizes":"192x192"}]}
   ]
 }

@@ -3,7 +3,10 @@ import { withBotId } from "botid/next/config";
 
 const nextConfig: NextConfig = {
   async rewrites() {
-    return [{ source: '/card', destination: '/card/index.html' }];
+    return [
+      { source: '/card', destination: '/card/index.html' },
+      { source: '/card/qr', destination: '/card/qr.html' },
+    ];
   },
   async headers() {
     return [{

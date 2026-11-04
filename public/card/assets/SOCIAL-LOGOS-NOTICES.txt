@@ -1,0 +1,37 @@
+Social logo assets
+==================
+
+Source: Font Awesome Free Brands 7.3.1, published by Fonticons, Inc.
+Project: https://fontawesome.com/
+Package: https://www.npmjs.com/package/@fortawesome/fontawesome-free/v/7.3.1
+Source archive: https://registry.npmjs.org/@fortawesome/fontawesome-free/-/fontawesome-free-7.3.1.tgz
+Archive integrity: sha512-wmglKKPDIkgV3aWlZzWECCPoGIkYCulzBwxG9+w7rc5BGapZ6cPMpoPOT8k36J0Ni7PPX6c/rsoMWfS4d1MUMg==
+Retrieved: November 3, 2026.
+
+The four SVG files are unmodified copies of the publisher's brand icons,
+renamed for this card. Their original SVG paths, view boxes, currentColor
+fills, copyright notices, and attribution comments are retained.
+
+Local file                  Original package path
+social-linkedin.svg         svgs/brands/linkedin-in.svg
+social-facebook.svg         svgs/brands/facebook-f.svg
+social-instagram.svg        svgs/brands/instagram.svg
+social-youtube.svg          svgs/brands/youtube.svg
+
+Version-pinned source asset URLs:
+https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/svgs/brands/linkedin-in.svg
+https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/svgs/brands/facebook-f.svg
+https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/svgs/brands/instagram.svg
+https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/svgs/brands/youtube.svg
+
+Copyright 2026 Fonticons, Inc.
+SVG icon license: Creative Commons Attribution 4.0 International (CC BY 4.0).
+License: https://creativecommons.org/licenses/by/4.0/
+Publisher's licensing page: https://fontawesome.com/license/free
+
+The source package's LICENSE.txt states that the CC BY 4.0 license applies
+to all icons packaged as SVG and JS file types. No Font Awesome font or
+JavaScript runtime is included here.
+
+LinkedIn, Facebook, Instagram, and YouTube names and logos remain trademarks
+of their respective owners. They identify the linked social profiles.

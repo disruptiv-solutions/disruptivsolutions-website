@@ -1,5 +1,12 @@
-const CACHE = 'ian-mcdonald-card-v2';
-const ASSETS = ['/card', '/card/index.html', '/card/card.css', '/card/card.js', '/card/config.js', '/card/assets/qrcode.js', '/card/assets/icon-192.png', '/card/assets/icon-512.png', '/card/manifest.webmanifest', "/card/assets/connection-collage.webp", "/card/assets/ian-portrait.webp", "/card/assets/montserrat.woff2", "/card/assets/rosario-italic.woff2", "/card/assets/rosario.woff2", "/card/assets/yellow-paper.webp"];
+const CACHE = 'ian-mcdonald-card-v3';
+const ASSETS = [
+  '/card', '/card/index.html', '/card/card.css', '/card/card.js', '/card/config.js',
+  '/card/qr', '/card/qr.html', '/card/qr.css', '/card/qr.js',
+  '/card/assets/qrcode.js', '/card/assets/icon-192.png', '/card/assets/icon-512.png', '/card/manifest.webmanifest',
+  '/card/assets/connection-collage.webp', '/card/assets/ian-portrait.webp', '/card/assets/montserrat.woff2',
+  '/card/assets/rosario-italic.woff2', '/card/assets/rosario.woff2', '/card/assets/yellow-paper.webp',
+  '/card/assets/social-linkedin.svg', '/card/assets/social-facebook.svg', '/card/assets/social-instagram.svg', '/card/assets/social-youtube.svg',
+];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));
 });
@@ -15,5 +22,5 @@ self.addEventListener('fetch', event => {
       event.waitUntil(caches.open(CACHE).then(cache => cache.put(event.request, copy)));
     }
     return response;
-  }).catch(async () => (await caches.match(event.request)) || (event.request.mode === 'navigate' && await caches.match('/card')) || Response.error()));
+  }).catch(async () => (await caches.match(event.request, { ignoreSearch: true })) || (event.request.mode === 'navigate' && await caches.match(url.pathname === '/card/qr' ? '/card/qr' : '/card')) || Response.error()));
 });
