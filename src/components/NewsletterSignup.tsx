@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import styles from '@/components/site/PublicPage.module.css';
-import { trackFormSubmission, trackButtonClick } from '@/lib/analytics';
+import { trackButtonClick } from '@/lib/analytics';
 
 const NewsletterSignup: React.FC = () => {
   const [name, setName] = useState('');
@@ -54,11 +54,8 @@ const NewsletterSignup: React.FC = () => {
       }
 
       const result = await response.json();
-      if (result.status !== 'subscribed') throw new Error('Subscription could not be confirmed. Please try again.');
-      if (result.newSignup) {
-        trackFormSubmission('newsletter_signup', { form_location: 'newsletter_page' });
-      }
-      setSuccessMessage(result.newSignup ? 'You’re subscribed. Thanks for joining!' : 'You’re already subscribed. Thanks for checking!');
+      if (result.success !== true) throw new Error('Request could not be processed. Please try again.');
+      setSuccessMessage('Thanks. If your address is new, check your inbox for a confirmation link. Existing subscribers can manage topics using the preferences link in a newsletter.');
 
       setSubmitSuccess(true);
       setName('');
@@ -90,7 +87,7 @@ const NewsletterSignup: React.FC = () => {
             <label htmlFor="phone">Phone <span>(optional)</span><input id="phone" type="tel" autoComplete="tel" value={phone} onChange={(e) => setPhone(e.target.value)} disabled={isSubmitting || submitSuccess} placeholder="Your phone number" /></label>
             {submitSuccess && <p role="status" className={styles.success}>{successMessage}</p>}
             {submitError && <p role="alert">{submitError}</p>}
-            <button type="submit" disabled={isSubmitting || submitSuccess} onClick={() => { if (!isSubmitting && !submitSuccess) trackButtonClick('subscribe_newsletter', 'newsletter_page'); }} className={styles.button}>{isSubmitting ? 'Subscribing…' : submitSuccess ? 'You’re subscribed' : 'Send me the notes →'}</button>
+            <button type="submit" disabled={isSubmitting || submitSuccess} onClick={() => { if (!isSubmitting && !submitSuccess) trackButtonClick('subscribe_newsletter', 'newsletter_page'); }} className={styles.button}>{isSubmitting ? 'Subscribing…' : submitSuccess ? 'Request received' : 'Send me the notes →'}</button>
             <p className={styles.finePrint}>By subscribing, you’ll receive weekly updates about building AI products and practical insights. You agree to the <Link href="/privacy">Privacy Policy</Link> and consent to being contacted for marketing purposes.</p>
           </form>
         </div>

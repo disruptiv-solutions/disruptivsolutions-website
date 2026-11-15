@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { trackFormSubmission, trackButtonClick } from '@/lib/analytics';
+import { trackButtonClick } from '@/lib/analytics';
 
 const Launchbox: React.FC = () => {
   const [activeCard, setActiveCard] = React.useState(0);
@@ -201,8 +201,6 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                   };
 
                   try {
-                    console.log('[Launchbox:Newsletter] Form submission started');
-                    console.log('[Launchbox:Newsletter] Sending webhook data:', webhookData);
                     
                     const response = await fetch('/api/newsletter-signup', {
                       method: 'POST',
@@ -212,7 +210,6 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                       body: JSON.stringify(webhookData),
                     });
                     
-                    console.log('[Launchbox:Newsletter] API response status:', response.status);
 
                     // Check if response is actually JSON
                     const contentType = response.headers.get('content-type');
@@ -225,14 +222,8 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                       throw new Error(errorData.error || 'Failed to subscribe. Please try again.');
                     }
 
-                    console.log('[Launchbox:Newsletter] Webhook success');
-                    
-                    // Track newsletter signup from Launchbox card
-                    console.log('[Launchbox:Newsletter] Tracking analytics event');
-                    trackFormSubmission('newsletter_signup', {
-                      page_location: '/',
-                      source: 'launchbox_card',
-                    });
+                    const result = await response.json();
+                    if (result.success !== true) throw new Error('Request could not be processed. Please try again.');
 
                     setSubmitSuccess(true);
                     setNlName('');
@@ -290,7 +281,7 @@ const ScrollableHighlights: React.FC<ScrollableHighlightsProps> = ({ onWaitlist,
                 {submitSuccess && (
                   <div className="p-3 rounded-lg bg-green-900/30 border border-green-600/50">
                     <p className="text-green-400 text-sm font-medium">
-                      ✓ Successfully subscribed! Check your email for confirmation.
+                      Thanks. If your address is new, check your inbox for a confirmation link. Existing subscribers can manage topics using the preferences link in a newsletter.
                     </p>
                   </div>
                 )}

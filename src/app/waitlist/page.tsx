@@ -497,7 +497,7 @@ const LaunchboxWaitlist: React.FC = () => {
                             
                             <div className="flex items-start gap-3 mt-2 bg-slate-50 p-4 rounded-xl border border-slate-100">
                                 <input type="checkbox" id="newsletter" checked={subscribeNewsletter} onChange={(e) => setSubscribeNewsletter(e.target.checked)} className="mt-1 h-4 w-4 accent-[#FF8A4F] rounded border-gray-300 text-[#FF8A4F]" />
-                                <label htmlFor="newsletter" className="text-sm text-slate-700">I’d also like to get Ian’s newsletter.</label>
+                                <label htmlFor="newsletter" className="text-sm text-slate-700">I’d also like to get Ian’s newsletter. New addresses must confirm by email. Existing subscribers can use the preferences link in a newsletter.</label>
                             </div>
 
                             {submitError && <div className="p-4 rounded-xl bg-red-50 text-red-700 text-sm font-medium">{submitError}</div>}

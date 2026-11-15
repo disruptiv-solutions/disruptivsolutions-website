@@ -117,28 +117,40 @@ export async function setPreferences(
 
 export const PREFERENCE_CATEGORY_ID = CATEGORY_ID;
 
-/** The public signup is complete only when this audience confirms membership. */
-export async function subscribeToNewsletter(name: string, email: string, phone: string) {
-  const hash = crypto.createHash('md5').update(email.toLowerCase()).digest('hex');
-  const previousResponse = await mailchimp(`/lists/${LIST_ID}/members/${hash}?fields=status,interests`);
-  if (!previousResponse.ok && previousResponse.status !== 404) throw new Error('Audience unavailable');
-  const previous = previousResponse.ok ? await previousResponse.json() : null;
-  const alreadySubscribed = previous?.status === 'subscribed' && previous?.interests?.[GROUPS.ian] === true;
-  if (alreadySubscribed) return { status: 'subscribed', newSignup: false } as const;
+/**
+ * Public signup requests confirmation for NEW contacts only. Existing audience
+ * membership/preferences are not proof that this visitor owns the address.
+ * Create-only POST avoids an upsert race overwriting a concurrent opt-out.
+ */
+export async function subscribeToNewsletter(name: string, email: string, phone = '') {
+  const normalizedEmail = email.trim().toLowerCase();
+  const hash = crypto.createHash('md5').update(normalizedEmail).digest('hex');
+  const previous = await mailchimp(`/lists/${LIST_ID}/members/${hash}?fields=status`);
+  if (previous.ok) return; // No writes or repeat confirmations for ANY existing status.
+  if (previous.status !== 404) throw new Error('Audience unavailable');
 
-  const response = await mailchimp(`/lists/${LIST_ID}/members/${hash}`, {
-    method: 'PUT',
-    body: JSON.stringify({ email_address: email, status_if_new: 'subscribed', status: 'subscribed',
-      merge_fields: { FNAME: name }, interests: { [GROUPS.ian]: true } }),
+  const response = await mailchimp(`/lists/${LIST_ID}/members`, {
+    method: 'POST',
+    body: JSON.stringify({
+      email_address: normalizedEmail,
+      status: 'pending',
+      merge_fields: { FNAME: name },
+      interests: { [GROUPS.ian]: true },
+    }),
   });
-  if (!response.ok) throw new Error('Subscription rejected');
   const member = await response.json();
-  if (member.status !== 'subscribed' || member.interests?.[GROUPS.ian] !== true) throw new Error('Subscription not confirmed');
+  // Another request may have created the member since GET. Never retry as an
+  // upsert or change status; Mailchimp's create-only duplicate is harmless.
+  if (response.status === 400 && member.title === 'Member Exists') return;
+  if (!response.ok || member.status !== 'pending') throw new Error('Signup request unavailable');
+  // Preserve the optional supplied phone only for this newly created pending
+  // contact. Never overwrite an existing contact's information.
   if (phone) {
-    const note = await mailchimp(`/lists/${LIST_ID}/members/${hash}/notes`, {
-      method: 'POST', body: JSON.stringify({ note: `Phone supplied with website newsletter signup: ${phone}` }),
-    });
-    if (!note.ok) console.error('[newsletter-signup] Optional phone note was not saved');
+    try {
+      const note = await mailchimp(`/lists/${LIST_ID}/members/${hash}/notes`, {
+        method: 'POST', body: JSON.stringify({ note: `Phone supplied with website newsletter signup: ${phone}` }),
+      });
+      if (!note.ok) console.error('[newsletter-signup] Optional phone note was not saved');
+    } catch { console.error('[newsletter-signup] Optional phone note was not saved'); }
   }
-  return { status: 'subscribed', newSignup: true } as const;
 }
