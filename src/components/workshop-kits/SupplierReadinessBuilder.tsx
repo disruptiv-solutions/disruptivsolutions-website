@@ -438,8 +438,8 @@ export default function SupplierReadinessBuilder() {
                   </div>
                 </div>
                 <p className="mt-4 text-sm leading-relaxed text-[#F7F1E8]/70">
-                  Built an AI product to{' '}
-                  <span className="font-semibold text-white">$1.2M ARR and 1,600 users</span> &mdash; solo.
+                  Built the AI for Business platform solo, supporting{' '}
+                  <span className="font-semibold text-white">more than 1,600 users</span>. The business it served reached $1.2M in annual recurring revenue within nine months.
                   HMSDC&rsquo;s AI subject-matter expert for the Academy.
                 </p>
               </div>

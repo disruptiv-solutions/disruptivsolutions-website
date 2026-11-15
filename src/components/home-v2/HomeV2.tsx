@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { trackButtonClick, trackDisruptivVisit, trackFormSubmission } from "@/lib/analytics";
+import { IAN_COMMUNITY_URL } from "@/lib/ian-community";
 import styles from "./HomeV2.module.css";
 import { LAUNCH_AND_LEARN } from "@/lib/launch-and-learn";
 
@@ -86,19 +87,17 @@ export default function HomeV2() {
     <section id="top" className={styles.hero} aria-labelledby="home-title">
       <div className={`${styles.container} ${styles.heroGrid}`}>
         <div className={styles.heroCopy}>
-          <p className={styles.eyebrow}>Ian McDonald / Builder. Founder. Speaker.</p>
-          <h1 id="home-title">Make AI practical.<br />Build what’s <em>next.</em></h1>
-          <p className={styles.heroDescription}>I build products and businesses with AI. Then I share what works, on stage, in workshops, and with people ready to try it themselves.</p>
-          <Link className={styles.heroAction} href="/speaking" onClick={() => trackButtonClick("explore_speaking", "home_v2_hero")}><span>Explore speaking & workshops</span><Arrow /></Link>
-          <Link className={styles.heroLearning} href="/learn" onClick={() => trackButtonClick("start_learning", "home_v2_hero")}>Heard me speak? Start with a free lesson <Arrow /></Link>
+          <p className={styles.eyebrow}>Ian McDonald / AI speaker & builder.</p>
+          <h1 id="home-title">Practical AI.<br />For your <em>audience.</em></h1>
+          <p className={styles.heroDescription}>Keynotes, workshops, and live builds for people ready to put AI to work. I share what I’m learning from building products and businesses, so your audience has something real to try.</p>
+          <div className={styles.heroActions}><Link className={styles.heroAction} href="/speaking#book" onClick={() => trackButtonClick("speaking_inquiry", "home_v2_hero")}><span>Bring Ian to your event</span><Arrow /></Link>
+          <a className={styles.heroLearning} href={IAN_COMMUNITY_URL} onClick={() => trackButtonClick("join_community", "home_v2_hero")}>Join free <Arrow /></a></div><p className={styles.communityNote}>Keep learning in my community on LaunchBox.</p>
         </div>
         <figure className={styles.heroArt}>
           <div className={styles.paperBack} aria-hidden="true" />
-          <div className={styles.stageFragment}><Image src="/speaking/ian-speaker-aixp.jpg" alt="Ian speaking at AIXP Houston" fill sizes="(max-width: 760px) 60vw, 26vw" className={styles.stagePhoto} priority /></div>
-          <div className={styles.portraitFragment}><Image src="/ian-mcdonald.png" alt="Ian McDonald" fill sizes="(max-width: 760px) 70vw, 34vw" priority /></div>
-          <svg className={styles.paperArrow} viewBox="0 0 260 120" aria-hidden="true"><path d="m4 75 139-16-4-48 115 69-116 37 4-35L4 108Z" fill="currentColor" /><path d="m142 59 104 20-105 4" stroke="#16181b" strokeWidth="2" fill="none" /></svg>
+          <div className={styles.stageFragment}><Image src="/speaking/ian-speaker-aixp.jpg" alt="Ian speaking at AIXP Houston" fill sizes="(max-width: 760px) 100vw, 48vw" className={styles.stagePhoto} priority /></div>
           <span className={styles.tape}>Built. Tried. Shared.</span>
-          <figcaption>Real work. Real rooms. Still building.</figcaption>
+          <figcaption>On stage at AIXP Houston / April 2026</figcaption>
         </figure>
       </div>
     </section>
@@ -114,7 +113,7 @@ export default function HomeV2() {
             <span className={styles.routeNumber}>02 / LEARNING</span><div><h3>Try it. Ask questions. Build.</h3><p>Start with a free lesson, bring a question to the weekly call, and keep building in the community.</p></div><Link className={styles.routeLink} href="/learn">Find your starting point <Arrow /></Link>
           </article>
           <article id="disruptiv" className={styles.routeRow}>
-            <span className={styles.routeNumber}>03 / BUILDING</span><div><h3>Make it work for your business.</h3><p>Disruptiv is my company for websites, apps, AI workflows, video, and campaigns. It’s where we build together.</p></div><Link className={styles.routeLink} href="/build" onClick={() => trackButtonClick("build_with_ian", "home_v2_routes")}>Build with Ian <Arrow /></Link>
+            <span className={styles.routeNumber}>03 / BUILDING</span><div><h3>Need it built?</h3><p>That’s what we do at Disruptiv Solutions. Websites, apps, AI workflows, video, and campaigns, built around your business.</p></div><Link className={styles.routeLink} href="/build" onClick={() => trackButtonClick("build_with_ian", "home_v2_routes")}>Build with Disruptiv <Arrow /></Link>
           </article>
         </div>
         <p className={styles.routeFoot}>This is where I teach and share. Disruptiv is where we put it to work in your business.</p>
