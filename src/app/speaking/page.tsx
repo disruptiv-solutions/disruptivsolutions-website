@@ -7,7 +7,7 @@ import styles from "./Speaking.module.css";
 
 export const metadata: Metadata = {
   title: "Speaking & Workshops | Ian McDonald",
-  description: "Practical AI keynotes, workshops, and live builds for founders, business owners, and teams. Explore Ian’s talks, watch a keynote, and inquire about your event.",
+  description: "Practical AI keynotes, workshops, and live builds for founders, business owners, and teams. Explore Ian’s talks, watch speaking highlights, and inquire about your event.",
   openGraph: { title: "Speaking & Workshops | Ian McDonald", description: "Give your audience something to build on. Practical AI sessions from a founder who builds and uses the tools himself.", type: "website", images: ["/ian-stage.jpg"] },
 };
 
@@ -22,7 +22,7 @@ const EVENTS = [
   { title: "Small & Diverse Business Inclusion Summit", date: "June 2026 / Houston", copy: "Live opportunity research and follow-up workflows for small-business owners at Commissioner Rodney Ellis’ summit." },
   { title: "Houston AI Club", date: "May 2026 / Virtual", copy: "From AI Consumer to AI Builder: a live LaunchBox build and Q&A for 50+ attendees." },
   { title: "AIXP Houston", date: "April 2026 / Houston", copy: "Four speaking slots, including the Founder Stories panel, sharing lessons from building LaunchBox." },
-  { title: "Orlando keynote", date: "May 2025 / 500+ attendees", copy: "Building AI products as a self-taught operator. Watch the keynote above." },
+  { title: "Orlando keynote", date: "June 2025 / 500+ attendees", copy: "Building AI products as a self-taught operator at the AI for Business Live Summit. Watch the highlights above." },
   { title: "Jacksonville keynote", date: "March 2025 / 250+ attendees", copy: "Practical AI for founders building without a technical background." },
 ];
 
@@ -46,7 +46,7 @@ export default function SpeakingPage() {
     <section id="proof" className={`${styles.container} ${styles.proof}`} aria-labelledby="proof-title">
       <header className={styles.sectionHeading}><p className={styles.eyebrow}>See the work behind the talk</p><h2 id="proof-title">A working builder.<br /><em>A real room.</em></h2></header>
       <div className={styles.proofGrid}>
-        <figure className={styles.film}><video controls preload="none" poster="/speaking/ian-speaker-orlando-2025.png" aria-label="Ian McDonald’s Orlando keynote, May 2025"><source src="/ian.mp4" type="video/mp4" /></video><figcaption><strong>Watch the Orlando keynote</strong><span>May 2025 / 500+ in the room</span></figcaption></figure>
+        <figure className={styles.film}><video controls playsInline preload="metadata" poster="/speaking/orlando-2025-speaker-reel.jpg" aria-label="Ian McDonald’s speaker highlights from the AI for Business Live Summit in Orlando, June 2025. 3 minutes 19 seconds, with captions."><source src="/speaking/orlando-2025-speaker-reel.mp4" type="video/mp4" /></video><figcaption><strong>Watch the 3:19 speaker reel</strong><span>AI for Business Live Summit / June 2025</span></figcaption></figure>
         <article className={styles.caseStudy}><p className={styles.eyebrow}>Builder record / 2025</p><h3>AI for Business.<br />Built solo by Ian.</h3><p>Ian built the AI for Business platform himself. The platform supported more than 1,600 users; the business it served reached $1.2M in annual recurring revenue within nine months.</p><dl className={styles.stats}><div><dt>1,600+</dt><dd>Users supported by the platform</dd></div><div><dt>$1.2M</dt><dd>Annual recurring revenue of the business the platform supported</dd></div></dl><p className={styles.caseNote}>These figures describe the 2025 AI for Business engagement.</p><Link href="/work/ai-for-business" className={styles.textLink}>See the platform case study <span aria-hidden="true">↗</span></Link></article>
       </div>
       <blockquote className={styles.quote}><p>“I enjoyed your speech, the hands-on coding presentation, your honesty and humble attitude, and your drive.”</p><footer><strong>Monika Mielnik</strong><span>Director, UX/UI Design & Development<br />AIXP Houston</span></footer></blockquote>

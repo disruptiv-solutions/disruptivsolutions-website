@@ -125,7 +125,7 @@ export default function HomeV2() {
       <div className={styles.container}>
         <header className={styles.sectionHeading}><h2 id="proof-title">Built in real life.<br />Shared in <em>real rooms.</em></h2><Link className={styles.textLink} href="/speaking#stage">See the speaking record <Arrow /></Link></header>
         <div className={styles.proofGrid}>
-          <figure className={styles.stageFilm}><video controls preload="none" poster="/speaking/ian-speaker-orlando-2025.png" aria-label="Watch Ian’s Orlando keynote"><source src="/ian.mp4" type="video/mp4" /></video><figcaption><strong>Orlando keynote</strong><span>May 2025 / 500+ in the room</span></figcaption></figure>
+          <figure className={styles.stageFilm}><video controls playsInline preload="metadata" poster="/speaking/orlando-2025-speaker-reel.jpg" aria-label="Watch Ian McDonald’s 3 minute 19 second speaker reel from Orlando, June 2025, with captions"><source src="/speaking/orlando-2025-speaker-reel.mp4" type="video/mp4" /></video><figcaption><strong>Orlando speaking highlights</strong><span>June 2025 / 3:19 speaker reel</span></figcaption></figure>
           <div id="about" className={styles.proofCopy}>
             <p className={styles.eyebrow}>The build behind the numbers / 2025</p><h3>AI for Business.<br />Built solo by Ian.</h3><p>I built the AI for Business platform myself. It supported more than 1,600 users, while the business it served reached $1.2M in annual recurring revenue within nine months.</p>
             <dl className={styles.stats}><div><dt>1,600+</dt><dd>Users supported by the AI for Business platform</dd></div><div><dt>$1.2M</dt><dd>Annual recurring revenue of the business the platform supported</dd></div></dl>

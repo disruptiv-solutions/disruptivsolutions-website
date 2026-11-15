@@ -35,7 +35,7 @@
 .sectionNote { font-size: 14px; line-height: 1.8; color: var(--site-muted); margin-top: 22px !important; max-width: 70ch; }
 .proof { padding-block: 58px 52px; }
 .proofGrid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 55px; align-items: center; }
-.film video { display: block; width: 100%; aspect-ratio: 16/11; object-fit: cover; background: var(--site-ink); }
+.film video { display: block; width: 100%; aspect-ratio: 16/9; object-fit: contain; background: var(--site-ink); }
 .film figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 20px; font-size: 14px; line-height: 1.7; margin-top: 13px; color: var(--site-muted); }
 .caseStudy h3 { font-size: 34px; margin-top: 17px; }
 .caseStudy > p:not(.eyebrow) { font-size: 15px; line-height: 1.8; margin-top: 20px; }
