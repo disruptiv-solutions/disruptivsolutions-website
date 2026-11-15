@@ -67,3 +67,9 @@
   .brand { font-size: 12px; gap: 6px; }
   .mobileCommunity { font-size: 10px; padding-inline: 6px; }
 }
+
+/* Personal name wordmark, distinct from the Disruptiv company mark. */
+.header .brand { font-family: var(--font-rosario), sans-serif; font-size: 25px; font-weight: 700; letter-spacing: -.04em; }
+@media(min-width:1101px) { .header .navLinks { position: static; transform: none; } .header .nav { gap: 16px; } .header .navLinks { gap: 18px; } .header .navCta { font-size: 11px; letter-spacing: .035em; padding-inline: 18px; } }
+@media(max-width:760px) { .header .brand { font-size: 23px; } }
+@media(max-width:360px) { .header .brand { font-size: 21px; } }
