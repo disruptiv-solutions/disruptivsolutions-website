@@ -107,7 +107,7 @@ export default function LearnPage() {
 
     <section id="learn-live" className={styles.liveSession} aria-labelledby="live-title">
       <div><p className={styles.eyebrow}>Free / Launch &amp; Learn</p><h2 id="live-title">Bring what you’re<br /><em>working on.</em></h2></div>
-      <div><p>Join my weekly call for practical AI building, live walkthroughs, and founder Q&amp;A. Bring a question from a lesson, a project you’re trying, or something you want to make easier.</p><p className={styles.schedule}>{LAUNCH_AND_LEARN.schedule}</p><a className={styles.liveLink} href={LAUNCH_AND_LEARN.meetingUrl} target="_blank" rel="noopener noreferrer">Join Launch &amp; Learn <Arrow /></a><Link className={styles.communityLink} href="/community">Keep the conversation going in my free community <span aria-hidden="true">→</span></Link></div>
+      <div><p>Join my weekly call for practical AI building, live walkthroughs, and founder Q&amp;A. Bring a question from a lesson, a project you’re trying, or something you want to make easier.</p><p className={styles.schedule}>{LAUNCH_AND_LEARN.schedule}</p><a className={styles.liveLink} href={LAUNCH_AND_LEARN.meetingUrl} target="_blank" rel="noopener noreferrer">View Launch &amp; Learn on LaunchBox <Arrow /></a><Link className={styles.communityLink} href="/community">Keep the conversation going in my free community <span aria-hidden="true">→</span></Link></div>
     </section>
     <aside className={styles.extraResources} aria-label="More ways to learn"><p>Still choosing a starting point? <Link href="/assessment">Try the free AI Snapshot.</Link></p><p>Prefer to follow along? <Link href="/newsletter">Get notes from my workbench.</Link></p></aside>
 

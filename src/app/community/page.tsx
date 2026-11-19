@@ -41,7 +41,7 @@ export default function CommunityPage() {
         <ol className={styles.practices}>
           <li><span aria-hidden="true">01</span><div><h3>Try one small project.</h3><p>Start with the lead tracker or animated GIF lesson. Use the prompts with your own information and make something you can use.</p><Link className={styles.textLink} href="/learn">Choose a free lesson <span aria-hidden="true">→</span></Link></div></li>
           <li><span aria-hidden="true">02</span><div><h3>Show what you’re trying.</h3><p>Introduce yourself in the community. Share your result or the step where you got stuck so there’s something concrete to work through.</p></div></li>
-          <li><span aria-hidden="true">03</span><div><h3>Bring it to Launch &amp; Learn.</h3><p>My free weekly call is a place for live walkthroughs and questions.<br />{LAUNCH_AND_LEARN.schedule}.</p><Link className={styles.textLink} href="/learn#learn-live">Get the call details <span aria-hidden="true">→</span></Link></div></li>
+          <li><span aria-hidden="true">03</span><div><h3>Bring it to Launch &amp; Learn.</h3><p>My free weekly call is a place for live walkthroughs and questions.<br />{LAUNCH_AND_LEARN.schedule}.</p><Link className={styles.textLink} href="/learn#learn-live">See how to join on LaunchBox <span aria-hidden="true">→</span></Link></div></li>
         </ol>
       </div>
       <div className={styles.workbench}>
