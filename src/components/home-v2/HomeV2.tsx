@@ -137,7 +137,7 @@ export default function HomeV2() {
 
     <section id="learn" className={styles.learning} aria-labelledby="learn-title">
       <div className={`${styles.container} ${styles.learningGrid}`}>
-        <div><p className={styles.eyebrow}>No stage. No ticket. Just start.</p><h2 id="learn-title">Bring a question.<br />Leave with <em>a next step.</em></h2><p>Launch & Learn is my free weekly call for practical AI building, live walkthroughs, and founder Q&A.</p><span className={styles.schedule}>{LAUNCH_AND_LEARN.schedule}</span><a className={styles.lightLink} href={LAUNCH_AND_LEARN.meetingUrl} target="_blank" rel="noreferrer">Join Launch & Learn <Arrow /></a></div>
+        <div><p className={styles.eyebrow}>No stage. No ticket. Just start.</p><h2 id="learn-title">Bring a question.<br />Leave with <em>a next step.</em></h2><p>Launch & Learn is my free weekly call for practical AI building, live walkthroughs, and founder Q&A.</p><span className={styles.schedule}>{LAUNCH_AND_LEARN.schedule}</span><a className={styles.lightLink} href={LAUNCH_AND_LEARN.meetingUrl} target="_blank" rel="noreferrer">View Launch & Learn on LaunchBox <Arrow /></a></div>
         <div className={styles.learningLinks}>
           <Link href="/learn"><span>Work through it</span><strong>Practical AI lessons & kits</strong><Arrow /></Link>
           <Link href="/assessment"><span>Find your starting point</span><strong>The free AI Snapshot</strong><Arrow /></Link>
