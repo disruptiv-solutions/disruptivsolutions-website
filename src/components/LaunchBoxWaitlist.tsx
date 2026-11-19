@@ -741,7 +741,7 @@ const LaunchboxWaitlist: React.FC = () => {
                     className="mt-1 h-4 w-4 accent-red-600"
                   />
                   <label htmlFor="newsletter" className="text-sm text-gray-700">
-                    I&apos;d also like to get Ian&apos;s newsletter with AI app-building tips &
+                    New addresses must confirm by email; existing subscribers can use the preferences link in a newsletter. I&apos;d also like to get Ian&apos;s newsletter with AI app-building tips &
                     workshop invites
                   </label>
                 </div>

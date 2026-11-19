@@ -1,13 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import { checkBotId } from 'botid/server';
 import { subscribeToNewsletter } from '@/lib/mailchimp-preferences';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
-  const origin = request.headers.get('origin');
-  if (origin && origin !== request.nextUrl.origin) {
+  if (request.headers.get('origin') !== new URL(request.url).origin) {
     return NextResponse.json({ error: 'Please submit through the website.' }, { status: 403 });
+  }
+  if (!request.headers.get('content-type')?.startsWith('application/json')) {
+    return NextResponse.json({ error: 'Please use the newsletter form.' }, { status: 415 });
+  }
+  try {
+    const verification = await checkBotId({ advancedOptions: { checkLevel: 'basic' } });
+    if (verification.isBot) {
+      return NextResponse.json({ error: 'We could not verify your browser. Refresh and try again.' }, { status: 403 });
+    }
+  } catch {
+    return NextResponse.json({ error: 'Browser verification is temporarily unavailable. Please try again later.' }, { status: 503 });
   }
   let body;
   try { body = await request.json(); } catch {
@@ -20,22 +30,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Please enter your name and a valid email.' }, { status: 400 });
   }
   try {
-    const result = await subscribeToNewsletter(name, email, phone);
-    if (result.newSignup && process.env.RESEND_API_KEY) {
-      try {
-        const welcome = await new Resend(process.env.RESEND_API_KEY).emails.send({
-          from: process.env.RESEND_FROM || 'Ian McDonald <ian@ianmcdonald.ai>',
-          to: email,
-          replyTo: 'ian@ianmcdonald.ai',
-          subject: 'You’re subscribed — Ian McDonald',
-          text: 'Thanks for joining my newsletter. You’ll receive practical AI builds, founder notes, and workshop updates.\n\nYou can choose your topics or unsubscribe using the links in each newsletter.\n\nTalk soon,\nIan\nhttps://www.ianmcdonald.ai',
-        });
-        if (welcome.error) console.error('[newsletter-signup] Welcome email not delivered');
-      } catch { console.error('[newsletter-signup] Welcome email unavailable'); }
-    }
-    return NextResponse.json({ success: true, ...result });
+    await subscribeToNewsletter(name, email, phone);
+    // Same response for pending, already subscribed and suppressed contacts.
+    // No Resend welcome: Mailchimp owns confirmation, not this public route.
+    return NextResponse.json({ success: true });
   } catch {
-    console.error('[newsletter-signup] Audience could not confirm subscription');
-    return NextResponse.json({ error: 'We could not confirm your subscription. Please try again.' }, { status: 502 });
+    console.error('[newsletter-signup] Signup request unavailable');
+    return NextResponse.json({ error: 'We could not process your request. Please try again later.' }, { status: 502 });
   }
 }
